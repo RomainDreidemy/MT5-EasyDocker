@@ -2,9 +2,20 @@ version: '3'
 
 services:
   front:
+    container_name: front
     build:
       context: ./front
       dockerfile: Dockerfile
     volumes:
       - ./front/:/app
     entrypoint: ["tail", "-f", "/dev/null"]
+
+  api:
+    container_name: api
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    volumes:
+      - ./api/:/app
+    ports:
+      - "3000:3000"

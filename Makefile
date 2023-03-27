@@ -12,3 +12,9 @@ build:
 
 watch:
 	docker compose exec -it react yarn run watch-build
+
+api-logs:
+	docker compose logs -f api
+
+front-logs:
+	docker compose logs -f front
