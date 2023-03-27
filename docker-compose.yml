@@ -1,8 +1,10 @@
 version: '3'
 
 services:
-  react:
-    build: .
+  front:
+    build:
+      context: ./front
+      dockerfile: Dockerfile
     volumes:
-      - .:/app
+      - ./front/:/app
     entrypoint: ["tail", "-f", "/dev/null"]

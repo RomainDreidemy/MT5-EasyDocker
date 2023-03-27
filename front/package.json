@@ -28,13 +28,13 @@
   "resolutions": {
   },
   "scripts": {
-    "vscode:prepublish": "node ./scripts/build-non-split.js && tsc -p tsconfig.extension.json",
+    "vscode:prepublish": "node scripts/build-non-split.js && tsc -p tsconfig.extension.json",
     "postinstall": "node ./node_modules/vscode/bin/install",
     "start": "react-scripts start",
-    "build": "node ./scripts/build-non-split.js && tsc -p tsconfig.extension.json",
+    "build": "node scripts/build-non-split.js && tsc -p tsconfig.extension.json",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "watch-build": "nodemon --watch src --ext js,tsx,ts --exec \"yarn run build\""
+    "watch-build": "nodemon --watch src --ext js,tsx,ts --exec \\\\\\\"yarn run build\\\\\\\""
   },
   "devDependencies": {
     "@types/jest": "^23.3.13",

@@ -12,7 +12,7 @@
         "strict": true
 	},
 	"include": [
-		"ext-src"
+      "ext-src"
 	],
     "exclude": [
         "node_modules",
