@@ -1,3 +1,6 @@
+tmp/
+.env
+
 ### FRONT ###
 front/node_modules/
 ### FRONT ###
