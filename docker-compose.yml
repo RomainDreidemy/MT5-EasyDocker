@@ -1,0 +1,8 @@
+version: '3'
+
+services:
+  react:
+    build: .
+    volumes:
+      - .:/app
+    entrypoint: ["tail", "-f", "/dev/null"]
