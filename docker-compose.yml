@@ -10,7 +10,9 @@ services:
         REACT_APP_API_URL: ${REACT_APP_API_URL}
     volumes:
       - ./front/:/app
-    entrypoint: ["tail", "-f", "/dev/null"]
+    ports:
+      - "${FRONT_PORT}:3000"
+    entrypoint: ["yarn", "start"]
 
   api:
     container_name: api
