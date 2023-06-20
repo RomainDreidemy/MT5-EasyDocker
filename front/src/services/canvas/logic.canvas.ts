@@ -2,7 +2,6 @@ import BaseCanvas from "./base.canvas";
 import ServiceDrawer from "../board/drawer/service.drawer";
 import MouseUtil from "../utils/mouse.util";
 import {EventsEnum} from "../../enums/events.enum";
-import {IPosition} from "../../interfaces/Position.interface";
 
 class LogicCanvas extends BaseCanvas {
   elements: ServiceDrawer[] = []
@@ -27,14 +26,12 @@ class LogicCanvas extends BaseCanvas {
 
       const element = this.elements.find(({factory}) => factory.isSelected(position))
 
+      console.log(element)
+
       if (element) {
         alert(`Hey boy, you currently selecting the element: ${element.service.id}`)
       }
     })
-  }
-
-  private isSelected(path: Path2D, {x, y}: IPosition): Boolean {
-    return this.context.isPointInPath(path, x, y)
   }
 }
 
