@@ -5,6 +5,8 @@ class BaseCanvas {
   public canvas: HTMLCanvasElement
   public context: CanvasRenderingContext2D
 
+  private contextId = '2d'
+
   constructor(canvas: HTMLCanvasElement) {
     this.canvas = canvas
     this.context = canvas.getContext('2d') as CanvasRenderingContext2D
@@ -29,7 +31,7 @@ class BaseCanvas {
   }
 
   updateContext() {
-    this.context = this.canvas.getContext('2d') as CanvasRenderingContext2D
+    this.context = this.canvas.getContext(this.contextId) as CanvasRenderingContext2D
   }
 
   setCanvasDimensions({width, height}: IWidth) {

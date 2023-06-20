@@ -8,17 +8,19 @@ class ServiceDrawer extends ItemBasics {
   readonly service: IService
   readonly baseCanvas: BaseCanvas
 
+  public factory: ServiceFactory
+
   constructor(service: IService, baseCanvas: BaseCanvas) {
     super(service, baseCanvas)
 
     this.service = service
     this.baseCanvas = baseCanvas
+
+    this.factory = new ServiceFactory(service, baseCanvas.context)
   }
 
   draw() {
-    const factory = new ServiceFactory(this.service, this.baseCanvas.context)
-
-    new BaseDrawer(factory).draw()
+    new BaseDrawer(this.factory).draw()
   }
 }
 
