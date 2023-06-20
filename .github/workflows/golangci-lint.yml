@@ -10,7 +10,7 @@ permissions:
   pull-requests: read
 
 jobs:
-  golangci:
+  linter:
     name: lint
     runs-on: ubuntu-latest
     steps:
