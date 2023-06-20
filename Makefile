@@ -7,13 +7,13 @@ down:
 	$(DOCKER_COMPOSE) down --remove-orphans
 
 install:
-	$(DOCKER_COMPOSE) exec -it react yarn install --ignore-engines
+	$(DOCKER_COMPOSE) exec -it front yarn install --ignore-engines
 
 build:
-	$(DOCKER_COMPOSE) exec -it react yarn run build
+	$(DOCKER_COMPOSE) exec -it front yarn run build
 
 watch:
-	$(DOCKER_COMPOSE) exec -it react yarn run watch-build
+	$(DOCKER_COMPOSE) exec -it front yarn run watch-build
 
 logs:
 	$(DOCKER_COMPOSE) logs -f
@@ -23,6 +23,9 @@ api-logs:
 
 front-logs:
 	$(DOCKER_COMPOSE) logs -f front
+
+front-linter:
+	$(DOCKER_COMPOSE) exec -it front yarn lint
 
 database-logs:
 	$(DOCKER_COMPOSE) logs -f database

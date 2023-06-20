@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from "react";
+import {useEffect, useRef} from "react";
 import ServiceDrawer from "../services/board/drawer/service.drawer";
 import {IService} from "../interfaces/Service.interface";
 import BaseCanvas from "../services/canvas/base.canvas";
