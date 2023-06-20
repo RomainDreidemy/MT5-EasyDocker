@@ -7,7 +7,7 @@ services:
       context: ./front
       dockerfile: Dockerfile
     environment:
-        REACT_APP_API_URL: ${REACT_APP_API_URL}
+        VITE_API_URL: ${VITE_API_URL}
     volumes:
       - ./front/:/app
     ports:
