@@ -1,35 +1,37 @@
+DOCKER_COMPOSE=docker compose
+
 up:
-	docker compose up --build --detach
+	$(DOCKER_COMPOSE) up --build --detach
 
 down:
-	docker compose down --remove-orphans
+	$(DOCKER_COMPOSE) down --remove-orphans
 
 install:
-	docker compose exec -it react yarn install --ignore-engines
+	$(DOCKER_COMPOSE) exec -it react yarn install --ignore-engines
 
 build:
-	docker compose exec -it react yarn run build
+	$(DOCKER_COMPOSE) exec -it react yarn run build
 
 watch:
-	docker compose exec -it react yarn run watch-build
+	$(DOCKER_COMPOSE) exec -it react yarn run watch-build
 
 logs:
-	docker compose logs -f
+	$(DOCKER_COMPOSE) logs -f
 
 api-logs:
-	docker compose logs -f api
+	$(DOCKER_COMPOSE) logs -f api
 
 front-logs:
-	docker compose logs -f front
+	$(DOCKER_COMPOSE) logs -f front
 
 database-logs:
-	docker compose logs -f database
+	$(DOCKER_COMPOSE) logs -f database
 
 api-sh:
-	docker compose exec -it api sh
+	$(DOCKER_COMPOSE) exec -it api sh
 
 front-sh:
-	docker compose exec -it front sh
+	$(DOCKER_COMPOSE) exec -it front sh
 
 database-sh:
-	docker compose exec -it database sh
+	$(DOCKER_COMPOSE) exec -it database sh
