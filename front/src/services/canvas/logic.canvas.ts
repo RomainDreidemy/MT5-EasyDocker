@@ -26,10 +26,8 @@ class LogicCanvas extends BaseCanvas {
 
       const element = this.elements.find(({factory}) => factory.isSelected(position))
 
-      console.log(element)
-
       if (element) {
-        alert(`Hey boy, you currently selecting the element: ${element.service.id}`)
+        alert(`Hey boy, you are selecting the element: ${element.service.id}`)
       }
     })
   }
