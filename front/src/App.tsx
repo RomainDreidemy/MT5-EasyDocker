@@ -1,11 +1,11 @@
 import React from 'react'
 import './App.css';
-import CanvasOrganism from "./views/organisms/Canvas.organism";
+import BoardOrganism from "./views/organisms/Board.organism";
 
 function App (): JSX.Element {
   return (
     <div className="App">
-      <CanvasOrganism/>
+      <BoardOrganism/>
     </div>
   )
 }
