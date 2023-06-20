@@ -1,10 +1,10 @@
-import {IWidth} from "../../interfaces/Window.interface";
+import { type IWidth } from '../../interfaces/Window.interface'
 
 class WindowApp {
-  static dimensions(): IWidth {
-    const {innerWidth: width, innerHeight: height} = window;
+  static dimensions (): IWidth {
+    const { innerWidth: width, innerHeight: height } = window
 
-    return {width, height};
+    return { width, height }
   }
 }
 

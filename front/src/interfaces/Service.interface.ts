@@ -1,6 +1,6 @@
 export interface IService {
-  id: number,
+  id: number
 
-  position_x: number,
-  position_y: number,
+  position_x: number
+  position_y: number
 }
