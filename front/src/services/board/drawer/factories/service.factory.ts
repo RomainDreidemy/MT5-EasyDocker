@@ -1,6 +1,7 @@
 import {IService} from "../../../../interfaces/Service.interface";
+import BaseFactory from "./base.factory";
 
-class ServiceFactory {
+class ServiceFactory extends BaseFactory {
   readonly service: IService
   readonly context: CanvasRenderingContext2D
 
@@ -11,6 +12,9 @@ class ServiceFactory {
   public height: number = 100
 
   constructor(service: IService, context: CanvasRenderingContext2D) {
+    super();
+    this.setFactory(this)
+
     this.service = service
     this.context = context
 

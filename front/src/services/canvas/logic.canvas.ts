@@ -25,7 +25,7 @@ class LogicCanvas extends BaseCanvas {
     this.canvas.addEventListener(EventsEnum.CLICK, (event) => {
       const position = MouseUtil.onCanvasPosition(this.canvas, event)
 
-      const element = this.elements.find(({factory}) => this.isSelected(factory.path, position))
+      const element = this.elements.find(({factory}) => factory.isSelected(position))
 
       if (element) {
         alert(`Hey boy, you currently selecting the element: ${element.service.id}`)
