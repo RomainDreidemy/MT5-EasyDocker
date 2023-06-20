@@ -2,10 +2,10 @@ import React from 'react';
 import useBoard from "../../hooks/useBoard";
 
 const BoardOrganism = () => {
-  const {canvasRef, props} = useBoard()
+  const {canvasRef} = useBoard()
 
   return (
-    <canvas ref={canvasRef} {...props} />
+    <canvas ref={canvasRef} />
   );
 };
 
