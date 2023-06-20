@@ -20,6 +20,6 @@ jobs:
       - name: Code Checkout
         uses: actions/checkout@v2
       - name: Install Dependencies
-        run: npm i
+        run: cd front && npm ci
       - name: Code Linting
-        run: npm run lint
+        run: cd front && npm run lint
