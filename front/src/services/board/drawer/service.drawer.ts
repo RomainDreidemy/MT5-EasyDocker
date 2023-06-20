@@ -1,21 +1,22 @@
-import { type IService } from '../../../interfaces/Service.interface'
-import BaseDrawer from './base.drawer'
-import ServiceFactory from './factories/service.factory'
-import ItemBasics from '../item.basics'
+import {IService} from "../../../interfaces/Service.interface";
+import BaseDrawer from "./base.drawer";
+import ServiceFactory from "./factories/service.factory";
+import ItemBasics from "../item.basics";
+import BaseCanvas from "../../canvas/base.canvas";
 
 class ServiceDrawer extends ItemBasics {
   readonly service: IService
-  readonly context: CanvasRenderingContext2D
+  readonly baseCanvas: BaseCanvas
 
-  constructor (service: IService, context: CanvasRenderingContext2D) {
-    super()
+  constructor(service: IService, baseCanvas: BaseCanvas) {
+    super(service, baseCanvas)
 
     this.service = service
-    this.context = context
+    this.baseCanvas = baseCanvas
   }
 
-  draw (): void {
-    const factory = new ServiceFactory(this.service, this.context)
+  draw() {
+    const factory = new ServiceFactory(this.service, this.baseCanvas.context)
 
     new BaseDrawer(factory).draw()
   }

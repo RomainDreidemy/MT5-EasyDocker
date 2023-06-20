@@ -1,42 +1,42 @@
-import WindowApp from '../apps/window.app'
-import { type IWidth } from '../../interfaces/Window.interface'
+import WindowApp from "../apps/window.app";
+import {IWidth} from "../../interfaces/Window.interface";
 
 class BaseCanvas {
-  private readonly canvas: HTMLCanvasElement
-
+  public canvas: HTMLCanvasElement
   public context: CanvasRenderingContext2D
 
-  constructor (canvas: HTMLCanvasElement) {
+  constructor(canvas: HTMLCanvasElement) {
     this.canvas = canvas
     this.context = canvas.getContext('2d') as CanvasRenderingContext2D
   }
 
-  create (): void {
+  create() {
     const dimensions = WindowApp.dimensions()
     this.setCanvasDimensions(dimensions)
   }
 
-  update (): void {
+  update() {
     this.updateContext()
 
     const dimensions = WindowApp.dimensions()
     this.setCanvasDimensions(dimensions)
   }
 
-  refreshCanvas (): void {
-    this.context.save()
-    this.context.fillRect(0, 0, this.canvas.width, this.canvas.height)
-    this.context.restore()
+  refreshCanvas() {
+    this.context.save();
+    this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
+    this.context.restore();
   }
 
-  updateContext (): void {
+  updateContext() {
     this.context = this.canvas.getContext('2d') as CanvasRenderingContext2D
   }
 
-  setCanvasDimensions ({ width, height }: IWidth): void {
+  setCanvasDimensions({width, height}: IWidth) {
     this.canvas.width = width
     this.canvas.height = height
   }
+
 }
 
 export default BaseCanvas
