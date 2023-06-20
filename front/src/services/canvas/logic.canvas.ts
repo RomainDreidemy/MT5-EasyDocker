@@ -1,7 +1,7 @@
 import BaseCanvas from "./base.canvas";
 import ServiceDrawer from "../board/drawer/service.drawer";
 import MouseUtil from "../utils/mouse.util";
-import {EventsEnum} from "../../enums/events.enum";
+import {Events} from "../../enums/events";
 
 class LogicCanvas extends BaseCanvas {
   elements: ServiceDrawer[] = []
@@ -21,7 +21,7 @@ class LogicCanvas extends BaseCanvas {
   }
 
   onClickListener() {
-    this.canvas.addEventListener(EventsEnum.CLICK, (event) => {
+    this.canvas.addEventListener(Events.ON_CLICK, (event) => {
       const position = MouseUtil.onCanvasPosition(this.canvas, event)
 
       const element = this.elements.find(({factory}) => factory.isSelected(position))
