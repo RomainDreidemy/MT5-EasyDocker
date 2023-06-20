@@ -1,20 +1,27 @@
-import type React from 'react'
-import { useEffect, useRef } from 'react'
+import { type MutableRefObject, useEffect, useRef } from 'react'
 import ServiceDrawer from '../services/board/drawer/service.drawer'
 import { type IService } from '../interfaces/Service.interface'
-import BaseCanvas from '../services/canvas/base.canvas'
+import EventsCanvas from '../services/canvas/Events.canvas'
 
-const useBoard = (): { canvasRef: React.MutableRefObject<HTMLCanvasElement | null> } => {
+const useBoard = (): { canvasRef: MutableRefObject<HTMLCanvasElement | null> } => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
 
   useEffect(() => {
     const canvas = canvasRef.current as unknown as HTMLCanvasElement
-    const baseCanvas = new BaseCanvas(canvas)
-    baseCanvas.create()
 
-    const service: IService = { id: 1, position_x: 100, position_y: 20 }
-    new ServiceDrawer(service, baseCanvas.context).draw()
-  }, [])
+    const eventCanvas = new EventsCanvas(canvas)
+    eventCanvas.create()
+
+    const service1: IService = { id: 1, position_x: 100, position_y: 20 }
+    const serviceDrawer1 = new ServiceDrawer(service1, eventCanvas)
+
+    const service2: IService = { id: 2, position_x: 100, position_y: 400 }
+    const serviceDrawer2 = new ServiceDrawer(service2, eventCanvas)
+
+    eventCanvas.add(serviceDrawer1, serviceDrawer2)
+    eventCanvas.draw()
+    eventCanvas.onClickListener()
+  }, [canvasRef])
 
   return {
     canvasRef

@@ -1,18 +1,29 @@
 import { type IService } from '../../../../interfaces/Service.interface'
+import BaseFactory from './base.factory'
 
-class ServiceFactory {
+class ServiceFactory extends BaseFactory {
   readonly service: IService
   readonly context: CanvasRenderingContext2D
 
   constructor (service: IService, context: CanvasRenderingContext2D) {
+    super()
+    this.setFactory(this)
+
     this.service = service
     this.context = context
+
+    this.position_x = isNaN(this.service.position_x) ? this.position_x : this.service.position_x
+    this.position_y = isNaN(this.service.position_y) ? this.position_y : this.service.position_y
   }
 
   create (): void {
+    const rectangle = new Path2D()
+
     this.context.beginPath()
-    this.context.rect(20, 20, 150, 100)
+    rectangle.rect(this.position_x, this.position_y, this.width, this.height)
     this.context.stroke()
+    this.context.fill(rectangle)
+    this.path = rectangle
   }
 }
 

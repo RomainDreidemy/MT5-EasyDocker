@@ -2,9 +2,10 @@ import WindowApp from '../apps/window.app'
 import { type IWidth } from '../../interfaces/Window.interface'
 
 class BaseCanvas {
-  private readonly canvas: HTMLCanvasElement
-
+  public canvas: HTMLCanvasElement
   public context: CanvasRenderingContext2D
+
+  private readonly CONTEXT_ID = '2d'
 
   constructor (canvas: HTMLCanvasElement) {
     this.canvas = canvas
@@ -30,7 +31,7 @@ class BaseCanvas {
   }
 
   updateContext (): void {
-    this.context = this.canvas.getContext('2d') as CanvasRenderingContext2D
+    this.context = this.canvas.getContext(this.CONTEXT_ID) as CanvasRenderingContext2D
   }
 
   setCanvasDimensions ({ width, height }: IWidth): void {
