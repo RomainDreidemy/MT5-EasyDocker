@@ -6,12 +6,8 @@ class ItemBasics {
   readonly baseCanvas: BaseCanvas
 
   constructor(service: IService, canvas: BaseCanvas) {
-    this.service = serviceIPosition
+    this.service = service
     this.baseCanvas = canvas
-  }
-
-  onClick() {
-
   }
 }
 

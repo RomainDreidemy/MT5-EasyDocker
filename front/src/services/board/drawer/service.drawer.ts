@@ -5,16 +5,10 @@ import ItemBasics from "../item.basics";
 import BaseCanvas from "../../canvas/base.canvas";
 
 class ServiceDrawer extends ItemBasics {
-  readonly service: IService
-  readonly baseCanvas: BaseCanvas
-
   public factory: ServiceFactory
 
   constructor(service: IService, baseCanvas: BaseCanvas) {
     super(service, baseCanvas)
-
-    this.service = service
-    this.baseCanvas = baseCanvas
 
     this.factory = new ServiceFactory(service, baseCanvas.context)
   }

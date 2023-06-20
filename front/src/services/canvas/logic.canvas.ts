@@ -2,6 +2,7 @@ import BaseCanvas from "./base.canvas";
 import ServiceDrawer from "../board/drawer/service.drawer";
 import MouseUtil from "../utils/mouse.util";
 import {EventsEnum} from "../../enums/events.enum";
+import {IPosition} from "../../interfaces/Position.interface";
 
 class LogicCanvas extends BaseCanvas {
   elements: ServiceDrawer[] = []
@@ -10,23 +11,30 @@ class LogicCanvas extends BaseCanvas {
     super(canvas);
   }
 
-  add(element: ServiceDrawer) {
-    this.elements.push(element)
+  add(...elements: ServiceDrawer[]) {
+    this.elements.push(...elements)
   }
 
-  draw(...elements: ServiceDrawer[]) {
-    for (const element of elements) {
+  draw() {
+    for (const element of this.elements) {
       element.draw()
     }
   }
 
-  onClick() {
+  onClickListener() {
     this.canvas.addEventListener(EventsEnum.CLICK, (event) => {
       const position = MouseUtil.onCanvasPosition(this.canvas, event)
 
-      console.log(position)
+      const element = this.elements.find(({factory}) => this.isSelected(factory.path, position))
 
+      if (element) {
+        alert(`Hey boy, you currently selecting the element: ${element.service.id}`)
+      }
     })
+  }
+
+  private isSelected(path: Path2D, {x, y}: IPosition): Boolean {
+    return this.context.isPointInPath(path, x, y)
   }
 }
 

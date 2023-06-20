@@ -4,6 +4,7 @@ class ServiceFactory {
   readonly service: IService
   readonly context: CanvasRenderingContext2D
 
+  public path: Path2D = new Path2D()
   public position_x: number = 20
   public position_y: number = 20
   public width: number = 150
@@ -18,9 +19,13 @@ class ServiceFactory {
   }
 
   create() {
+    const rectangle = new Path2D();
+
     this.context.beginPath();
-    this.context.rect(this.position_x, this.position_y, this.width, this.height);
+    rectangle.rect(this.position_x, this.position_y, this.width, this.height);
     this.context.stroke();
+    this.context.fill(rectangle);
+    this.path = rectangle
   }
 }
 
