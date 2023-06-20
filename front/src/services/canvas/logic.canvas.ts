@@ -1,32 +1,28 @@
-import BaseCanvas from "./base.canvas";
-import ServiceDrawer from "../board/drawer/service.drawer";
-import MouseUtil from "../utils/mouse.util";
-import {Events} from "../../enums/events";
+import BaseCanvas from './base.canvas'
+import type ServiceDrawer from '../board/drawer/service.drawer'
+import MouseUtil from '../utils/mouse.util'
+import { Events } from '../../enums/events'
 
 class LogicCanvas extends BaseCanvas {
   elements: ServiceDrawer[] = []
 
-  constructor(canvas: HTMLCanvasElement) {
-    super(canvas);
-  }
-
-  add(...elements: ServiceDrawer[]) {
+  add (...elements: ServiceDrawer[]): void {
     this.elements.push(...elements)
   }
 
-  draw() {
+  draw (): void {
     for (const element of this.elements) {
       element.draw()
     }
   }
 
-  onClickListener() {
+  onClickListener (): void {
     this.canvas.addEventListener(Events.ON_CLICK, (event) => {
       const position = MouseUtil.onCanvasPosition(this.canvas, event)
 
-      const element = this.elements.find(({factory}) => factory.isSelected(position))
+      const element = this.elements.find(({ factory }) => factory.isSelected(position))
 
-      if (element) {
+      if (element != null) {
         alert(`Hey boy, you are selecting the element: ${element.service.id}`)
       }
     })

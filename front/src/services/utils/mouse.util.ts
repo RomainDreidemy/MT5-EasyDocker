@@ -1,8 +1,8 @@
-import {IPosition} from "../../interfaces/Position.interface";
+import { type IPosition } from '../../interfaces/Position.interface'
 
 class MouseUtil {
-  static onCanvasPosition(canvas: HTMLCanvasElement, event: MouseEvent): IPosition {
-    const ClientRect = canvas.getBoundingClientRect();
+  static onCanvasPosition (canvas: HTMLCanvasElement, event: MouseEvent): IPosition {
+    const ClientRect = canvas.getBoundingClientRect()
 
     return {
       x: Math.round(event.clientX - ClientRect.left),

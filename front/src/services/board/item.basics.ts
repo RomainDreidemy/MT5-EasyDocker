@@ -1,9 +1,9 @@
-import {IService} from "../../interfaces/Service.interface";
+import { type IService } from '../../interfaces/Service.interface'
 
 class ItemBasics {
   readonly service: IService
 
-  constructor(service: IService) {
+  constructor (service: IService) {
     this.service = service
   }
 }
