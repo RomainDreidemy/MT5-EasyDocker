@@ -3,7 +3,7 @@ import type ServiceDrawer from '../board/drawer/service.drawer'
 import MouseUtil from '../utils/mouse.util'
 import { Events } from '../../enums/events'
 
-class LogicCanvas extends BaseCanvas {
+class EventsCanvas extends BaseCanvas {
   elements: ServiceDrawer[] = []
 
   add (...elements: ServiceDrawer[]): void {
@@ -29,4 +29,4 @@ class LogicCanvas extends BaseCanvas {
   }
 }
 
-export default LogicCanvas
+export default EventsCanvas
