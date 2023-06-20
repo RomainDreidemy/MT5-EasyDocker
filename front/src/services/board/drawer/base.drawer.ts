@@ -1,13 +1,13 @@
-import ServiceFactory from "./factories/service.factory";
+import type ServiceFactory from './factories/service.factory'
 
 class BaseDrawer {
   readonly factory
 
-  constructor(factory: ServiceFactory) {
+  constructor (factory: ServiceFactory) {
     this.factory = factory
   }
 
-  draw() {
+  draw (): void {
     this.factory.create()
   }
 }

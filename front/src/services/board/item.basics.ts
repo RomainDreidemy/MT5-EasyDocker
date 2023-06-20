@@ -1,5 +1,5 @@
 class ItemBasics {
-  onClick() {
+  onClick (): void {
 
   }
 }
