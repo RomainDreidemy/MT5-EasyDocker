@@ -6,6 +6,9 @@ class ServiceFactory extends BaseFactory {
   readonly service: IService
   readonly context: CanvasRenderingContext2D
 
+  selected: boolean = false
+  path: Path2D = new Path2D()
+
   constructor (service: IService, context: CanvasRenderingContext2D) {
     super()
     this.setFactory(this)
@@ -21,9 +24,21 @@ class ServiceFactory extends BaseFactory {
     const rectangle = new Path2D()
 
     this.context.beginPath()
-    rectangle.rect(this.position_x, this.position_y, this.width, this.height)
-    this.context.stroke()
-    this.context.fill(rectangle)
+    rectangle.roundRect(this.position_x, this.position_y, this.width, this.height, [10])
+
+    this.context.font = '25px Georgia'
+    this.context.lineWidth = 3
+
+    if (this.selected) {
+      this.context.strokeStyle = 'green'
+    } else {
+      this.context.strokeStyle = 'black'
+    }
+
+    this.context.stroke(rectangle)
+    this.context.fillText('Service', this.position_x + 10, this.position_y + 30)
+    this.context.closePath()
+
     this.path = rectangle
   }
 
