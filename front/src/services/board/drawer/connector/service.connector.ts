@@ -3,11 +3,10 @@ import {IPosition} from "../../../../interfaces/Position.interface";
 import ServiceDrawer from "../service.drawer";
 
 class ServiceConnector extends BaseConnector {
-  constructor(
-    readonly context: CanvasRenderingContext2D,
-    readonly drawer: ServiceDrawer,
-    readonly position: IPosition
-  ) {
+  constructor(readonly context: CanvasRenderingContext2D,
+              readonly drawer: ServiceDrawer,
+              readonly position: IPosition,
+              readonly offset: number) {
     super();
     this.setConnector(this);
 
@@ -23,18 +22,6 @@ class ServiceConnector extends BaseConnector {
     this.context.fill(circle);
     this.context.closePath();
     this.path = circle
-  }
-
-  public drawLinks() {
-    this.links.forEach((link) => this.drawLink(link))
-  }
-
-  private drawLink(linker: ServiceConnector) {
-    console.log('DRAW')
-    this.context.beginPath()
-    this.context.moveTo(this.position_x, this.position_y)
-    this.context.lineTo(linker.position_x, linker.position_y)
-    this.context.stroke()
   }
 }
 

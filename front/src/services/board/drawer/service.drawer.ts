@@ -10,7 +10,7 @@ import ServiceLinker from "./linker/service.linker";
 class ServiceDrawer extends ItemBasics {
   readonly factory: ServiceFactory;
   public connectors: ServiceConnector[] = [];
-  public links: ServiceDrawer[] = [];
+  public links: { drawer: ServiceDrawer, connector: ServiceConnector }[] = [];
   public linker: ServiceLinker;
 
   constructor(readonly service: IService,
@@ -18,7 +18,6 @@ class ServiceDrawer extends ItemBasics {
     super(service);
     this.factory = new ServiceFactory(service, baseCanvas.context);
     this.linker = new ServiceLinker(this.links, this.baseCanvas.context, this.factory);
-
   }
 
   draw(): void {

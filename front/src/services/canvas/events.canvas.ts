@@ -72,7 +72,7 @@ class EventsCanvas extends BaseCanvas {
 
         console.log(connector.drawer)
 
-        connector.drawer.links.push(this.selectedElement)
+        connector.drawer.links.push({connector: connector, drawer: this.selectedElement})
         // this.selectedConnector.links.push(connector)
         // connector.links.push(this.selectedConnector)
         // console.log('LINKED')
