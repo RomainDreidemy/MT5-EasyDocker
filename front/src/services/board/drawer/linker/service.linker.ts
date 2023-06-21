@@ -1,39 +1,24 @@
-import BaseLinker from "./base.linker";
-import {IPosition} from "../../../../interfaces/Position.interface";
+import ServiceDrawer from "../service.drawer";
+import ServiceFactory from "../factories/service.factory";
 
-class ServiceLinker extends BaseLinker {
-  constructor(
-    readonly context: CanvasRenderingContext2D,
-    readonly position: IPosition
-  ) {
-    super();
-    this.setLinker(this);
-
-    this.position_x = position.x
-    this.position_y = position.y
+class ServiceLinker {
+  constructor(readonly links: ServiceDrawer[],
+              readonly context: CanvasRenderingContext2D,
+              readonly factory: ServiceFactory) {
   }
 
-  public draw() {
-    const circle = new Path2D()
-    this.context.beginPath();
-    circle.arc(this.position.x, this.position.y, this.radius, this.start_angle, this.end_angle);
-    this.context.fillStyle = this.color;
-    this.context.fill(circle);
-    this.context.closePath();
-    this.path = circle
-  }
-
-  public drawLinks() {
-    this.links.forEach((link) => this.drawLink(link))
-  }
-
-  private drawLink(linker: ServiceLinker) {
-    console.log('DRAW')
-    this.context.beginPath()
-    this.context.moveTo(this.position_x, this.position_y)
-    this.context.lineTo(linker.position_x, linker.position_y)
-    this.context.stroke()
+  drawLinks() {
+    console.log(this.links)
+    this.links.forEach((link) => {
+      this.context.beginPath()
+      // this.context.moveTo(link.factory.position_x, link.factory.position_y)
+      console.log(link.factory.position_x)
+      console.log(this.factory.position_x)
+      this.context.moveTo(link.factory.position_x, link.factory.position_y)
+      this.context.lineTo(this.factory.position_x, this.factory.position_y)
+      this.context.stroke()
+    })
   }
 }
 
-export default ServiceLinker;
+export default ServiceLinker
