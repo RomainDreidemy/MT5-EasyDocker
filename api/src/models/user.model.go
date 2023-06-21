@@ -8,6 +8,7 @@ type User struct {
 	ID       *uuid.UUID `gorm:"type:uuid;default:uuid_generate_v4();primary_key"`
 	Email    string     `gorm:"type:varchar(100);uniqueIndex;not null"`
 	Password string     `gorm:"type:varchar(100);not null"`
+	Stacks   []Stack    `gorm:"foreignKey:UserID"`
 }
 
 type SignUpInput struct {
