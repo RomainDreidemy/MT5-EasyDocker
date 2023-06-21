@@ -9,6 +9,7 @@ COPY go.mod go.sum /app/
 RUN go mod download && go mod verify
 
 RUN go install github.com/cosmtrek/air@latest
+RUN go install github.com/swaggo/swag/cmd/swag@latest
 
 COPY . /app
 
