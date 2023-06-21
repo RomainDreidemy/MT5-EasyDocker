@@ -10,6 +10,7 @@ services:
         VITE_API_URL: ${VITE_API_URL}
     volumes:
       - ./front/:/app
+      - /app/node_modules
     ports:
       - "${FRONT_PORT}:3000"
     entrypoint: ["yarn", "start"]
