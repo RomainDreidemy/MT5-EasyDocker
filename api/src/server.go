@@ -36,11 +36,8 @@ func main() {
 		router.Post("/login", controllers.SignInUser)
 	})
 
-	micro.Get("/", func(c *fiber.Ctx) error {
-		return c.SendString("Hello, World 👋!")
-	})
-
-	micro.Get("/users/me", middleware.DeserializeUser, controllers.GetMe)
+	users := micro.Group("/users", middleware.DeserializeUser)
+	users.Get("/me", controllers.GetMe)
 
 	log.Fatal(app.Listen(":3000"))
 }
