@@ -1,23 +1,23 @@
 import BaseCanvas from './base.canvas'
 import type ServiceDrawer from '../board/drawer/service.drawer'
-import { Events } from '../../enums/events'
+import {Events} from '../../enums/events'
 
 class EventsCanvas extends BaseCanvas {
   elements: ServiceDrawer[] = []
   isMoving: boolean = false
   selectedElement: ServiceDrawer | undefined
 
-  add (...elements: ServiceDrawer[]): void {
+  add(...elements: ServiceDrawer[]): void {
     this.elements.push(...elements)
   }
 
-  draw (): void {
+  draw(): void {
     this.elements.forEach((element) => {
       element.draw()
     })
   }
 
-  updateScreen (): void {
+  updateScreen(): void {
     this.clearArea()
     this.draw()
 
@@ -27,7 +27,7 @@ class EventsCanvas extends BaseCanvas {
     this.context.stroke()
   }
 
-  startup (): void {
+  startup(): void {
     this.canvas.addEventListener(Events.ON_MOUSE_DOWN, this.handleMouseDown)
     this.canvas.addEventListener(Events.ON_MOUSE_UP, this.handleMouseUp)
     this.canvas.addEventListener(Events.ON_MOUSE_MOVE, this.handleMouseMove)
@@ -35,26 +35,32 @@ class EventsCanvas extends BaseCanvas {
 
   private readonly handleMouseDown = (event: MouseEvent): void => {
     this.isMoving = true
-    this.selectedElement = this.elements.find(({ factory }) =>
-      factory.isSelected({ x: event.offsetX, y: event.offsetY })
+    const element = this.elements.find(({factory}) =>
+      factory.isSelected({x: event.offsetX, y: event.offsetY})
     )
-    this.setSelected(true)
+
+    if (element) {
+      this.selectedElement = element
+      this.setSelected(true)
+
+    } else {
+      this.setSelected(false)
+      this.selectedElement = undefined
+    }
   }
 
   private readonly handleMouseUp = (): void => {
     this.isMoving = false
-    this.setSelected(false)
-    this.selectedElement = undefined
   }
 
   private readonly handleMouseMove = (event: MouseEvent): void => {
     if (this.isMoving && (this.selectedElement != null)) {
-      this.selectedElement.factory.updatePosition({ x: event.offsetX, y: event.offsetY })
+      this.selectedElement.factory.updatePosition({x: event.offsetX, y: event.offsetY})
       this.updateScreen()
     }
   }
 
-  private setSelected (selected: boolean): void {
+  private setSelected(selected: boolean): void {
     if (this.selectedElement != null) {
       this.selectedElement.factory.selected = selected
       this.updateScreen()
