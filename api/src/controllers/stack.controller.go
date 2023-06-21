@@ -44,3 +44,51 @@ func CreateStack(c *fiber.Ctx) error {
 		Name: newStack.Name,
 	})
 }
+
+// UpdateStack godoc
+// @Summary      Update a stack
+// @Tags         Stacks
+// @Accept       json
+// @Produce      json
+// @Param id path string true "Stack ID"
+// @Param request body models.StackUpdateInput true "query params"
+// @Success      200  {object}  models.StackResponse
+// @Router       /stacks/{id} [put]
+func UpdateStack(c *fiber.Ctx) error {
+	id := c.Params("id")
+	currentUser := c.Locals("user").(models.UserResponse)
+	var payload *models.StackUpdateInput
+
+	var stack models.Stack
+	initializers.DB.First(&stack, "id = ?", id)
+
+	if *stack.UserID != currentUser.ID {
+		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"status": "error", "message": "Unauthorized"})
+	}
+
+	if err := c.BodyParser(&payload); err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"status": "fail", "message": err.Error()})
+	}
+
+	errors := models.ValidateStruct(payload)
+	if errors != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"status": "fail", "errors": errors})
+	}
+
+	updatedStack := models.Stack{
+		Name:        payload.Name,
+		Description: payload.Description,
+	}
+
+	result := initializers.DB.Model(&stack).Updates(updatedStack)
+
+	if result.Error != nil {
+		return c.Status(fiber.StatusBadGateway).JSON(fiber.Map{"status": "error", "message": "Something bad happened"})
+	}
+
+	return c.Status(fiber.StatusOK).JSON(models.StackResponse{
+		ID:          stack.ID,
+		Name:        stack.Name,
+		Description: stack.Description,
+	})
+}

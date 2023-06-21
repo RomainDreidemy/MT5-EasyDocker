@@ -15,7 +15,12 @@ type StackCreateInput struct {
 	Description string `json:"description"`
 }
 
+type StackUpdateInput struct {
+	StackCreateInput
+}
+
 type StackResponse struct {
-	ID   *uuid.UUID `json:"id"`
-	Name string     `json:"name"`
+	ID          *uuid.UUID `json:"id"`
+	Name        string     `json:"name"`
+	Description string     `json:"description"`
 }
