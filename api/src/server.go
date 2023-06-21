@@ -43,6 +43,9 @@ func main() {
 	users := micro.Group("/users", middleware.DeserializeUser)
 	users.Get("/me", controllers.GetMe)
 
+	stacks := micro.Group("/stacks", middleware.DeserializeUser)
+	stacks.Post("/", controllers.CreateStack)
+
 	app.Get("/swagger/*", swagger.HandlerDefault)
 
 	log.Fatal(app.Listen(":3000"))

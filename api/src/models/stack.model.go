@@ -9,3 +9,13 @@ type Stack struct {
 	UserID      *uuid.UUID
 	User        User
 }
+
+type StackCreateInput struct {
+	Name        string `json:"name" validate:"required,min=3,max=100"`
+	Description string `json:"description"`
+}
+
+type StackResponse struct {
+	ID   *uuid.UUID `json:"id"`
+	Name string     `json:"name"`
+}
