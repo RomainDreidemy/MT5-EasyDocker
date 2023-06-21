@@ -1,12 +1,14 @@
 package main
 
 import (
+	_ "github.com/RomainDreidemy/MT5-docker-extension/docs"
 	"github.com/RomainDreidemy/MT5-docker-extension/src/controllers"
 	"github.com/RomainDreidemy/MT5-docker-extension/src/initializers"
 	middleware "github.com/RomainDreidemy/MT5-docker-extension/src/middlewares"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/logger"
+	"github.com/gofiber/swagger"
 	"log"
 )
 
@@ -18,6 +20,8 @@ func init() {
 	initializers.ConnectDB(&config)
 }
 
+// @title EasyDocker API
+// @BasePath /
 func main() {
 	app := fiber.New()
 	micro := fiber.New()
@@ -38,6 +42,8 @@ func main() {
 
 	users := micro.Group("/users", middleware.DeserializeUser)
 	users.Get("/me", controllers.GetMe)
+
+	app.Get("/swagger/*", swagger.HandlerDefault)
 
 	log.Fatal(app.Listen(":3000"))
 }

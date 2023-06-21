@@ -11,6 +11,14 @@ import (
 	"time"
 )
 
+// SignUpUser godoc
+// @Summary      Sign up a new user
+// @Tags         Auth
+// @Accept       json
+// @Produce      json
+// @Param request body models.SignUpInput true "query params"
+// @Success      200  {object}  models.UserResponse
+// @Router       /auth/register [post]
 func SignUpUser(c *fiber.Ctx) error {
 	var payload *models.SignUpInput
 
@@ -49,6 +57,14 @@ func SignUpUser(c *fiber.Ctx) error {
 	return c.Status(fiber.StatusCreated).JSON(models.FilterUserRecord(&newUser))
 }
 
+// SignInUser godoc
+// @Summary      Sign in a new user
+// @Tags         Auth
+// @Accept       json
+// @Produce      json
+// @Param request body models.SignInInput true "query params"
+// @Success      200  {object}  models.UserLoginResponse
+// @Router       /auth/login [post]
 func SignInUser(c *fiber.Ctx) error {
 	var payload *models.SignInInput
 
@@ -101,5 +117,7 @@ func SignInUser(c *fiber.Ctx) error {
 		Domain:   "localhost",
 	})
 
-	return c.Status(fiber.StatusOK).JSON(fiber.Map{"token": tokenString})
+	return c.Status(fiber.StatusOK).JSON(&models.UserLoginResponse{
+		Token: tokenString,
+	})
 }

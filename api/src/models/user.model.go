@@ -26,6 +26,10 @@ type UserResponse struct {
 	Email string    `json:"email,omitempty"`
 }
 
+type UserLoginResponse struct {
+	Token string `json:"token,required"`
+}
+
 func FilterUserRecord(user *User) UserResponse {
 	return UserResponse{
 		ID:    *user.ID,
