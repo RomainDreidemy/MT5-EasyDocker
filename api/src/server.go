@@ -1,16 +1,19 @@
 package main
 
-import "github.com/gofiber/fiber/v2"
+import "github.com/gin-gonic/gin"
 
 func main() {
-	app := fiber.New()
+	r := gin.Default()
 
-	app.Get("/", func(c *fiber.Ctx) error {
-		return c.SendString("Hello, World 👋!")
+	r.GET("/ping", func(c *gin.Context) {
+		c.JSON(200, gin.H{
+			"message": "pong",
+		})
 	})
 
-	err := app.Listen(":3000")
+	err := r.Run() // listen and serve on 0.0.0.0:8080
+
 	if err != nil {
-		return
+		panic(err)
 	}
 }
