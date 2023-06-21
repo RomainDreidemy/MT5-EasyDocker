@@ -1,6 +1,6 @@
-import { type IService } from '../../../../interfaces/Service.interface'
+import {type IService} from '../../../../interfaces/Service.interface'
 import BaseFactory from './base.factory'
-import { type IPosition } from '../../../../interfaces/Position.interface'
+import {type IPosition} from '../../../../interfaces/Position.interface'
 
 class ServiceFactory extends BaseFactory {
   readonly service: IService
@@ -8,7 +8,7 @@ class ServiceFactory extends BaseFactory {
 
   path: Path2D = new Path2D()
 
-  constructor (service: IService, context: CanvasRenderingContext2D) {
+  constructor(service: IService, context: CanvasRenderingContext2D) {
     super()
     this.setFactory(this)
 
@@ -19,7 +19,7 @@ class ServiceFactory extends BaseFactory {
     this.position_y = isNaN(this.service.position_y) ? this.position_y : this.service.position_y
   }
 
-  create (): void {
+  create(): void {
     const rectangle = new Path2D()
 
     this.context.beginPath()
@@ -30,6 +30,10 @@ class ServiceFactory extends BaseFactory {
 
     if (this.selected) {
       this.context.strokeStyle = 'green'
+
+    } else if (this.onHover) {
+      this.context.strokeStyle = 'orange'
+
     } else {
       this.context.strokeStyle = 'black'
     }
@@ -41,7 +45,7 @@ class ServiceFactory extends BaseFactory {
     this.path = rectangle
   }
 
-  updatePosition (position: IPosition): void {
+  updatePosition(position: IPosition): void {
     this.position_x = position.x
     this.position_y = position.y
   }

@@ -9,6 +9,7 @@ class EventsCanvas extends BaseCanvas {
   isMoving: boolean = false
   selectedElement: ServiceDrawer | undefined
   selectedLinker: ServiceLinker | undefined
+  onHoverElement: ServiceDrawer | undefined
 
   add(...elements: ServiceDrawer[]): void {
     this.elements.push(...elements)
@@ -23,11 +24,6 @@ class EventsCanvas extends BaseCanvas {
   updateScreen(): void {
     this.clearArea()
     this.draw()
-
-    // this.context.beginPath()
-    // this.context.moveTo(this.elements[1].factory.position_x, this.elements[1].factory.position_y)
-    // this.context.lineTo(this.elements[0].factory.position_x + this.elements[0].factory.width, this.elements[0].factory.position_y + this.elements[0].factory.height)
-    // this.context.stroke()
   }
 
   startup(): void {
@@ -62,17 +58,53 @@ class EventsCanvas extends BaseCanvas {
 
   private handleMouseUpOnLinker = (element: ServiceDrawer, position: IPosition): void => {
     this.selectedLinker = element.linkers.find((linker) => linker.isSelected(position))
-    console.log(this.selectedLinker)
   }
 
-  private readonly handleMouseUp = (): void => {
+  private readonly handleMouseUp = (event: MouseEvent): void => {
+    const position: IPosition = {x: event.offsetX, y: event.offsetY}
+
+    if (this.selectedLinker && this.onHoverElement) {
+      const linker = this.elements.flatMap((element) => element.linkers)
+        .find((linker) => linker.isSelected(position))
+
+      if (linker) {
+        this.selectedLinker.links.push(linker)
+        linker.links.push(this.selectedLinker)
+        console.log('LINKED')
+        console.log(this.selectedLinker)
+        console.log(this.elements)
+
+      }
+    }
+
     this.isMoving = false
+    this.selectedLinker = undefined
+    this.updateScreen()
   }
 
   private readonly handleMouseMove = (event: MouseEvent): void => {
+    const position: IPosition = {x: event.offsetX, y: event.offsetY}
+
     if (this.isMoving && (this.selectedElement != null) && !this.selectedLinker) {
-      this.selectedElement.factory.updatePosition({x: event.offsetX, y: event.offsetY})
+      this.selectedElement.factory.updatePosition(position)
       this.updateScreen()
+    } else if (this.selectedLinker) {
+      this.updateScreen()
+      this.context.beginPath()
+      this.context.moveTo(this.selectedLinker.position_x, this.selectedLinker.position_y)
+      this.context.lineTo(position.x, position.y)
+      this.context.stroke()
+
+      const element = this.elements.find(({factory}) =>
+        factory.isSelected(position)
+      )
+
+      if (element) {
+        this.onHoverElement = element
+        this.onHoverElement.factory.onHover = true
+      }
+
+
     }
   }
 

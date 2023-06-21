@@ -9,9 +9,15 @@ class BaseDrawer {
   draw(): void {
     this.factory.create()
 
-    if (this.factory.selected) {
-      this.linkers.forEach((linker) => linker.draw())
+    if (this.factory.selected || this.factory.onHover) {
+      this.linkers.forEach((linker) => {
+        linker.draw()
+      })
     }
+
+    this.linkers.forEach((linker) =>
+      linker.drawLinks()
+    )
   }
 }
 

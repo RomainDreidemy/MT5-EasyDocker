@@ -8,6 +8,9 @@ class ServiceLinker extends BaseLinker {
   ) {
     super();
     this.setLinker(this);
+
+    this.position_x = position.x
+    this.position_y = position.y
   }
 
   public draw() {
@@ -18,6 +21,18 @@ class ServiceLinker extends BaseLinker {
     this.context.fill(circle);
     this.context.closePath();
     this.path = circle
+  }
+
+  public drawLinks() {
+    this.links.forEach((link) => this.drawLink(link))
+  }
+
+  private drawLink(linker: ServiceLinker) {
+    console.log('DRAW')
+    this.context.beginPath()
+    this.context.moveTo(this.position_x, this.position_y)
+    this.context.lineTo(linker.position_x, linker.position_y)
+    this.context.stroke()
   }
 }
 

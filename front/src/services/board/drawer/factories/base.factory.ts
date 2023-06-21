@@ -11,6 +11,7 @@ class BaseFactory {
   public height: number = 100
 
   selected: boolean = false
+  onHover: boolean = false
 
   setFactory (factory: ServiceFactory): void {
     this.factory = factory
