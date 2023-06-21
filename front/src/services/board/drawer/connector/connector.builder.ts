@@ -1,8 +1,9 @@
 import {IPosition} from "../../../../interfaces/Position.interface";
 import serviceFactory from "../factories/service.factory";
-import ServiceLinker from "./service.linker";
+import ServiceConnector from "./service.connector";
+import ServiceDrawer from "../service.drawer";
 
-class LinkersBuilder {
+class ConnectorBuilder {
   offset: number = 20
 
   positions: IPosition[] = [
@@ -25,14 +26,19 @@ class LinkersBuilder {
   ];
 
   constructor(readonly context: CanvasRenderingContext2D,
-              readonly factory: serviceFactory) {
+              readonly factory: serviceFactory,
+              readonly drawer: ServiceDrawer) {
   }
 
-  create(): ServiceLinker[] {
+  create(): ServiceConnector[] {
     return this.positions.map((position) =>
-      new ServiceLinker(this.context, position)
+      new ServiceConnector(
+        this.context,
+        this.drawer,
+        position
+      )
     )
   }
 }
 
-export default LinkersBuilder
+export default ConnectorBuilder

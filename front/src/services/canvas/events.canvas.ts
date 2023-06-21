@@ -2,13 +2,13 @@ import BaseCanvas from './base.canvas'
 import type ServiceDrawer from '../board/drawer/service.drawer'
 import {Events} from '../../enums/events'
 import {IPosition} from "../../interfaces/Position.interface";
-import ServiceLinker from "../board/drawer/linker/service.linker";
+import ServiceConnector from "../board/drawer/connector/service.connector";
 
 class EventsCanvas extends BaseCanvas {
   elements: ServiceDrawer[] = []
   isMoving: boolean = false
   selectedElement: ServiceDrawer | undefined
-  selectedLinker: ServiceLinker | undefined
+  selectedConnector: ServiceConnector | undefined
   onHoverElement: ServiceDrawer | undefined
 
   add(...elements: ServiceDrawer[]): void {
@@ -50,48 +50,53 @@ class EventsCanvas extends BaseCanvas {
       this.selectedElement = element
       this.selectElement(true)
 
-    } else if (!this.selectedLinker) {
+    } else if (!this.selectedConnector) {
       this.selectElement(false)
       this.selectedElement = undefined
     }
   }
 
   private handleMouseUpOnLinker = (element: ServiceDrawer, position: IPosition): void => {
-    this.selectedLinker = element.linkers.find((linker) => linker.isSelected(position))
+    this.selectedConnector = element.connectors.find((linker) => linker.isSelected(position))
   }
 
   private readonly handleMouseUp = (event: MouseEvent): void => {
     const position: IPosition = {x: event.offsetX, y: event.offsetY}
 
-    if (this.selectedLinker && this.onHoverElement) {
-      const linker = this.elements.flatMap((element) => element.linkers)
+    if (this.selectedConnector && this.onHoverElement) {
+      const connector = this.elements.flatMap((element) => element.connectors)
         .find((linker) => linker.isSelected(position))
 
-      if (linker) {
-        this.selectedLinker.links.push(linker)
-        linker.links.push(this.selectedLinker)
-        console.log('LINKED')
-        console.log(this.selectedLinker)
-        console.log(this.elements)
+      if (connector && this.selectedElement) {
+        console.log(connector)
+
+        console.log(connector.drawer)
+
+        connector.drawer.links.push(this.selectedElement)
+        // this.selectedConnector.links.push(connector)
+        // connector.links.push(this.selectedConnector)
+        // console.log('LINKED')
+        // console.log(this.selectedConnector)
+        // console.log(this.elements)
 
       }
     }
 
     this.isMoving = false
-    this.selectedLinker = undefined
+    this.selectedConnector = undefined
     this.updateScreen()
   }
 
   private readonly handleMouseMove = (event: MouseEvent): void => {
     const position: IPosition = {x: event.offsetX, y: event.offsetY}
 
-    if (this.isMoving && (this.selectedElement != null) && !this.selectedLinker) {
+    if (this.isMoving && (this.selectedElement != null) && !this.selectedConnector) {
       this.selectedElement.factory.updatePosition(position)
       this.updateScreen()
-    } else if (this.selectedLinker) {
+    } else if (this.selectedConnector) {
       this.updateScreen()
       this.context.beginPath()
-      this.context.moveTo(this.selectedLinker.position_x, this.selectedLinker.position_y)
+      this.context.moveTo(this.selectedConnector.position_x, this.selectedConnector.position_y)
       this.context.lineTo(position.x, position.y)
       this.context.stroke()
 
