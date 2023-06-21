@@ -6,6 +6,31 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
+// GetStacks godoc
+// @Summary      Get stacks for current user
+// @Tags         Stacks
+// @Accept       json
+// @Produce      json
+// @Success      200  {array}  models.StackResponse
+// @Router       /stacks [get]
+func GetStacks(c *fiber.Ctx) error {
+	currentUser := c.Locals("user").(models.UserResponse)
+	var stacks []models.Stack
+
+	initializers.DB.Where("user_id = ?", currentUser.ID).Find(&stacks)
+
+	var serializedStacks []models.StackResponse
+	for i := 0; i < len(stacks); i++ {
+		serializedStacks = append(serializedStacks, models.StackResponse{
+			ID:          stacks[i].ID,
+			Name:        stacks[i].Name,
+			Description: stacks[i].Description,
+		})
+	}
+
+	return c.Status(fiber.StatusOK).JSON(serializedStacks)
+}
+
 // CreateStack godoc
 // @Summary      Create a new stack
 // @Tags         Stacks
