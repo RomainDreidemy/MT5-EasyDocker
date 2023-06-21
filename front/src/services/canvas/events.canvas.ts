@@ -1,14 +1,16 @@
 import BaseCanvas from './base.canvas'
 import type ServiceDrawer from '../board/drawer/service.drawer'
 import {Events} from '../../enums/events'
+import {IPosition} from "../../interfaces/Position.interface";
+import ServiceLinker from "../board/drawer/linker/service.linker";
 
 class EventsCanvas extends BaseCanvas {
   elements: ServiceDrawer[] = []
   isMoving: boolean = false
   selectedElement: ServiceDrawer | undefined
+  selectedLinker: ServiceLinker | undefined
 
   add(...elements: ServiceDrawer[]): void {
-    console.log(elements)
     this.elements.push(...elements)
   }
 
@@ -36,19 +38,32 @@ class EventsCanvas extends BaseCanvas {
 
   private readonly handleMouseDown = (event: MouseEvent): void => {
     this.isMoving = true
+
+    const position: IPosition = {x: event.offsetX, y: event.offsetY}
+
+    if (this.selectedElement) {
+      this.handleMouseUpOnLinker(this.selectedElement, position)
+    }
+
     const element = this.elements.find(({factory}) =>
-      factory.isSelected({x: event.offsetX, y: event.offsetY})
+      factory.isSelected(position)
     )
 
     if (element) {
-      this.elementSelected(false)
+      this.selectElement(false)
       this.selectedElement = element
-      this.elementSelected(true)
+      this.selectElement(true)
 
     } else {
-      this.elementSelected(false)
-      this.selectedElement = undefined
+      // this.selectElement(false)
+      // this.selectedElement = undefined
     }
+  }
+
+  private handleMouseUpOnLinker = (element: ServiceDrawer, position: IPosition): void => {
+    const linker = element.linker.paths.find((path) => element.linker.isSelected(path, position))
+    console.log(linker)
+    // this.selectedLinker = linker
   }
 
   private readonly handleMouseUp = (): void => {
@@ -62,7 +77,7 @@ class EventsCanvas extends BaseCanvas {
     }
   }
 
-  private elementSelected(selected: boolean): void {
+  private selectElement(selected: boolean): void {
     if (this.selectedElement != null) {
       this.selectedElement.factory.selected = selected
       this.updateScreen()

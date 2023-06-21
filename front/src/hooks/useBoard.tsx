@@ -1,7 +1,7 @@
 import { type MutableRefObject, useEffect, useRef } from 'react'
 import ServiceDrawer from '../services/board/drawer/service.drawer'
 import { type IService } from '../interfaces/Service.interface'
-import EventsCanvas from '../services/canvas/Events.canvas'
+import EventsCanvas from '../services/canvas/events.canvas'
 
 const useBoard = (): { canvasRef: MutableRefObject<HTMLCanvasElement | null> } => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null)

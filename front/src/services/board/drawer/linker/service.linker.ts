@@ -38,17 +38,17 @@ class ServiceLinker extends BaseLinker {
 
   create() {
     this.initializeLinkers();
-    for (const linker of this.linkers) {
+    this.linkers.forEach((linker) => {
       this.drawLinker(linker.x, linker.y);
-    }
+    })
   }
 
   private drawLinker(x: number, y: number) {
     const circle = new Path2D()
     this.context.beginPath();
-    this.context.arc(x, y, this.radius, this.start_angle, this.end_angle);
+    circle.arc(x, y, this.radius, this.start_angle, this.end_angle);
     this.context.fillStyle = this.color;
-    this.context.fill();
+    this.context.fill(circle);
     this.context.closePath();
     this.paths.push(circle)
   }
