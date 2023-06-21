@@ -1,11 +1,12 @@
 import BaseCanvas from './base.canvas'
 import type ServiceDrawer from '../board/drawer/service.drawer'
-import MouseUtil from '../utils/mouse.util'
 import {Events} from '../../enums/events'
-import {IPosition} from "../../interfaces/Position.interface";
 
 class EventsCanvas extends BaseCanvas {
   elements: ServiceDrawer[] = []
+
+  isMoving: Boolean = false
+  selectedElement: ServiceDrawer | undefined = undefined
 
   add(...elements: ServiceDrawer[]): void {
     this.elements.push(...elements)
@@ -17,25 +18,27 @@ class EventsCanvas extends BaseCanvas {
     }
   }
 
-  onClickListener(): void {
-    this.canvas.addEventListener(Events.ON_CLICK, this.onClick)
+  startup(): void {
+    this.canvas.addEventListener(Events.ON_MOUSE_DOWN, (event) => {
+      this.isMoving = true;
+      this.selectedElement = this.elements.find(({factory}) =>
+        factory.isSelected({x: event.offsetX, y: event.offsetY}))
+    });
+
+    this.canvas.addEventListener(Events.ON_MOUSE_UP, () => {
+      this.isMoving = false;
+      this.selectedElement = undefined
+    });
+
+    this.canvas.addEventListener(Events.ON_MOUSE_MOVE, (event) => {
+      if (this.isMoving && this.selectedElement) {
+        this.selectedElement.factory.updatePosition({x: event.offsetX, y: event.offsetY})
+
+        this.refreshCanvas()
+        this.draw()
+      }
+    });
   }
-
-  private onClick(event: MouseEvent): void {
-    console.log(this.canvas)
-    const position: IPosition = MouseUtil.onCanvasPosition(this.canvas, event)
-
-    const element = this.elements.find(({factory}) => factory.isSelected(position))
-
-    if (element != null) {
-      // alert(`Hey boy, you are selecting the element: ${element.service.id}`)
-      // this.onMouseListener()
-
-      // const test: IPosition = {x: 1000, y: 1000}
-      // element.factory.updatePosition(test)
-    }
-  }
-
 }
 
 export default EventsCanvas

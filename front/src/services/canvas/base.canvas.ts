@@ -25,9 +25,8 @@ class BaseCanvas {
   }
 
   refreshCanvas (): void {
-    this.context.save()
-    this.context.fillRect(0, 0, this.canvas.width, this.canvas.height)
-    this.context.restore()
+    this.context.setTransform(1, 0, 0, 1, 0, 0);
+    this.context.clearRect(0, 0, this.canvas.width, this.canvas.width);
   }
 
   updateContext (): void {

@@ -20,7 +20,7 @@ const useBoard = (): { canvasRef: MutableRefObject<HTMLCanvasElement | null> } =
 
     eventCanvas.add(serviceDrawer1, serviceDrawer2)
     eventCanvas.draw()
-    eventCanvas.onClickListener()
+    eventCanvas.startup()
   }, [canvasRef])
 
   return {
