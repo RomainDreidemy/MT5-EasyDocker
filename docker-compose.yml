@@ -25,7 +25,7 @@ services:
     volumes:
       - ./api/:/app
     ports:
-      - "${API_PORT}:3000"
+      - "${API_PORT}:8080"
     depends_on:
       database:
         condition: service_healthy
