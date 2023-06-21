@@ -46,7 +46,7 @@ func SignUpUser(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusBadGateway).JSON(fiber.Map{"status": "error", "message": "Something bad happened"})
 	}
 
-	return c.Status(fiber.StatusCreated).JSON(fiber.Map{"status": "success", "data": fiber.Map{"user": models.FilterUserRecord(&newUser)}})
+	return c.Status(fiber.StatusCreated).JSON(models.FilterUserRecord(&newUser))
 }
 
 func SignInUser(c *fiber.Ctx) error {
@@ -101,5 +101,5 @@ func SignInUser(c *fiber.Ctx) error {
 		Domain:   "localhost",
 	})
 
-	return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "token": tokenString})
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{"token": tokenString})
 }
