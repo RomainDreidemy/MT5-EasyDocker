@@ -21,10 +21,10 @@ class EventsCanvas extends BaseCanvas {
     this.clearArea()
     this.draw()
 
-    this.context.beginPath()
-    this.context.moveTo(this.elements[1].factory.position_x, this.elements[1].factory.position_y)
-    this.context.lineTo(this.elements[0].factory.position_x + this.elements[0].factory.width, this.elements[0].factory.position_y + this.elements[0].factory.height)
-    this.context.stroke()
+    // this.context.beginPath()
+    // this.context.moveTo(this.elements[1].factory.position_x, this.elements[1].factory.position_y)
+    // this.context.lineTo(this.elements[0].factory.position_x + this.elements[0].factory.width, this.elements[0].factory.position_y + this.elements[0].factory.height)
+    // this.context.stroke()
   }
 
   startup(): void {
@@ -40,11 +40,12 @@ class EventsCanvas extends BaseCanvas {
     )
 
     if (element) {
+      this.elementSelected(false)
       this.selectedElement = element
-      this.setSelected(true)
+      this.elementSelected(true)
 
     } else {
-      this.setSelected(false)
+      this.elementSelected(false)
       this.selectedElement = undefined
     }
   }
@@ -60,7 +61,7 @@ class EventsCanvas extends BaseCanvas {
     }
   }
 
-  private setSelected(selected: boolean): void {
+  private elementSelected(selected: boolean): void {
     if (this.selectedElement != null) {
       this.selectedElement.factory.selected = selected
       this.updateScreen()
