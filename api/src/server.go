@@ -45,6 +45,7 @@ func main() {
 
 	stacks := micro.Group("/stacks", middleware.DeserializeUser)
 	stacks.Get("/", controllers.GetStacks)
+	stacks.Get("/:id", controllers.GetStack)
 	stacks.Post("/", controllers.CreateStack)
 	stacks.Put("/:id", controllers.UpdateStack)
 

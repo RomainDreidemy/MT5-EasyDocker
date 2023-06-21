@@ -31,6 +31,32 @@ func GetStacks(c *fiber.Ctx) error {
 	return c.Status(fiber.StatusOK).JSON(serializedStacks)
 }
 
+// GetStack godoc
+// @Summary      Get a stack
+// @Tags         Stacks
+// @Accept       json
+// @Produce      json
+// @Param id path string true "Stack ID"
+// @Success      200  {object}  models.StackResponse
+// @Router       /stacks/{id} [get]
+func GetStack(c *fiber.Ctx) error {
+	id := c.Params("id")
+	currentUser := c.Locals("user").(models.UserResponse)
+
+	var stack models.Stack
+	initializers.DB.First(&stack, "id = ? and user_id = ?", id, currentUser.ID)
+
+	if stack.Name == "" {
+		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"status": "error", "message": "Stack not found"})
+	}
+
+	return c.Status(fiber.StatusOK).JSON(models.StackResponse{
+		ID:          stack.ID,
+		Name:        stack.Name,
+		Description: stack.Description,
+	})
+}
+
 // CreateStack godoc
 // @Summary      Create a new stack
 // @Tags         Stacks
