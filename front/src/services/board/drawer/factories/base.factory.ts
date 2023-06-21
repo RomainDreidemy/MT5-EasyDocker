@@ -10,6 +10,8 @@ class BaseFactory {
   public width: number = 150
   public height: number = 100
 
+  selected: boolean = false
+
   setFactory (factory: ServiceFactory): void {
     this.factory = factory
   }

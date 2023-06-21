@@ -8,6 +8,7 @@ class EventsCanvas extends BaseCanvas {
   selectedElement: ServiceDrawer | undefined
 
   add(...elements: ServiceDrawer[]): void {
+    console.log(elements)
     this.elements.push(...elements)
   }
 

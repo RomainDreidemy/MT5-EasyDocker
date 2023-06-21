@@ -6,7 +6,6 @@ class ServiceFactory extends BaseFactory {
   readonly service: IService
   readonly context: CanvasRenderingContext2D
 
-  selected: boolean = false
   path: Path2D = new Path2D()
 
   constructor (service: IService, context: CanvasRenderingContext2D) {
