@@ -1,31 +1,48 @@
 import BaseCanvas from './base.canvas'
 import type ServiceDrawer from '../board/drawer/service.drawer'
-import MouseUtil from '../utils/mouse.util'
 import { Events } from '../../enums/events'
 
 class EventsCanvas extends BaseCanvas {
   elements: ServiceDrawer[] = []
+  isMoving: boolean = false
+  selectedElement: ServiceDrawer | undefined
 
   add (...elements: ServiceDrawer[]): void {
     this.elements.push(...elements)
   }
 
   draw (): void {
-    for (const element of this.elements) {
-      element.draw()
-    }
+    this.elements.forEach((element) => { element.draw() })
   }
 
-  onClickListener (): void {
-    this.canvas.addEventListener(Events.ON_CLICK, (event) => {
-      const position = MouseUtil.onCanvasPosition(this.canvas, event)
+  updateScreen (): void {
+    this.clearArea()
+    this.draw()
+  }
 
-      const element = this.elements.find(({ factory }) => factory.isSelected(position))
+  startup (): void {
+    this.canvas.addEventListener(Events.ON_MOUSE_DOWN, this.handleMouseDown)
+    this.canvas.addEventListener(Events.ON_MOUSE_UP, this.handleMouseUp)
+    this.canvas.addEventListener(Events.ON_MOUSE_MOVE, this.handleMouseMove)
+  }
 
-      if (element != null) {
-        alert(`Hey boy, you are selecting the element: ${element.service.id}`)
-      }
-    })
+  private readonly handleMouseDown = (event: MouseEvent): void => {
+    this.isMoving = true
+    this.selectedElement = this.elements.find(({ factory }) =>
+      factory.isSelected({ x: event.offsetX, y: event.offsetY })
+    )
+  }
+
+  private readonly handleMouseUp = (): void => {
+    this.isMoving = false
+    this.selectedElement = undefined
+  }
+
+  private readonly handleMouseMove = (event: MouseEvent): void => {
+    if (this.isMoving && (this.selectedElement != null)) {
+      this.selectedElement.factory.updatePosition({ x: event.offsetX, y: event.offsetY })
+      this.updateScreen()
+    }
   }
 }
 
