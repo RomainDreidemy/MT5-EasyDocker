@@ -54,16 +54,15 @@ class EventsCanvas extends BaseCanvas {
       this.selectedElement = element
       this.selectElement(true)
 
-    } else {
-      // this.selectElement(false)
-      // this.selectedElement = undefined
+    } else if (!this.selectedLinker) {
+      this.selectElement(false)
+      this.selectedElement = undefined
     }
   }
 
   private handleMouseUpOnLinker = (element: ServiceDrawer, position: IPosition): void => {
-    const linker = element.linker.paths.find((path) => element.linker.isSelected(path, position))
-    console.log(linker)
-    // this.selectedLinker = linker
+    this.selectedLinker = element.linkers.find((linker) => linker.isSelected(position))
+    console.log(this.selectedLinker)
   }
 
   private readonly handleMouseUp = (): void => {
@@ -71,7 +70,7 @@ class EventsCanvas extends BaseCanvas {
   }
 
   private readonly handleMouseMove = (event: MouseEvent): void => {
-    if (this.isMoving && (this.selectedElement != null)) {
+    if (this.isMoving && (this.selectedElement != null) && !this.selectedLinker) {
       this.selectedElement.factory.updatePosition({x: event.offsetX, y: event.offsetY})
       this.updateScreen()
     }

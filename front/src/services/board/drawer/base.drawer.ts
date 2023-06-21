@@ -3,14 +3,14 @@ import ServiceLinker from "./linker/service.linker";
 
 class BaseDrawer {
   constructor(readonly factory: ServiceFactory,
-              readonly linker: ServiceLinker) {
+              readonly linkers: ServiceLinker[]) {
   }
 
   draw(): void {
     this.factory.create()
 
     if (this.factory.selected) {
-      this.linker.create()
+      this.linkers.forEach((linker) => linker.draw())
     }
   }
 }
