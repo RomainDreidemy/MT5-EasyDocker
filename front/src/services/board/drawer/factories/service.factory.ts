@@ -1,5 +1,6 @@
 import { type IService } from '../../../../interfaces/Service.interface'
 import BaseFactory from './base.factory'
+import {IPosition} from "../../../../interfaces/Position.interface";
 
 class ServiceFactory extends BaseFactory {
   readonly service: IService
@@ -24,6 +25,11 @@ class ServiceFactory extends BaseFactory {
     this.context.stroke()
     this.context.fill(rectangle)
     this.path = rectangle
+  }
+
+  updatePosition(position: IPosition): void {
+    this.position_x = position.x
+    this.position_y = position.y
   }
 }
 
