@@ -33,7 +33,7 @@ func main() {
 	app.Use(cors.New(cors.Config{
 		AllowOrigins:     frontUrl,
 		AllowHeaders:     "Origin, Content-Type, Accept",
-		AllowMethods:     "GET, POST",
+		AllowMethods:     "GET, POST, PUT, DELETE",
 		AllowCredentials: true,
 	}))
 
@@ -44,6 +44,13 @@ func main() {
 
 	users := micro.Group("/users", middleware.DeserializeUser)
 	users.Get("/me", controllers.GetMe)
+
+	stacks := micro.Group("/stacks", middleware.DeserializeUser)
+	stacks.Get("/", controllers.GetStacks)
+	stacks.Get("/:id", controllers.GetStack)
+	stacks.Post("/", controllers.CreateStack)
+	stacks.Put("/:id", controllers.UpdateStack)
+	stacks.Delete("/:id", controllers.DeleteStack)
 
 	app.Get("/swagger/*", swagger.HandlerDefault)
 
