@@ -48,6 +48,7 @@ func main() {
 	stacks.Get("/:id", controllers.GetStack)
 	stacks.Post("/", controllers.CreateStack)
 	stacks.Put("/:id", controllers.UpdateStack)
+	stacks.Delete("/:id", controllers.DeleteStack)
 
 	app.Get("/swagger/*", swagger.HandlerDefault)
 

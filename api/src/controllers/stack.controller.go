@@ -143,3 +143,27 @@ func UpdateStack(c *fiber.Ctx) error {
 		Description: stack.Description,
 	})
 }
+
+// DeleteStack godoc
+// @Summary      Delete a stack
+// @Tags         Stacks
+// @Accept       json
+// @Produce      json
+// @Param id path string true "Stack ID"
+// @Success      204
+// @Router       /stacks/{id} [delete]
+func DeleteStack(c *fiber.Ctx) error {
+	id := c.Params("id")
+	currentUser := c.Locals("user").(models.UserResponse)
+
+	var stack models.Stack
+	result := initializers.DB.First(&stack, "id = ? and user_id = ?", id, currentUser.ID)
+
+	if result.RowsAffected == 0 {
+		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"status": "error", "message": "Stack not found"})
+	}
+
+	initializers.DB.Delete(&stack)
+
+	return c.Status(fiber.StatusNoContent).Send(nil)
+}
