@@ -8,22 +8,22 @@ import type ServiceLinker from '../board/drawer/linker/service.linker'
 import { Keyboard } from '../../enums/keyboard'
 
 class EventsCanvas extends BaseCanvas {
-  elements: ServiceDrawer[] = []
+  drawers: ServiceDrawer[] = []
 
   selectedLinker?: ServiceLinker
-  selectedElement?: ServiceDrawer
+  selectedDrawer?: ServiceDrawer
   selectedConnector?: ServiceConnector
-  onHoverElement?: ServiceDrawer
+  onHoverDrawer?: ServiceDrawer
 
   isMoving: boolean = false
 
-  add (...elements: ServiceDrawer[]): void {
-    this.elements.push(...elements)
+  add (...drawers: ServiceDrawer[]): void {
+    this.drawers.push(...drawers)
   }
 
   draw (): void {
-    this.elements.forEach(element => {
-      element.draw()
+    this.drawers.forEach(drawer => {
+      drawer.draw()
     })
   }
 
@@ -56,16 +56,16 @@ class EventsCanvas extends BaseCanvas {
     const position: IPosition = { x: event.offsetX, y: event.offsetY }
     this.isMoving = true
 
-    if (this.selectedElement != null) {
-      this.handleMouseUpOnLinker(this.selectedElement, position)
+    if (this.selectedDrawer != null) {
+      this.handleMouseUpOnLinker(this.selectedDrawer, position)
     }
 
-    const element = this.findElement(position)
+    const drawer = this.findDrawer(position)
 
-    if (element != null) {
-      this.selectElement(element)
+    if (drawer != null) {
+      this.selectDrawer(drawer)
     } else if (this.selectedConnector == null) {
-      this.clearSelectedElement()
+      this.clearSelectedDrawer()
     }
 
     const linker = this.findLinker(position)
@@ -77,18 +77,18 @@ class EventsCanvas extends BaseCanvas {
     }
   }
 
-  private readonly findElement = (position: IPosition): ServiceDrawer | undefined => this.elements.find(service =>
+  private readonly findDrawer = (position: IPosition): ServiceDrawer | undefined => this.drawers.find(service =>
     service.factory.isSelected(position)
   )
 
-  private readonly handleMouseUpOnLinker = (element: ServiceDrawer, position: IPosition): void => {
-    this.selectedConnector = element.connectors.find(linker => linker.isSelected(position))
+  private readonly handleMouseUpOnLinker = (drawer: ServiceDrawer, position: IPosition): void => {
+    this.selectedConnector = drawer.connectors.find(linker => linker.isSelected(position))
   }
 
   private readonly handleMouseUp = (event: MouseEvent): void => {
     const position: IPosition = { x: event.offsetX, y: event.offsetY }
 
-    if ((this.selectedConnector != null) && (this.onHoverElement != null)) {
+    if ((this.selectedConnector != null) && (this.onHoverDrawer != null)) {
       this.createLink(position)
     }
 
@@ -100,68 +100,68 @@ class EventsCanvas extends BaseCanvas {
   private readonly handleMouseMove = (event: MouseEvent): void => {
     const position: IPosition = { x: event.offsetX, y: event.offsetY }
 
-    if (this.isMoving && (this.selectedElement != null) && (this.selectedConnector == null)) {
-      this.selectedElement.factory.updatePosition(position)
+    if (this.isMoving && (this.selectedDrawer != null) && (this.selectedConnector == null)) {
+      this.selectedDrawer.factory.updatePosition(position)
       this.updateScreen()
     } else if (this.selectedConnector != null) {
       this.drawConnectorLine(this.selectedConnector, position)
-      this.updateHoverElement(position)
+      this.updateHoverDrawer(position)
     }
   }
 
-  private updateHoverElement (position: IPosition): void {
-    const element = this.findElement(position)
+  private updateHoverDrawer (position: IPosition): void {
+    const drawer = this.findDrawer(position)
 
-    if (element != null) {
-      this.onHoverElement = element
-      this.onHoverElement.factory.onHover = true
+    if (drawer != null) {
+      this.onHoverDrawer = drawer
+      this.onHoverDrawer.factory.onHover = true
     }
   }
 
-  private onSelectElement (selected: boolean): void {
-    if (this.selectedElement != null) {
-      this.selectedElement.factory.selected = selected
+  private onSelectDrawer (selected: boolean): void {
+    if (this.selectedDrawer != null) {
+      this.selectedDrawer.factory.selected = selected
     }
   }
 
   private createLink (position: IPosition): void {
     const connector = this.findConnector(position)
 
-    if ((this.selectedConnector != null) && (connector != null) && (this.selectedElement != null) && (this.onHoverElement != null)) {
+    if ((this.selectedConnector != null) && (connector != null) && (this.selectedDrawer != null) && (this.onHoverDrawer != null)) {
       const link: ILink = { to: this.selectedConnector, at: connector }
 
-      const linker = new this.selectedElement.Linker(this.selectedElement, this.context, link)
-      this.selectedElement.linkers.push(linker)
+      const linker = new this.selectedDrawer.Linker(this.selectedDrawer, this.context, link)
+      this.selectedDrawer.linkers.push(linker)
 
-      this.onHoverElement.factory.onHover = false
-      this.onHoverElement = undefined
-      this.onSelectElement(false)
+      this.onHoverDrawer.factory.onHover = false
+      this.onHoverDrawer = undefined
+      this.onSelectDrawer(false)
     }
   }
 
   private findConnector (position: IPosition): ServiceConnector | undefined {
-    return this.elements
-      .flatMap(element => element.connectors)
+    return this.drawers
+      .flatMap(drawer => drawer.connectors)
       .find(connector => connector.isSelected(position))
   }
 
   private findLinker (position: IPosition): ServiceLinker | undefined {
-    return this.elements
-      .flatMap(element => element.linkers)
+    return this.drawers
+      .flatMap(drawer => drawer.linkers)
       .find(linker => linker.isSelected(position))
   }
 
-  private selectElement (element: ServiceDrawer): void {
-    this.clearSelectedElement()
-    this.selectedElement = element
-    this.selectedElement.factory.selected = true
+  private selectDrawer (drawer: ServiceDrawer): void {
+    this.clearSelectedDrawer()
+    this.selectedDrawer = drawer
+    this.selectedDrawer.factory.selected = true
   }
 
-  private clearSelectedElement (): void {
-    if (this.selectedElement != null) {
-      this.selectedElement.factory.selected = false
+  private clearSelectedDrawer (): void {
+    if (this.selectedDrawer != null) {
+      this.selectedDrawer.factory.selected = false
     }
-    this.selectedElement = undefined
+    this.selectedDrawer = undefined
   }
 
   private selectLinker (linker: ServiceLinker): void {
