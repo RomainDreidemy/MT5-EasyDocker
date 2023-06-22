@@ -11,9 +11,10 @@ services:
     volumes:
       - ./front/:/app
       - /app/node_modules
+      - ./.env:/app/.env
     ports:
       - "${FRONT_PORT}:3000"
-    entrypoint: ["yarn", "start"]
+    entrypoint: ["npm", "run", "start"]
 
   api:
     container_name: api
