@@ -5,4 +5,5 @@ export enum Events {
   ON_MOUSE_UP = 'mouseup',
   ON_MOUSE_OVER = 'handleMouseOver',
   ON_MOUSE_OUT = 'handleMouseOut',
+  ON_KEY_DOWN = 'keydown',
 }

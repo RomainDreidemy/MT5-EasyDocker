@@ -1,5 +1,6 @@
 import { type IPosition } from '../../../../interfaces/Position.interface'
 import type ServiceLinker from './service.linker'
+import {Errors} from "../../../../enums/errors";
 
 class BaseLinker {
   protected linker?: ServiceLinker
@@ -20,6 +21,10 @@ class BaseLinker {
     }
 
     return this.linker.context.isPointInStroke(this.linker.path, x, y)
+  }
+
+  draw() {
+    throw new Error(Errors.NOT_IMPLEMENTED)
   }
 }
 

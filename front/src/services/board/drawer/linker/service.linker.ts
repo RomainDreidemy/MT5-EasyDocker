@@ -2,11 +2,13 @@ import type ServiceConnector from '../connector/service.connector'
 import {Placements} from '../../../../enums/placements'
 import {type ILink} from '../../../../interfaces/Link.interface'
 import BaseLinker from './base.linker'
+import ServiceDrawer from "../service.drawer";
 
 class ServiceLinker extends BaseLinker {
   constructor(
+    readonly drawer: ServiceDrawer,
+    readonly context: CanvasRenderingContext2D,
     readonly link: ILink,
-    readonly context: CanvasRenderingContext2D
   ) {
     super()
     this.setLinker(this)

@@ -1,10 +1,11 @@
 import BaseCanvas from './base.canvas'
 import type ServiceDrawer from '../board/drawer/service.drawer'
-import { Events } from '../../enums/events'
-import { type IPosition } from '../../interfaces/Position.interface'
+import {Events} from '../../enums/events'
+import {type IPosition} from '../../interfaces/Position.interface'
 import type ServiceConnector from '../board/drawer/connector/service.connector'
 import {ILink} from "../../interfaces/Link.interface";
 import ServiceLinker from "../board/drawer/linker/service.linker";
+import {Keyboard} from "../../enums/keyboard";
 
 class EventsCanvas extends BaseCanvas {
   elements: ServiceDrawer[] = []
@@ -16,27 +17,43 @@ class EventsCanvas extends BaseCanvas {
 
   isMoving: boolean = false
 
-  add (...elements: ServiceDrawer[]): void {
+  add(...elements: ServiceDrawer[]): void {
     this.elements.push(...elements)
   }
 
-  draw (): void {
-    this.elements.forEach(element => { element.draw() })
+  draw(): void {
+    this.elements.forEach(element => {
+      element.draw()
+    })
   }
 
-  updateScreen (): void {
+  updateScreen(): void {
     this.clearArea()
     this.draw()
   }
 
-  startup (): void {
+  startup(): void {
     this.canvas.addEventListener(Events.ON_MOUSE_DOWN, this.handleMouseDown)
     this.canvas.addEventListener(Events.ON_MOUSE_UP, this.handleMouseUp)
     this.canvas.addEventListener(Events.ON_MOUSE_MOVE, this.handleMouseMove)
+
+    document.addEventListener(Events.ON_KEY_DOWN, this.handleKeyDown);
+  }
+
+  private readonly handleKeyDown = (event: KeyboardEvent): void => {
+    if (event.code === Keyboard.DELETE && this.selectedLinker) {
+      this.deleteLine(this.selectedLinker.drawer, this.selectedLinker)
+      this.updateScreen()
+    }
+  }
+
+  private deleteLine(drawer: ServiceDrawer, linkerToRemove: ServiceLinker) {
+    const index = drawer.linkers.findIndex(linker => linkerToRemove === linker)
+    drawer.linkers.splice(index, 1);
   }
 
   private readonly handleMouseDown = (event: MouseEvent): void => {
-    const position: IPosition = { x: event.offsetX, y: event.offsetY }
+    const position: IPosition = {x: event.offsetX, y: event.offsetY}
     this.isMoving = true
 
     if (this.selectedElement != null) {
@@ -69,7 +86,7 @@ class EventsCanvas extends BaseCanvas {
   }
 
   private readonly handleMouseUp = (event: MouseEvent): void => {
-    const position: IPosition = { x: event.offsetX, y: event.offsetY }
+    const position: IPosition = {x: event.offsetX, y: event.offsetY}
 
     if ((this.selectedConnector != null) && (this.onHoverElement != null)) {
       this.createLink(position)
@@ -81,7 +98,7 @@ class EventsCanvas extends BaseCanvas {
   }
 
   private readonly handleMouseMove = (event: MouseEvent): void => {
-    const position: IPosition = { x: event.offsetX, y: event.offsetY }
+    const position: IPosition = {x: event.offsetX, y: event.offsetY}
 
     if (this.isMoving && (this.selectedElement != null) && (this.selectedConnector == null)) {
       this.selectedElement.factory.updatePosition(position)
@@ -92,7 +109,7 @@ class EventsCanvas extends BaseCanvas {
     }
   }
 
-  private updateHoverElement (position: IPosition): void {
+  private updateHoverElement(position: IPosition): void {
     const element = this.findElement(position)
 
     if (element != null) {
@@ -101,19 +118,19 @@ class EventsCanvas extends BaseCanvas {
     }
   }
 
-  private onSelectElement (selected: boolean): void {
+  private onSelectElement(selected: boolean): void {
     if (this.selectedElement != null) {
       this.selectedElement.factory.selected = selected
     }
   }
 
-  private createLink (position: IPosition): void {
+  private createLink(position: IPosition): void {
     const connector = this.findConnector(position)
 
     if ((this.selectedConnector != null) && (connector != null) && (this.selectedElement != null) && (this.onHoverElement != null)) {
-      const link: ILink = { to: this.selectedConnector, at: connector }
+      const link: ILink = {to: this.selectedConnector, at: connector}
 
-      const linker = new this.selectedElement.linker(link, this.context)
+      const linker = new this.selectedElement.linker(this.selectedElement, this.context, link)
       this.selectedElement.linkers.push(linker)
 
       this.onHoverElement.factory.onHover = false
@@ -122,45 +139,45 @@ class EventsCanvas extends BaseCanvas {
     }
   }
 
-  private findConnector (position: IPosition): ServiceConnector | undefined {
+  private findConnector(position: IPosition): ServiceConnector | undefined {
     return this.elements
       .flatMap(element => element.connectors)
       .find(connector => connector.isSelected(position))
   }
 
-  private findLinker (position: IPosition) {
+  private findLinker(position: IPosition) {
     return this.elements
       .flatMap(element => element.linkers)
       .find(linker => linker.isSelected(position))
   }
 
-  private selectElement (element: ServiceDrawer): void {
+  private selectElement(element: ServiceDrawer): void {
     this.clearSelectedElement()
     this.selectedElement = element
     this.selectedElement.factory.selected = true
   }
 
-  private clearSelectedElement (): void {
+  private clearSelectedElement(): void {
     if (this.selectedElement != null) {
       this.selectedElement.factory.selected = false
     }
     this.selectedElement = undefined
   }
 
-  private selectLinker (linker: ServiceLinker): void {
+  private selectLinker(linker: ServiceLinker): void {
     this.clearSelectedLinker()
     this.selectedLinker = linker
     this.selectedLinker.selected = true
   }
 
-  private clearSelectedLinker (): void {
+  private clearSelectedLinker(): void {
     if (this.selectedLinker != null) {
       this.selectedLinker.selected = false
     }
     this.selectedLinker = undefined
   }
 
-  private drawConnectorLine (connector: ServiceConnector, position: IPosition): void {
+  private drawConnectorLine(connector: ServiceConnector, position: IPosition): void {
     this.updateScreen()
     this.context.beginPath()
     this.context.moveTo(connector.positionX, connector.positionY)
