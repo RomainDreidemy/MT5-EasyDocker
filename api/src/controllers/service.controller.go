@@ -99,6 +99,49 @@ func CreateService(c *fiber.Ctx) error {
 	return c.Status(fiber.StatusCreated).JSON(factories.BuildServiceResponse(service))
 }
 
+// UpdateService godoc
+// @Summary      Update a service
+// @Tags         Services
+// @Accept       json
+// @Produce      json
+// @Param id path string true "Service ID"
+// @Param request body models.ServiceUpdateInput true "query params"
+// @Success      200  {object}  models.ServiceResponse
+// @Router       /services/{id} [put]
+func UpdateService(c *fiber.Ctx) error {
+	currentUser := c.Locals("user").(models.UserResponse)
+	id := c.Params("id")
+
+	service := models.Service{}
+	result := initializers.DB.First(&service, "id = ?", id)
+
+	if result.RowsAffected == 0 {
+		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"status": "error", "message": "Service not found"})
+	}
+
+	// we check if the user want to access to a service that belongs to him
+	result, _ = repositories.GetStackByIdForAUser(service.StackID, currentUser.ID)
+
+	if result.RowsAffected == 0 {
+		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"status": "error", "message": "Service not found"})
+	}
+
+	var body models.ServiceUpdateInput
+	if err := c.BodyParser(&body); err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"status": "error", "message": "Cannot parse JSON"})
+	}
+
+	updatedService := factories.BuildServiceFromServiceUpdateInput(body)
+
+	result = initializers.DB.Model(&service).Updates(updatedService)
+
+	if result.Error != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"status": "error", "message": "Cannot update service"})
+	}
+
+	return c.Status(fiber.StatusOK).JSON(factories.BuildServiceResponse(service))
+}
+
 // DeleteService godoc
 // @Summary      Delete a service
 // @Tags         Services

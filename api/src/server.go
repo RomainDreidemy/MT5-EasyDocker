@@ -55,6 +55,7 @@ func main() {
 
 	service := micro.Group("/services", middleware.DeserializeUser)
 	service.Get("/:id", controllers.GetService)
+	service.Put("/:id", controllers.UpdateService)
 	service.Delete("/:id", controllers.DeleteService)
 
 	app.Get("/swagger/*", swagger.HandlerDefault)

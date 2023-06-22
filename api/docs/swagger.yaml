@@ -35,6 +35,21 @@ definitions:
       positionY:
         type: number
     type: object
+  models.ServiceUpdateInput:
+    properties:
+      description:
+        type: string
+      dockerImage:
+        type: string
+      dockerTag:
+        type: string
+      entrypoint:
+        type: string
+      positionX:
+        type: number
+      positionY:
+        type: number
+    type: object
   models.SignInInput:
     properties:
       email:
@@ -184,6 +199,31 @@ paths:
           schema:
             $ref: '#/definitions/models.ServiceResponse'
       summary: Get services for a stack
+      tags:
+      - Services
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: Service ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.ServiceUpdateInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.ServiceResponse'
+      summary: Update a service
       tags:
       - Services
   /stacks:

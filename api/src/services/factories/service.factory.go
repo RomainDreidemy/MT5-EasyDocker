@@ -32,3 +32,14 @@ func BuildServiceFromServiceCreationInput(service models.ServiceCreateInput) mod
 		PositionY:   service.PositionY,
 	}
 }
+
+func BuildServiceFromServiceUpdateInput(service models.ServiceUpdateInput) models.Service {
+	return models.Service{
+		DockerImage: service.DockerImage,
+		DockerTag:   service.DockerTag,
+		Entrypoint:  service.Entrypoint,
+		Description: service.Description,
+		PositionX:   service.PositionX,
+		PositionY:   service.PositionY,
+	}
+}
