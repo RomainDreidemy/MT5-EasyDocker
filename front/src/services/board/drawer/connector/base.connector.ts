@@ -2,9 +2,8 @@ import ServiceConnector from "./service.connector";
 import {IPosition} from "../../../../interfaces/Position.interface";
 
 class BaseConnector {
-  protected connector: ServiceConnector | null = null
+  protected connector?: ServiceConnector
 
-  public links: ServiceConnector[] = []
   public path: Path2D = new Path2D()
 
   color: string = 'blue'

@@ -3,12 +3,10 @@ import BaseFactory from './base.factory'
 import {type IPosition} from '../../../../interfaces/Position.interface'
 
 class ServiceFactory extends BaseFactory {
-  readonly service: IService
-  readonly context: CanvasRenderingContext2D
-
   path: Path2D = new Path2D()
 
-  constructor(service: IService, context: CanvasRenderingContext2D) {
+  constructor(readonly service: IService,
+              readonly context: CanvasRenderingContext2D) {
     super()
     this.setFactory(this)
 

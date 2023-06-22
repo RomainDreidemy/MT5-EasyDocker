@@ -37,12 +37,7 @@ class ConnectorBuilder {
 
   create(): ServiceConnector[] {
     return this.positions.map((position) =>
-      new ServiceConnector(
-        this.context,
-        this.drawer,
-        position,
-        this.offset,
-      )
+      new ServiceConnector(this.context, this.drawer, position)
     )
   }
 }

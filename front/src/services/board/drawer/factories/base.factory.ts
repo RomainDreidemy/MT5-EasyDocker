@@ -2,7 +2,7 @@ import type ServiceFactory from './service.factory'
 import { type IPosition } from '../../../../interfaces/Position.interface'
 
 class BaseFactory {
-  protected factory: ServiceFactory | null = null
+  protected factory?: ServiceFactory
 
   public path: Path2D = new Path2D()
   public position_x: number = 20

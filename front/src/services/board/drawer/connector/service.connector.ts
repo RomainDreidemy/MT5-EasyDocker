@@ -5,8 +5,7 @@ import ServiceDrawer from "../service.drawer";
 class ServiceConnector extends BaseConnector {
   constructor(readonly context: CanvasRenderingContext2D,
               readonly drawer: ServiceDrawer,
-              readonly position: IPosition,
-              readonly offset: number) {
+              readonly position: IPosition) {
     super();
     this.setConnector(this);
 
