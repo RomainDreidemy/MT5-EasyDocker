@@ -7,5 +7,6 @@ front/node_modules/
 
 ### API ###
 api/tmp/
-api/docs
+api/docs/*
+!api/docs/.gitkeep
 ### API ###
