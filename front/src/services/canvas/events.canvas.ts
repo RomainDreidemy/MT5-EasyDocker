@@ -40,20 +40,19 @@ class EventsCanvas extends BaseCanvas {
       this.handleMouseUpOnLinker(this.selectedElement, position)
     }
 
-    const element = this.elements.find(({factory}) =>
-      factory.isSelected(position)
-    )
+    const element = this.findElement(position)
 
     if (element) {
-      this.onSelectElement(false, false)
-      this.selectedElement = element
-      this.onSelectElement(true)
+      this.selectElement(element)
 
     } else if (!this.selectedConnector) {
-      this.onSelectElement(false)
-      this.selectedElement = undefined
+      this.clearSelectedElement()
     }
   }
+
+  private findElement = (position: IPosition) : ServiceDrawer | undefined => this.elements.find(({factory}) =>
+    factory.isSelected(position)
+  )
 
   private handleMouseUpOnLinker = (element: ServiceDrawer, position: IPosition): void => {
     this.selectedConnector = element.connectors.find((linker) => linker.isSelected(position))
@@ -79,26 +78,22 @@ class EventsCanvas extends BaseCanvas {
       this.updateScreen()
     } else if (this.selectedConnector) {
       this.drawConnectorLine(this.selectedConnector, position);
-
-
-      const element = this.elements.find(({factory}) =>
-        factory.isSelected(position)
-      )
-
-      if (element) {
-        this.onHoverElement = element
-        this.onHoverElement.factory.onHover = true
-      }
+      this.updateHoverElement(position)
     }
   }
 
-  private onSelectElement(selected: boolean, updateScreen: boolean = true): void {
+  private updateHoverElement(position: IPosition): void {
+    const element = this.findElement(position)
+
+    if (element) {
+      this.onHoverElement = element
+      this.onHoverElement.factory.onHover = true
+    }
+  }
+
+  private onSelectElement(selected: boolean): void {
     if (this.selectedElement != null) {
       this.selectedElement.factory.selected = selected
-
-      if (updateScreen) {
-        this.updateScreen()
-      }
     }
   }
 
@@ -117,12 +112,25 @@ class EventsCanvas extends BaseCanvas {
     }
   }
 
+  private selectElement(element: ServiceDrawer): void {
+    this.clearSelectedElement();
+    this.selectedElement = element;
+    this.selectedElement.factory.selected = true;
+  }
+
+  private clearSelectedElement(): void {
+    if (this.selectedElement) {
+      this.selectedElement.factory.selected = false;
+    }
+    this.selectedElement = undefined;
+  }
+
   private drawConnectorLine(connector: ServiceConnector, position: IPosition): void {
-      this.updateScreen();
-      this.context.beginPath();
-      this.context.moveTo(connector.position_x, connector.position_y);
-      this.context.lineTo(position.x, position.y);
-      this.context.stroke();
+    this.updateScreen();
+    this.context.beginPath();
+    this.context.moveTo(connector.position_x, connector.position_y);
+    this.context.lineTo(position.x, position.y);
+    this.context.stroke();
   }
 }
 
