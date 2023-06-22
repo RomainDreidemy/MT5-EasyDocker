@@ -53,6 +53,9 @@ func main() {
 	stacks.Post("/:stackId/services", controllers.CreateService)
 	stacks.Get("/:stackId/services", controllers.GetServices)
 
+	service := micro.Group("/services", middleware.DeserializeUser)
+	service.Get("/:id", controllers.GetService)
+
 	app.Get("/swagger/*", swagger.HandlerDefault)
 
 	app.Static("/docs", "./../docs")

@@ -32,6 +32,36 @@ func GetServices(c *fiber.Ctx) error {
 	return c.Status(fiber.StatusOK).JSON(factories.BuildServiceResponses(services))
 }
 
+// GetService godoc
+// @Summary      Get services for a stack
+// @Tags         Services
+// @Accept       json
+// @Produce      json
+// @Param id path string true "Service ID"
+// @Success      200  {object}  models.ServiceResponse
+// @Router       /services/{id} [get]
+func GetService(c *fiber.Ctx) error {
+	currentUser := c.Locals("user").(models.UserResponse)
+	id := c.Params("id")
+
+	service := models.Service{}
+	result := initializers.DB.First(&service, "id = ?", id)
+
+	if result.RowsAffected == 0 {
+		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"status": "error", "message": "Service not found"})
+	}
+
+	// we check if the user want to access to a service that belongs to him
+	stack := models.Stack{}
+	result = initializers.DB.First(&stack, "id = ? and user_id = ?", service.StackID, currentUser.ID)
+
+	if result.RowsAffected == 0 {
+		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"status": "error", "message": "Service not found"})
+	}
+
+	return c.Status(fiber.StatusOK).JSON(factories.BuildServiceResponse(service))
+}
+
 // CreateService godoc
 // @Summary      Create a new service
 // @Tags         Services
