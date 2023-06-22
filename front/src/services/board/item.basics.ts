@@ -1,7 +1,7 @@
-import {type IService} from '../../interfaces/Service.interface'
+import { type IService } from '../../interfaces/Service.interface'
 
 class ItemBasics {
-  constructor(readonly service: IService) {
+  constructor (readonly service: IService) {
   }
 }
 

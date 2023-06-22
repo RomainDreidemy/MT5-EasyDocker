@@ -1,6 +1,6 @@
 import WindowApp from '../apps/window.app'
 import { type IWidth } from '../../interfaces/Window.interface'
-import {Contexts} from "../../enums/contexts";
+import { Contexts } from '../../enums/contexts'
 
 class BaseCanvas {
   public canvas: HTMLCanvasElement

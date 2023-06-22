@@ -1,27 +1,27 @@
-import ServiceConnector from "./service.connector";
-import { IPosition } from "../../../../interfaces/Position.interface";
+import type ServiceConnector from './service.connector'
+import { type IPosition } from '../../../../interfaces/Position.interface'
 
 class BaseConnector {
-  protected connector?: ServiceConnector;
-  public path: Path2D = new Path2D();
-  public color: string = 'blue';
-  public radius: number = 7;
-  public startAngle: number = 0;
-  public endAngle: number = 2 * Math.PI;
-  public positionX: number = 0;
-  public positionY: number = 0;
+  protected connector?: ServiceConnector
+  public path: Path2D = new Path2D()
+  public color: string = 'blue'
+  public radius: number = 7
+  public startAngle: number = 0
+  public endAngle: number = 2 * Math.PI
+  public positionX: number = 0
+  public positionY: number = 0
 
-  public setConnector(factory: ServiceConnector): void {
-    this.connector = factory;
+  public setConnector (factory: ServiceConnector): void {
+    this.connector = factory
   }
 
-  public isSelected({ x, y }: IPosition): boolean {
+  public isSelected ({ x, y }: IPosition): boolean {
     if (this.connector == null) {
-      throw new Error('Link not implemented');
+      throw new Error('Link not implemented')
     }
 
-    return this.connector.context.isPointInPath(this.path, x, y);
+    return this.connector.context.isPointInPath(this.path, x, y)
   }
 }
 
-export default BaseConnector;
+export default BaseConnector

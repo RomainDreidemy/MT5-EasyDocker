@@ -98,7 +98,7 @@ class EventsCanvas extends BaseCanvas {
     }
   }
 
-  private createLink(position: IPosition) {
+  private createLink(position: IPosition): void {
     const connector = this.elements
       .flatMap(element => element.connectors)
       .find(linker => linker.isSelected(position))
