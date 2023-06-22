@@ -14,3 +14,22 @@ type Service struct {
 	StackID *uuid.UUID `gorm:"type:uuid;not null"`
 	Stack   Stack
 }
+
+type ServiceCreateInput struct {
+	DockerImage string  `json:"dockerImage"`
+	DockerTag   string  `json:"dockerTag"`
+	Entrypoint  string  `json:"entrypoint"`
+	Description string  `json:"description"`
+	PositionX   float32 `json:"positionX" validate:"required"`
+	PositionY   float32 `json:"positionY" validate:"required"`
+}
+
+type ServiceResponse struct {
+	ID          *uuid.UUID `json:"id"`
+	DockerImage string     `json:"dockerImage"`
+	DockerTag   string     `json:"dockerTag"`
+	Entrypoint  string     `json:"entrypoint"`
+	Description string     `json:"description"`
+	PositionX   float32    `json:"positionX"`
+	PositionY   float32    `json:"positionY"`
+}

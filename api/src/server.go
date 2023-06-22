@@ -50,7 +50,11 @@ func main() {
 	stacks.Put("/:id", controllers.UpdateStack)
 	stacks.Delete("/:id", controllers.DeleteStack)
 
+	stacks.Post("/:stackId/services", controllers.CreateService)
+
 	app.Get("/swagger/*", swagger.HandlerDefault)
+
+	app.Static("/docs", "./../docs")
 
 	log.Fatal(app.Listen(":3000"))
 }

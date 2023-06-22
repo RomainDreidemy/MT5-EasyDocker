@@ -1,5 +1,40 @@
 basePath: /
 definitions:
+  models.ServiceCreateInput:
+    properties:
+      description:
+        type: string
+      dockerImage:
+        type: string
+      dockerTag:
+        type: string
+      entrypoint:
+        type: string
+      positionX:
+        type: number
+      positionY:
+        type: number
+    required:
+    - positionX
+    - positionY
+    type: object
+  models.ServiceResponse:
+    properties:
+      description:
+        type: string
+      dockerImage:
+        type: string
+      dockerTag:
+        type: string
+      entrypoint:
+        type: string
+      id:
+        type: string
+      positionX:
+        type: number
+      positionY:
+        type: number
+    type: object
   models.SignInInput:
     properties:
       email:
@@ -212,6 +247,32 @@ paths:
       summary: Update a stack
       tags:
       - Stacks
+  /stacks/{stackId}/services:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Stack ID
+        in: path
+        name: stackId
+        required: true
+        type: string
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.ServiceCreateInput'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.ServiceResponse'
+      summary: Create a new service
+      tags:
+      - Services
   /users/me:
     get:
       consumes:
