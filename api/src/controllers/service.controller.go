@@ -1,8 +1,10 @@
 package controllers
 
 import (
+	"github.com/RomainDreidemy/MT5-docker-extension/src/helpers"
 	"github.com/RomainDreidemy/MT5-docker-extension/src/initializers"
 	"github.com/RomainDreidemy/MT5-docker-extension/src/models"
+	"github.com/RomainDreidemy/MT5-docker-extension/src/policies"
 	"github.com/RomainDreidemy/MT5-docker-extension/src/repositories"
 	"github.com/RomainDreidemy/MT5-docker-extension/src/services/factories"
 	"github.com/gofiber/fiber/v2"
@@ -20,15 +22,11 @@ func GetServices(c *fiber.Ctx) error {
 	currentUser := c.Locals("user").(models.UserResponse)
 	stackId := c.Params("stackId")
 
-	stack := models.Stack{}
-	result := initializers.DB.First(&stack, "id = ? and user_id = ?", stackId, currentUser.ID)
-
-	if result.RowsAffected == 0 {
-		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"status": "error", "message": "Stack not found"})
+	if !policies.CanAccessStack(currentUser, stackId) {
+		return c.Status(fiber.StatusNotFound).JSON(factories.BuildErrorResponse("error", "Stack not found"))
 	}
 
-	services := []models.Service{}
-	initializers.DB.Find(&services, "stack_id = ?", stackId)
+	services, _ := repositories.FindServicesByStackId(stackId)
 
 	return c.Status(fiber.StatusOK).JSON(factories.BuildServiceResponses(services))
 }
@@ -45,20 +43,11 @@ func GetService(c *fiber.Ctx) error {
 	currentUser := c.Locals("user").(models.UserResponse)
 	id := c.Params("id")
 
-	service := models.Service{}
-	result := initializers.DB.First(&service, "id = ?", id)
-
-	if result.RowsAffected == 0 {
-		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"status": "error", "message": "Service not found"})
+	if !policies.CanAccessService(currentUser, id) {
+		return c.Status(fiber.StatusNotFound).JSON(factories.BuildErrorResponse("error", "Service not found"))
 	}
 
-	// we check if the user want to access to a service that belongs to him
-	stack := models.Stack{}
-	result = initializers.DB.First(&stack, "id = ? and user_id = ?", service.StackID, currentUser.ID)
-
-	if result.RowsAffected == 0 {
-		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"status": "error", "message": "Service not found"})
-	}
+	service, _ := repositories.FindService(id)
 
 	return c.Status(fiber.StatusOK).JSON(factories.BuildServiceResponse(service))
 }
@@ -76,24 +65,21 @@ func CreateService(c *fiber.Ctx) error {
 	currentUser := c.Locals("user").(models.UserResponse)
 	stackId := c.Params("stackId")
 
-	stack := models.Stack{}
-	result := initializers.DB.First(&stack, "id = ? and user_id = ?", stackId, currentUser.ID)
-
-	if result.RowsAffected == 0 {
-		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"status": "error", "message": "Stack not found"})
+	if !policies.CanAccessStack(currentUser, stackId) {
+		return c.Status(fiber.StatusNotFound).JSON(factories.BuildErrorResponse("error", "Stack not found"))
 	}
 
-	var body models.ServiceCreateInput
-	if err := c.BodyParser(&body); err != nil {
-		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"status": "error", "message": "Cannot parse JSON"})
+	body, err := helpers.BodyParse[models.ServiceCreateInput](c)
+	if err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(factories.BuildErrorResponse("error", "Cannot parse JSON"))
 	}
 
-	service := factories.BuildServiceFromServiceCreationInput(body)
+	service := factories.BuildServiceFromServiceCreationInput(body, stackId)
 
-	result = initializers.DB.Create(&service)
+	result := initializers.DB.Create(&service)
 
 	if result.Error != nil {
-		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"status": "error", "message": "Cannot create service"})
+		return c.Status(fiber.StatusBadRequest).JSON(factories.BuildErrorResponse("error", "Cannot create service"))
 	}
 
 	return c.Status(fiber.StatusCreated).JSON(factories.BuildServiceResponse(service))
@@ -112,31 +98,23 @@ func UpdateService(c *fiber.Ctx) error {
 	currentUser := c.Locals("user").(models.UserResponse)
 	id := c.Params("id")
 
-	service := models.Service{}
-	result := initializers.DB.First(&service, "id = ?", id)
-
-	if result.RowsAffected == 0 {
-		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"status": "error", "message": "Service not found"})
+	if !policies.CanAccessService(currentUser, id) {
+		return c.Status(fiber.StatusNotFound).JSON(factories.BuildErrorResponse("error", "Service not found"))
 	}
 
-	// we check if the user want to access to a service that belongs to him
-	result, _ = repositories.GetStackByIdForAUser(service.StackID, currentUser.ID)
+	service, _ := repositories.FindService(id)
 
-	if result.RowsAffected == 0 {
-		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"status": "error", "message": "Service not found"})
-	}
-
-	var body models.ServiceUpdateInput
-	if err := c.BodyParser(&body); err != nil {
-		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"status": "error", "message": "Cannot parse JSON"})
+	body, err := helpers.BodyParse[models.ServiceUpdateInput](c)
+	if err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(factories.BuildErrorResponse("error", "Cannot parse JSON"))
 	}
 
 	updatedService := factories.BuildServiceFromServiceUpdateInput(body)
 
-	result = initializers.DB.Model(&service).Updates(updatedService)
+	result := initializers.DB.Model(&service).Updates(updatedService)
 
 	if result.Error != nil {
-		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"status": "error", "message": "Cannot update service"})
+		return c.Status(fiber.StatusBadRequest).JSON(factories.BuildErrorResponse("error", "Cannot update service"))
 	}
 
 	return c.Status(fiber.StatusOK).JSON(factories.BuildServiceResponse(service))
@@ -154,15 +132,14 @@ func DeleteService(c *fiber.Ctx) error {
 	currentUser := c.Locals("user").(models.UserResponse)
 	id := c.Params("id")
 
-	service := models.Service{}
-	result := initializers.DB.First(&service, "id = ?", id)
-
-	if result.RowsAffected == 0 {
-		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"status": "error", "message": "Service not found"})
+	if !policies.CanAccessService(currentUser, id) {
+		return c.Status(fiber.StatusNotFound).JSON(factories.BuildErrorResponse("error", "Service not found"))
 	}
 
+	service, _ := repositories.FindService(id)
+
 	// we check if the user want to access to a service that belongs to him
-	result, _ = repositories.GetStackByIdForAUser(service.StackID, currentUser.ID)
+	result, _ := repositories.GetStackByIdForAUser(service.StackID, currentUser.ID)
 
 	if result.RowsAffected == 0 {
 		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"status": "error", "message": "Service not found"})

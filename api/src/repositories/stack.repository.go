@@ -7,7 +7,7 @@ import (
 	"gorm.io/gorm"
 )
 
-func GetStackByIdForAUser(stackId *uuid.UUID, userId uuid.UUID) (*gorm.DB, models.Stack) {
+func GetStackByIdForAUser(stackId string, userId uuid.UUID) (*gorm.DB, models.Stack) {
 	var stack models.Stack
 	result := initializers.DB.First(&stack, "id = ? and user_id = ?", stackId, userId)
 

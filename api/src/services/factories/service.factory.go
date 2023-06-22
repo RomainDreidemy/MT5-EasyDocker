@@ -1,6 +1,8 @@
 package factories
 
-import "github.com/RomainDreidemy/MT5-docker-extension/src/models"
+import (
+	"github.com/RomainDreidemy/MT5-docker-extension/src/models"
+)
 
 func BuildServiceResponse(service models.Service) models.ServiceResponse {
 	return models.ServiceResponse{
@@ -22,7 +24,7 @@ func BuildServiceResponses(services []models.Service) []models.ServiceResponse {
 	return serializedServices
 }
 
-func BuildServiceFromServiceCreationInput(service models.ServiceCreateInput) models.Service {
+func BuildServiceFromServiceCreationInput(service models.ServiceCreateInput, stackId string) models.Service {
 	return models.Service{
 		DockerImage: service.DockerImage,
 		DockerTag:   service.DockerTag,
@@ -30,6 +32,7 @@ func BuildServiceFromServiceCreationInput(service models.ServiceCreateInput) mod
 		Description: service.Description,
 		PositionX:   service.PositionX,
 		PositionY:   service.PositionY,
+		StackID:     stackId,
 	}
 }
 

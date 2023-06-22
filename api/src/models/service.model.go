@@ -11,7 +11,7 @@ type Service struct {
 	PositionX   float32    `gorm:"type:decimal(20,8);not null"`
 	PositionY   float32    `gorm:"type:decimal(20,8);not null"`
 
-	StackID *uuid.UUID `gorm:"type:uuid;not null"`
+	StackID string `gorm:"type:uuid;not null"`
 	Stack   Stack
 }
 
