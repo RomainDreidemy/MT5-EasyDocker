@@ -5,8 +5,10 @@ import { type IPosition } from '../../../../interfaces/Position.interface'
 class ServiceFactory extends BaseFactory {
   path: Path2D = new Path2D()
 
-  constructor (readonly service: IService,
-    readonly context: CanvasRenderingContext2D) {
+  constructor (
+    readonly service: IService,
+    readonly context: CanvasRenderingContext2D
+  ) {
     super()
     this.setFactory(this)
 

@@ -7,7 +7,8 @@ import { Placements } from '../../../../enums/placements'
 class ConnectorBuilder {
   offset: number = 20
 
-  constructor (readonly context: CanvasRenderingContext2D,
+  constructor (
+    readonly context: CanvasRenderingContext2D,
     readonly factory: serviceFactory,
     readonly drawer: ServiceDrawer
   ) {

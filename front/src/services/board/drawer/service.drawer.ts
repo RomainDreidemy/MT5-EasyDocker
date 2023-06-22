@@ -15,8 +15,10 @@ class ServiceDrawer extends ItemBasics {
   public connectors: ServiceConnector[] = []
   public links: ILink[] = []
 
-  constructor (readonly service: IService,
-    readonly baseCanvas: BaseCanvas) {
+  constructor (
+    readonly service: IService,
+    readonly baseCanvas: BaseCanvas
+  ) {
     super(service)
     this.factory = new ServiceFactory(service, baseCanvas.context)
     this.linker = new ServiceLinker(this.links, baseCanvas.context)

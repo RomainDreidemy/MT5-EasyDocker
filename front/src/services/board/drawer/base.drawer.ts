@@ -3,9 +3,11 @@ import type ServiceConnector from './connector/service.connector'
 import type ServiceLinker from './linker/service.linker'
 
 class BaseDrawer {
-  constructor (private readonly factory: ServiceFactory,
+  constructor (
+    private readonly factory: ServiceFactory,
     private readonly connectors: ServiceConnector[],
-    private readonly linker: ServiceLinker) {
+    private readonly linker: ServiceLinker
+  ) {
   }
 
   draw (): void {
@@ -23,7 +25,9 @@ class BaseDrawer {
   }
 
   private drawConnectors (): void {
-    this.connectors.forEach(connector => { connector.draw() })
+    this.connectors.forEach(connector => {
+      connector.draw()
+    })
   }
 }
 
