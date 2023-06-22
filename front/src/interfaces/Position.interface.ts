@@ -1,7 +1,7 @@
-import {Positions} from "../enums/positions";
+import {Placements} from "../enums/placements";
 
 export interface IPosition {
   x: number
   y: number
-  position?: Positions
+  placement?: Placements
 }

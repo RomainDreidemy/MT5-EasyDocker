@@ -2,29 +2,29 @@ import {IPosition} from "../../../../interfaces/Position.interface";
 import serviceFactory from "../factories/service.factory";
 import ServiceConnector from "./service.connector";
 import ServiceDrawer from "../service.drawer";
-import {Positions} from "../../../../enums/positions";
+import {Placements} from "../../../../enums/placements";
 
 class ConnectorBuilder {
   offset: number = 20
 
   positions: IPosition[] = [
     {
-      position: Positions.TOP,
+      placement: Placements.TOP,
       x: this.factory.position_x + this.factory.width / 2,
       y: this.factory.position_y - this.offset,
     },
     {
-      position: Positions.BOTTOM,
+      placement: Placements.BOTTOM,
       x: this.factory.position_x + this.factory.width / 2,
       y: this.factory.position_y + this.factory.height + this.offset,
     },
     {
-      position: Positions.LEFT,
+      placement: Placements.LEFT,
       x: this.factory.position_x - this.offset,
       y: this.factory.position_y + this.factory.height / 2,
     },
     {
-      position: Positions.RIGHT,
+      placement: Placements.RIGHT,
       x: this.factory.position_x + this.factory.width + this.offset,
       y: this.factory.position_y + this.factory.height / 2,
     },

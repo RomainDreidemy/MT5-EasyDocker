@@ -10,7 +10,7 @@ import ServiceLinker from "./linker/service.linker";
 class ServiceDrawer extends ItemBasics {
   readonly factory: ServiceFactory;
   public connectors: ServiceConnector[] = [];
-  public links: { drawer: ServiceDrawer, connector: ServiceConnector }[] = [];
+  public links: { at: ServiceConnector, to: ServiceConnector }[] = [];
   public linker: ServiceLinker;
 
   constructor(readonly service: IService,

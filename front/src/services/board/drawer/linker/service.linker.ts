@@ -1,44 +1,64 @@
-import ServiceDrawer from "../service.drawer";
 import ServiceFactory from "../factories/service.factory";
 import ServiceConnector from "../connector/service.connector";
-import {Positions} from "../../../../enums/positions";
+import { Placements } from "../../../../enums/placements";
 
 class ServiceLinker {
-
-  constructor(readonly links: { drawer: ServiceDrawer, connector: ServiceConnector }[],
-              readonly context: CanvasRenderingContext2D,
-              readonly factory: ServiceFactory) {
-  }
+  constructor(
+    readonly links: { to: ServiceConnector; at: ServiceConnector }[],
+    readonly context: CanvasRenderingContext2D,
+    readonly factory: ServiceFactory
+  ) {}
 
   drawLinks() {
-    console.log(this.links)
-    this.links.forEach(({drawer, connector}) => {
+    this.links.forEach(({ at, to }) => {
+      this.context.beginPath();
+      this.defineAtPosition(at);
+      this.defineToPosition(to);
+      this.context.stroke();
+    });
+  }
 
-      console.log(connector.position.position)
-      this.context.beginPath()
+  private defineAtPosition(connector: ServiceConnector) {
+    const { drawer, position } = connector;
+    const { placement } = position;
+    const { position_x, position_y, width, height } = drawer.factory;
 
-      switch (connector.position.position) {
-        case Positions.LEFT: {
-          this.context.moveTo(drawer.factory.position_x, drawer.factory.position_y + drawer.factory.height / 2)
-          this.context.lineTo(this.factory.position_x, this.factory.position_y + this.factory.height / 2)
-          break
-        }
-        case Positions.BOTTOM: {
-          this.context.moveTo(drawer.factory.position_x + drawer.factory.width / 2, drawer.factory.position_y + drawer.factory.height)
-          this.context.lineTo(this.factory.position_x, this.factory.position_y + this.factory.height / 2)
-          break
-          // x: this.factory.position_x + this.factory.width / 2,
-          //   y: this.factory.position_y + this.factory.height + this.offset,
-        }
+    switch (placement) {
+      case Placements.TOP:
+        this.context.moveTo(position_x + width / 2, position_y);
+        break;
+      case Placements.BOTTOM:
+        this.context.moveTo(position_x + width / 2, position_y + height);
+        break;
+      case Placements.LEFT:
+        this.context.moveTo(position_x, position_y + height / 2);
+        break;
+      case Placements.RIGHT:
+        this.context.moveTo(position_x + width, position_y + height / 2);
+        break;
+    }
+  }
 
-      }
+  private defineToPosition(connector: ServiceConnector) {
+    const { drawer, position } = connector;
+    const { placement } = position;
+    const { position_x, position_y, width, height } = drawer.factory;
 
-
-      // this.context.moveTo(drawer.factory.position_x, drawer.factory.position_y + drawer.factory.height / 2)
-      // this.context.lineTo(this.factory.position_x, this.factory.position_y + this.factory.height / 2)
-      this.context.stroke()
-    })
+    switch (placement) {
+      case Placements.TOP:
+        this.context.lineTo(position_x + width / 2, position_y);
+        break;
+      case Placements.BOTTOM:
+        this.context.lineTo(position_x + width / 2, position_y + height);
+        break;
+      case Placements.LEFT:
+        this.context.lineTo(position_x, position_y + height / 2);
+        break;
+      case Placements.RIGHT:
+        this.context.lineTo(position_x + width, position_y + height / 2);
+        break;
+    }
   }
 }
 
-export default ServiceLinker
+export default ServiceLinker;

@@ -68,17 +68,7 @@ class EventsCanvas extends BaseCanvas {
         .find((linker) => linker.isSelected(position))
 
       if (connector && this.selectedElement) {
-        console.log(connector)
-
-        console.log(connector.drawer)
-
-        connector.drawer.links.push({connector: connector, drawer: this.selectedElement})
-        // this.selectedConnector.links.push(connector)
-        // connector.links.push(this.selectedConnector)
-        // console.log('LINKED')
-        // console.log(this.selectedConnector)
-        // console.log(this.elements)
-
+        connector.drawer.links.push({to: connector, at: this.selectedConnector})
       }
     }
 

@@ -1,4 +1,4 @@
-export enum Positions {
+export enum Placements {
   TOP = 'top',
   BOTTOM = 'bottom',
   LEFT = 'left',
