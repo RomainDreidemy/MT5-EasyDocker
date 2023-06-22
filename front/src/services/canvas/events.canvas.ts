@@ -4,10 +4,12 @@ import { Events } from '../../enums/events'
 import { type IPosition } from '../../interfaces/Position.interface'
 import type ServiceConnector from '../board/drawer/connector/service.connector'
 import {ILink} from "../../interfaces/Link.interface";
+import ServiceLinker from "../board/drawer/linker/service.linker";
 
 class EventsCanvas extends BaseCanvas {
   elements: ServiceDrawer[] = []
 
+  selectedLinker?: ServiceLinker
   selectedElement?: ServiceDrawer
   selectedConnector?: ServiceConnector
   onHoverElement?: ServiceDrawer
@@ -37,8 +39,6 @@ class EventsCanvas extends BaseCanvas {
     const position: IPosition = { x: event.offsetX, y: event.offsetY }
     this.isMoving = true
 
-    console.log(this.elements)
-
     if (this.selectedElement != null) {
       this.handleMouseUpOnLinker(this.selectedElement, position)
     }
@@ -49,6 +49,14 @@ class EventsCanvas extends BaseCanvas {
       this.selectElement(element)
     } else if (this.selectedConnector == null) {
       this.clearSelectedElement()
+    }
+
+    const linker = this.findLinker(position)
+
+    if (linker) {
+      this.selectLinker(linker)
+    } else {
+      this.clearSelectedLinker()
     }
   }
 
@@ -74,8 +82,6 @@ class EventsCanvas extends BaseCanvas {
 
   private readonly handleMouseMove = (event: MouseEvent): void => {
     const position: IPosition = { x: event.offsetX, y: event.offsetY }
-
-    this.findLine(position)
 
     if (this.isMoving && (this.selectedElement != null) && (this.selectedConnector == null)) {
       this.selectedElement.factory.updatePosition(position)
@@ -122,12 +128,10 @@ class EventsCanvas extends BaseCanvas {
       .find(connector => connector.isSelected(position))
   }
 
-  private findLine (position: IPosition) {
-    // console.log(this.elements)
-
-    // return this.elements
-    //   .flatMap(element => element.linker)
-    //   .find(linker => linker.isSelected(position))
+  private findLinker (position: IPosition) {
+    return this.elements
+      .flatMap(element => element.linkers)
+      .find(linker => linker.isSelected(position))
   }
 
   private selectElement (element: ServiceDrawer): void {
@@ -141,6 +145,19 @@ class EventsCanvas extends BaseCanvas {
       this.selectedElement.factory.selected = false
     }
     this.selectedElement = undefined
+  }
+
+  private selectLinker (linker: ServiceLinker): void {
+    this.clearSelectedLinker()
+    this.selectedLinker = linker
+    this.selectedLinker.selected = true
+  }
+
+  private clearSelectedLinker (): void {
+    if (this.selectedLinker != null) {
+      this.selectedLinker.selected = false
+    }
+    this.selectedLinker = undefined
   }
 
   private drawConnectorLine (connector: ServiceConnector, position: IPosition): void {

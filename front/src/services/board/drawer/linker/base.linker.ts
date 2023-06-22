@@ -8,6 +8,8 @@ class BaseLinker {
 
   public selected: boolean = false
 
+  public width: number = 7
+
   public setLinker (linker: ServiceLinker): void {
     this.linker = linker
   }
@@ -17,7 +19,7 @@ class BaseLinker {
       throw new Error('Linker not implemented')
     }
 
-    return this.linker.context.isPointInPath(this.linker.path, x, y)
+    return this.linker.context.isPointInStroke(this.linker.path, x, y)
   }
 }
 

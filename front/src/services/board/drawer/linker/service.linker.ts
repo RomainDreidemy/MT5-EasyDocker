@@ -28,7 +28,7 @@ class ServiceLinker extends BaseLinker {
     } else {
       this.context.strokeStyle = 'black'
     }
-
+    this.context.lineWidth = this.width
     this.context.stroke(line)
 
     this.path = line
