@@ -3,6 +3,7 @@ import type ServiceDrawer from '../board/drawer/service.drawer'
 import { Events } from '../../enums/events'
 import { type IPosition } from '../../interfaces/Position.interface'
 import type ServiceConnector from '../board/drawer/connector/service.connector'
+import {ILink} from "../../interfaces/Link.interface";
 
 class EventsCanvas extends BaseCanvas {
   elements: ServiceDrawer[] = []
@@ -35,6 +36,8 @@ class EventsCanvas extends BaseCanvas {
   private readonly handleMouseDown = (event: MouseEvent): void => {
     const position: IPosition = { x: event.offsetX, y: event.offsetY }
     this.isMoving = true
+
+    console.log(this.elements)
 
     if (this.selectedElement != null) {
       this.handleMouseUpOnLinker(this.selectedElement, position)
@@ -72,6 +75,8 @@ class EventsCanvas extends BaseCanvas {
   private readonly handleMouseMove = (event: MouseEvent): void => {
     const position: IPosition = { x: event.offsetX, y: event.offsetY }
 
+    this.findLine(position)
+
     if (this.isMoving && (this.selectedElement != null) && (this.selectedConnector == null)) {
       this.selectedElement.factory.updatePosition(position)
       this.updateScreen()
@@ -100,7 +105,10 @@ class EventsCanvas extends BaseCanvas {
     const connector = this.findConnector(position)
 
     if ((this.selectedConnector != null) && (connector != null) && (this.selectedElement != null) && (this.onHoverElement != null)) {
-      connector.drawer.links.push({ to: connector, at: this.selectedConnector })
+      const link: ILink = { to: this.selectedConnector, at: connector }
+
+      const linker = new this.selectedElement.linker(link, this.context)
+      this.selectedElement.linkers.push(linker)
 
       this.onHoverElement.factory.onHover = false
       this.onHoverElement = undefined
@@ -111,7 +119,15 @@ class EventsCanvas extends BaseCanvas {
   private findConnector (position: IPosition): ServiceConnector | undefined {
     return this.elements
       .flatMap(element => element.connectors)
-      .find(linker => linker.isSelected(position))
+      .find(connector => connector.isSelected(position))
+  }
+
+  private findLine (position: IPosition) {
+    // console.log(this.elements)
+
+    // return this.elements
+    //   .flatMap(element => element.linker)
+    //   .find(linker => linker.isSelected(position))
   }
 
   private selectElement (element: ServiceDrawer): void {
