@@ -6,7 +6,7 @@ class BaseDrawer {
   constructor (
     private readonly factory: ServiceFactory,
     private readonly connectors: ServiceConnector[],
-    private readonly linker: ServiceLinker
+    private readonly linkers: ServiceLinker[]
   ) {
   }
 
@@ -17,7 +17,7 @@ class BaseDrawer {
       this.drawConnectors()
     }
 
-    this.linker.drawLinks()
+    this.drawLinkers()
   }
 
   private shouldDrawConnectors (): boolean {
@@ -27,6 +27,12 @@ class BaseDrawer {
   private drawConnectors (): void {
     this.connectors.forEach(connector => {
       connector.draw()
+    })
+  }
+
+  private drawLinkers (): void {
+    this.linkers.forEach(link => {
+      link.draw()
     })
   }
 }

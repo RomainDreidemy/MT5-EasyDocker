@@ -6,14 +6,13 @@ import type BaseCanvas from '../../canvas/base.canvas'
 import type ServiceConnector from './connector/service.connector'
 import ConnectorBuilder from './connector/connector.builder'
 import ServiceLinker from './linker/service.linker'
-import { type ILink } from '../../../interfaces/Link.interface'
 
 class ServiceDrawer extends ItemBasics {
   readonly factory: ServiceFactory
-  public linker: ServiceLinker
+  public Linker: typeof ServiceLinker = ServiceLinker
 
   public connectors: ServiceConnector[] = []
-  public links: ILink[] = []
+  public linkers: ServiceLinker[] = []
 
   constructor (
     readonly service: IService,
@@ -21,7 +20,6 @@ class ServiceDrawer extends ItemBasics {
   ) {
     super(service)
     this.factory = new ServiceFactory(service, baseCanvas.context)
-    this.linker = new ServiceLinker(this.links, baseCanvas.context)
   }
 
   draw (): void {
@@ -40,7 +38,7 @@ class ServiceDrawer extends ItemBasics {
   }
 
   private drawBaseDrawer (): void {
-    new BaseDrawer(this.factory, this.connectors, this.linker).draw()
+    new BaseDrawer(this.factory, this.connectors, this.linkers).draw()
   }
 }
 
