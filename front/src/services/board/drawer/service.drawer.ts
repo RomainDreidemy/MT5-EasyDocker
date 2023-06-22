@@ -9,7 +9,7 @@ import ServiceLinker from './linker/service.linker'
 
 class ServiceDrawer extends ItemBasics {
   readonly factory: ServiceFactory
-  public linker: typeof ServiceLinker = ServiceLinker
+  public Linker: typeof ServiceLinker = ServiceLinker
 
   public connectors: ServiceConnector[] = []
   public linkers: ServiceLinker[] = []

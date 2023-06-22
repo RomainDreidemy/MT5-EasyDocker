@@ -1,6 +1,6 @@
 import type ServiceConnector from './service.connector'
 import { type IPosition } from '../../../../interfaces/Position.interface'
-import {Errors} from "../../../../enums/errors";
+import { Errors } from '../../../../enums/errors'
 
 class BaseConnector {
   protected connector?: ServiceConnector
@@ -24,7 +24,7 @@ class BaseConnector {
     return this.connector.context.isPointInPath(this.path, x, y)
   }
 
-  draw() {
+  draw (): void {
     throw new Error(Errors.NOT_IMPLEMENTED)
   }
 }

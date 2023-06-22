@@ -1,6 +1,6 @@
 import type ServiceFactory from './service.factory'
 import { type IPosition } from '../../../../interfaces/Position.interface'
-import {Errors} from "../../../../enums/errors";
+import { Errors } from '../../../../enums/errors'
 
 class BaseFactory {
   protected factory?: ServiceFactory
@@ -26,7 +26,7 @@ class BaseFactory {
     return this.factory.context.isPointInPath(this.factory.path, x, y)
   }
 
-  draw() {
+  draw (): void {
     throw new Error(Errors.NOT_IMPLEMENTED)
   }
 }

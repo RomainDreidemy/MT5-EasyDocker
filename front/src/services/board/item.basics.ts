@@ -1,11 +1,11 @@
 import { type IService } from '../../interfaces/Service.interface'
-import {Errors} from "../../enums/errors";
+import { Errors } from '../../enums/errors'
 
 class ItemBasics {
   constructor (readonly service: IService) {
   }
 
-  draw() {
+  draw (): void {
     throw new Error(Errors.NOT_IMPLEMENTED)
   }
 }
