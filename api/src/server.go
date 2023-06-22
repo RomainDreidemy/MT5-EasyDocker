@@ -28,14 +28,14 @@ func main() {
 	micro := fiber.New()
 	frontUrl := viper.GetString("FRONT_URL")
 
-	app.Mount("/", micro)
 	app.Use(logger.New())
 	app.Use(cors.New(cors.Config{
-		AllowOrigins:     frontUrl,
-		AllowHeaders:     "Origin, Content-Type, Accept",
+		AllowOrigins:     frontUrl + ", http://localhost, http://localhost:3000",
+		AllowHeaders:     "Origin, Content-Type, Accept, X-Requested-With",
 		AllowMethods:     "GET, POST, PUT, DELETE",
 		AllowCredentials: true,
 	}))
+	app.Mount("/", micro)
 
 	micro.Route("/auth", func(router fiber.Router) {
 		router.Post("/register", controllers.SignUpUser)
