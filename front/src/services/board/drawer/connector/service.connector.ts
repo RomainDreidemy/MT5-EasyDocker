@@ -9,14 +9,14 @@ class ServiceConnector extends BaseConnector {
     super();
     this.setConnector(this);
 
-    this.position_x = position.x
-    this.position_y = position.y
+    this.positionX = position.x
+    this.positionY = position.y
   }
 
   public draw() {
     const circle = new Path2D()
     this.context.beginPath();
-    circle.arc(this.position.x, this.position.y, this.radius, this.start_angle, this.end_angle);
+    circle.arc(this.position.x, this.position.y, this.radius, this.startAngle, this.endAngle);
     this.context.fillStyle = this.color;
     this.context.fill(circle);
     this.context.closePath();

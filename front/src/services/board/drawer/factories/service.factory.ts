@@ -13,15 +13,15 @@ class ServiceFactory extends BaseFactory {
     this.service = service
     this.context = context
 
-    this.position_x = isNaN(this.service.position_x) ? this.position_x : this.service.position_x
-    this.position_y = isNaN(this.service.position_y) ? this.position_y : this.service.position_y
+    this.positionX = isNaN(this.service.positionX) ? this.positionX : this.service.positionX
+    this.positionY = isNaN(this.service.positionY) ? this.positionY : this.service.positionY
   }
 
   create(): void {
     const rectangle = new Path2D()
 
     this.context.beginPath()
-    rectangle.roundRect(this.position_x, this.position_y, this.width, this.height, [10])
+    rectangle.roundRect(this.positionX, this.positionY, this.width, this.height, [10])
 
     this.context.font = '25px Georgia'
     this.context.lineWidth = 3
@@ -37,15 +37,15 @@ class ServiceFactory extends BaseFactory {
     }
 
     this.context.stroke(rectangle)
-    this.context.fillText('Service', this.position_x + 10, this.position_y + 30)
+    this.context.fillText('Service', this.positionX + 10, this.positionY + 30)
     this.context.closePath()
 
     this.path = rectangle
   }
 
   updatePosition(position: IPosition): void {
-    this.position_x = position.x
-    this.position_y = position.y
+    this.positionX = position.x
+    this.positionY = position.y
   }
 }
 

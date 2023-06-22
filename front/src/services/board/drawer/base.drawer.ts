@@ -1,24 +1,31 @@
-import type ServiceFactory from './factories/service.factory'
-import ServiceConnector from "./connector/service.connector";
-import ServiceLinker from "./linker/service.linker";
+import type ServiceFactory from './factories/service.factory';
+import ServiceConnector from './connector/service.connector';
+import ServiceLinker from './linker/service.linker';
 
 class BaseDrawer {
-  constructor(readonly factory: ServiceFactory,
-              readonly connectors: ServiceConnector[],
-              readonly linker: ServiceLinker) {
+  constructor(private readonly factory: ServiceFactory,
+              private readonly connectors: ServiceConnector[],
+              private readonly linker: ServiceLinker
+  ) {
   }
 
   draw(): void {
-    this.factory.create()
+    this.factory.create();
 
-    if (this.factory.selected || this.factory.onHover) {
-      this.connectors.forEach((connector) => {
-        connector.draw()
-      })
+    if (this.shouldDrawConnectors()) {
+      this.drawConnectors();
     }
 
-    this.linker.drawLinks()
+    this.linker.drawLinks();
+  }
+
+  private shouldDrawConnectors(): boolean {
+    return this.factory.selected || this.factory.onHover;
+  }
+
+  private drawConnectors(): void {
+    this.connectors.forEach(connector => connector.draw());
   }
 }
 
-export default BaseDrawer
+export default BaseDrawer;

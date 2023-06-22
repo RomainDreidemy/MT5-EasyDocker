@@ -6,19 +6,19 @@ import ServiceConnector from "../board/drawer/connector/service.connector";
 
 class EventsCanvas extends BaseCanvas {
   elements: ServiceDrawer[] = []
-  isMoving: boolean = false
+
   selectedElement?: ServiceDrawer
   selectedConnector?: ServiceConnector
   onHoverElement?: ServiceDrawer
+
+  isMoving: boolean = false
 
   add(...elements: ServiceDrawer[]): void {
     this.elements.push(...elements)
   }
 
   draw(): void {
-    this.elements.forEach((element) => {
-      element.draw()
-    })
+    this.elements.forEach(element => element.draw())
   }
 
   updateScreen(): void {
@@ -50,12 +50,12 @@ class EventsCanvas extends BaseCanvas {
     }
   }
 
-  private findElement = (position: IPosition) : ServiceDrawer | undefined => this.elements.find(({factory}) =>
-    factory.isSelected(position)
+  private findElement = (position: IPosition): ServiceDrawer | undefined => this.elements.find(service =>
+    service.factory.isSelected(position)
   )
 
   private handleMouseUpOnLinker = (element: ServiceDrawer, position: IPosition): void => {
-    this.selectedConnector = element.connectors.find((linker) => linker.isSelected(position))
+    this.selectedConnector = element.connectors.find(linker => linker.isSelected(position))
   }
 
   private readonly handleMouseUp = (event: MouseEvent): void => {
@@ -76,6 +76,7 @@ class EventsCanvas extends BaseCanvas {
     if (this.isMoving && (this.selectedElement != null) && !this.selectedConnector) {
       this.selectedElement.factory.updatePosition(position)
       this.updateScreen()
+
     } else if (this.selectedConnector) {
       this.drawConnectorLine(this.selectedConnector, position);
       this.updateHoverElement(position)
@@ -98,8 +99,9 @@ class EventsCanvas extends BaseCanvas {
   }
 
   private createLink(position: IPosition) {
-    const connector = this.elements.flatMap((element) => element.connectors)
-      .find((linker) => linker.isSelected(position))
+    const connector = this.elements
+      .flatMap(element => element.connectors)
+      .find(linker => linker.isSelected(position))
 
     const hasConnectorsAndElements = connector && this.selectedElement && this.onHoverElement && this.selectedConnector
 
@@ -128,7 +130,7 @@ class EventsCanvas extends BaseCanvas {
   private drawConnectorLine(connector: ServiceConnector, position: IPosition): void {
     this.updateScreen();
     this.context.beginPath();
-    this.context.moveTo(connector.position_x, connector.position_y);
+    this.context.moveTo(connector.positionX, connector.positionY);
     this.context.lineTo(position.x, position.y);
     this.context.stroke();
   }

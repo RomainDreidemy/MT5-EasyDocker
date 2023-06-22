@@ -1,12 +1,11 @@
-import ServiceFactory from "../factories/service.factory";
 import ServiceConnector from "../connector/service.connector";
 import { Placements } from "../../../../enums/placements";
+import {ILink} from "../../../../interfaces/Link.interface";
 
 class ServiceLinker {
   constructor(
-    readonly links: { to: ServiceConnector; at: ServiceConnector }[],
-    readonly context: CanvasRenderingContext2D,
-    readonly factory: ServiceFactory
+    readonly links: ILink[],
+    readonly context: CanvasRenderingContext2D
   ) {}
 
   drawLinks() {
@@ -21,20 +20,20 @@ class ServiceLinker {
   private defineAtPosition(connector: ServiceConnector) {
     const { drawer, position } = connector;
     const { placement } = position;
-    const { position_x, position_y, width, height } = drawer.factory;
+    const { positionX, positionY, width, height } = drawer.factory;
 
     switch (placement) {
       case Placements.TOP:
-        this.context.moveTo(position_x + width / 2, position_y);
+        this.context.moveTo(positionX + width / 2, positionY);
         break;
       case Placements.BOTTOM:
-        this.context.moveTo(position_x + width / 2, position_y + height);
+        this.context.moveTo(positionX + width / 2, positionY + height);
         break;
       case Placements.LEFT:
-        this.context.moveTo(position_x, position_y + height / 2);
+        this.context.moveTo(positionX, positionY + height / 2);
         break;
       case Placements.RIGHT:
-        this.context.moveTo(position_x + width, position_y + height / 2);
+        this.context.moveTo(positionX + width, positionY + height / 2);
         break;
     }
   }
@@ -42,20 +41,20 @@ class ServiceLinker {
   private defineToPosition(connector: ServiceConnector) {
     const { drawer, position } = connector;
     const { placement } = position;
-    const { position_x, position_y, width, height } = drawer.factory;
+    const { positionX, positionY, width, height } = drawer.factory;
 
     switch (placement) {
       case Placements.TOP:
-        this.context.lineTo(position_x + width / 2, position_y);
+        this.context.lineTo(positionX + width / 2, positionY);
         break;
       case Placements.BOTTOM:
-        this.context.lineTo(position_x + width / 2, position_y + height);
+        this.context.lineTo(positionX + width / 2, positionY + height);
         break;
       case Placements.LEFT:
-        this.context.lineTo(position_x, position_y + height / 2);
+        this.context.lineTo(positionX, positionY + height / 2);
         break;
       case Placements.RIGHT:
-        this.context.lineTo(position_x + width, position_y + height / 2);
+        this.context.lineTo(positionX + width, positionY + height / 2);
         break;
     }
   }
