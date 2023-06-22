@@ -44,9 +44,9 @@ func GetStack(c *fiber.Ctx) error {
 	currentUser := c.Locals("user").(models.UserResponse)
 
 	var stack models.Stack
-	initializers.DB.First(&stack, "id = ? and user_id = ?", id, currentUser.ID)
+	result := initializers.DB.First(&stack, "id = ? and user_id = ?", id, currentUser.ID)
 
-	if stack.Name == "" {
+	if result.RowsAffected == 0 {
 		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"status": "error", "message": "Stack not found"})
 	}
 
@@ -111,10 +111,10 @@ func UpdateStack(c *fiber.Ctx) error {
 	var payload *models.StackUpdateInput
 
 	var stack models.Stack
-	initializers.DB.First(&stack, "id = ?", id)
+	result := initializers.DB.First(&stack, "id = ? and user_id = ?", id, currentUser.ID)
 
-	if *stack.UserID != currentUser.ID {
-		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"status": "error", "message": "Unauthorized"})
+	if result.RowsAffected == 0 {
+		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"status": "error", "message": "Stack not found"})
 	}
 
 	if err := c.BodyParser(&payload); err != nil {
@@ -131,7 +131,7 @@ func UpdateStack(c *fiber.Ctx) error {
 		Description: payload.Description,
 	}
 
-	result := initializers.DB.Model(&stack).Updates(updatedStack)
+	result = initializers.DB.Model(&stack).Updates(updatedStack)
 
 	if result.Error != nil {
 		return c.Status(fiber.StatusBadGateway).JSON(fiber.Map{"status": "error", "message": "Something bad happened"})
