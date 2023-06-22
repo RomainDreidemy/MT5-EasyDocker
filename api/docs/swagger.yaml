@@ -1,0 +1,229 @@
+basePath: /
+definitions:
+  models.SignInInput:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    required:
+    - email
+    - password
+    type: object
+  models.SignUpInput:
+    properties:
+      email:
+        type: string
+      password:
+        minLength: 8
+        type: string
+      passwordConfirm:
+        minLength: 8
+        type: string
+    required:
+    - email
+    - password
+    - passwordConfirm
+    type: object
+  models.StackCreateInput:
+    properties:
+      description:
+        type: string
+      name:
+        maxLength: 100
+        minLength: 3
+        type: string
+    required:
+    - name
+    type: object
+  models.StackResponse:
+    properties:
+      description:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+    type: object
+  models.StackUpdateInput:
+    properties:
+      description:
+        type: string
+      name:
+        maxLength: 100
+        minLength: 3
+        type: string
+    required:
+    - name
+    type: object
+  models.UserLoginResponse:
+    properties:
+      token:
+        type: string
+    type: object
+  models.UserResponse:
+    properties:
+      email:
+        type: string
+      id:
+        type: string
+    type: object
+info:
+  contact: {}
+  title: EasyDocker API
+paths:
+  /auth/login:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.SignInInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.UserLoginResponse'
+      summary: Sign in a new user
+      tags:
+      - Auth
+  /auth/register:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.SignUpInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.UserResponse'
+      summary: Sign up a new user
+      tags:
+      - Auth
+  /stacks:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.StackResponse'
+            type: array
+      summary: Get stacks for current user
+      tags:
+      - Stacks
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.StackCreateInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.StackResponse'
+      summary: Create a new stack
+      tags:
+      - Stacks
+  /stacks/{id}:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: Stack ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+      summary: Delete a stack
+      tags:
+      - Stacks
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Stack ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.StackResponse'
+      summary: Get a stack
+      tags:
+      - Stacks
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: Stack ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.StackUpdateInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.StackResponse'
+      summary: Update a stack
+      tags:
+      - Stacks
+  /users/me:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.UserResponse'
+      summary: Get current user
+      tags:
+      - Users
+swagger: "2.0"
