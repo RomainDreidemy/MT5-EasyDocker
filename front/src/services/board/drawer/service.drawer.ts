@@ -2,7 +2,7 @@ import { type IService } from '../../../interfaces/Service.interface'
 import BaseDrawer from './base.drawer'
 import ServiceFactory from './factories/service.factory'
 import ItemBasics from '../item.basics'
-import type BaseCanvas from '../../canvas/base.canvas'
+import type BaseCanvas from '../../canvas/Base.canvas'
 import type ServiceConnector from './connector/service.connector'
 import ConnectorBuilder from './connector/connector.builder'
 import ServiceLinker from './linker/service.linker'
@@ -16,10 +16,10 @@ class ServiceDrawer extends ItemBasics {
 
   constructor (
     readonly service: IService,
-    readonly baseCanvas: BaseCanvas
+    readonly context: CanvasRenderingContext2D
   ) {
     super(service)
-    this.factory = new ServiceFactory(service, baseCanvas.context)
+    this.factory = new ServiceFactory(service, context)
   }
 
   draw (): void {
@@ -33,7 +33,7 @@ class ServiceDrawer extends ItemBasics {
   }
 
   private createConnectors (): void {
-    const connectorBuilder = new ConnectorBuilder(this.baseCanvas.context, this.factory, this)
+    const connectorBuilder = new ConnectorBuilder(this.context, this.factory, this)
     this.connectors.push(...connectorBuilder.create())
   }
 
