@@ -5,8 +5,7 @@ import ServiceLinker from './linker/service.linker';
 class BaseDrawer {
   constructor(private readonly factory: ServiceFactory,
               private readonly connectors: ServiceConnector[],
-              private readonly linker: ServiceLinker
-  ) {
+              private readonly linker: ServiceLinker) {
   }
 
   draw(): void {
