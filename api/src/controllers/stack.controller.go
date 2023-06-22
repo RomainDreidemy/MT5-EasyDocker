@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"github.com/RomainDreidemy/MT5-docker-extension/src/helpers"
 	"github.com/RomainDreidemy/MT5-docker-extension/src/initializers"
 	"github.com/RomainDreidemy/MT5-docker-extension/src/models"
 	"github.com/gofiber/fiber/v2"
@@ -73,7 +74,7 @@ func CreateStack(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"status": "fail", "message": err.Error()})
 	}
 
-	errors := models.ValidateStruct(payload)
+	errors := helpers.ValidateStruct(payload)
 	if errors != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"status": "fail", "errors": errors})
 	}
@@ -121,7 +122,7 @@ func UpdateStack(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"status": "fail", "message": err.Error()})
 	}
 
-	errors := models.ValidateStruct(payload)
+	errors := helpers.ValidateStruct(payload)
 	if errors != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"status": "fail", "errors": errors})
 	}

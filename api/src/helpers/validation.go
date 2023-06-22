@@ -1,14 +1,8 @@
-package models
+package helpers
 
 import "github.com/go-playground/validator/v10"
 
 var validate = validator.New()
-
-type ValidationErrorResponse struct {
-	Field string `json:"field"`
-	Tag   string `json:"tag"`
-	Value string `json:"value,omitempty"`
-}
 
 func ValidateStruct[T any](payload T) []*ValidationErrorResponse {
 	var errors []*ValidationErrorResponse
@@ -25,7 +19,8 @@ func ValidateStruct[T any](payload T) []*ValidationErrorResponse {
 	return errors
 }
 
-type ErrorResponse struct {
-	Status  string `json:"status"`
-	Message string `json:"message"`
+type ValidationErrorResponse struct {
+	Field string `json:"field"`
+	Tag   string `json:"tag"`
+	Value string `json:"value,omitempty"`
 }
