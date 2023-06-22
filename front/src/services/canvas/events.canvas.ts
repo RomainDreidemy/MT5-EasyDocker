@@ -42,12 +42,12 @@ class EventsCanvas extends BaseCanvas {
 
   private readonly handleKeyDown = (event: KeyboardEvent): void => {
     if (event.code === Keyboard.DELETE && (this.selectedLinker != null)) {
-      this.deleteLine(this.selectedLinker.drawer, this.selectedLinker)
+      this.deleteLinker(this.selectedLinker.drawer, this.selectedLinker)
       this.updateScreen()
     }
   }
 
-  private deleteLine (drawer: ServiceDrawer, linkerToRemove: ServiceLinker): void {
+  private deleteLinker (drawer: ServiceDrawer, linkerToRemove: ServiceLinker): void {
     const index = drawer.linkers.findIndex(linker => linkerToRemove === linker)
     drawer.linkers.splice(index, 1)
   }
