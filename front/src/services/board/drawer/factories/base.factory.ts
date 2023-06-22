@@ -2,19 +2,22 @@ import type ServiceFactory from './service.factory'
 import { type IPosition } from '../../../../interfaces/Position.interface'
 
 class BaseFactory {
-  protected factory: ServiceFactory | null = null
+  protected factory?: ServiceFactory
 
   public path: Path2D = new Path2D()
-  public position_x: number = 20
-  public position_y: number = 20
+  public positionX: number = 20
+  public positionY: number = 20
   public width: number = 150
   public height: number = 100
 
-  setFactory (factory: ServiceFactory): void {
+  public selected: boolean = false
+  public onHover: boolean = false
+
+  public setFactory (factory: ServiceFactory): void {
     this.factory = factory
   }
 
-  isSelected ({ x, y }: IPosition): boolean {
+  public isSelected ({ x, y }: IPosition): boolean {
     if (this.factory == null) {
       throw new Error('Factory not implemented')
     }
