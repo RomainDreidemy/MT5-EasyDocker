@@ -3,6 +3,7 @@ package controllers
 import (
 	"github.com/RomainDreidemy/MT5-docker-extension/src/initializers"
 	"github.com/RomainDreidemy/MT5-docker-extension/src/models"
+	"github.com/RomainDreidemy/MT5-docker-extension/src/repositories"
 	"github.com/RomainDreidemy/MT5-docker-extension/src/services/factories"
 	"github.com/gofiber/fiber/v2"
 )
@@ -96,4 +97,35 @@ func CreateService(c *fiber.Ctx) error {
 	}
 
 	return c.Status(fiber.StatusCreated).JSON(factories.BuildServiceResponse(service))
+}
+
+// DeleteService godoc
+// @Summary      Delete a service
+// @Tags         Services
+// @Accept       json
+// @Produce      json
+// @Param id path string true "Service ID"
+// @Success      204
+// @Router       /services/{id} [delete]
+func DeleteService(c *fiber.Ctx) error {
+	currentUser := c.Locals("user").(models.UserResponse)
+	id := c.Params("id")
+
+	service := models.Service{}
+	result := initializers.DB.First(&service, "id = ?", id)
+
+	if result.RowsAffected == 0 {
+		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"status": "error", "message": "Service not found"})
+	}
+
+	// we check if the user want to access to a service that belongs to him
+	result, _ = repositories.GetStackByIdForAUser(service.StackID, currentUser.ID)
+
+	if result.RowsAffected == 0 {
+		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"status": "error", "message": "Service not found"})
+	}
+
+	initializers.DB.Delete(&service)
+
+	return c.Status(fiber.StatusNoContent).Send(nil)
 }

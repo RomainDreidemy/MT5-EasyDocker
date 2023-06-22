@@ -55,10 +55,9 @@ func main() {
 
 	service := micro.Group("/services", middleware.DeserializeUser)
 	service.Get("/:id", controllers.GetService)
+	service.Delete("/:id", controllers.DeleteService)
 
 	app.Get("/swagger/*", swagger.HandlerDefault)
-
-	app.Static("/docs", "./../docs")
 
 	log.Fatal(app.Listen(":3000"))
 }
