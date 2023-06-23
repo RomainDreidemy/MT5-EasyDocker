@@ -1,13 +1,5 @@
 import React from 'react'
-
-interface CheckboxProps {
-  label: string
-  name?: string
-  value?: string
-  className?: string
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
-  onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void
-}
+import { type CheckboxProps } from '../../../interfaces/Forms/Checkbox.interface'
 
 const Checkbox = ({ label, name, value, className = '', onChange, onKeyDown }: CheckboxProps): JSX.Element => {
   return (

@@ -27,10 +27,11 @@ func main() {
 	app := fiber.New()
 	micro := fiber.New()
 	frontUrl := viper.GetString("FRONT_URL")
+	frontPort := viper.GetString("FRONT_PORT")
 
 	app.Use(logger.New())
 	app.Use(cors.New(cors.Config{
-		AllowOrigins:     frontUrl + ", http://localhost, http://localhost:3000",
+		AllowOrigins:     frontUrl + ", http://localhost, http://localhost:" + frontPort,
 		AllowHeaders:     "Origin, Content-Type, Accept, X-Requested-With",
 		AllowMethods:     "GET, POST, PUT, DELETE",
 		AllowCredentials: true,

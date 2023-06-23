@@ -1,14 +1,5 @@
 import React from 'react'
-
-interface ButtonProps {
-  label: string
-  name?: string
-  className?: string
-  icon?: JSX.Element
-  variant?: string
-  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void
-  direction?: string
-}
+import { type ButtonProps } from '../../../interfaces/Forms/Button.interface'
 
 const Button = ({ label, name, className = '', icon, variant = 'primary', onClick, direction = 'left' }: ButtonProps): JSX.Element => {
   const styles: Record<string, string> = {
@@ -19,15 +10,17 @@ const Button = ({ label, name, className = '', icon, variant = 'primary', onClic
     link: 'btn-link'
   }
 
+  const isDirection = (to: string): boolean | string => to === direction && label
+
   return (
       <button
           type="button"
           name={name}
           onClick={onClick}
           className={`btn flex-nowrap ${styles[variant]} ${className}`}>
-        {direction === 'right' && label}
+        {isDirection('right')}
         {icon}
-        {direction === 'left' && label}
+        {isDirection('left')}
       </button>
   )
 }

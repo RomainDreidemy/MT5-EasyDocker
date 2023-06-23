@@ -1,5 +1,4 @@
 import React, { useContext, useState } from 'react'
-import axios from '../../services/utils/axios'
 import { boolean, object, string } from 'yup'
 import Warning from '../molecules/Alerts/Warning.molecule'
 import Success from '../molecules/Alerts/Success.molecule'
@@ -11,6 +10,7 @@ import { NavLink, useNavigate } from 'react-router-dom'
 import Button from '../atoms/Forms/Button.atom'
 import { AiOutlineUnlock } from 'react-icons/ai'
 import { BiLeftArrowAlt, BiRightArrowAlt } from 'react-icons/bi'
+import AuthEntity from '../../services/entities/Auth.entity'
 
 const LoginPage = () => {
   const [form, setForm] = useState({ email: '', password: '', remember: false })
@@ -24,6 +24,15 @@ const LoginPage = () => {
     remember: boolean().nullable()
   })
 
+  const changeValue = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value })
+  }
+  const hasError = (field) => {
+    return errors?.map((e) => e.path).includes(field)
+  }
+  const showErrorMessage = (field) => {
+    return errors?.map((e) => e.path === field ? e.message : '')
+  }
   const validateSchema = async () => {
     const validationResult = await userSchema
       .validate(form, { abortEarly: false })
@@ -38,30 +47,26 @@ const LoginPage = () => {
     setErrors(validationErrors)
     if (validationErrors !== null) return
 
-    axios.post('/auth/login', form).then(r => {
-      // Return error if status is not 200
-      if (r.status !== 200) {
-        setErrors([{ path: 'fail', message: 'Error while logging in. Please try again later.' }])
-        return
-      }
+    const authRes = await AuthEntity.auth(form)
+    if (authRes.status !== 200) {
+      setErrors([{ path: authRes.data.status, message: authRes.data.message }])
+      return
+    }
 
-      // Set user context
-      setUser({ email: form.email, token: r.data.token })
+    // Set user context
+    setUser({ email: form.email, token: authRes.data.token })
 
-      // Remember cookie
-      Cookies.set(
-        'token',
-        r.data.token,
-        { expires: form.remember ? 365 : 1 }
-      )
+    // Remember cookie
+    Cookies.set(
+      'token',
+      authRes.data.token,
+      { expires: form.remember ? 365 : 1 }
+    )
 
-      // Redirect to stacks page
-      setTimeout(() => {
-        navigate('/stacks')
-      }, 2000)
-    }).catch(e => {
-      setErrors([{ path: e.response.data.status, message: e.response.data.message }])
-    })
+    // Redirect to stacks page
+    setTimeout(() => {
+      navigate('/stacks')
+    }, 2000)
   }
 
   return (
@@ -77,29 +82,28 @@ const LoginPage = () => {
                         <Input
                             label="Email"
                             type="email"
-                            onChange={(e) => {
-                              setForm({ ...form, email: e.target.value })
-                            }}
-                            className={errors?.map((e) => e.path).includes('email') ? 'border-2 border-red-600' : ''}
+                            name="email"
+                            onChange={(e) => changeValue(e)}
+                            className={hasError('email') ? 'border-2 border-red-600' : ''}
                         />
-                        <div className='text-red-500 mb-5 first-letter:uppercase'>{errors?.map(e => e.path === 'email' ? e.message : '')}</div>
+                        <div className='text-red-500 mb-5 first-letter:uppercase'>{showErrorMessage('email')}</div>
 
                         <Input
                             label="Password"
                             type="password"
-                            onChange={(e) => {
-                              setForm({ ...form, password: e.target.value })
-                            }}
-                            onKeyDown={(e) => {
-                              e.key === 'Enter' && processLogin()
-                            }}
-                            className={errors?.map((e) => e.path).includes('password') ? 'border-2 border-red-600' : ''}
+                            name="password"
+                            onChange={(e) => changeValue(e)}
+                            onKeyDown={(e) => e.key === 'Enter' && processLogin()}
+                            className={hasError('password') ? 'border-2 border-red-600' : ''}
                         />
-                        <div className='text-red-500 mb-2 first-letter:uppercase'>{errors?.map(e => e.path === 'password' ? e.message : '')}</div>
+                        <div className='text-red-500 mb-2 first-letter:uppercase'>{showErrorMessage('password')}</div>
 
-                        <Checkbox label={'Remember me'} onChange={(e) => {
-                          setForm({ ...form, remember: e.target.checked })
-                        }} className={'mb-2'}/>
+                        <Checkbox
+                            label={'Remember me'}
+                            name={'remember'}
+                            onChange={(e) => changeValue(e)}
+                            className={'mb-2'}
+                        />
 
                         <Button
                             label={'Login'}
@@ -113,7 +117,7 @@ const LoginPage = () => {
 
                     <div className="py-5">
                         <div className="grid grid-cols-2 gap-1">
-                            <div className="text-center sm:text-left whitespace-nowrap">
+                            <div className="text-center sm:text-left whitespace-nowrap ml-1">
                                 <NavLink to={'/forgot-password'}>
                                     <Button label={'Forgot password ?'} icon={<AiOutlineUnlock/>} variant={'ghost'}/>
                                 </NavLink>

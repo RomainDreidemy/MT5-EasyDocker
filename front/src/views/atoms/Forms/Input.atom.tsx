@@ -1,15 +1,5 @@
 import React from 'react'
-
-interface InputProps {
-  label?: string
-  type: string
-  placeholder?: string
-  name?: string
-  value?: string
-  className?: string
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
-  onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void
-}
+import { type InputProps } from '../../../interfaces/Forms/Input.interface'
 
 const Input = ({ label, type, placeholder, name, value, className = '', onChange, onKeyDown }: InputProps): JSX.Element => {
   return (
