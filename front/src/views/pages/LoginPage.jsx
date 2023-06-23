@@ -86,8 +86,8 @@ const LoginPage = () => {
                             onChange={(e) => {
                               setForm({ ...form, password: e.target.value })
                             }}
-                            onKeyDown={async (e) => {
-                              e.key === 'Enter' ? await processLogin() : null
+                            onKeyDown={(e) => {
+                              e.key === 'Enter' && processLogin()
                             }}
                             className={errors?.map((e) => e.path).includes('password') ? 'border-2 border-red-600' : ''}
                         />
