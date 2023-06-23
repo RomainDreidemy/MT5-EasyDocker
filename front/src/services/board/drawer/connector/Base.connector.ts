@@ -1,19 +1,12 @@
 import {type IPosition} from '../../../../interfaces/Position.interface'
-import {Errors} from '../../../../enums/errors'
 import StateConnector from "./State.connector";
 import {TBaseConnector} from "../../../../types/board/drawer/connectors/Base.connector";
+import CommonBases from "../Common.bases";
 
 
 const BaseConnector: TBaseConnector = {
+  ...CommonBases,
   ...StateConnector,
-
-  create(): void {
-    throw new Error(Errors.NOT_IMPLEMENTED)
-  },
-
-  draw(): void {
-    throw new Error(Errors.NOT_IMPLEMENTED)
-  },
 
   isSelected({x, y}: IPosition): boolean {
     return this.context!.isPointInPath(this.path, x, y)

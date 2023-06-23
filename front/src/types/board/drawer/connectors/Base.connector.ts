@@ -1,10 +1,10 @@
 import {TStateConnector} from "./State.connector";
 import {IPosition} from "../../../../interfaces/Position.interface";
+import {TCommonBases} from "../Common.bases";
 
 export type TBaseConnector =
+  TCommonBases &
   TStateConnector &
   {
-    create: () => void,
-    draw: () => void,
     isSelected: (Position: IPosition) => boolean
   }

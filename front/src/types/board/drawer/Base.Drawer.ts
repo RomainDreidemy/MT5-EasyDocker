@@ -1,6 +1,8 @@
 import {TStateDrawer} from "./State.drawer";
+import {TCommonBases} from "./Common.bases";
 
 export type TBaseDrawer =
+  TCommonBases &
   TStateDrawer &
   {
     create: () => void

@@ -1,8 +1,10 @@
 import {TBaseDrawer} from "../../../types/board/drawer/Base.Drawer";
 import StateDrawer from "./State.drawer";
 import {Errors} from "../../../enums/errors";
+import CommonBases from "./Common.bases";
 
 const BaseDrawer: TBaseDrawer = {
+  ...CommonBases,
   ...StateDrawer,
 
   create(): void {
