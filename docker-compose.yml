@@ -14,7 +14,7 @@ services:
       - ./.env:/app/.env
     ports:
       - "${FRONT_PORT}:3000"
-    entrypoint: ["npm", "run", "start"]
+    entrypoint: ["yarn", "start"]
 
   api:
     container_name: api

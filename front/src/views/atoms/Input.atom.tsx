@@ -19,7 +19,7 @@ const Input = ({ type, placeholder, name, value, className, onChange, onKeyDown 
             value={value}
             onChange={onChange}
             onKeyDown={onKeyDown}
-            className={`border rounded-lg px-3 py-2 mt-1 text-sm w-full focus:outline-none focus:border-gray-400 ${className}`}
+            className={`input input-bordered w-full max-w-xs mt-1 ${className}`}
         />
     )
 }
