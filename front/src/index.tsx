@@ -12,15 +12,15 @@ const root = ReactDOM.createRoot(
 
 export const UserContext = createContext({})
 
-const App = () => {
+const App = (): JSX.Element => {
   const [user, setUser] = useState(UserContext)
 
   return (
-      <IconContext.Provider value={{ className: 'icons' }}>
-          <UserContext.Provider value={{ user, setUser }}>
-              <RouterProvider router={router}/>
-          </UserContext.Provider>
-      </IconContext.Provider>
+        <IconContext.Provider value={{ className: 'icons' }}>
+            <UserContext.Provider value={{ user, setUser }}>
+                <RouterProvider router={router}/>
+            </UserContext.Provider>
+        </IconContext.Provider>
   )
 }
 
