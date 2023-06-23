@@ -73,6 +73,7 @@ const LoginPage = () => {
                 <div className="bg-white shadow w-full rounded-lg divide-y divide-gray-200">
                     <div className="px-5 py-7">
                         {(user.token !== null && user.token !== undefined) ? <Success message={'Logged in successfully. Redirecting...'}/> : ''}
+                        {errors?.map((e, key) => e.path === 'fail' ? <Warning key={key} message={e.message}/> : '')}
 
                         <Input
                             label="Email"
@@ -107,7 +108,6 @@ const LoginPage = () => {
                             icon={<BiRightArrowAlt/>}
                             direction={'right'}
                         />
-                        {errors?.map((e, key) => e.path === 'fail' ? <Warning key={key} message={e.message}/> : '')}
                     </div>
 
                     <div className="py-5">
