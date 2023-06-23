@@ -1,9 +1,9 @@
 import {useContext, useEffect, useState} from "react";
 import axios from "../../services/utils/axios";
 import { object, string } from 'yup';
-import Warning from "../molecules/Warning.molecule";
-import Success from "../molecules/Success.molecule";
-import Input from "../atoms/Input.atom";
+import Warning from "../molecules/Alerts/Warning.molecule";
+import Success from "../molecules/Alerts/Success.molecule";
+import Input from "../atoms/Forms/Input.atom";
 import {UserContext} from "../../index";
 
 const LoginPage = () => {

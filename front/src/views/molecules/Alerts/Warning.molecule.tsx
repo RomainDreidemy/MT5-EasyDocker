@@ -1,4 +1,4 @@
-import Alert from "../atoms/Alert.atom";
+import Alert from "../../atoms/Alert.atom";
 
 interface AlertProps {
     message: string
