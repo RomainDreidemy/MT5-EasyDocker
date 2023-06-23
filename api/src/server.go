@@ -9,6 +9,7 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/gofiber/swagger"
+	"github.com/spf13/viper"
 	"log"
 )
 
@@ -25,15 +26,17 @@ func init() {
 func main() {
 	app := fiber.New()
 	micro := fiber.New()
+	frontUrl := viper.GetString("FRONT_URL")
+	frontPort := viper.GetString("FRONT_PORT")
 
-	app.Mount("/", micro)
 	app.Use(logger.New())
 	app.Use(cors.New(cors.Config{
-		AllowOrigins:     "*",
-		AllowHeaders:     "Origin, Content-Type, Accept",
+		AllowOrigins:     frontUrl + ", http://localhost, http://localhost:" + frontPort,
+		AllowHeaders:     "Origin, Content-Type, Accept, X-Requested-With",
 		AllowMethods:     "GET, POST, PUT, DELETE",
 		AllowCredentials: true,
 	}))
+	app.Mount("/", micro)
 
 	micro.Route("/auth", func(router fiber.Router) {
 		router.Post("/register", controllers.SignUpUser)

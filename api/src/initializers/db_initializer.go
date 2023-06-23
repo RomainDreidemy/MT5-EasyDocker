@@ -7,7 +7,6 @@ import (
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
 	"log"
-	"os"
 )
 
 var DB *gorm.DB
@@ -19,7 +18,6 @@ func ConnectDB(config *Config) {
 	DB, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
 		log.Fatal("Failed to connect to the Database! \n", err.Error())
-		os.Exit(1)
 	}
 
 	DB.Exec("CREATE EXTENSION IF NOT EXISTS \"uuid-ossp\"")
@@ -29,7 +27,6 @@ func ConnectDB(config *Config) {
 	err = DB.AutoMigrate(&User{}, &Stack{}, &Service{})
 	if err != nil {
 		log.Fatal("Migration Failed:  \n", err.Error())
-		os.Exit(1)
 	}
 
 	log.Println("🚀 Connected Successfully to the Database")
