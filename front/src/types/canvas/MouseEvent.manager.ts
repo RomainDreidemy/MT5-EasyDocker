@@ -11,9 +11,8 @@ export type TMouseEventManager =
   TLinkerManager &
   {
     mouseStartup: () => void,
+    handleMouseDown: (event: MouseEvent) => void
     handleMouseUp: (event: MouseEvent) => void,
     handleMouseMove: (event: MouseEvent) => void,
-    handleMouseDown: (event: MouseEvent) => void,
-    handleKeyDown: (event: KeyboardEvent) => void,
     handleMouseUpOnLinker: (drawer: ServiceDrawer, position: IPosition) => ServiceConnector | undefined
   }

@@ -6,6 +6,7 @@ import BaseManager from "./Base.manager";
 import MouseEventManager from "./MouseEventManager";
 import LinkerManager from "./Linker.manager";
 import {ConnectorManager} from "./Connector.manager";
+import KeyboardEventManager from "./KeyboardEvent.manager";
 
 const EventsCanvas: TEventsCanvas = {
   ...StateCanvas,
@@ -14,6 +15,12 @@ const EventsCanvas: TEventsCanvas = {
   ...LinkerManager,
   ...ConnectorManager,
   ...MouseEventManager,
+  ...KeyboardEventManager,
+
+  startup(): void {
+    this.mouseStartup()
+    this.keyboardStartup()
+  }
 }
 
 export default EventsCanvas

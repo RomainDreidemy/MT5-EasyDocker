@@ -4,7 +4,10 @@ import {Contexts} from '../../enums/contexts'
 import {TBaseCanvas} from "../../types/canvas/Base.canvas";
 
 const BaseCanvas: TBaseCanvas = {
-  create(): void {
+  create(canvas: HTMLCanvasElement): void {
+    this.canvas = canvas
+    this.context = canvas.getContext(Contexts.ID_2D) as CanvasRenderingContext2D
+
     const dimensions = WindowApp.dimensions();
     this.setCanvasDimensions(dimensions);
   },

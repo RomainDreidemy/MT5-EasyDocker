@@ -9,7 +9,7 @@ const useBoard = (): { canvasRef: MutableRefObject<HTMLCanvasElement | null> } =
   useEffect(() => {
     const canvas = canvasRef.current as unknown as HTMLCanvasElement
 
-    EventsCanvas.create()
+    EventsCanvas.create(canvas)
 
     const service1: IService = { id: 1, positionX: 100, positionY: 20 }
     const serviceDrawer1 = new ServiceDrawer(service1, EventsCanvas.context!)
@@ -19,7 +19,7 @@ const useBoard = (): { canvasRef: MutableRefObject<HTMLCanvasElement | null> } =
 
     EventsCanvas.add(serviceDrawer1, serviceDrawer2)
     EventsCanvas.draw()
-    EventsCanvas.mouseStartup()
+    EventsCanvas.startup()
   }, [canvasRef])
 
   return {

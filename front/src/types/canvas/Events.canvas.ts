@@ -1,17 +1,15 @@
-import {TBaseCanvas} from "./Base.canvas";
-import {Drawers} from "../Drawer";
 import {TConnectorManager} from "./Connector.manager";
 import {TStateCanvas} from "./State.Canvas";
 import {TBaseManager} from "./Base.manager";
 import {TMouseEventManager} from "./MouseEvent.manager";
+import {TKeyboardEventManager} from "./KeyboardEvent.manager";
 
 export type TEventsCanvas =
   TBaseManager &
   TStateCanvas &
-  TMouseEventManager &
   TConnectorManager &
+  TMouseEventManager &
+  TKeyboardEventManager &
   {
-    add: (...drawers: Drawers) => void,
-    draw: () => void,
-    updateScreen: () => void,
+    startup: () => void
   }
