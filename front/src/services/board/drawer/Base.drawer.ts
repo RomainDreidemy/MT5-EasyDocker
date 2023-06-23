@@ -43,8 +43,7 @@ const BaseDrawer: TBaseDrawer = {
   },
 
   createConnectors(): void {
-    const connectorBuilder = new this.Connector!(this.context!, this.factory!, this)
-    this.connectors.push(...connectorBuilder.create())
+    this.connectors.push(...this.Connector!.create())
   }
 }
 

@@ -1,12 +1,14 @@
-import type ServiceConnector from '../connector/service.connector'
+import type ServiceConnector from '../connector/Service.connector'
 import { Placements } from '../../../../enums/placements'
 import { type ILink } from '../../../../interfaces/Link.interface'
 import BaseLinker from './base.linker'
 import type ServiceDrawer from '../Service.drawer'
+import {TConnector} from "../../../../types/Connector";
+import {TDrawer} from "../../../../types/Drawer";
 
 class ServiceLinker extends BaseLinker {
   constructor (
-    readonly drawer: ServiceDrawer,
+    readonly drawer: TDrawer,
     readonly context: CanvasRenderingContext2D,
     readonly link: ILink
   ) {
@@ -36,10 +38,9 @@ class ServiceLinker extends BaseLinker {
     this.path = line
   }
 
-  private definePosition (connector: ServiceConnector, line: (x: number, y: number) => void): void {
-    const { drawer, position } = connector
-    const { placement } = position
-    const { positionX, positionY, width, height } = drawer.factory
+  private definePosition (connector: TConnector, line: (x: number, y: number) => void): void {
+    const { placement, factory } = connector
+    const { positionX, positionY, width, height } = factory!
 
     switch (placement) {
       case Placements.TOP: {
