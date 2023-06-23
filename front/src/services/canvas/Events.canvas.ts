@@ -18,6 +18,7 @@ const EventsCanvas: TEventsCanvas = {
   ...KeyboardEventManager,
 
   startup(): void {
+    this.draw()
     this.mouseStartup()
     this.keyboardStartup()
   }

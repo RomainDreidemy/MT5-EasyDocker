@@ -1,5 +1,5 @@
 import {TBaseManager} from "../../types/canvas/Base.manager";
-import {Drawers} from "../../types/Drawer";
+import {TDrawers} from "../../types/TDrawer";
 import BaseCanvas from "./Base.canvas";
 import StateCanvas from "./State.canvas";
 
@@ -7,7 +7,7 @@ const BaseManager: TBaseManager = {
   ...BaseCanvas,
   ...StateCanvas,
 
-  add (...drawers: Drawers): void {
+  add (...drawers: TDrawers): void {
     this.drawers.push(...drawers)
   },
 

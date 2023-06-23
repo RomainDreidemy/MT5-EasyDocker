@@ -1,9 +1,9 @@
-import type ServiceConnector from './service.connector'
 import { type IPosition } from '../../../../interfaces/Position.interface'
 import { Errors } from '../../../../enums/errors'
+import {TConnector} from "../../../../types/TConnector";
 
 class BaseConnector {
-  protected connector?: ServiceConnector
+  protected connector?: TConnector
   public path: Path2D = new Path2D()
   public color: string = 'blue'
   public radius: number = 7
@@ -12,7 +12,7 @@ class BaseConnector {
   public positionX: number = 0
   public positionY: number = 0
 
-  public setConnector (factory: ServiceConnector): void {
+  public setConnector (factory: TConnector): void {
     this.connector = factory
   }
 

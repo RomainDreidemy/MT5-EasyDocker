@@ -1,11 +1,11 @@
-import {Drawers} from "../Drawer";
+import {TDrawers} from "../TDrawer";
 import {TStateCanvas} from "./State.Canvas";
 import {TBaseCanvas} from "./Base.canvas";
 
 export type TBaseManager =
   TBaseCanvas &
   TStateCanvas & {
-  add: (...drawers: Drawers) => void,
+  add: (...drawers: TDrawers) => void,
   draw: () => void,
   updateScreen: () => void
 }

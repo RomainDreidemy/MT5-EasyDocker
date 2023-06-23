@@ -1,12 +1,12 @@
 import {TConnectorManager} from "../../types/canvas/Connector.manager";
 import {IPosition} from "../../interfaces/Position.interface";
-import ServiceConnector from "../board/drawer/connector/service.connector";
 import StateCanvas from "./State.canvas";
+import {TConnectorOrNullify} from "../../types/TConnector";
 
 export const ConnectorManager: TConnectorManager = {
   ...StateCanvas,
 
-  findConnector(position: IPosition): ServiceConnector | undefined {
+  findConnector(position: IPosition): TConnectorOrNullify {
     return this.drawers
       .flatMap(drawers => drawers.connectors)
       .find(connector => connector.isSelected(position))

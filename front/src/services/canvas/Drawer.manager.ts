@@ -1,12 +1,12 @@
-import ServiceDrawer from "../board/drawer/service.drawer";
 import {TDrawerManager} from "../../types/canvas/Drawer.manager";
 import {IPosition} from "../../interfaces/Position.interface";
 import StateCanvas from "./State.canvas";
+import {TDrawer, TDrawerOrNullify} from "../../types/TDrawer";
 
 export const DrawerManager: TDrawerManager = {
   ...StateCanvas,
 
-  findDrawer(position: IPosition): ServiceDrawer | undefined {
+  findDrawer(position: IPosition): TDrawerOrNullify {
     return this.drawers.find(service =>
       service.factory.isSelected(position))
   },
@@ -18,7 +18,7 @@ export const DrawerManager: TDrawerManager = {
     this.selectedDrawer = undefined
   },
 
-  selectDrawer(drawer: ServiceDrawer): void {
+  selectDrawer(drawer: TDrawer): void {
     this.clearSelectedDrawer()
     this.selectedDrawer = drawer
     this.selectedDrawer.factory.selected = true

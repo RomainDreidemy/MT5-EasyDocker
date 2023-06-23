@@ -1,18 +1,17 @@
 import {TLinkerManager} from "../../types/canvas/Linker.manager";
-import ServiceConnector from "../board/drawer/connector/service.connector";
 import {IPosition} from "../../interfaces/Position.interface";
-import ServiceDrawer from "../board/drawer/service.drawer";
-import ServiceLinker from "../board/drawer/linker/service.linker";
 import {ILink} from "../../interfaces/Link.interface";
-import StateCanvas from "./State.canvas";
 import {ConnectorManager} from "./Connector.manager";
 import BaseManager from "./Base.manager";
+import {TConnector} from "../../types/TConnector";
+import {TDrawer} from "../../types/TDrawer";
+import {TLinker, TLinkerOrNullify} from "../../types/TLinker";
 
 const LinkerManager: TLinkerManager = {
   ...BaseManager,
   ...ConnectorManager,
 
-  drawConnectorLine(connector: ServiceConnector, position: IPosition): void {
+  drawConnectorLine(connector: TConnector, position: IPosition): void {
     this.updateScreen()
     this.context!.beginPath()
     this.context!.moveTo(connector.positionX, connector.positionY)
@@ -20,18 +19,18 @@ const LinkerManager: TLinkerManager = {
     this.context!.stroke()
   },
 
-  deleteLinker(drawer: ServiceDrawer, linkerToRemove: ServiceLinker): void {
+  deleteLinker(drawer: TDrawer, linkerToRemove: TLinker): void {
     const index = drawer.linkers.findIndex(linker => linkerToRemove === linker)
     drawer.linkers.splice(index, 1)
   },
 
-  findLinker(position: IPosition): ServiceLinker | undefined {
+  findLinker(position: IPosition): TLinkerOrNullify {
     return this.drawers
       .flatMap(element => element.linkers)
       .find(linker => linker.isSelected(position))
   },
 
-  selectLinker(linker: ServiceLinker): void {
+  selectLinker(linker: TLinker): void {
     this.clearSelectedLinker()
     this.selectedLinker = linker
     this.selectedLinker.selected = true
