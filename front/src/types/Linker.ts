@@ -1,7 +1,8 @@
 import { type TServiceLinker } from './board/drawer/linkers/Service.linker'
 import type ServiceLinker from '../services/board/drawer/linkers/Service.linker'
+import NetworkLinker from "../services/board/drawer/linkers/Network.linker";
 
 export type TLinker = TServiceLinker
 export type TLinkerOrNullify = TLinker | undefined
 export type TLinkers = TLinker[]
-export type TLinkerBuilder = typeof ServiceLinker
+export type TLinkerBuilder = typeof ServiceLinker | typeof NetworkLinker

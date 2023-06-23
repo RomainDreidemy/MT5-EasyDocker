@@ -1,13 +1,13 @@
 import {type ILink} from '../../../../interfaces/Link.interface'
 import BaseLinker from './Base.linker'
 import {type TDrawer} from '../../../../types/Drawer'
-import {type TServiceLinker} from '../../../../types/board/drawer/linkers/Service.linker'
+import {TNetworkLinker} from "../../../../types/board/drawer/linkers/Network.linker";
 
-const ServiceLinker = (drawer: TDrawer, context: CanvasRenderingContext2D, link: ILink): TServiceLinker => {
+const NetworkLinker = (drawer: TDrawer, context: CanvasRenderingContext2D, link: ILink): TNetworkLinker => {
   return {
     ...BaseLinker,
-
-    create(): void {
+    
+    create (): void {
       this.context = context
       this.drawer = drawer
       this.link = link
@@ -15,4 +15,4 @@ const ServiceLinker = (drawer: TDrawer, context: CanvasRenderingContext2D, link:
   }
 }
 
-export default ServiceLinker
+export default NetworkLinker
