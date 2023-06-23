@@ -28,7 +28,7 @@ type UserResponse struct {
 }
 
 type UserLoginResponse struct {
-	Token string `json:"token,required"`
+	Token string `json:"token"`
 }
 
 func FilterUserRecord(user *User) UserResponse {
