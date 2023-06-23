@@ -1,4 +1,4 @@
-import { type TStateCanvas } from '../../types/canvas/State.Canvas'
+import { type TStateCanvas } from '../../types/canvas/State.canvas'
 
 const StateCanvas: TStateCanvas = {
   drawers: [],

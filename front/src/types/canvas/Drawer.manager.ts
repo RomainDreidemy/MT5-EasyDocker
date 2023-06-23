@@ -1,6 +1,6 @@
 import { type IPosition } from '../../interfaces/Position.interface'
-import type ServiceDrawer from '../../services/board/drawer/service.drawer'
-import { type TStateCanvas } from './State.Canvas'
+import type ServiceDrawer from '../../services/board/drawer/Service.drawer'
+import { type TStateCanvas } from './State.canvas'
 
 export type TDrawerManager =
   TStateCanvas &

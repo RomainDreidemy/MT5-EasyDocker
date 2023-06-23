@@ -1,7 +1,7 @@
 import { type IPosition } from '../../../../interfaces/Position.interface'
 import type serviceFactory from '../factories/service.factory'
 import ServiceConnector from './service.connector'
-import type ServiceDrawer from '../service.drawer'
+import type ServiceDrawer from '../Service.drawer'
 import { Placements } from '../../../../enums/placements'
 
 class ConnectorBuilder {

@@ -1,4 +1,4 @@
-import type ServiceDrawer from '../../services/board/drawer/service.drawer'
+import type ServiceDrawer from '../../services/board/drawer/Service.drawer'
 import { type IPosition } from '../../interfaces/Position.interface'
 import type ServiceConnector from '../../services/board/drawer/connector/service.connector'
 import { type TDrawerManager } from './Drawer.manager'

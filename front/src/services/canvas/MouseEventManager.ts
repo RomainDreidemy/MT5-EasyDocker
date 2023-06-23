@@ -1,7 +1,7 @@
 import { type TMouseEventManager } from '../../types/canvas/MouseEvent.manager'
 import { Events } from '../../enums/events'
 import { type IPosition } from '../../interfaces/Position.interface'
-import type ServiceDrawer from '../board/drawer/service.drawer'
+import type ServiceDrawer from '../board/drawer/Service.drawer'
 import BaseManager from './Base.manager'
 import LinkerManager from './Linker.manager'
 import { DrawerManager } from './Drawer.manager'

@@ -1,5 +1,5 @@
-import type ServiceDrawer from '../services/board/drawer/service.drawer'
+import {TServiceDrawer} from "./board/drawer/Service.drawer";
 
-export type TDrawer = ServiceDrawer
+export type TDrawer = TServiceDrawer
 export type TDrawerOrNullify = TDrawer | undefined
 export type TDrawers = TDrawer[]

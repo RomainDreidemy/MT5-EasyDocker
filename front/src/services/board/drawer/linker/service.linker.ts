@@ -2,7 +2,7 @@ import type ServiceConnector from '../connector/service.connector'
 import { Placements } from '../../../../enums/placements'
 import { type ILink } from '../../../../interfaces/Link.interface'
 import BaseLinker from './base.linker'
-import type ServiceDrawer from '../service.drawer'
+import type ServiceDrawer from '../Service.drawer'
 
 class ServiceLinker extends BaseLinker {
   constructor (

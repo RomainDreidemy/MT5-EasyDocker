@@ -1,6 +1,6 @@
 import { type ISize } from '../../interfaces/Window.interface'
 
-export interface TBaseCanvas {
+export type TBaseCanvas = {
   canvas?: HTMLCanvasElement
   context?: CanvasRenderingContext2D
   create: (canvas: HTMLCanvasElement) => void

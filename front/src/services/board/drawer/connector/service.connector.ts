@@ -1,6 +1,6 @@
 import BaseConnector from './base.connector'
 import { type IPosition } from '../../../../interfaces/Position.interface'
-import type ServiceDrawer from '../service.drawer'
+import type ServiceDrawer from '../Service.drawer'
 
 class ServiceConnector extends BaseConnector {
   constructor (
