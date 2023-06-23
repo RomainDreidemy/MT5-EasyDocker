@@ -15,11 +15,9 @@ const NetworkDrawer = (network: INetwork, context: CanvasRenderingContext2D): TN
       this.context = context
       this.Linker = NetworkLinker
 
-      this.factory = NetworkFactory(network, context)
-      this.factory.create()
+      this.factory = NetworkFactory()
+      this.factory.create(network, context)
 
-      console.log('--')
-      console.log(ConnectorBuilder(this.factory, context, network, NetworkConnector))
       this.Connector = ConnectorBuilder(this.factory, context, network, NetworkConnector)
     }
   }

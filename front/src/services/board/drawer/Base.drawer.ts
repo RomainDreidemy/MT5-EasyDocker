@@ -1,4 +1,4 @@
-import { type TBaseDrawer } from '../../../types/board/drawer/Base.Drawer'
+import { type TBaseDrawer } from '../../../types/board/drawer/Base.drawer'
 import StateDrawer from './State.drawer'
 import { Errors } from '../../../enums/errors'
 import CommonBases from './Common.bases'

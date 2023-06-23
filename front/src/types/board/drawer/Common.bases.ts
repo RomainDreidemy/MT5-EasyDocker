@@ -1,4 +1,4 @@
 export interface TCommonBases {
-  create: () => void
-  draw: () => void
+  create: () => void;
+  draw: () => void;
 }

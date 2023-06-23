@@ -1,4 +1,4 @@
-import { type TBaseDrawer } from './Base.Drawer'
+import { type TBaseDrawer } from './Base.drawer'
 
 export type TServiceDrawer =
   TBaseDrawer

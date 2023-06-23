@@ -1,11 +1,13 @@
-import { type TStateFactory } from './State.factory'
-import { type IPosition } from '../../../../interfaces/Position.interface'
-import { type TCommonBases } from '../Common.bases'
+import {type TStateFactory} from './State.factory'
+import {type IPosition} from '../../../../interfaces/Position.interface'
+import {type TCommonBases} from '../Common.bases'
+import {TEntity} from "../../../Entity";
 
 export type TBaseFactory =
-  TCommonBases &
-  TStateFactory &
+  Omit<TCommonBases & TStateFactory, "create">
+  &
   {
-    isSelected: (Position: IPosition) => boolean
-    updatePosition: (Position: IPosition) => void
+    create: (entity: TEntity, context: CanvasRenderingContext2D) => void;
+    isSelected: (position: IPosition) => boolean
+    updatePosition: (position: IPosition) => void
   }

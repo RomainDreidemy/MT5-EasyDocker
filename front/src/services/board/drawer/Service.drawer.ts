@@ -15,8 +15,8 @@ const ServiceDrawer = (service: IService, context: CanvasRenderingContext2D): TS
       this.context = context
       this.Linker = ServiceLinker
 
-      this.factory = ServiceFactory(service, context)
-      this.factory.create()
+      this.factory = ServiceFactory()
+      this.factory.create(service, context)
 
       this.Connector = ConnectorBuilder(this.factory, context, service, ServiceConnector)
     }

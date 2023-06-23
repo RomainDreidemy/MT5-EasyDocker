@@ -2,10 +2,17 @@ import { type TBaseFactory } from '../../../../types/board/drawer/factories/Base
 import StateFactory from './State.factory'
 import { type IPosition } from '../../../../interfaces/Position.interface'
 import CommonBases from '../Common.bases'
+import {TEntity} from "../../../../types/Entity";
 
 const BaseFactory: TBaseFactory = {
   ...CommonBases,
   ...StateFactory,
+
+  create(entity: TEntity, context: CanvasRenderingContext2D): void {
+    this.context = context
+    this.positionX = isNaN(entity.positionX) ? this.positionX : entity.positionX
+    this.positionY = isNaN(entity.positionY) ? this.positionY : entity.positionY
+  },
 
   isSelected ({ x, y }: IPosition): boolean {
     return this.context!.isPointInPath(this.path, x, y)
@@ -34,7 +41,7 @@ const BaseFactory: TBaseFactory = {
     }
 
     this.context!.stroke(rectangle)
-    this.context!.fillText('Service', this.positionX + 10, this.positionY + 30)
+    this.context!.fillText(this.name, this.positionX + 10, this.positionY + 30)
     this.context!.closePath()
 
     this.path = rectangle
