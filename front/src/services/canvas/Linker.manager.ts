@@ -26,7 +26,7 @@ const LinkerManager: TLinkerManager = {
 
   findLinker (position: IPosition): TLinkerOrNullify {
     return this.drawers
-      .flatMap(element => element.linkers)
+      .flatMap(drawer => drawer.linkers)
       .find(linker => linker.isSelected(position))
   },
 
@@ -42,11 +42,11 @@ const LinkerManager: TLinkerManager = {
     if ((this.selectedConnector != null) && (connector != null) && (this.selectedDrawer != null) && (this.onHoverDrawer != null)) {
       const link: ILink = { to: this.selectedConnector, at: connector }
 
-      const linker = this.selectedDrawer.Linker(this.selectedDrawer, this.context!, link)
+      const linker = this.selectedDrawer.Linker!(this.selectedDrawer, this.context!, link)
       linker.create()
       this.selectedDrawer.linkers.push(linker)
 
-      this.onHoverDrawer.factory.onHover = false
+      this.onHoverDrawer.factory!.onHover = false
       this.onHoverDrawer = undefined
       this.onSelectDrawer(false)
     }
@@ -54,7 +54,7 @@ const LinkerManager: TLinkerManager = {
 
   onSelectDrawer (selected: boolean): void {
     if (this.selectedDrawer != null) {
-      this.selectedDrawer.factory.selected = selected
+      this.selectedDrawer.factory!.selected = selected
     }
   },
 

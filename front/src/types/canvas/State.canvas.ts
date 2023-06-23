@@ -1,14 +1,14 @@
-import type ServiceDrawer from '../../services/board/drawer/Service.drawer'
-import type ServiceLinker from '../../services/board/drawer/linkers/Service.linker'
-import type ServiceConnector from '../../services/board/drawer/connector/Service.connector'
+import {TDrawer} from "../Drawer";
+import {TLinker} from "../Linker";
+import {TConnector} from "../Connector";
 
 export interface TStateCanvas {
-  drawers: ServiceDrawer[]
+  drawers: TDrawer[]
 
-  selectedLinker?: ServiceLinker
-  selectedDrawer?: ServiceDrawer
-  selectedConnector?: ServiceConnector
-  onHoverDrawer?: ServiceDrawer
+  selectedLinker?: TLinker
+  selectedDrawer?: TDrawer
+  selectedConnector?: TConnector
+  onHoverDrawer?: TDrawer
 
   isMoving: boolean
 }

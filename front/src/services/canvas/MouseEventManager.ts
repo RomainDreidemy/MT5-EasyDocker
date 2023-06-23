@@ -1,19 +1,18 @@
-import { type TMouseEventManager } from '../../types/canvas/MouseEvent.manager'
-import { Events } from '../../enums/events'
-import { type IPosition } from '../../interfaces/Position.interface'
-import type ServiceDrawer from '../board/drawer/Service.drawer'
+import {type TMouseEventManager} from '../../types/canvas/MouseEvent.manager'
+import {Events} from '../../enums/events'
+import {type IPosition} from '../../interfaces/Position.interface'
 import BaseManager from './Base.manager'
 import LinkerManager from './Linker.manager'
-import { DrawerManager } from './Drawer.manager'
-import { type TConnectorOrNullify } from '../../types/Connector'
-import {TServiceDrawer} from "../../types/board/drawer/Service.drawer";
+import {DrawerManager} from './Drawer.manager'
+import {type TConnectorOrNullify} from '../../types/Connector'
+import {TDrawer} from "../../types/Drawer";
 
 const MouseEventManager: TMouseEventManager = {
   ...BaseManager,
   ...LinkerManager,
   ...DrawerManager,
 
-  mouseStartup (): void {
+  mouseStartup(): void {
     this.canvas!.addEventListener(Events.ON_MOUSE_DOWN, (event: MouseEvent): void => {
       this.handleMouseDown(event)
     })
@@ -25,8 +24,8 @@ const MouseEventManager: TMouseEventManager = {
     })
   },
 
-  handleMouseUp (event: MouseEvent): void {
-    const position: IPosition = { x: event.offsetX, y: event.offsetY }
+  handleMouseUp(event: MouseEvent): void {
+    const position: IPosition = {x: event.offsetX, y: event.offsetY}
 
     if ((this.selectedConnector != null) && (this.onHoverDrawer != null)) {
       this.createLink(position)
@@ -37,11 +36,11 @@ const MouseEventManager: TMouseEventManager = {
     this.updateScreen()
   },
 
-  handleMouseMove (event: MouseEvent): void {
-    const position: IPosition = { x: event.offsetX, y: event.offsetY }
+  handleMouseMove(event: MouseEvent): void {
+    const position: IPosition = {x: event.offsetX, y: event.offsetY}
 
     if (this.isMoving && (this.selectedDrawer != null) && (this.selectedConnector == null)) {
-      this.selectedDrawer.factory.updatePosition(position)
+      this.selectedDrawer.factory!.updatePosition(position)
       this.updateScreen()
     } else if (this.selectedConnector != null) {
       this.drawConnectorLine(this.selectedConnector, position)
@@ -49,8 +48,8 @@ const MouseEventManager: TMouseEventManager = {
     }
   },
 
-  handleMouseDown (event: MouseEvent): void {
-    const position: IPosition = { x: event.offsetX, y: event.offsetY }
+  handleMouseDown(event: MouseEvent): void {
+    const position: IPosition = {x: event.offsetX, y: event.offsetY}
     this.isMoving = true
 
     if (this.selectedDrawer != null) {
@@ -74,8 +73,8 @@ const MouseEventManager: TMouseEventManager = {
     }
   },
 
-  handleMouseUpOnLinker (element: TServiceDrawer, position: IPosition): TConnectorOrNullify {
-    return element.connectors.find(linker => linker.isSelected(position))
+  handleMouseUpOnLinker(drawer: TDrawer, position: IPosition): TConnectorOrNullify {
+    return drawer.connectors.find(drawer => drawer.isSelected(position))
   }
 }
 
