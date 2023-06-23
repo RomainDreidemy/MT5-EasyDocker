@@ -3,9 +3,9 @@ import { type IPosition } from '../../interfaces/Position.interface'
 import { type ILink } from '../../interfaces/Link.interface'
 import { ConnectorManager } from './Connector.manager'
 import BaseManager from './Base.manager'
-import { type TConnector } from '../../types/TConnector'
-import { type TDrawer } from '../../types/TDrawer'
-import { type TLinker, type TLinkerOrNullify } from '../../types/TLinker'
+import { type TConnector } from '../../types/Connector'
+import { type TDrawer } from '../../types/Drawer'
+import { type TLinker, type TLinkerOrNullify } from '../../types/Linker'
 
 const LinkerManager: TLinkerManager = {
   ...BaseManager,
@@ -26,7 +26,7 @@ const LinkerManager: TLinkerManager = {
 
   findLinker (position: IPosition): TLinkerOrNullify {
     return this.drawers
-      .flatMap(element => element.linkers)
+      .flatMap(drawer => drawer.linkers)
       .find(linker => linker.isSelected(position))
   },
 
@@ -42,10 +42,11 @@ const LinkerManager: TLinkerManager = {
     if ((this.selectedConnector != null) && (connector != null) && (this.selectedDrawer != null) && (this.onHoverDrawer != null)) {
       const link: ILink = { to: this.selectedConnector, at: connector }
 
-      const linker = new this.selectedDrawer.Linker(this.selectedDrawer, this.context!, link)
+      const linker = this.selectedDrawer.Linker!(this.selectedDrawer, this.context!, link)
+      linker.create()
       this.selectedDrawer.linkers.push(linker)
 
-      this.onHoverDrawer.factory.onHover = false
+      this.onHoverDrawer.factory!.onHover = false
       this.onHoverDrawer = undefined
       this.onSelectDrawer(false)
     }
@@ -53,7 +54,7 @@ const LinkerManager: TLinkerManager = {
 
   onSelectDrawer (selected: boolean): void {
     if (this.selectedDrawer != null) {
-      this.selectedDrawer.factory.selected = selected
+      this.selectedDrawer.factory!.selected = selected
     }
   },
 

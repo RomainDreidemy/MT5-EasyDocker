@@ -1,5 +1,5 @@
 import { type TConnectorManager } from './Connector.manager'
-import { type TStateCanvas } from './State.Canvas'
+import { type TStateCanvas } from './State.canvas'
 import { type TBaseManager } from './Base.manager'
 import { type TMouseEventManager } from './MouseEvent.manager'
 import { type TKeyboardEventManager } from './KeyboardEvent.manager'

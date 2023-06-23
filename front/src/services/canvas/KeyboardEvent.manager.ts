@@ -14,7 +14,7 @@ const MouseEventManager: TKeyboardEventManager = {
 
   handleKeyDown (event: KeyboardEvent): void {
     if (event.code === Keyboard.DELETE && (this.selectedLinker != null)) {
-      this.deleteLinker(this.selectedLinker.drawer, this.selectedLinker)
+      this.deleteLinker(this.selectedLinker.drawer!, this.selectedLinker)
       this.updateScreen()
     }
   }

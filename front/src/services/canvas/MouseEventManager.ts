@@ -1,11 +1,11 @@
 import { type TMouseEventManager } from '../../types/canvas/MouseEvent.manager'
 import { Events } from '../../enums/events'
 import { type IPosition } from '../../interfaces/Position.interface'
-import type ServiceDrawer from '../board/drawer/service.drawer'
 import BaseManager from './Base.manager'
 import LinkerManager from './Linker.manager'
 import { DrawerManager } from './Drawer.manager'
-import { type TConnectorOrNullify } from '../../types/TConnector'
+import { type TConnectorOrNullify } from '../../types/Connector'
+import { type TDrawer } from '../../types/Drawer'
 
 const MouseEventManager: TMouseEventManager = {
   ...BaseManager,
@@ -40,7 +40,7 @@ const MouseEventManager: TMouseEventManager = {
     const position: IPosition = { x: event.offsetX, y: event.offsetY }
 
     if (this.isMoving && (this.selectedDrawer != null) && (this.selectedConnector == null)) {
-      this.selectedDrawer.factory.updatePosition(position)
+      this.selectedDrawer.factory!.updatePosition(position)
       this.updateScreen()
     } else if (this.selectedConnector != null) {
       this.drawConnectorLine(this.selectedConnector, position)
@@ -73,8 +73,8 @@ const MouseEventManager: TMouseEventManager = {
     }
   },
 
-  handleMouseUpOnLinker (element: ServiceDrawer, position: IPosition): TConnectorOrNullify {
-    return element.connectors.find(linker => linker.isSelected(position))
+  handleMouseUpOnLinker (drawer: TDrawer, position: IPosition): TConnectorOrNullify {
+    return drawer.connectors.find(drawer => drawer.isSelected(position))
   }
 }
 

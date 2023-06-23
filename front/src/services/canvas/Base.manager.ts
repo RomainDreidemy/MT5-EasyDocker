@@ -1,5 +1,5 @@
 import { type TBaseManager } from '../../types/canvas/Base.manager'
-import { type TDrawers } from '../../types/TDrawer'
+import { type TDrawers } from '../../types/Drawer'
 import BaseCanvas from './Base.canvas'
 import StateCanvas from './State.canvas'
 

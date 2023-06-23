@@ -1,12 +1,13 @@
 import { type IPosition } from '../../interfaces/Position.interface'
-import type ServiceDrawer from '../../services/board/drawer/service.drawer'
-import { type TStateCanvas } from './State.Canvas'
+import { type TStateCanvas } from './State.canvas'
+import { type TServiceDrawer } from '../board/drawer/Service.drawer'
+import { type TDrawerOrNullify } from '../Drawer'
 
 export type TDrawerManager =
   TStateCanvas &
   {
-    findDrawer: (position: IPosition) => ServiceDrawer | undefined
-    selectDrawer: (drawer: ServiceDrawer) => void
+    findDrawer: (position: IPosition) => TDrawerOrNullify
+    selectDrawer: (drawer: TServiceDrawer) => void
     clearSelectedDrawer: () => void
     updateHoverDrawer: (position: IPosition) => void
   }
