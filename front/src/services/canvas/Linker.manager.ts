@@ -3,9 +3,9 @@ import { type IPosition } from '../../interfaces/Position.interface'
 import { type ILink } from '../../interfaces/Link.interface'
 import { ConnectorManager } from './Connector.manager'
 import BaseManager from './Base.manager'
-import { type TConnector } from '../../types/TConnector'
-import { type TDrawer } from '../../types/TDrawer'
-import { type TLinker, type TLinkerOrNullify } from '../../types/TLinker'
+import { type TConnector } from '../../types/Connector'
+import { type TDrawer } from '../../types/Drawer'
+import { type TLinker, type TLinkerOrNullify } from '../../types/Linker'
 
 const LinkerManager: TLinkerManager = {
   ...BaseManager,

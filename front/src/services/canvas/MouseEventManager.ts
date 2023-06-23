@@ -5,7 +5,8 @@ import type ServiceDrawer from '../board/drawer/Service.drawer'
 import BaseManager from './Base.manager'
 import LinkerManager from './Linker.manager'
 import { DrawerManager } from './Drawer.manager'
-import { type TConnectorOrNullify } from '../../types/TConnector'
+import { type TConnectorOrNullify } from '../../types/Connector'
+import {TServiceDrawer} from "../../types/board/drawer/Service.drawer";
 
 const MouseEventManager: TMouseEventManager = {
   ...BaseManager,
@@ -73,7 +74,7 @@ const MouseEventManager: TMouseEventManager = {
     }
   },
 
-  handleMouseUpOnLinker (element: ServiceDrawer, position: IPosition): TConnectorOrNullify {
+  handleMouseUpOnLinker (element: TServiceDrawer, position: IPosition): TConnectorOrNullify {
     return element.connectors.find(linker => linker.isSelected(position))
   }
 }

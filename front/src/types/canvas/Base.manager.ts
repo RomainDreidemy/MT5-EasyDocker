@@ -1,4 +1,4 @@
-import { type TDrawers } from '../TDrawer'
+import { type TDrawers } from '../Drawer'
 import { type TStateCanvas } from './State.canvas'
 import { type TBaseCanvas } from './Base.canvas'
 

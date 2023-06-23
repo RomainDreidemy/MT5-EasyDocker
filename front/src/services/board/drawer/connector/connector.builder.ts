@@ -1,16 +1,18 @@
 import { type IPosition } from '../../../../interfaces/Position.interface'
-import type serviceFactory from '../factories/service.factory'
+import type serviceFactory from '../factories/Service.factory'
 import ServiceConnector from './service.connector'
 import type ServiceDrawer from '../Service.drawer'
 import { Placements } from '../../../../enums/placements'
+import {TServiceDrawer} from "../../../../types/board/drawer/Service.drawer";
+import {TServiceFactory} from "../../../../types/board/drawer/factories/Service.factory";
 
 class ConnectorBuilder {
   offset: number = 20
 
   constructor (
     readonly context: CanvasRenderingContext2D,
-    readonly factory: serviceFactory,
-    readonly drawer: ServiceDrawer
+    readonly factory: TServiceFactory,
+    readonly drawer: TServiceDrawer
   ) {
   }
 

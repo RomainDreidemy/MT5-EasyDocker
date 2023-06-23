@@ -1,3 +1,3 @@
-import type ServiceFactory from '../services/board/drawer/factories/service.factory'
+import {TServiceFactory} from "./board/drawer/factories/Service.factory";
 
-export type TFactory = ServiceFactory
+export type TFactory = TServiceFactory
