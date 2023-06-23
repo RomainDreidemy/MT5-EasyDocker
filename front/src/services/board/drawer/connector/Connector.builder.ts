@@ -1,6 +1,6 @@
 import {type IPosition} from '../../../../interfaces/Position.interface'
 import {Placements} from '../../../../enums/placements'
-import {TConnectorBuilder} from "../../../../types/board/drawer/Connectors/Connector.builder";
+import {TConnectorBuilder} from "../../../../types/board/drawer/connectors/Connector.builder";
 import {TFactory} from "../../../../types/Factory";
 import {TCallableConnectors, TConnector} from "../../../../types/Connector";
 import {TEntity} from "../../../../types/Entity";

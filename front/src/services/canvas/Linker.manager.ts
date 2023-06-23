@@ -42,7 +42,8 @@ const LinkerManager: TLinkerManager = {
     if ((this.selectedConnector != null) && (connector != null) && (this.selectedDrawer != null) && (this.onHoverDrawer != null)) {
       const link: ILink = { to: this.selectedConnector, at: connector }
 
-      const linker = new this.selectedDrawer.Linker(this.selectedDrawer, this.context!, link)
+      const linker = this.selectedDrawer.Linker(this.selectedDrawer, this.context!, link)
+      linker.create()
       this.selectedDrawer.linkers.push(linker)
 
       this.onHoverDrawer.factory.onHover = false

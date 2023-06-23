@@ -7,8 +7,8 @@ export const DrawerManager: TDrawerManager = {
   ...StateCanvas,
 
   findDrawer (position: IPosition): TDrawerOrNullify {
-    return this.drawers.find(service =>
-      service.factory.isSelected(position))
+    return this.drawers.find(drawer =>
+      drawer.factory.isSelected(position))
   },
 
   clearSelectedDrawer (): void {

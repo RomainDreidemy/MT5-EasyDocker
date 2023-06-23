@@ -1,4 +1,4 @@
-import {TStateConnector} from "../../../../types/board/drawer/Connectors/State.connector";
+import {TStateConnector} from "../../../../types/board/drawer/connectors/State.connector";
 
 const StateConnector: TStateConnector = {
   path: new Path2D(),

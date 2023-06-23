@@ -1,11 +1,10 @@
 import {type IPosition} from '../../../../interfaces/Position.interface'
 import {Errors} from '../../../../enums/errors'
-import StateConnector from "./State.connector";
-import {TBaseConnector} from "../../../../types/board/drawer/connectors/Base.connector";
+import {TBaseLinker} from "../../../../types/board/drawer/linkers/Base.linker";
+import StateLinker from "./State.linker";
 
-
-const BaseConnector: TBaseConnector = {
-  ...StateConnector,
+const BaseLinker: TBaseLinker = {
+  ...StateLinker,
 
   create(): void {
     throw new Error(Errors.NOT_IMPLEMENTED)
@@ -16,8 +15,8 @@ const BaseConnector: TBaseConnector = {
   },
 
   isSelected({x, y}: IPosition): boolean {
-    return this.context!.isPointInPath(this.path, x, y)
-  },
+    return this.context!.isPointInStroke(this.path, x, y)
+  }
 }
 
-export default BaseConnector
+export default BaseLinker

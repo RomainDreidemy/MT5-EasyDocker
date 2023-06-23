@@ -1,6 +1,6 @@
 import BaseConnector from './Base.connector'
 import {type IPosition} from '../../../../interfaces/Position.interface'
-import {TServiceConnector} from "../../../../types/board/drawer/Connectors/Service.connector";
+import {TServiceConnector} from "../../../../types/board/drawer/connectors/Service.connector";
 import {TFactory} from "../../../../types/Factory";
 
 

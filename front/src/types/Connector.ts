@@ -1,5 +1,5 @@
 import type ServiceConnector from '../services/board/drawer/connector/Service.connector'
-import {TServiceConnector} from "./board/drawer/Connectors/Service.connector";
+import {TServiceConnector} from "./board/drawer/connectors/Service.connector";
 
 export type TConnector = TServiceConnector
 export type TConnectorOrNullify = TConnector | undefined
