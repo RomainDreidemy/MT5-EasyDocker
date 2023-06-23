@@ -5,6 +5,8 @@ import { type TServiceDrawer } from '../types/board/drawer/Service.drawer'
 import ServiceDrawer from '../services/board/drawer/Service.drawer'
 import {INetwork} from "../interfaces/Network.interface";
 import NetworkDrawer from "../services/board/drawer/Network.drawer";
+import VolumeDrawer from "../services/board/drawer/Volume.drawer";
+import {IVolume} from "../interfaces/Volume.interface";
 
 const useBoard = (): { canvasRef: MutableRefObject<HTMLCanvasElement | null> } => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
@@ -14,19 +16,19 @@ const useBoard = (): { canvasRef: MutableRefObject<HTMLCanvasElement | null> } =
 
     EventsCanvas.create(canvas)
 
-    const service1: IService = { id: 1, positionX: 100, positionY: 20 }
-    const serviceDrawer1: TServiceDrawer = ServiceDrawer(service1, EventsCanvas.context!)
-    serviceDrawer1.create()
-
-    const service2: IService = { id: 2, positionX: 100, positionY: 400 }
-    const serviceDrawer2 = ServiceDrawer(service2, EventsCanvas.context!)
-    serviceDrawer2.create()
+    const service: IService = { id: 1, positionX: 100, positionY: 20 }
+    const serviceDrawer: TServiceDrawer = ServiceDrawer(service, EventsCanvas.context!)
+    serviceDrawer.create()
 
     const network: INetwork = { id: 2, positionX: 400, positionY: 400 }
     const networkDrawer = NetworkDrawer(network, EventsCanvas.context!)
     networkDrawer.create()
 
-    EventsCanvas.add(serviceDrawer1, serviceDrawer2, networkDrawer)
+    const volume: IVolume = { id: 2, positionX: 400, positionY: 20 }
+    const volumeDrawer = VolumeDrawer(volume, EventsCanvas.context!)
+    volumeDrawer.create()
+
+    EventsCanvas.add(serviceDrawer, networkDrawer, volumeDrawer)
     EventsCanvas.startup()
   }, [canvasRef])
 
