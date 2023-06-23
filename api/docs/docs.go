@@ -82,6 +82,101 @@ const docTemplate = `{
                 }
             }
         },
+        "/services/{id}": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Services"
+                ],
+                "summary": "Get a service",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Service ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.ServiceResponse"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Services"
+                ],
+                "summary": "Update a service",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Service ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "query params",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.ServiceUpdateInput"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.ServiceResponse"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Services"
+                ],
+                "summary": "Delete a service",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Service ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    }
+                }
+            }
+        },
         "/stacks": {
             "get": {
                 "consumes": [
@@ -233,6 +328,78 @@ const docTemplate = `{
                 }
             }
         },
+        "/stacks/{stackId}/services": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Services"
+                ],
+                "summary": "Get services for a stack",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Stack ID",
+                        "name": "stackId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.ServiceResponse"
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Services"
+                ],
+                "summary": "Create a new service",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Stack ID",
+                        "name": "stackId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "query params",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.ServiceCreateInput"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/models.ServiceResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/users/me": {
             "get": {
                 "consumes": [
@@ -257,6 +424,82 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "models.ServiceCreateInput": {
+            "type": "object",
+            "required": [
+                "positionX",
+                "positionY"
+            ],
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "dockerImage": {
+                    "type": "string"
+                },
+                "dockerTag": {
+                    "type": "string"
+                },
+                "entrypoint": {
+                    "type": "string"
+                },
+                "positionX": {
+                    "type": "number"
+                },
+                "positionY": {
+                    "type": "number"
+                }
+            }
+        },
+        "models.ServiceResponse": {
+            "type": "object",
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "dockerImage": {
+                    "type": "string"
+                },
+                "dockerTag": {
+                    "type": "string"
+                },
+                "entrypoint": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "positionX": {
+                    "type": "number"
+                },
+                "positionY": {
+                    "type": "number"
+                }
+            }
+        },
+        "models.ServiceUpdateInput": {
+            "type": "object",
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "dockerImage": {
+                    "type": "string"
+                },
+                "dockerTag": {
+                    "type": "string"
+                },
+                "entrypoint": {
+                    "type": "string"
+                },
+                "positionX": {
+                    "type": "number"
+                },
+                "positionY": {
+                    "type": "number"
+                }
+            }
+        },
         "models.SignInInput": {
             "type": "object",
             "required": [

@@ -50,6 +50,14 @@ func main() {
 	stacks.Put("/:id", controllers.UpdateStack)
 	stacks.Delete("/:id", controllers.DeleteStack)
 
+	stacks.Post("/:stackId/services", controllers.CreateService)
+	stacks.Get("/:stackId/services", controllers.GetServices)
+
+	service := micro.Group("/services", middleware.DeserializeUser)
+	service.Get("/:id", controllers.GetService)
+	service.Put("/:id", controllers.UpdateService)
+	service.Delete("/:id", controllers.DeleteService)
+
 	app.Get("/swagger/*", swagger.HandlerDefault)
 
 	log.Fatal(app.Listen(":3000"))
