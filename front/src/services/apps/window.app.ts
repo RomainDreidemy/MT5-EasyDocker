@@ -1,7 +1,7 @@
-import { type IWidth } from '../../interfaces/Window.interface'
+import { type ISize } from '../../interfaces/Window.interface'
 
 class WindowApp {
-  static dimensions (): IWidth {
+  static dimensions (): ISize {
     const { innerWidth: width, innerHeight: height } = window
 
     return { width, height }

@@ -1,9 +1,9 @@
-import type ServiceFactory from './service.factory'
 import { type IPosition } from '../../../../interfaces/Position.interface'
 import { Errors } from '../../../../enums/errors'
+import { type TFactory } from '../../../../types/Factory'
 
 class BaseFactory {
-  protected factory?: ServiceFactory
+  protected factory?: TFactory
 
   public path: Path2D = new Path2D()
   public positionX: number = 20
@@ -14,7 +14,7 @@ class BaseFactory {
   public selected: boolean = false
   public onHover: boolean = false
 
-  public setFactory (factory: ServiceFactory): void {
+  public setFactory (factory: TFactory): void {
     this.factory = factory
   }
 

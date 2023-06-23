@@ -8,6 +8,7 @@ type Stack struct {
 	Description string     `gorm:"type:text"`
 	UserID      *uuid.UUID
 	User        User
+	Services    []Service
 }
 
 type StackCreateInput struct {
