@@ -4,6 +4,7 @@ import './index.css'
 import reportWebVitals from './reportWebVitals'
 import { RouterProvider } from 'react-router-dom'
 import { router } from './routes/router'
+import { IconContext } from 'react-icons'
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -15,9 +16,11 @@ const App = () => {
   const [user, setUser] = useState(UserContext)
 
   return (
-        <UserContext.Provider value={{ user, setUser }}>
-            <RouterProvider router={router} />
-        </UserContext.Provider>
+      <IconContext.Provider value={{ className: 'icons' }}>
+          <UserContext.Provider value={{ user, setUser }}>
+              <RouterProvider router={router}/>
+          </UserContext.Provider>
+      </IconContext.Provider>
   )
 }
 
