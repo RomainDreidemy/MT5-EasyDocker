@@ -1,5 +1,5 @@
-import {TStateDrawer} from "./State.drawer";
-import {TCommonBases} from "./Common.bases";
+import { type TStateDrawer } from './State.drawer'
+import { type TCommonBases } from './Common.bases'
 
 export type TBaseDrawer =
   TCommonBases &
@@ -7,9 +7,9 @@ export type TBaseDrawer =
   {
     create: () => void
     preProcessActions: () => void
-    draw: () => void,
-    shouldDrawConnectors: () => boolean,
+    draw: () => void
+    shouldDrawConnectors: () => boolean
     drawConnectors: () => void
-    drawLinkers: () => void,
-    createConnectors: () => void,
+    drawLinkers: () => void
+    createConnectors: () => void
   }

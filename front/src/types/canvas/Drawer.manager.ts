@@ -1,7 +1,7 @@
-import {type IPosition} from '../../interfaces/Position.interface'
-import {type TStateCanvas} from './State.canvas'
-import {TServiceDrawer} from "../board/drawer/Service.drawer";
-import {TDrawerOrNullify} from "../Drawer";
+import { type IPosition } from '../../interfaces/Position.interface'
+import { type TStateCanvas } from './State.canvas'
+import { type TServiceDrawer } from '../board/drawer/Service.drawer'
+import { type TDrawerOrNullify } from '../Drawer'
 
 export type TDrawerManager =
   TStateCanvas &

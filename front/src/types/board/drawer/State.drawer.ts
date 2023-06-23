@@ -1,17 +1,16 @@
-import {TFactory} from "../../Factory";
-import {TConnectors} from "../../Connector";
-import {TLinker, TLinkers} from "../../Linker";
-import {TEntity} from "../../Entity";
-import {TConnectorBuilder} from "./connectors/Connector.builder";
-import ServiceLinker from "../../../services/board/drawer/linkers/Service.linker";
+import { type TFactory } from '../../Factory'
+import { type TConnectors } from '../../Connector'
+import { type TLinkerBuilder, type TLinkers } from '../../Linker'
+import { type TEntity } from '../../Entity'
+import { type TConnectorBuilder } from './connectors/Connector.builder'
 
-export type TStateDrawer = {
-  context?: CanvasRenderingContext2D,
+export interface TStateDrawer {
+  context?: CanvasRenderingContext2D
   entity?: TEntity
-  factory?: TFactory,
-  Linker?: typeof ServiceLinker
+  factory?: TFactory
+  Linker?: TLinkerBuilder
   Connector?: TConnectorBuilder
 
-  connectors: TConnectors,
-  linkers: TLinkers,
+  connectors: TConnectors
+  linkers: TLinkers
 }

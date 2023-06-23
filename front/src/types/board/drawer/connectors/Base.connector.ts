@@ -1,6 +1,6 @@
-import {TStateConnector} from "./State.connector";
-import {IPosition} from "../../../../interfaces/Position.interface";
-import {TCommonBases} from "../Common.bases";
+import { type TStateConnector } from './State.connector'
+import { type IPosition } from '../../../../interfaces/Position.interface'
+import { type TCommonBases } from '../Common.bases'
 
 export type TBaseConnector =
   TCommonBases &

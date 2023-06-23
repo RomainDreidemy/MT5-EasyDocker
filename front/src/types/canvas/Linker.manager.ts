@@ -1,10 +1,10 @@
-import {type TStateCanvas} from './State.canvas'
-import {type IPosition} from '../../interfaces/Position.interface'
-import {type TConnectorManager} from './Connector.manager'
-import {type TBaseManager} from './Base.manager'
-import {TConnector} from "../Connector";
-import {TDrawer} from "../Drawer";
-import {TLinker} from "../Linker";
+import { type TStateCanvas } from './State.canvas'
+import { type IPosition } from '../../interfaces/Position.interface'
+import { type TConnectorManager } from './Connector.manager'
+import { type TBaseManager } from './Base.manager'
+import { type TConnector } from '../Connector'
+import { type TDrawer } from '../Drawer'
+import { type TLinker } from '../Linker'
 
 export type TLinkerManager =
   TStateCanvas &

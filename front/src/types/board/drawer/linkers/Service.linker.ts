@@ -1,7 +1,7 @@
-import {TBaseLinker} from "./Base.linker";
-import {TConnector} from "../../../Connector";
+import { type TBaseLinker } from './Base.linker'
+import { type TConnector } from '../../../Connector'
 
 export type TServiceLinker =
   TBaseLinker & {
-  definePosition(connector: TConnector, line: (x: number, y: number) => void): void
-}
+    definePosition: (connector: TConnector, line: (x: number, y: number) => void) => void
+  }

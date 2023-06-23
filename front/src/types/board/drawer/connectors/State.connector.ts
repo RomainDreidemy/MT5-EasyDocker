@@ -1,10 +1,9 @@
-import {IPosition} from "../../../../interfaces/Position.interface";
-import {Placements} from "../../../../enums/placements";
-import {TFactory} from "../../../Factory";
+import { type Placements } from '../../../../enums/placements'
+import { type TFactory } from '../../../Factory'
 
-export type TStateConnector = {
-  context?: CanvasRenderingContext2D,
-  factory?: TFactory,
+export interface TStateConnector {
+  context?: CanvasRenderingContext2D
+  factory?: TFactory
   placement?: Placements
 
   path: Path2D

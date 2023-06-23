@@ -1,17 +1,17 @@
-import {TBaseDrawer} from "../../../types/board/drawer/Base.Drawer";
-import StateDrawer from "./State.drawer";
-import {Errors} from "../../../enums/errors";
-import CommonBases from "./Common.bases";
+import { type TBaseDrawer } from '../../../types/board/drawer/Base.Drawer'
+import StateDrawer from './State.drawer'
+import { Errors } from '../../../enums/errors'
+import CommonBases from './Common.bases'
 
 const BaseDrawer: TBaseDrawer = {
   ...CommonBases,
   ...StateDrawer,
 
-  create(): void {
+  create (): void {
     throw new Error(Errors.NOT_IMPLEMENTED)
   },
 
-  draw(): void {
+  draw (): void {
     this.preProcessActions()
     this.createConnectors()
 
@@ -24,27 +24,27 @@ const BaseDrawer: TBaseDrawer = {
     this.drawLinkers()
   },
 
-  preProcessActions(): void {
+  preProcessActions (): void {
     this.connectors = []
   },
 
-  shouldDrawConnectors(): boolean {
+  shouldDrawConnectors (): boolean {
     return this.factory!.selected || this.factory!.onHover
   },
 
-  drawConnectors(): void {
+  drawConnectors (): void {
     this.connectors.forEach(connector => {
       connector.draw()
     })
   },
 
-  drawLinkers(): void {
+  drawLinkers (): void {
     this.linkers.forEach(link => {
       link.draw()
     })
   },
 
-  createConnectors(): void {
+  createConnectors (): void {
     this.connectors.push(...this.Connector!.create())
   }
 }

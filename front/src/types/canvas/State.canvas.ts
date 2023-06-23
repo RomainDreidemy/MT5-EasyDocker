@@ -1,6 +1,6 @@
-import {TDrawer} from "../Drawer";
-import {TLinker} from "../Linker";
-import {TConnector} from "../Connector";
+import { type TDrawer } from '../Drawer'
+import { type TLinker } from '../Linker'
+import { type TConnector } from '../Connector'
 
 export interface TStateCanvas {
   drawers: TDrawer[]

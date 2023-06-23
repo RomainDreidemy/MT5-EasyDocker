@@ -1,5 +1,4 @@
-import {TBaseConnector} from "./Base.connector";
+import { type TBaseConnector } from './Base.connector'
 
 export type TServiceConnector =
-  TBaseConnector &
-  {}
+  TBaseConnector

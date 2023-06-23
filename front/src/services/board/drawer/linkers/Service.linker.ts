@@ -1,22 +1,21 @@
-import {Placements} from '../../../../enums/placements'
-import {type ILink} from '../../../../interfaces/Link.interface'
+import { Placements } from '../../../../enums/placements'
+import { type ILink } from '../../../../interfaces/Link.interface'
 import BaseLinker from './Base.linker'
-import {TConnector} from "../../../../types/Connector";
-import {TDrawer} from "../../../../types/Drawer";
-import {TServiceLinker} from "../../../../types/board/drawer/linkers/Service.linker";
-import {type IService} from '../../../../interfaces/Service.interface'
+import { type TConnector } from '../../../../types/Connector'
+import { type TDrawer } from '../../../../types/Drawer'
+import { type TServiceLinker } from '../../../../types/board/drawer/linkers/Service.linker'
 
 const ServiceLinker = (drawer: TDrawer, context: CanvasRenderingContext2D, link: ILink): TServiceLinker => {
   return {
     ...BaseLinker,
 
-    create(): void {
+    create (): void {
       this.context = context
       this.drawer = drawer
       this.link = link
     },
 
-    draw(): void {
+    draw (): void {
       const line = new Path2D()
 
       this.context!.beginPath()
@@ -38,31 +37,31 @@ const ServiceLinker = (drawer: TDrawer, context: CanvasRenderingContext2D, link:
       this.path = line
     },
 
-    definePosition(connector: TConnector, line: (x: number, y: number) => void): void {
-    const {placement, factory} = connector
-    const {positionX, positionY, width, height} = factory!
+    definePosition (connector: TConnector, line: (x: number, y: number) => void): void {
+      const { placement, factory } = connector
+      const { positionX, positionY, width, height } = factory!
 
-    switch (placement) {
-    case Placements.TOP: {
-        line(positionX + width / 2, positionY)
-        return
-      }
+      switch (placement) {
+        case Placements.TOP: {
+          line(positionX + width / 2, positionY)
+          return
+        }
 
-    case Placements.BOTTOM: {
-        line(positionX + width / 2, positionY + height)
-        return
-      }
+        case Placements.BOTTOM: {
+          line(positionX + width / 2, positionY + height)
+          return
+        }
 
-    case Placements.LEFT: {
-        line(positionX, positionY + height / 2)
-        return
-      }
+        case Placements.LEFT: {
+          line(positionX, positionY + height / 2)
+          return
+        }
 
-    case Placements.RIGHT: {
-        line(positionX + width, positionY + height / 2)
+        case Placements.RIGHT: {
+          line(positionX + width, positionY + height / 2)
+        }
       }
     }
-  }
   }
 }
 

@@ -1,4 +1,4 @@
-import {TStateFactory} from "../../../../types/board/drawer/factories/State.factory";
+import { type TStateFactory } from '../../../../types/board/drawer/factories/State.factory'
 
 const StateFactory: TStateFactory = {
   path: new Path2D(),

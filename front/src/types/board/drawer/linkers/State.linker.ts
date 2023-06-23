@@ -1,8 +1,8 @@
-import {ILink} from "../../../../interfaces/Link.interface";
-import {TDrawer} from "../../../Drawer";
+import { type ILink } from '../../../../interfaces/Link.interface'
+import { type TDrawer } from '../../../Drawer'
 
-export type TStateLinker = {
-  context?: CanvasRenderingContext2D,
+export interface TStateLinker {
+  context?: CanvasRenderingContext2D
   link?: ILink
   drawer?: TDrawer
 

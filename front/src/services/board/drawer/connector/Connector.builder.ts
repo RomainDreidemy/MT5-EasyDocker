@@ -1,9 +1,9 @@
-import {type IPosition} from '../../../../interfaces/Position.interface'
-import {Placements} from '../../../../enums/placements'
-import {TConnectorBuilder} from "../../../../types/board/drawer/connectors/Connector.builder";
-import {TFactory} from "../../../../types/Factory";
-import {TCallableConnectors, TConnector} from "../../../../types/Connector";
-import {TEntity} from "../../../../types/Entity";
+import { type IPosition } from '../../../../interfaces/Position.interface'
+import { Placements } from '../../../../enums/placements'
+import { type TConnectorBuilder } from '../../../../types/board/drawer/connectors/Connector.builder'
+import { type TFactory } from '../../../../types/Factory'
+import { type TCallableConnectors, type TConnector } from '../../../../types/Connector'
+import { type TEntity } from '../../../../types/Entity'
 
 const ConnectorBuilder = (
   factory: TFactory,
@@ -13,7 +13,7 @@ const ConnectorBuilder = (
   offset: number = 20
 ): TConnectorBuilder => {
   return {
-    create(): TConnector[] {
+    create (): TConnector[] {
       const positions: IPosition[] = [
         {
           placement: Placements.TOP,
@@ -40,7 +40,7 @@ const ConnectorBuilder = (
       return positions.map(this.constructor)
     },
 
-    constructor(position: IPosition): TConnector {
+    constructor (position: IPosition): TConnector {
       const connector = callableConnector(context, factory, position)
       connector.create()
       return connector

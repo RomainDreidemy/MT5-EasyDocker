@@ -1,4 +1,4 @@
-import {TStateDrawer} from "../../../types/board/drawer/State.drawer";
+import { type TStateDrawer } from '../../../types/board/drawer/State.drawer'
 
 const StateDrawer: TStateDrawer = {
   connectors: [],

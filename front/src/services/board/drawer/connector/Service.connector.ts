@@ -1,14 +1,13 @@
 import BaseConnector from './Base.connector'
-import {type IPosition} from '../../../../interfaces/Position.interface'
-import {TServiceConnector} from "../../../../types/board/drawer/connectors/Service.connector";
-import {TFactory} from "../../../../types/Factory";
-
+import { type IPosition } from '../../../../interfaces/Position.interface'
+import { type TServiceConnector } from '../../../../types/board/drawer/connectors/Service.connector'
+import { type TFactory } from '../../../../types/Factory'
 
 const ServiceConnector = (context: CanvasRenderingContext2D, factory: TFactory, position: IPosition): TServiceConnector => {
   return {
     ...BaseConnector,
 
-    create(): void {
+    create (): void {
       this.context = context
       this.factory = factory
       this.positionX = position.x
@@ -16,7 +15,7 @@ const ServiceConnector = (context: CanvasRenderingContext2D, factory: TFactory, 
       this.placement = position.placement!
     },
 
-    draw(): void {
+    draw (): void {
       const circle = new Path2D()
 
       this.context!.beginPath()

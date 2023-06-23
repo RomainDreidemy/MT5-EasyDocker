@@ -1,4 +1,4 @@
-import {TStateConnector} from "../../../../types/board/drawer/connectors/State.connector";
+import { type TStateConnector } from '../../../../types/board/drawer/connectors/State.connector'
 
 const StateConnector: TStateConnector = {
   path: new Path2D(),
@@ -9,7 +9,7 @@ const StateConnector: TStateConnector = {
   startAngle: 0,
   endAngle: 2 * Math.PI,
   positionX: 0,
-  positionY: 0,
+  positionY: 0
 }
 
 export default StateConnector

@@ -1,6 +1,6 @@
-import {TStateFactory} from "./State.factory";
-import {IPosition} from "../../../../interfaces/Position.interface";
-import {TCommonBases} from "../Common.bases";
+import { type TStateFactory } from './State.factory'
+import { type IPosition } from '../../../../interfaces/Position.interface'
+import { type TCommonBases } from '../Common.bases'
 
 export type TBaseFactory =
   TCommonBases &

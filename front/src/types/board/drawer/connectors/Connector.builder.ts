@@ -1,9 +1,8 @@
-import {TServiceConnector} from "./Service.connector";
-import {IPosition} from "../../../../interfaces/Position.interface";
-import {TConnector} from "../../../Connector";
+import { type TServiceConnector } from './Service.connector'
+import { type IPosition } from '../../../../interfaces/Position.interface'
+import { type TConnector } from '../../../Connector'
 
-export type TConnectorBuilder =
-  {
-    create: () => TServiceConnector[],
-    constructor: (position: IPosition) => TConnector
-  }
+export interface TConnectorBuilder {
+  create: () => TServiceConnector[]
+  constructor: (position: IPosition) => TConnector
+}
