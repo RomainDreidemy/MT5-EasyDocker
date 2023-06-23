@@ -1,11 +1,12 @@
-import Alert from "../../atoms/Alert.atom";
+import React from 'react'
+import Alert from '../../atoms/Alert.atom'
 
 interface AlertProps {
-    message: string
+  message: string
 }
 
-const Warning = ({message}: AlertProps) => {
-    return <Alert message={message} type={'warning'} />
+const Warning = ({ message }: AlertProps): JSX.Element => {
+  return <Alert message={message} type={'warning'} />
 }
 
 export default Warning

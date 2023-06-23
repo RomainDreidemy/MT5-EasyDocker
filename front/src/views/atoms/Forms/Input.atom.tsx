@@ -1,18 +1,18 @@
-import React from "react";
+import React from 'react'
 
 interface InputProps {
-    label?: string,
-    type: string,
-    placeholder?: string,
-    name?: string,
-    value?: string,
-    className?: string,
-    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void,
-    onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void
+  label?: string
+  type: string
+  placeholder?: string
+  name?: string
+  value?: string
+  className?: string
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
+  onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void
 }
 
 const Input = ({ label, type, placeholder, name, value, className, onChange, onKeyDown }: InputProps) => {
-    return (
+  return (
         <>
             {label && <label className="font-semibold text-sm text-gray-600 pb-1 block">{label}</label> }
             <input
@@ -25,7 +25,7 @@ const Input = ({ label, type, placeholder, name, value, className, onChange, onK
                 className={`input input-bordered w-full max-w-xs mt-1 ${className}`}
             />
         </>
-    )
+  )
 }
 
 export default Input

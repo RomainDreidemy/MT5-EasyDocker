@@ -1,4 +1,4 @@
-import React, {createContext, useState} from 'react'
+import React, { createContext, useState } from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.css'
 import reportWebVitals from './reportWebVitals'
@@ -12,14 +12,14 @@ const root = ReactDOM.createRoot(
 export const UserContext = createContext({})
 
 const App = () => {
-    const [user, setUser] = useState(UserContext);
+  const [user, setUser] = useState(UserContext)
 
-    return (
-        <UserContext.Provider value={{user, setUser}}>
+  return (
+        <UserContext.Provider value={{ user, setUser }}>
             <RouterProvider router={router} />
         </UserContext.Provider>
-    );
-};
+  )
+}
 
 root.render(<App />)
 

@@ -1,11 +1,12 @@
-import Alert from "../../atoms/Alert.atom";
+import React from 'react'
+import Alert from '../../atoms/Alert.atom'
 
 interface AlertProps {
-    message: string
+  message: string
 }
 
-const Notice = ({message}: AlertProps) => {
-    return <Alert message={message} type={'info'} />
+const Notice = ({ message }: AlertProps): JSX.Element => {
+  return <Alert message={message} type={'info'} />
 }
 
 export default Notice
