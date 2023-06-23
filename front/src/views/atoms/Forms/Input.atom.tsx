@@ -11,10 +11,10 @@ interface InputProps {
   onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void
 }
 
-const Input = ({ label, type, placeholder, name, value, className, onChange, onKeyDown }: InputProps) => {
+const Input = ({ label, type, placeholder, name, value, className = '', onChange, onKeyDown }: InputProps): JSX.Element => {
   return (
         <>
-            {label && <label className="font-semibold text-sm text-gray-600 pb-1 block">{label}</label> }
+            {(label != null) && <label className="font-semibold text-sm text-gray-600 pb-1 block">{label}</label> }
             <input
                 type={type}
                 placeholder={placeholder}
