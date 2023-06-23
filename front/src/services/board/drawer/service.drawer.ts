@@ -4,8 +4,8 @@ import ServiceFactory from './factories/service.factory'
 import ItemBasics from '../item.basics'
 import ConnectorBuilder from './connector/connector.builder'
 import ServiceLinker from './linker/service.linker'
-import {TConnectors} from "../../../types/TConnector";
-import {TLinkers} from "../../../types/TLinker";
+import { type TConnectors } from '../../../types/TConnector'
+import { type TLinkers } from '../../../types/TLinker'
 
 class ServiceDrawer extends ItemBasics {
   readonly factory: ServiceFactory

@@ -1,6 +1,6 @@
 import { type IPosition } from '../../../../interfaces/Position.interface'
 import { Errors } from '../../../../enums/errors'
-import {TConnector} from "../../../../types/TConnector";
+import { type TConnector } from '../../../../types/TConnector'
 
 class BaseConnector {
   protected connector?: TConnector

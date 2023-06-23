@@ -1,18 +1,18 @@
-import ServiceDrawer from "../../services/board/drawer/service.drawer";
-import {IPosition} from "../../interfaces/Position.interface";
-import ServiceConnector from "../../services/board/drawer/connector/service.connector";
-import {TDrawerManager} from "./Drawer.manager";
-import {TBaseManager} from "./Base.manager";
-import {TLinkerManager} from "./Linker.manager";
+import type ServiceDrawer from '../../services/board/drawer/service.drawer'
+import { type IPosition } from '../../interfaces/Position.interface'
+import type ServiceConnector from '../../services/board/drawer/connector/service.connector'
+import { type TDrawerManager } from './Drawer.manager'
+import { type TBaseManager } from './Base.manager'
+import { type TLinkerManager } from './Linker.manager'
 
 export type TMouseEventManager =
   TBaseManager &
   TDrawerManager &
   TLinkerManager &
   {
-    mouseStartup: () => void,
+    mouseStartup: () => void
     handleMouseDown: (event: MouseEvent) => void
-    handleMouseUp: (event: MouseEvent) => void,
-    handleMouseMove: (event: MouseEvent) => void,
+    handleMouseUp: (event: MouseEvent) => void
+    handleMouseMove: (event: MouseEvent) => void
     handleMouseUpOnLinker: (drawer: ServiceDrawer, position: IPosition) => ServiceConnector | undefined
   }

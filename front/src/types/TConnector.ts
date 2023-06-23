@@ -1,4 +1,4 @@
-import ServiceConnector from "../services/board/drawer/connector/service.connector";
+import type ServiceConnector from '../services/board/drawer/connector/service.connector'
 
 export type TConnector = ServiceConnector
 export type TConnectorOrNullify = TConnector | undefined

@@ -29,7 +29,8 @@ module.exports = {
     'react'
   ],
   rules: {
-    '@typescript-eslint/no-extraneous-class': 'off'
+    '@typescript-eslint/no-extraneous-class': 'off',
+    '@typescript-eslint/no-non-null-assertion': 'off'
   },
   settings: {
     react: {

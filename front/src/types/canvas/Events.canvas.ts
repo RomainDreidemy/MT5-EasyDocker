@@ -1,8 +1,8 @@
-import {TConnectorManager} from "./Connector.manager";
-import {TStateCanvas} from "./State.Canvas";
-import {TBaseManager} from "./Base.manager";
-import {TMouseEventManager} from "./MouseEvent.manager";
-import {TKeyboardEventManager} from "./KeyboardEvent.manager";
+import { type TConnectorManager } from './Connector.manager'
+import { type TStateCanvas } from './State.Canvas'
+import { type TBaseManager } from './Base.manager'
+import { type TMouseEventManager } from './MouseEvent.manager'
+import { type TKeyboardEventManager } from './KeyboardEvent.manager'
 
 export type TEventsCanvas =
   TBaseManager &

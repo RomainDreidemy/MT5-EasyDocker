@@ -1,7 +1,7 @@
-import {TBaseManager} from "../../types/canvas/Base.manager";
-import {TDrawers} from "../../types/TDrawer";
-import BaseCanvas from "./Base.canvas";
-import StateCanvas from "./State.canvas";
+import { type TBaseManager } from '../../types/canvas/Base.manager'
+import { type TDrawers } from '../../types/TDrawer'
+import BaseCanvas from './Base.canvas'
+import StateCanvas from './State.canvas'
 
 const BaseManager: TBaseManager = {
   ...BaseCanvas,

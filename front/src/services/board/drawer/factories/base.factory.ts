@@ -1,6 +1,6 @@
-import {type IPosition} from '../../../../interfaces/Position.interface'
-import {Errors} from '../../../../enums/errors'
-import {TFactory} from "../../../../types/Factory";
+import { type IPosition } from '../../../../interfaces/Position.interface'
+import { Errors } from '../../../../enums/errors'
+import { type TFactory } from '../../../../types/Factory'
 
 class BaseFactory {
   protected factory?: TFactory
@@ -14,11 +14,11 @@ class BaseFactory {
   public selected: boolean = false
   public onHover: boolean = false
 
-  public setFactory(factory: TFactory): void {
+  public setFactory (factory: TFactory): void {
     this.factory = factory
   }
 
-  public isSelected({x, y}: IPosition): boolean {
+  public isSelected ({ x, y }: IPosition): boolean {
     if (this.factory == null) {
       throw new Error('Factory not implemented')
     }
@@ -26,7 +26,7 @@ class BaseFactory {
     return this.factory.context.isPointInPath(this.factory.path, x, y)
   }
 
-  draw(): void {
+  draw (): void {
     throw new Error(Errors.NOT_IMPLEMENTED)
   }
 }

@@ -1,9 +1,9 @@
-import ServiceDrawer from "../../services/board/drawer/service.drawer";
-import ServiceLinker from "../../services/board/drawer/linker/service.linker";
-import ServiceConnector from "../../services/board/drawer/connector/service.connector";
+import type ServiceDrawer from '../../services/board/drawer/service.drawer'
+import type ServiceLinker from '../../services/board/drawer/linker/service.linker'
+import type ServiceConnector from '../../services/board/drawer/connector/service.connector'
 
-export type TStateCanvas = {
-  drawers: ServiceDrawer[],
+export interface TStateCanvas {
+  drawers: ServiceDrawer[]
 
   selectedLinker?: ServiceLinker
   selectedDrawer?: ServiceDrawer
