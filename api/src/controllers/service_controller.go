@@ -32,7 +32,7 @@ func GetServices(c *fiber.Ctx) error {
 }
 
 // GetService godoc
-// @Summary      Get services for a stack
+// @Summary      Get a service
 // @Tags         Services
 // @Accept       json
 // @Produce      json

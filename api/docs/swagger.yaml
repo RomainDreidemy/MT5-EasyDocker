@@ -198,7 +198,7 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/models.ServiceResponse'
-      summary: Get services for a stack
+      summary: Get a service
       tags:
       - Services
     put:

@@ -93,7 +93,7 @@ const docTemplate = `{
                 "tags": [
                     "Services"
                 ],
-                "summary": "Get services for a stack",
+                "summary": "Get a service",
                 "parameters": [
                     {
                         "type": "string",

@@ -8,7 +8,7 @@ import (
 
 func FindService(id string) (models.Service, *gorm.DB) {
 	var service models.Service
-	result := initializers.DB.First(&service, id)
+	result := initializers.DB.First(&service, "id = ?", id)
 	return service, result
 }
 

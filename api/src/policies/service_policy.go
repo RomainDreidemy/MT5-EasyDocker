@@ -14,7 +14,5 @@ func CanAccessService(user models.UserResponse, serviceId string) bool {
 		return false
 	}
 
-	result, _ = repositories.GetStackByIdForAUser(service.StackID, user.ID)
-
-	return result.RowsAffected > 0
+	return CanAccessStack(user, service.StackID)
 }
