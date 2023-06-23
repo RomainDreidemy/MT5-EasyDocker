@@ -34,12 +34,7 @@ const LoginPage = () => {
     return errors?.map((e) => e.path === field ? e.message : '')
   }
   const validateSchema = async () => {
-    const validationResult = await userSchema
-      .validate(form, { abortEarly: false })
-      .catch((err) => {
-        return err
-      })
-
+    const validationResult = await userSchema.validate(form, { abortEarly: false }).catch((err) => err)
     return validationResult.inner ?? null
   }
   const processLogin = async () => {
@@ -47,26 +42,26 @@ const LoginPage = () => {
     setErrors(validationErrors)
     if (validationErrors !== null) return
 
-    const authRes = await AuthEntity.auth(form)
-    if (authRes.status !== 200) {
-      setErrors([{ path: authRes.data.status, message: authRes.data.message }])
-      return
+    try {
+      const authRes = await AuthEntity.auth(form)
+
+      // Set user context
+      setUser({ email: form.email, token: authRes.data.token })
+
+      // Remember cookie
+      Cookies.set(
+        'token',
+        authRes.data.token,
+        { expires: form.remember ? 365 : 1 }
+      )
+
+      // Redirect to stacks page
+      setTimeout(() => {
+        navigate('/stacks')
+      }, 2000)
+    } catch (e) {
+      setErrors([{ path: e.response.data.status, message: e.response.data.message }])
     }
-
-    // Set user context
-    setUser({ email: form.email, token: authRes.data.token })
-
-    // Remember cookie
-    Cookies.set(
-      'token',
-      authRes.data.token,
-      { expires: form.remember ? 365 : 1 }
-    )
-
-    // Redirect to stacks page
-    setTimeout(() => {
-      navigate('/stacks')
-    }, 2000)
   }
 
   return (

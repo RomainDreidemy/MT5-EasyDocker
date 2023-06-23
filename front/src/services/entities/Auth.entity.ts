@@ -1,7 +1,8 @@
 import axios from '../utils/axios'
+import { type IAuth, type IAuthEntity } from '../../interfaces/Auth.interface'
 
-const AuthEntity = (): any => ({
-  auth: async (data: any) => await axios.post('/auth/login', data).then((r) => r).catch((e) => e.response)
+const AuthEntity = (): IAuth => ({
+  auth: async (data: IAuthEntity) => await axios.post('/auth/login', data)
 })
 
 export default AuthEntity()
