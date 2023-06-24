@@ -36,7 +36,7 @@ const LinkerManager: TLinkerManager = {
     this.selectedLinker.selected = true
   },
 
-  createLink (position: IPosition): void {
+  createLinker (position: IPosition): void {
     const connector = this.findConnector(position)
 
     if ((this.selectedConnector != null) && (connector != null) && (this.selectedDrawer != null) && (this.onHoverDrawer != null)) {

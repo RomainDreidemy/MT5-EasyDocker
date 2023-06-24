@@ -7,6 +7,9 @@ import {INetwork} from "../interfaces/Network.interface";
 import NetworkDrawer from "../services/board/drawer/Network.drawer";
 import VolumeDrawer from "../services/board/drawer/Volume.drawer";
 import {IVolume} from "../interfaces/Volume.interface";
+import {EventListenerCallback} from "../interfaces/EventListener.interface";
+import eventEmitter from "../services/apps/Event.emitter";
+import {EventEmitters} from "../enums/eventEmitters";
 
 const useBoard = (): { canvasRef: MutableRefObject<HTMLCanvasElement | null> } => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
@@ -31,6 +34,23 @@ const useBoard = (): { canvasRef: MutableRefObject<HTMLCanvasElement | null> } =
     EventsCanvas.add(serviceDrawer, networkDrawer, volumeDrawer)
     EventsCanvas.startup()
   }, [canvasRef])
+
+  useEffect(() => {
+    const onDrawerSelected: EventListenerCallback = (data) => {
+      console.log('Moved drawer :', data);
+    };
+    const onLinkerCreated: EventListenerCallback = (data) => {
+      console.log('Created linker :', data);
+    };
+
+    eventEmitter.on(EventEmitters.ON_DRAWER_SELECTED, onDrawerSelected);
+    eventEmitter.on(EventEmitters.ON_LINKER_CREATED, onLinkerCreated);
+
+    return () => {
+      eventEmitter.removeListener(EventEmitters.ON_DRAWER_SELECTED, onDrawerSelected);
+      eventEmitter.removeListener(EventEmitters.ON_LINKER_CREATED, onLinkerCreated);
+    };
+  }, []);
 
   return {
     canvasRef

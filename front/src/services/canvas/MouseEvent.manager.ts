@@ -6,6 +6,8 @@ import LinkerManager from './Linker.manager'
 import { DrawerManager } from './Drawer.manager'
 import { type TConnectorOrNullify } from '../../types/Connector'
 import { type TDrawer } from '../../types/Drawer'
+import eventEmitter from "../apps/Event.emitter";
+import {EventEmitters} from "../../enums/eventEmitters";
 
 const MouseEventManager: TMouseEventManager = {
   ...BaseManager,
@@ -28,12 +30,16 @@ const MouseEventManager: TMouseEventManager = {
     const position: IPosition = { x: event.offsetX, y: event.offsetY }
 
     if ((this.selectedConnector != null) && (this.onHoverDrawer != null)) {
-      this.createLink(position)
+      this.createLinker(position)
     }
 
     this.isMoving = false
     this.selectedConnector = undefined
     this.updateScreen()
+
+    if (this.selectedDrawer) {
+      eventEmitter.emit(EventEmitters.ON_DRAWER_SELECTED, this.selectedDrawer);
+    }
   },
 
   handleMouseMove (event: MouseEvent): void {

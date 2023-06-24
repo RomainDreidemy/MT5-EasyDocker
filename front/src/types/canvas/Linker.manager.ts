@@ -15,7 +15,7 @@ export type TLinkerManager =
     deleteLinker: (drawer: TDrawer, linkerToRemove: TLinker) => void
     findLinker: (position: IPosition) => TLinker | undefined
     selectLinker: (linker: TLinker) => void
-    createLink: (position: IPosition) => void
+    createLinker: (position: IPosition) => void
     onSelectDrawer: (selected: boolean) => void
     clearSelectedLinker: () => void
   }
