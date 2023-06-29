@@ -15,11 +15,12 @@ export const UserContext = createContext({})
 
 const App = (): JSX.Element => {
   const [user, setUser] = useState(UserContext)
+  const isAuthPage = location.pathname === '/login' || location.pathname === '/register'
 
   return (
     <IconContext.Provider value={{ className: 'icons' }}>
       <UserContext.Provider value={{ user, setUser }}>
-         <Navbar />
+        {!isAuthPage && <Navbar />}
         <RouterProvider router={router} />
       </UserContext.Provider>
     </IconContext.Provider>
