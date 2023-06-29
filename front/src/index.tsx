@@ -5,6 +5,7 @@ import reportWebVitals from './reportWebVitals'
 import { RouterProvider } from 'react-router-dom'
 import { router } from './routes/router'
 import { IconContext } from 'react-icons'
+import { Navbar } from './views/organisms/Navbar.organism'
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -16,11 +17,12 @@ const App = (): JSX.Element => {
   const [user, setUser] = useState(UserContext)
 
   return (
-        <IconContext.Provider value={{ className: 'icons' }}>
-            <UserContext.Provider value={{ user, setUser }}>
-                <RouterProvider router={router}/>
-            </UserContext.Provider>
-        </IconContext.Provider>
+    <IconContext.Provider value={{ className: 'icons' }}>
+      <UserContext.Provider value={{ user, setUser }}>
+         <Navbar />
+        <RouterProvider router={router} />
+      </UserContext.Provider>
+    </IconContext.Provider>
   )
 }
 
