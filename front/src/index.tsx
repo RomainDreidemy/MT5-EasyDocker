@@ -5,6 +5,7 @@ import reportWebVitals from './reportWebVitals'
 import { RouterProvider } from 'react-router-dom'
 import { router } from './routes/router'
 import { IconContext } from 'react-icons'
+import { Navbar } from './views/organisms/Navbar.organism'
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -14,13 +15,15 @@ export const UserContext = createContext({})
 
 const App = (): JSX.Element => {
   const [user, setUser] = useState(UserContext)
+  const isAuthPage = location.pathname === '/login' || location.pathname === '/register'
 
   return (
-        <IconContext.Provider value={{ className: 'icons' }}>
-            <UserContext.Provider value={{ user, setUser }}>
-                <RouterProvider router={router}/>
-            </UserContext.Provider>
-        </IconContext.Provider>
+    <IconContext.Provider value={{ className: 'icons' }}>
+      <UserContext.Provider value={{ user, setUser }}>
+        {!isAuthPage && <Navbar />}
+        <RouterProvider router={router} />
+      </UserContext.Provider>
+    </IconContext.Provider>
   )
 }
 
