@@ -67,6 +67,7 @@ func main() {
 	servicePort := micro.Group("/ports", middleware.DeserializeUser)
 	servicePort.Get("/:id", controllers.GetServicePort)
 	servicePort.Put("/:id", controllers.UpdateServicePort)
+	servicePort.Delete("/:id", controllers.DeleteServicePort)
 
 	app.Get("/swagger/*", swagger.HandlerDefault)
 

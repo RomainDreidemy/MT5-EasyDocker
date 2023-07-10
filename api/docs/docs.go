@@ -149,6 +149,32 @@ const docTemplate = `{
                         }
                     }
                 }
+            },
+            "delete": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Service Ports"
+                ],
+                "summary": "Delete a service port",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Service Port ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    }
+                }
             }
         },
         "/services/{id}": {
