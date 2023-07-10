@@ -69,6 +69,14 @@ func main() {
 	servicePort.Put("/:id", controllers.UpdateServicePort)
 	servicePort.Delete("/:id", controllers.DeleteServicePort)
 
+	service.Post("/:serviceId/env_variables", controllers.CreateServiceEnvVariable)
+	service.Get("/:serviceId/env_variables", controllers.GetServiceEnvVariables)
+
+	serviceEnvVariable := micro.Group("/env_variables", middleware.DeserializeUser)
+	serviceEnvVariable.Get("/:id", controllers.GetServiceEnvVariable)
+	serviceEnvVariable.Put("/:id", controllers.UpdateServiceEnvVariable)
+	serviceEnvVariable.Delete("/:id", controllers.DeleteServiceEnvVariable)
+
 	app.Get("/swagger/*", swagger.HandlerDefault)
 
 	log.Fatal(app.Listen(":3000"))

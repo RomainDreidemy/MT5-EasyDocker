@@ -18,6 +18,35 @@ definitions:
     - positionX
     - positionY
     type: object
+  models.ServiceEnvVariableCreateInput:
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+    required:
+    - key
+    - value
+    type: object
+  models.ServiceEnvVariableResponse:
+    properties:
+      id:
+        type: string
+      key:
+        type: string
+      value:
+        type: string
+    type: object
+  models.ServiceEnvVariableUpdateInput:
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+    required:
+    - key
+    - value
+    type: object
   models.ServicePortCreateInput:
     properties:
       private:
@@ -193,6 +222,68 @@ paths:
       summary: Sign up a new user
       tags:
       - Auth
+  /env_variables/{id}:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: Service Env Variable ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+      summary: Delete a service env variable
+      tags:
+      - Service Env Variables
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Service Env Variable ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.ServiceEnvVariableResponse'
+      summary: Get an env variable
+      tags:
+      - Service Env Variables
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: Service Env Variable ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.ServiceEnvVariableUpdateInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.ServiceEnvVariableResponse'
+      summary: Update a service env variable
+      tags:
+      - Service Env Variables
   /ports/{id}:
     delete:
       consumes:
@@ -317,6 +408,53 @@ paths:
       summary: Update a service
       tags:
       - Services
+  /services/{serviceId}/env_variables:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Service ID
+        in: path
+        name: serviceId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.ServiceEnvVariableResponse'
+            type: array
+      summary: Get env variables for a service
+      tags:
+      - Service Env Variables
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Service ID
+        in: path
+        name: serviceId
+        required: true
+        type: string
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.ServiceEnvVariableCreateInput'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.ServiceEnvVariableResponse'
+      summary: Create a new service env variable
+      tags:
+      - Service Env Variables
   /services/{serviceId}/ports:
     get:
       consumes:
