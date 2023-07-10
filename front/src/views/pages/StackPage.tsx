@@ -8,10 +8,10 @@ import EditorOrganism from "../organisms/Editor.organism";
 const StackPage = () => {
   const {id} = useParams();
 
-  const {canvasRef} = useBoard()
+  const {canvasRef, selectedDrawer} = useBoard()
 
   return (
-    <section className="h-[calc(100vh-64px)] flex">
+    <section className="h-[calc(100vh-66px)] flex relative">
 
       <div className="basis-1/12">
         <ManagerOrganism/>
@@ -22,9 +22,9 @@ const StackPage = () => {
         <BoardOrganism canvasRef={canvasRef}/>
       </div>
 
-      <div className="basis-1/6">
-        <EditorOrganism/>
-      </div>
+      {selectedDrawer && <div className="absolute top-0 right-0 h-full w-80 bg-white">
+          <EditorOrganism drawer={selectedDrawer}/>
+      </div>}
     </section>
   )
 }

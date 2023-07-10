@@ -13,6 +13,7 @@ export interface TStateDrawer {
   Connector?: TConnectorBuilder
 
   canBeLinkedWith: DrawerTypes[]
+  type: DrawerTypes
 
   connectors: TConnectors
   linkers: TLinkers

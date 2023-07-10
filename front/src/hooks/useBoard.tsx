@@ -1,4 +1,4 @@
-import { type MutableRefObject, useEffect, useRef } from 'react'
+import {type MutableRefObject, useEffect, useRef, useState} from 'react'
 import { type IService } from '../interfaces/Service.interface'
 import EventsCanvas from '../services/canvas/Events.canvas'
 import { type TServiceDrawer } from '../types/board/drawer/Service.drawer'
@@ -10,9 +10,12 @@ import { type IVolume } from '../interfaces/Volume.interface'
 import { type EventListenerCallback } from '../interfaces/EventListener.interface'
 import eventEmitter from '../services/apps/Event.emitter'
 import { EventEmitters } from '../enums/eventEmitters'
+import {TDrawer, TDrawerOrNullify} from "../types/Drawer";
 
-const useBoard = (): { canvasRef: MutableRefObject<HTMLCanvasElement | null> } => {
+const useBoard = (): { canvasRef: MutableRefObject<HTMLCanvasElement | null>, selectedDrawer: TDrawerOrNullify } => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
+
+  const [selectedDrawer, setSelectedDrawer] = useState<TDrawerOrNullify>(undefined)
 
   useEffect(() => {
     const canvas = canvasRef.current as unknown as HTMLCanvasElement
@@ -31,6 +34,8 @@ const useBoard = (): { canvasRef: MutableRefObject<HTMLCanvasElement | null> } =
     const volumeDrawer = VolumeDrawer(volume, EventsCanvas.context!)
     volumeDrawer.create()
 
+    setSelectedDrawer(serviceDrawer)
+
     EventsCanvas.add(serviceDrawer, networkDrawer, volumeDrawer)
     EventsCanvas.startup()
   }, [canvasRef])
@@ -38,6 +43,7 @@ const useBoard = (): { canvasRef: MutableRefObject<HTMLCanvasElement | null> } =
   useEffect(() => {
     const onDrawerSelected: EventListenerCallback = (data) => {
       console.log('Moved drawer :', data)
+      setSelectedDrawer(data)
     }
     const onLinkerCreated: EventListenerCallback = (data) => {
       console.log('Created linker :', data)
@@ -53,7 +59,8 @@ const useBoard = (): { canvasRef: MutableRefObject<HTMLCanvasElement | null> } =
   }, [])
 
   return {
-    canvasRef
+    canvasRef,
+    selectedDrawer
   }
 }
 

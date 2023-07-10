@@ -6,8 +6,7 @@ const ServiceFactory = (): TServiceFactory => {
   return {
     ...BaseFactory,
 
-    name: 'Service',
-    type: DrawerTypes.SERVICE
+    name: 'Service'
   }
 }
 

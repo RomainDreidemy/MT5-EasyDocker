@@ -6,8 +6,7 @@ const NetworkFactory = (): TNetworkFactory => {
   return {
     ...BaseFactory,
 
-    name: 'Network',
-    type: DrawerTypes.NETWORK
+    name: 'Network'
   }
 }
 

@@ -35,7 +35,7 @@ export const DrawerManager: TDrawerManager = {
     const drawer = this.findDrawer(position)
 
     if (drawer != null) {
-      const canBeLinked = this.selectedDrawer!.canBeLinkedWith.includes(drawer.factory!.type!)
+      const canBeLinked = this.selectedDrawer!.canBeLinkedWith.includes(drawer.type)
 
       if (canBeLinked) {
         this.onHoverDrawer = drawer

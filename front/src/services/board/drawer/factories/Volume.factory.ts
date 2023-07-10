@@ -6,8 +6,7 @@ const VolumeFactory = (): TVolumeFactory => {
   return {
     ...BaseFactory,
 
-    name: 'Volume',
-    type: DrawerTypes.VOLUME
+    name: 'Volume'
   }
 }
 
