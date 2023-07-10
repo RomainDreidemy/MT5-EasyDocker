@@ -10,7 +10,7 @@ const ConnectorBuilder = (
   context: CanvasRenderingContext2D,
   entity: TEntity,
   callableConnector: TCallableConnectors,
-  offset: number = 20
+  offset: number = 0
 ): TConnectorBuilder => {
   return {
     create (): TConnector[] {
