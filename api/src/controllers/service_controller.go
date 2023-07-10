@@ -2,7 +2,6 @@ package controllers
 
 import (
 	"github.com/RomainDreidemy/MT5-docker-extension/src/helpers"
-	"github.com/RomainDreidemy/MT5-docker-extension/src/initializers"
 	"github.com/RomainDreidemy/MT5-docker-extension/src/models"
 	"github.com/RomainDreidemy/MT5-docker-extension/src/policies"
 	"github.com/RomainDreidemy/MT5-docker-extension/src/repositories"
@@ -76,7 +75,7 @@ func CreateService(c *fiber.Ctx) error {
 
 	service := factories.BuildServiceFromServiceCreationInput(body, stackId)
 
-	result := initializers.DB.Create(&service)
+	result := repositories.CreateService(service)
 
 	if result.Error != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(factories.BuildErrorResponse("error", "Cannot create service"))
@@ -111,7 +110,7 @@ func UpdateService(c *fiber.Ctx) error {
 
 	updatedService := factories.BuildServiceFromServiceUpdateInput(body)
 
-	result := initializers.DB.Model(&service).Updates(updatedService)
+	result := repositories.UpdateService(service, updatedService)
 
 	if result.Error != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(factories.BuildErrorResponse("error", "Cannot update service"))
@@ -145,7 +144,7 @@ func DeleteService(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"status": "error", "message": "Service not found"})
 	}
 
-	initializers.DB.Delete(&service)
+	repositories.DeleteService(service)
 
-	return c.Status(fiber.StatusNoContent).Send(nil)
+	return c.SendStatus(fiber.StatusNoContent)
 }
