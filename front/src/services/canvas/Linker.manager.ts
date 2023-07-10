@@ -6,7 +6,7 @@ import BaseManager from './Base.manager'
 import { type TConnector } from '../../types/Connector'
 import { type TDrawer } from '../../types/Drawer'
 import { type TLinker, type TLinkerOrNullify } from '../../types/Linker'
-import {DrawerManager} from "./Drawer.manager";
+import { DrawerManager } from './Drawer.manager'
 
 const LinkerManager: TLinkerManager = {
   ...BaseManager,

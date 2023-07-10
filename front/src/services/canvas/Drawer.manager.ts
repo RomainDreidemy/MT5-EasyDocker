@@ -20,7 +20,7 @@ export const DrawerManager: TDrawerManager = {
 
   clearOnHoverDrawer (): void {
     if (this.onHoverDrawer != null) {
-      this.onHoverDrawer!.factory!.onHover = false
+      this.onHoverDrawer.factory!.onHover = false
     }
     this.onHoverDrawer = undefined
   },
