@@ -19,6 +19,9 @@ const BaseConnector: TBaseConnector = {
     this.context!.fillStyle = this.color
     this.context!.fill(circle)
     this.context!.closePath()
+
+    this.context!.fillStyle = 'black'
+
     this.path = circle
   }
 }

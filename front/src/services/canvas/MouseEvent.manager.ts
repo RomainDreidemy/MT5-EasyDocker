@@ -96,7 +96,7 @@ const MouseEventManager: TMouseEventManager = {
   },
 
   handleMouseUpOnLinker (drawer: TDrawer, position: IPosition): TConnectorOrNullify {
-    return drawer.connectors.find(drawer => drawer.isSelected(position))
+    return drawer.connectors.find((drawer: TDrawer) => drawer.isSelected(position))
   },
 
   boundingClientPosition (event: MouseEvent): IPosition {

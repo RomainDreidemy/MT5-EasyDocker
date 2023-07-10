@@ -7,22 +7,24 @@ import { type TConnector } from '../../types/Connector'
 import { type TDrawer } from '../../types/Drawer'
 import { type TLinker, type TLinkerOrNullify } from '../../types/Linker'
 import { DrawerManager } from './Drawer.manager'
+import { TBaseLinker } from '../../types/board/drawer/linkers/Base.linker'
 
 const LinkerManager: TLinkerManager = {
   ...BaseManager,
   ...ConnectorManager,
   ...DrawerManager,
 
-  drawConnectorLine (connector: TConnector, position: IPosition): void {
+  drawConnectorLine(connector: TConnector, position: IPosition): void {
     this.updateScreen()
     this.context!.beginPath()
+    this.context!.strokeStyle = 'black'
     this.context!.moveTo(connector.positionX, connector.positionY)
     this.context!.lineTo(position.x, position.y)
     this.context!.stroke()
   },
 
-  deleteLinker (drawer: TDrawer, linkerToRemove: TLinker): void {
-    const index = drawer.linkers.findIndex(linker => linkerToRemove === linker)
+  deleteLinker(drawer: TDrawer, linkerToRemove: TLinker): void {
+    const index = drawer.linkers.findIndex((linker: TBaseLinker) => linkerToRemove === linker)
     drawer.linkers.splice(index, 1)
   },
 
