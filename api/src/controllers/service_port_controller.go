@@ -1,6 +1,8 @@
 package controllers
 
 import (
+	"github.com/RomainDreidemy/MT5-docker-extension/src/helpers"
+	"github.com/RomainDreidemy/MT5-docker-extension/src/initializers"
 	"github.com/RomainDreidemy/MT5-docker-extension/src/models"
 	"github.com/RomainDreidemy/MT5-docker-extension/src/policies"
 	"github.com/RomainDreidemy/MT5-docker-extension/src/repositories"
@@ -51,37 +53,37 @@ func GetServicePort(c *fiber.Ctx) error {
 }
 
 // CreateServicePort godoc
-// @Summary      Create a new service
-// @Tags         Services
+// @Summary      Create a new service port
+// @Tags         Service Ports
 // @Accept       json
 // @Produce      json
-// @Param stackId path string true "Stack ID"
-// @Param request body models.ServiceCreateInput true "query params"
-// @Success      201  {object}  models.ServiceResponse
+// @Param serviceId path string true "Service ID"
+// @Param request body models.ServicePortCreateInput true "query params"
+// @Success      201  {object}  models.ServicePortResponse
 // @Router       /services/{serviceId}/ports [post]
-//func CreateServicePort(c *fiber.Ctx) error {
-//	currentUser := c.Locals("user").(models.UserResponse)
-//	stackId := c.Params("stackId")
-//
-//	if !policies.CanAccessStack(currentUser, stackId) {
-//		return c.Status(fiber.StatusNotFound).JSON(factories.BuildErrorResponse("error", "Stack not found"))
-//	}
-//
-//	body, err := helpers.BodyParse[models.ServiceCreateInput](c)
-//	if err != nil {
-//		return c.Status(fiber.StatusBadRequest).JSON(factories.BuildErrorResponse("error", "Cannot parse JSON"))
-//	}
-//
-//	service := factories.BuildServiceFromServiceCreationInput(body, stackId)
-//
-//	result := initializers.DB.Create(&service)
-//
-//	if result.Error != nil {
-//		return c.Status(fiber.StatusBadRequest).JSON(factories.BuildErrorResponse("error", "Cannot create service"))
-//	}
-//
-//	return c.Status(fiber.StatusCreated).JSON(factories.BuildServiceResponse(service))
-//}
+func CreateServicePort(c *fiber.Ctx) error {
+	currentUser := c.Locals("user").(models.UserResponse)
+	serviceId := c.Params("serviceId")
+
+	if !policies.CanAccessService(currentUser, serviceId) {
+		return c.Status(fiber.StatusNotFound).JSON(factories.BuildErrorResponse("error", "Service port not found"))
+	}
+
+	body, err := helpers.BodyParse[models.ServicePortCreateInput](c)
+	if err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(factories.BuildErrorResponse("error", "Cannot parse JSON"))
+	}
+
+	servicePort := factories.BuildServicePortFromServicePortCreationInput(body, serviceId)
+
+	result := initializers.DB.Create(&servicePort)
+
+	if result.Error != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(factories.BuildErrorResponse("error", "Cannot create service"))
+	}
+
+	return c.Status(fiber.StatusCreated).JSON(factories.BuildServicePortResponse(servicePort))
+}
 
 // UpdateServicePort godoc
 // @Summary      Update a service

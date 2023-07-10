@@ -18,6 +18,16 @@ definitions:
     - positionX
     - positionY
     type: object
+  models.ServicePortCreateInput:
+    properties:
+      private:
+        type: integer
+      public:
+        type: integer
+    required:
+    - private
+    - public
+    type: object
   models.ServicePortResponse:
     properties:
       id:
@@ -275,6 +285,31 @@ paths:
               $ref: '#/definitions/models.ServicePortResponse'
             type: array
       summary: Get ports for a service
+      tags:
+      - Service Ports
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Service ID
+        in: path
+        name: serviceId
+        required: true
+        type: string
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.ServicePortCreateInput'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.ServicePortResponse'
+      summary: Create a new service port
       tags:
       - Service Ports
   /stacks:

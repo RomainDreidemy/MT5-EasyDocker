@@ -4,8 +4,8 @@ import "github.com/google/uuid"
 
 type ServicePort struct {
 	ID      *uuid.UUID `gorm:"type:uuid;default:uuid_generate_v4();primary_key"`
-	Private int        `gorm:"type:varchar(10);not null"`
-	Public  int        `gorm:"type:varchar(10);not null"`
+	Private int        `gorm:"type:integer;not null"`
+	Public  int        `gorm:"type:integer;not null"`
 
 	ServiceID string `gorm:"type:uuid;not null"`
 	Service   Service

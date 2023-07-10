@@ -240,6 +240,44 @@ const docTemplate = `{
                         }
                     }
                 }
+            },
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Service Ports"
+                ],
+                "summary": "Create a new service port",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Service ID",
+                        "name": "serviceId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "query params",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.ServicePortCreateInput"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/models.ServicePortResponse"
+                        }
+                    }
+                }
             }
         },
         "/stacks": {
@@ -513,6 +551,21 @@ const docTemplate = `{
                 },
                 "positionY": {
                     "type": "number"
+                }
+            }
+        },
+        "models.ServicePortCreateInput": {
+            "type": "object",
+            "required": [
+                "private",
+                "public"
+            ],
+            "properties": {
+                "private": {
+                    "type": "integer"
+                },
+                "public": {
+                    "type": "integer"
                 }
             }
         },

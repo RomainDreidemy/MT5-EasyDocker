@@ -61,6 +61,7 @@ func main() {
 	service.Put("/:id", controllers.UpdateService)
 	service.Delete("/:id", controllers.DeleteService)
 
+	service.Post("/:serviceId/ports", controllers.CreateServicePort)
 	service.Get("/:serviceId/ports", controllers.GetServicePorts)
 
 	servicePort := micro.Group("/ports", middleware.DeserializeUser)
