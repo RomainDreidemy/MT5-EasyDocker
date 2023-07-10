@@ -1,5 +1,50 @@
 basePath: /
 definitions:
+  models.NetworkCreateInput:
+    properties:
+      description:
+        type: string
+      isExternal:
+        type: boolean
+      name:
+        type: string
+      positionX:
+        type: number
+      positionY:
+        type: number
+    required:
+    - name
+    - positionX
+    - positionY
+    type: object
+  models.NetworkResponse:
+    properties:
+      description:
+        type: string
+      id:
+        type: string
+      isExternal:
+        type: boolean
+      name:
+        type: string
+      positionX:
+        type: number
+      positionY:
+        type: number
+    type: object
+  models.NetworkUpdateInput:
+    properties:
+      description:
+        type: string
+      isExternal:
+        type: boolean
+      name:
+        type: string
+      positionX:
+        type: number
+      positionY:
+        type: number
+    type: object
   models.ServiceCreateInput:
     properties:
       description:
@@ -340,6 +385,68 @@ paths:
       summary: Update a service env variable
       tags:
       - Service Env Variables
+  /networks/{id}:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: Network ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+      summary: Delete a network
+      tags:
+      - Networks
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Network ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.NetworkResponse'
+      summary: Get a network
+      tags:
+      - Networks
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: Network ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.NetworkUpdateInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.NetworkResponse'
+      summary: Update a network
+      tags:
+      - Networks
   /ports/{id}:
     delete:
       consumes:
@@ -703,6 +810,53 @@ paths:
       summary: Update a stack
       tags:
       - Stacks
+  /stacks/{stackId}/networks:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Stack ID
+        in: path
+        name: stackId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.NetworkResponse'
+            type: array
+      summary: Get networks for a stack
+      tags:
+      - Networks
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Stack ID
+        in: path
+        name: stackId
+        required: true
+        type: string
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.NetworkCreateInput'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.NetworkResponse'
+      summary: Create a new network
+      tags:
+      - Networks
   /stacks/{stackId}/services:
     get:
       consumes:
