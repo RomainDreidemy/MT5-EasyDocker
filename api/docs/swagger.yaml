@@ -18,6 +18,35 @@ definitions:
     - positionX
     - positionY
     type: object
+  models.ServicePortCreateInput:
+    properties:
+      private:
+        type: integer
+      public:
+        type: integer
+    required:
+    - private
+    - public
+    type: object
+  models.ServicePortResponse:
+    properties:
+      id:
+        type: string
+      private:
+        type: integer
+      public:
+        type: integer
+    type: object
+  models.ServicePortUpdateInput:
+    properties:
+      private:
+        type: integer
+      public:
+        type: integer
+    required:
+    - private
+    - public
+    type: object
   models.ServiceResponse:
     properties:
       description:
@@ -164,6 +193,68 @@ paths:
       summary: Sign up a new user
       tags:
       - Auth
+  /ports/{id}:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: Service Port ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+      summary: Delete a service port
+      tags:
+      - Service Ports
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Service Port ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.ServicePortResponse'
+      summary: Get a port
+      tags:
+      - Service Ports
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: Service Port ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.ServicePortUpdateInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.ServicePortResponse'
+      summary: Update a service port
+      tags:
+      - Service Ports
   /services/{id}:
     delete:
       consumes:
@@ -226,6 +317,53 @@ paths:
       summary: Update a service
       tags:
       - Services
+  /services/{serviceId}/ports:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Service ID
+        in: path
+        name: serviceId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.ServicePortResponse'
+            type: array
+      summary: Get ports for a service
+      tags:
+      - Service Ports
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Service ID
+        in: path
+        name: serviceId
+        required: true
+        type: string
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.ServicePortCreateInput'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.ServicePortResponse'
+      summary: Create a new service port
+      tags:
+      - Service Ports
   /stacks:
     get:
       consumes:

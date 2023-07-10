@@ -72,6 +72,101 @@
                 }
             }
         },
+        "/ports/{id}": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Service Ports"
+                ],
+                "summary": "Get a port",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Service Port ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.ServicePortResponse"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Service Ports"
+                ],
+                "summary": "Update a service port",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Service Port ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "query params",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.ServicePortUpdateInput"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.ServicePortResponse"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Service Ports"
+                ],
+                "summary": "Delete a service port",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Service Port ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    }
+                }
+            }
+        },
         "/services/{id}": {
             "get": {
                 "consumes": [
@@ -163,6 +258,78 @@
                 "responses": {
                     "204": {
                         "description": "No Content"
+                    }
+                }
+            }
+        },
+        "/services/{serviceId}/ports": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Service Ports"
+                ],
+                "summary": "Get ports for a service",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Service ID",
+                        "name": "serviceId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.ServicePortResponse"
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Service Ports"
+                ],
+                "summary": "Create a new service port",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Service ID",
+                        "name": "serviceId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "query params",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.ServicePortCreateInput"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/models.ServicePortResponse"
+                        }
                     }
                 }
             }
@@ -438,6 +605,50 @@
                 },
                 "positionY": {
                     "type": "number"
+                }
+            }
+        },
+        "models.ServicePortCreateInput": {
+            "type": "object",
+            "required": [
+                "private",
+                "public"
+            ],
+            "properties": {
+                "private": {
+                    "type": "integer"
+                },
+                "public": {
+                    "type": "integer"
+                }
+            }
+        },
+        "models.ServicePortResponse": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "private": {
+                    "type": "integer"
+                },
+                "public": {
+                    "type": "integer"
+                }
+            }
+        },
+        "models.ServicePortUpdateInput": {
+            "type": "object",
+            "required": [
+                "private",
+                "public"
+            ],
+            "properties": {
+                "private": {
+                    "type": "integer"
+                },
+                "public": {
+                    "type": "integer"
                 }
             }
         },

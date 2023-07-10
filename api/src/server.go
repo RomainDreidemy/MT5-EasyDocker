@@ -61,6 +61,14 @@ func main() {
 	service.Put("/:id", controllers.UpdateService)
 	service.Delete("/:id", controllers.DeleteService)
 
+	service.Post("/:serviceId/ports", controllers.CreateServicePort)
+	service.Get("/:serviceId/ports", controllers.GetServicePorts)
+
+	servicePort := micro.Group("/ports", middleware.DeserializeUser)
+	servicePort.Get("/:id", controllers.GetServicePort)
+	servicePort.Put("/:id", controllers.UpdateServicePort)
+	servicePort.Delete("/:id", controllers.DeleteServicePort)
+
 	app.Get("/swagger/*", swagger.HandlerDefault)
 
 	log.Fatal(app.Listen(":3000"))
