@@ -12,6 +12,7 @@ const VolumeDrawer = (volume: IVolume, context: CanvasRenderingContext2D): TVolu
     ...BaseDrawer,
 
     canBeLinkedWith: [DrawerTypes.SERVICE],
+    type: DrawerTypes.VOLUME,
 
     create () {
       this.entity = volume

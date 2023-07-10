@@ -2,6 +2,8 @@ import { type TDrawerManager } from '../../types/canvas/Drawer.manager'
 import { type IPosition } from '../../interfaces/Position.interface'
 import StateCanvas from './State.canvas'
 import { type TDrawer, type TDrawerOrNullify } from '../../types/Drawer'
+import eventEmitter from '../apps/Event.emitter'
+import { EventEmitters } from '../../enums/eventEmitters'
 
 export const DrawerManager: TDrawerManager = {
   ...StateCanvas,
@@ -16,11 +18,13 @@ export const DrawerManager: TDrawerManager = {
       this.selectedDrawer.factory!.selected = false
     }
     this.selectedDrawer = undefined
+
+    eventEmitter.emit(EventEmitters.ON_DRAWER_UNSELECTED)
   },
 
   clearOnHoverDrawer (): void {
     if (this.onHoverDrawer != null) {
-      this.onHoverDrawer!.factory!.onHover = false
+      this.onHoverDrawer.factory!.onHover = false
     }
     this.onHoverDrawer = undefined
   },
@@ -35,7 +39,7 @@ export const DrawerManager: TDrawerManager = {
     const drawer = this.findDrawer(position)
 
     if (drawer != null) {
-      const canBeLinked = this.selectedDrawer!.canBeLinkedWith.includes(drawer.factory!.type!)
+      const canBeLinked = this.selectedDrawer!.canBeLinkedWith.includes(drawer.type)
 
       if (canBeLinked) {
         this.onHoverDrawer = drawer

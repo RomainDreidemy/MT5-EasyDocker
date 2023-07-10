@@ -12,6 +12,7 @@ const NetworkDrawer = (network: INetwork, context: CanvasRenderingContext2D): TN
     ...BaseDrawer,
 
     canBeLinkedWith: [DrawerTypes.VOLUME],
+    type: DrawerTypes.NETWORK,
 
     create () {
       this.entity = network
