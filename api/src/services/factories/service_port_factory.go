@@ -28,10 +28,9 @@ func BuildServicePortFromServicePortCreationInput(servicePort models.ServicePort
 	}
 }
 
-func BuildServicePortFromServicePortUpdateInput(servicePort models.ServicePortUpdateInput, serviceId string) models.ServicePort {
+func BuildServicePortFromServicePortUpdateInput(servicePort models.ServicePortUpdateInput) models.ServicePort {
 	return models.ServicePort{
-		Private:   servicePort.Private,
-		Public:    servicePort.Public,
-		ServiceID: serviceId,
+		Private: servicePort.Private,
+		Public:  servicePort.Public,
 	}
 }

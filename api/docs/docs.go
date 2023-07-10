@@ -111,6 +111,44 @@ const docTemplate = `{
                         }
                     }
                 }
+            },
+            "put": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Service Ports"
+                ],
+                "summary": "Update a service port",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Service Port ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "query params",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.ServicePortUpdateInput"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.ServicePortResponse"
+                        }
+                    }
+                }
             }
         },
         "/services/{id}": {
@@ -575,6 +613,21 @@ const docTemplate = `{
                 "id": {
                     "type": "string"
                 },
+                "private": {
+                    "type": "integer"
+                },
+                "public": {
+                    "type": "integer"
+                }
+            }
+        },
+        "models.ServicePortUpdateInput": {
+            "type": "object",
+            "required": [
+                "private",
+                "public"
+            ],
+            "properties": {
                 "private": {
                     "type": "integer"
                 },

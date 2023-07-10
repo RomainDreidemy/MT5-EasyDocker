@@ -37,6 +37,16 @@ definitions:
       public:
         type: integer
     type: object
+  models.ServicePortUpdateInput:
+    properties:
+      private:
+        type: integer
+      public:
+        type: integer
+    required:
+    - private
+    - public
+    type: object
   models.ServiceResponse:
     properties:
       description:
@@ -201,6 +211,31 @@ paths:
           schema:
             $ref: '#/definitions/models.ServicePortResponse'
       summary: Get a port
+      tags:
+      - Service Ports
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: Service Port ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.ServicePortUpdateInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.ServicePortResponse'
+      summary: Update a service port
       tags:
       - Service Ports
   /services/{id}:

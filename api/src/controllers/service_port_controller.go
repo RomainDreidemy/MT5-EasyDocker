@@ -43,11 +43,11 @@ func GetServicePort(c *fiber.Ctx) error {
 	currentUser := c.Locals("user").(models.UserResponse)
 	id := c.Params("id")
 
-	servicePort, _ := repositories.FindServicePort(id)
-
-	if !policies.CanAccessService(currentUser, servicePort.ServiceID) {
+	if !policies.CanAccessServicePort(currentUser, id) {
 		return c.Status(fiber.StatusNotFound).JSON(factories.BuildErrorResponse("error", "Service Port not found"))
 	}
+
+	servicePort, _ := repositories.FindServicePort(id)
 
 	return c.Status(fiber.StatusOK).JSON(factories.BuildServicePortResponse(servicePort))
 }
@@ -86,39 +86,39 @@ func CreateServicePort(c *fiber.Ctx) error {
 }
 
 // UpdateServicePort godoc
-// @Summary      Update a service
-// @Tags         Services
+// @Summary      Update a service port
+// @Tags         Service Ports
 // @Accept       json
 // @Produce      json
-// @Param id path string true "Service ID"
-// @Param request body models.ServiceUpdateInput true "query params"
-// @Success      200  {object}  models.ServiceResponse
+// @Param id path string true "Service Port ID"
+// @Param request body models.ServicePortUpdateInput true "query params"
+// @Success      200  {object}  models.ServicePortResponse
 // @Router       /ports/{id} [put]
-//func UpdateServicePort(c *fiber.Ctx) error {
-//	currentUser := c.Locals("user").(models.UserResponse)
-//	id := c.Params("id")
-//
-//	if !policies.CanAccessService(currentUser, id) {
-//		return c.Status(fiber.StatusNotFound).JSON(factories.BuildErrorResponse("error", "Service not found"))
-//	}
-//
-//	service, _ := repositories.FindService(id)
-//
-//	body, err := helpers.BodyParse[models.ServiceUpdateInput](c)
-//	if err != nil {
-//		return c.Status(fiber.StatusBadRequest).JSON(factories.BuildErrorResponse("error", "Cannot parse JSON"))
-//	}
-//
-//	updatedService := factories.BuildServiceFromServiceUpdateInput(body)
-//
-//	result := initializers.DB.Model(&service).Updates(updatedService)
-//
-//	if result.Error != nil {
-//		return c.Status(fiber.StatusBadRequest).JSON(factories.BuildErrorResponse("error", "Cannot update service"))
-//	}
-//
-//	return c.Status(fiber.StatusOK).JSON(factories.BuildServiceResponse(service))
-//}
+func UpdateServicePort(c *fiber.Ctx) error {
+	currentUser := c.Locals("user").(models.UserResponse)
+	id := c.Params("id")
+
+	if !policies.CanAccessServicePort(currentUser, id) {
+		return c.Status(fiber.StatusNotFound).JSON(factories.BuildErrorResponse("error", "Service not found"))
+	}
+
+	servicePort, _ := repositories.FindServicePort(id)
+
+	body, err := helpers.BodyParse[models.ServicePortUpdateInput](c)
+	if err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(factories.BuildErrorResponse("error", "Cannot parse JSON"))
+	}
+
+	updatedService := factories.BuildServicePortFromServicePortUpdateInput(body)
+
+	result := initializers.DB.Model(&servicePort).Updates(updatedService)
+
+	if result.Error != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(factories.BuildErrorResponse("error", "Cannot update service"))
+	}
+
+	return c.Status(fiber.StatusOK).JSON(factories.BuildServicePortResponse(servicePort))
+}
 
 // DeleteServicePort godoc
 // @Summary      Delete a service
