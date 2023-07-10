@@ -18,6 +18,13 @@ export const DrawerManager: TDrawerManager = {
     this.selectedDrawer = undefined
   },
 
+  clearOnHoverDrawer (): void {
+    if (this.onHoverDrawer != null) {
+      this.onHoverDrawer!.factory!.onHover = false
+    }
+    this.onHoverDrawer = undefined
+  },
+
   selectDrawer (drawer: TDrawer): void {
     this.clearSelectedDrawer()
     this.selectedDrawer = drawer
@@ -28,8 +35,14 @@ export const DrawerManager: TDrawerManager = {
     const drawer = this.findDrawer(position)
 
     if (drawer != null) {
-      this.onHoverDrawer = drawer
-      this.onHoverDrawer.factory!.onHover = true
+      const canBeLinked = this.selectedDrawer!.canBeLinkedWith.includes(drawer.factory!.type!)
+
+      if (canBeLinked) {
+        this.onHoverDrawer = drawer
+        this.onHoverDrawer.factory!.onHover = true
+      }
+    } else {
+      this.clearOnHoverDrawer()
     }
   }
 }

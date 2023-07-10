@@ -5,7 +5,7 @@ import CommonLinker from './linkers/Common.linker'
 import { type IVolume } from '../../../interfaces/Volume.interface'
 import { type TVolumeDrawer } from '../../../types/board/drawer/Volume.drawer'
 import VolumeFactory from './factories/Volume.factory'
-import {DrawerTypes} from "../../../enums/DrawerTypes";
+import { DrawerTypes } from '../../../enums/DrawerTypes'
 
 const VolumeDrawer = (volume: IVolume, context: CanvasRenderingContext2D): TVolumeDrawer => {
   return {

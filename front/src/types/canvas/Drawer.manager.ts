@@ -9,5 +9,6 @@ export type TDrawerManager =
     findDrawer: (position: IPosition) => TDrawerOrNullify
     selectDrawer: (drawer: TServiceDrawer) => void
     clearSelectedDrawer: () => void
+    clearOnHoverDrawer: () => void
     updateHoverDrawer: (position: IPosition) => void
   }

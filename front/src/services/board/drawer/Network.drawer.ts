@@ -5,7 +5,7 @@ import NetworkFactory from './factories/Network.factory'
 import { type TNetworkDrawer } from '../../../types/board/drawer/Network.drawer'
 import CommonConnector from './connector/Common.connector'
 import CommonLinker from './linkers/Common.linker'
-import {DrawerTypes} from "../../../enums/DrawerTypes";
+import { DrawerTypes } from '../../../enums/DrawerTypes'
 
 const NetworkDrawer = (network: INetwork, context: CanvasRenderingContext2D): TNetworkDrawer => {
   return {
