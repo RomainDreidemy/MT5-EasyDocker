@@ -1,20 +1,20 @@
-import { type IPosition } from '../../../../interfaces/Position.interface'
-import { type TBaseLinker } from '../../../../types/board/drawer/linkers/Base.linker'
+import {type IPosition} from '../../../../interfaces/Position.interface'
+import {type TBaseLinker} from '../../../../types/board/drawer/linkers/Base.linker'
 import StateLinker from './State.linker'
 import CommonBases from '../Common.bases'
-import { type TConnector } from '../../../../types/Connector'
-import { Placements } from '../../../../enums/placements'
+import {type TConnector} from '../../../../types/Connector'
+import {Placements} from '../../../../enums/placements'
 import {CanvasColor} from "../../../../enums/CanvasColor";
 
 const BaseLinker: TBaseLinker = {
   ...CommonBases,
   ...StateLinker,
 
-  isSelected ({ x, y }: IPosition): boolean {
+  isSelected({x, y}: IPosition): boolean {
     return this.context!.isPointInStroke(this.path, x, y)
   },
 
-  draw (): void {
+  draw(): void {
     const line = new Path2D()
 
     this.context!.beginPath()
@@ -34,11 +34,16 @@ const BaseLinker: TBaseLinker = {
     this.context!.stroke(line)
 
     this.path = line
+
+    const at: IPosition = this.link!.at.factory!.position(this.offset)
+    const to: IPosition = this.link!.to.factory!.position(this.offset)
+
+    this.drawArrow(to, at)
   },
 
-  definePosition (connector: TConnector, line: (x: number, y: number) => void): void {
-    const { placement, factory } = connector
-    const { positionX, positionY, width, height } = factory!
+  definePosition(connector: TConnector, line: (x: number, y: number) => void): void {
+    const {placement, factory} = connector
+    const {positionX, positionY, width, height} = factory!
 
     switch (placement) {
       case Placements.TOP: {
@@ -60,6 +65,32 @@ const BaseLinker: TBaseLinker = {
         line(positionX + width + this.offset, positionY + height / 2)
       }
     }
+  },
+
+  drawArrow(to: IPosition, at: IPosition): void {
+    const angle: number = Math.atan2(at.y - to.y, at.x - to.x)
+
+    this.context!.beginPath();
+    if (this.selected) {
+      this.context!.strokeStyle = CanvasColor.SELECTED
+      this.context!.fillStyle = CanvasColor.SELECTED
+    } else {
+      this.context!.strokeStyle = CanvasColor.DEFAULT
+      this.context!.fillStyle = CanvasColor.DEFAULT
+    }
+    this.context!.moveTo(to.x, to.y);
+
+    this.definePosition(this.link!.at, (x, y) => {
+      this.context!.moveTo(x, y)
+    })
+
+    this.definePosition(this.link!.at, (x, y) => {
+      this.context!.lineTo(x - this.arrowSize * Math.cos(angle - Math.PI / 6), y - this.arrowSize * Math.sin(angle - Math.PI / 6));
+      this.context!.lineTo(x - this.arrowSize * Math.cos(angle + Math.PI / 6), y - this.arrowSize * Math.sin(angle + Math.PI / 6));
+    })
+
+    this.context!.closePath();
+    this.context!.fill();
   }
 }
 

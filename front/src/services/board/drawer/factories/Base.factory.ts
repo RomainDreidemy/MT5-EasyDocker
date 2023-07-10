@@ -24,6 +24,13 @@ const BaseFactory: TBaseFactory = {
     this.positionY = position.y
   },
 
+  position(withOffset: number = 0): IPosition {
+    return {
+      x: this.positionX - withOffset,
+      y: this.positionY - withOffset,
+    }
+  },
+
   draw(): void {
     const rectangle = new Path2D()
 

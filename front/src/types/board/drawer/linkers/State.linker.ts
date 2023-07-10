@@ -12,4 +12,5 @@ export interface TStateLinker {
 
   offset: number
   width: number
+  arrowSize: number
 }

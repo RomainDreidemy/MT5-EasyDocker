@@ -7,6 +7,7 @@ const StateLinker: TStateLinker = {
 
   width: 2,
   offset: 5,
+  arrowSize: 10
 }
 
 export default StateLinker

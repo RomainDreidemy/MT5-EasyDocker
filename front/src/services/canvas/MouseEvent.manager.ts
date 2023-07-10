@@ -4,7 +4,7 @@ import { type IPosition } from '../../interfaces/Position.interface'
 import BaseManager from './Base.manager'
 import LinkerManager from './Linker.manager'
 import { DrawerManager } from './Drawer.manager'
-import { type TConnectorOrNullify } from '../../types/Connector'
+import {TConnector, type TConnectorOrNullify} from '../../types/Connector'
 import { type TDrawer, type TDrawerOrNullify } from '../../types/Drawer'
 import eventEmitter from '../apps/Event.emitter'
 import { EventEmitters } from '../../enums/eventEmitters'
@@ -96,7 +96,7 @@ const MouseEventManager: TMouseEventManager = {
   },
 
   handleMouseUpOnLinker (drawer: TDrawer, position: IPosition): TConnectorOrNullify {
-    return drawer.connectors.find((drawer: TDrawer) => drawer.isSelected(position))
+    return drawer.connectors.find((connector: TConnector) => connector.isSelected(position))
   },
 
   boundingClientPosition (event: MouseEvent): IPosition {
