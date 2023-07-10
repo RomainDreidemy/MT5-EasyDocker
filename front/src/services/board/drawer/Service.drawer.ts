@@ -2,9 +2,9 @@ import ServiceFactory from './factories/Service.factory'
 import { type TServiceDrawer } from '../../../types/board/drawer/Service.drawer'
 import BaseDrawer from './Base.drawer'
 import ConnectorBuilder from './connector/Connector.builder'
-import ServiceLinker from './linkers/Service.linker'
-import ServiceConnector from './connector/Service.connector'
 import { type IService } from '../../../interfaces/Service.interface'
+import CommonConnector from './connector/Common.connector'
+import CommonLinker from './linkers/Common.linker'
 
 const ServiceDrawer = (service: IService, context: CanvasRenderingContext2D): TServiceDrawer => {
   return {
@@ -13,12 +13,12 @@ const ServiceDrawer = (service: IService, context: CanvasRenderingContext2D): TS
     create () {
       this.entity = service
       this.context = context
-      this.Linker = ServiceLinker
+      this.Linker = CommonLinker
 
-      this.factory = ServiceFactory(service, context)
-      this.factory.create()
+      this.factory = ServiceFactory()
+      this.factory.create(service, context)
 
-      this.Connector = ConnectorBuilder(this.factory, context, service, ServiceConnector)
+      this.Connector = ConnectorBuilder(this.factory, context, service, CommonConnector)
     }
   }
 }

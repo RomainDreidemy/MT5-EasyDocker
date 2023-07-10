@@ -8,6 +8,8 @@ export interface TStateFactory {
   width: number
   height: number
 
+  name: string
+
   selected: boolean
   onHover: boolean
 }

@@ -8,6 +8,8 @@ const StateFactory: TStateFactory = {
   width: 150,
   height: 100,
 
+  name: '',
+
   selected: false,
   onHover: false
 }

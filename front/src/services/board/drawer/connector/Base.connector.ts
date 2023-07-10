@@ -9,6 +9,17 @@ const BaseConnector: TBaseConnector = {
 
   isSelected ({ x, y }: IPosition): boolean {
     return this.context!.isPointInPath(this.path, x, y)
+  },
+
+  draw (): void {
+    const circle = new Path2D()
+
+    this.context!.beginPath()
+    circle.arc(this.positionX, this.positionY, this.radius, this.startAngle, this.endAngle)
+    this.context!.fillStyle = this.color
+    this.context!.fill(circle)
+    this.context!.closePath()
+    this.path = circle
   }
 }
 
