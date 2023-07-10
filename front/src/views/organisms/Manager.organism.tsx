@@ -1,6 +1,6 @@
 import React from 'react'
 
-const ManagerOrganism = ({}) => {
+const ManagerOrganism = (): JSX.Element => {
   return (
     <div className="w-full h-full border-l-2 ">
       <div className="p-2 flex flex items-center justify-between">

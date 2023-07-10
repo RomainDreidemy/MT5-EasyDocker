@@ -21,9 +21,9 @@ type structure = {
 
 interface form {
   label: string
-  name: string,
-  type: string,
-  validator: string,
+  name: string
+  type: string
+  validator: string
 }
 
 const useEditor = (drawer: TDrawer): { fields: form[] } => {

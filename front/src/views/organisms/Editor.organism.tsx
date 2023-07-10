@@ -1,28 +1,34 @@
-import React, {ChangeEvent, useState} from 'react'
+import React, { type ChangeEvent, useState } from 'react'
 import useEditor from '../../hooks/useEditor'
-import {type TDrawer} from '../../types/Drawer'
+import { type TDrawer } from '../../types/Drawer'
 import EventsCanvas from '../../services/canvas/Events.canvas'
-import Input from "../atoms/Forms/Input.atom";
-import Button from "../atoms/Forms/Button.atom";
+import Input from '../atoms/Forms/Input.atom'
+import Button from '../atoms/Forms/Button.atom'
 
-const EditorOrganism = ({drawer}: { drawer: TDrawer }) => {
-  const {fields} = useEditor(drawer)
+const EditorOrganism = ({ drawer }: { drawer: TDrawer }): JSX.Element => {
+  const { fields } = useEditor(drawer)
 
   const [formDrawer, setFormDrawer] = useState<TDrawer>(drawer)
 
-  const changeValue = (event: ChangeEvent<HTMLInputElement>): void =>
-    setFormDrawer({...formDrawer, [event.target.name]: event.target.value})
+  const changeValue: (event: ChangeEvent<HTMLInputElement>)
+  => void =
+    (event: ChangeEvent<HTMLInputElement>): void => {
+      setFormDrawer({ ...formDrawer, [event.target.name]: event.target.value })
+    }
 
-  const onClose = () => {
+  const onClose = (): void => {
     EventsCanvas.clearSelectedDrawer()
     EventsCanvas.updateScreen()
   }
 
-  const onSubmit = async () => {}
+  const onSubmit = (): void => {
 
-  const submitText: string = drawer?.entity?.id ? 'Update' : 'Create'
+  }
 
-  const validators = fields.reduce((acc, field) => ({ [field.name]: field.validator }), {});
+  const submitText: string = drawer?.entity?.id !== null ? 'Update' : 'Create'
+
+  // yup validation
+  // const validators: object = fields.reduce((acc, field) => ({ [field.name]: field.validator }), {})
 
   return (
     <div className="w-full h-full border-l-2 ">
@@ -31,14 +37,14 @@ const EditorOrganism = ({drawer}: { drawer: TDrawer }) => {
 
         <Button
           className="bg-transparent text-blue-500 hover:text-white font-bold h-2"
-          label={"X"}
+          label={'X'}
           onClick={onClose}
         />
       </div>
 
       <form className="p-2" onSubmit={onSubmit}>
 
-        { fields.map((field, index) => (
+        {fields.map((field, index) => (
           <Input
             label={field.label}
             type={field.type}

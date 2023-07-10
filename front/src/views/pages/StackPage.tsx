@@ -1,13 +1,10 @@
-import { useParams } from 'react-router-dom'
 import BoardOrganism from '../organisms/Board.organism'
 import React from 'react'
 import useBoard from '../../hooks/useBoard'
 import ManagerOrganism from '../organisms/Manager.organism'
 import EditorOrganism from '../organisms/Editor.organism'
 
-const StackPage = () => {
-  const { id } = useParams()
-
+const StackPage = (): JSX.Element => {
   const { canvasRef, selectedDrawer } = useBoard()
 
   return (
