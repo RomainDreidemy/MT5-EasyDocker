@@ -19,7 +19,7 @@ export const DrawerManager: TDrawerManager = {
     }
     this.selectedDrawer = undefined
 
-    eventEmitter.emit(EventEmitters.ON_DRAWER_UNSELECTED)
+    eventEmitter.emit(EventEmitters.ON_UNSELECTED_DRAWER)
   },
 
   clearOnHoverDrawer (): void {

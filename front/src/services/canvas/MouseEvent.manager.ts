@@ -4,7 +4,7 @@ import { type IPosition } from '../../interfaces/Position.interface'
 import BaseManager from './Base.manager'
 import LinkerManager from './Linker.manager'
 import { DrawerManager } from './Drawer.manager'
-import {TConnector, type TConnectorOrNullify} from '../../types/Connector'
+import { type TConnector, type TConnectorOrNullify } from '../../types/Connector'
 import { type TDrawer, type TDrawerOrNullify } from '../../types/Drawer'
 import eventEmitter from '../apps/Event.emitter'
 import { EventEmitters } from '../../enums/eventEmitters'
@@ -40,7 +40,7 @@ const MouseEventManager: TMouseEventManager = {
     this.updateScreen()
 
     if (this.selectedDrawer != null) {
-      eventEmitter.emit(EventEmitters.ON_DRAWER_SELECTED, this.selectedDrawer)
+      eventEmitter.emit(EventEmitters.ON_SELECTED_DRAWER, this.selectedDrawer)
     }
   },
 

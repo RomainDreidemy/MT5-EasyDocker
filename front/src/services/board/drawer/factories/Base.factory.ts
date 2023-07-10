@@ -1,50 +1,50 @@
-import {type TBaseFactory} from '../../../../types/board/drawer/factories/Base.factory'
+import { type TBaseFactory } from '../../../../types/board/drawer/factories/Base.factory'
 import StateFactory from './State.factory'
-import {type IPosition} from '../../../../interfaces/Position.interface'
+import { type IPosition } from '../../../../interfaces/Position.interface'
 import CommonBases from '../Common.bases'
-import {type TEntity} from '../../../../types/Entity'
-import {CanvasColor} from "../../../../enums/CanvasColor";
+import { type TEntity } from '../../../../types/Entity'
+import { CanvasColor } from '../../../../enums/CanvasColor'
 
 const BaseFactory: TBaseFactory = {
   ...CommonBases,
   ...StateFactory,
 
-  create(entity: TEntity, context: CanvasRenderingContext2D): void {
+  create (entity: TEntity, context: CanvasRenderingContext2D): void {
     this.context = context
     this.positionX = isNaN(entity.positionX) ? this.positionX : entity.positionX
     this.positionY = isNaN(entity.positionY) ? this.positionY : entity.positionY
   },
 
-  isSelected({x, y}: IPosition): boolean {
+  isSelected ({ x, y }: IPosition): boolean {
     return this.context!.isPointInPath(this.path, x, y)
   },
 
-  updatePosition(position: IPosition): void {
+  updatePosition (position: IPosition): void {
     this.positionX = position.x
     this.positionY = position.y
   },
 
-  position(withOffset: number = 0): IPosition {
+  position (withOffset: number = 0): IPosition {
     return {
       x: this.positionX - withOffset,
-      y: this.positionY - withOffset,
+      y: this.positionY - withOffset
     }
   },
 
-  draw(): void {
+  draw (): void {
     const rectangle = new Path2D()
 
     this.context!.beginPath()
 
-    this.context!.beginPath();
+    this.context!.beginPath()
     this.context!.lineWidth = 3
     rectangle.roundRect(this.positionX, this.positionY, this.width, this.height, [10])
-    this.context!.stroke();
+    this.context!.stroke()
 
-    this.context!.strokeStyle = CanvasColor.BORDER;
-    this.context!.fillStyle = CanvasColor.BACKGROUND;
-    this.context!.beginPath();
-    this.context!.roundRect(this.positionX, this.positionY, this.width, this.height, [10]);
+    this.context!.strokeStyle = CanvasColor.BORDER
+    this.context!.fillStyle = CanvasColor.BACKGROUND
+    this.context!.beginPath()
+    this.context!.roundRect(this.positionX, this.positionY, this.width, this.height, [10])
 
     if (this.selected) {
       this.context!.strokeStyle = CanvasColor.SELECTED
@@ -53,12 +53,12 @@ const BaseFactory: TBaseFactory = {
     }
 
     this.context!.stroke(rectangle)
-    this.context!.fill();
+    this.context!.fill()
     this.context!.closePath()
 
-    this.context!.fillStyle = CanvasColor.TITLE;
-    this.context!.font = 'bold 20px Arial';
-    this.context!.fillText(this.name, this.positionX + 20, this.positionY + 40);
+    this.context!.fillStyle = CanvasColor.TITLE
+    this.context!.font = 'bold 20px Arial'
+    this.context!.fillText(this.name, this.positionX + 20, this.positionY + 40)
 
     this.path = rectangle
   }

@@ -1,7 +1,7 @@
-import {type TStateLinker} from './State.linker'
-import {type IPosition} from '../../../../interfaces/Position.interface'
-import {type TCommonBases} from '../Common.bases'
-import {type TConnector} from '../../../Connector'
+import { type TStateLinker } from './State.linker'
+import { type IPosition } from '../../../../interfaces/Position.interface'
+import { type TCommonBases } from '../Common.bases'
+import { type TConnector } from '../../../Connector'
 
 export type TBaseLinker =
   TCommonBases &

@@ -1,5 +1,5 @@
 export enum EventEmitters {
-  ON_DRAWER_SELECTED = 'onDrawerSelected',
-  ON_DRAWER_UNSELECTED = 'onDrawerUnselected',
-  ON_LINKER_CREATED = 'linkerCreated'
+  ON_SELECTED_DRAWER = 'onDrawerSelected',
+  ON_UNSELECTED_DRAWER = 'onDrawerUnselected',
+  ON_CREATED_LINKER = 'linkerCreated'
 }
