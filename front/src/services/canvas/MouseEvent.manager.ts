@@ -51,8 +51,8 @@ const MouseEventManager: TMouseEventManager = {
       const movePosition: IPosition = this.boundingClientPosition(event)
 
       const drawerPosition: IPosition = {
-        x: movePosition.x - this.onDrawerClickOffset.x,
-        y: movePosition.y - this.onDrawerClickOffset.y
+        x: movePosition.x - this.onDrawerClickOffset!.x,
+        y: movePosition.y - this.onDrawerClickOffset!.y
       }
 
       this.selectedDrawer.factory!.updatePosition(drawerPosition)

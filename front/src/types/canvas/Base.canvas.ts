@@ -8,4 +8,5 @@ export interface TBaseCanvas {
   clearArea: () => void
   updateContext: () => void
   setCanvasDimensions: (size: ISize) => void
+  sizeCanvas: () => void
 }
