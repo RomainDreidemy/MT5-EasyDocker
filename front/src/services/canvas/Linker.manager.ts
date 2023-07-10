@@ -6,10 +6,12 @@ import BaseManager from './Base.manager'
 import { type TConnector } from '../../types/Connector'
 import { type TDrawer } from '../../types/Drawer'
 import { type TLinker, type TLinkerOrNullify } from '../../types/Linker'
+import {DrawerManager} from "./Drawer.manager";
 
 const LinkerManager: TLinkerManager = {
   ...BaseManager,
   ...ConnectorManager,
+  ...DrawerManager,
 
   drawConnectorLine (connector: TConnector, position: IPosition): void {
     this.updateScreen()
@@ -46,8 +48,7 @@ const LinkerManager: TLinkerManager = {
       linker.create()
       this.selectedDrawer.linkers.push(linker)
 
-      this.onHoverDrawer.factory!.onHover = false
-      this.onHoverDrawer = undefined
+      this.clearOnHoverDrawer()
       this.onSelectDrawer(false)
     }
   },

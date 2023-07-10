@@ -5,10 +5,13 @@ import ConnectorBuilder from './connector/Connector.builder'
 import { type IService } from '../../../interfaces/Service.interface'
 import CommonConnector from './connector/Common.connector'
 import CommonLinker from './linkers/Common.linker'
+import { DrawerTypes } from '../../../enums/DrawerTypes'
 
 const ServiceDrawer = (service: IService, context: CanvasRenderingContext2D): TServiceDrawer => {
   return {
     ...BaseDrawer,
+
+    canBeLinkedWith: [DrawerTypes.NETWORK],
 
     create () {
       this.entity = service

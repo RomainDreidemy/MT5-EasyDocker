@@ -3,6 +3,7 @@ import { type TConnectors } from '../../Connector'
 import { type TLinkerBuilder, type TLinkers } from '../../Linker'
 import { type TEntity } from '../../Entity'
 import { type TConnectorBuilder } from './connectors/Connector.builder'
+import { type DrawerTypes } from '../../../enums/DrawerTypes'
 
 export interface TStateDrawer {
   context?: CanvasRenderingContext2D
@@ -10,6 +11,8 @@ export interface TStateDrawer {
   factory?: TFactory
   Linker?: TLinkerBuilder
   Connector?: TConnectorBuilder
+
+  canBeLinkedWith: DrawerTypes[]
 
   connectors: TConnectors
   linkers: TLinkers

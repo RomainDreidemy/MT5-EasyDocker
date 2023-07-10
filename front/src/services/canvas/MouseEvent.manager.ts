@@ -35,6 +35,8 @@ const MouseEventManager: TMouseEventManager = {
 
     this.isMoving = false
     this.selectedConnector = undefined
+
+    this.clearOnHoverDrawer()
     this.updateScreen()
 
     if (this.selectedDrawer != null) {
