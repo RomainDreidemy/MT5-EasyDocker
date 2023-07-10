@@ -103,6 +103,10 @@ definitions:
         type: string
       entrypoint:
         type: string
+      envVariables:
+        items:
+          $ref: '#/definitions/models.ServiceEnvVariableResponse'
+        type: array
       id:
         type: string
       positionX:

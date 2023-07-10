@@ -6,14 +6,15 @@ import (
 
 func BuildServiceResponse(service models.Service) models.ServiceResponseItem {
 	return models.ServiceResponseItem{
-		ID:          service.ID,
-		DockerImage: service.DockerImage,
-		DockerTag:   service.DockerTag,
-		Entrypoint:  service.Entrypoint,
-		Description: service.Description,
-		PositionX:   service.PositionX,
-		PositionY:   service.PositionY,
-		Volumes:     BuildServiceVolumeResponses(service.ServiceVolumes),
+		ID:           service.ID,
+		DockerImage:  service.DockerImage,
+		DockerTag:    service.DockerTag,
+		Entrypoint:   service.Entrypoint,
+		Description:  service.Description,
+		PositionX:    service.PositionX,
+		PositionY:    service.PositionY,
+		Volumes:      BuildServiceVolumeResponses(service.ServiceVolumes),
+		EnvVariables: BuildServiceEnvVariableResponses(service.ServiceEnvVariables),
 	}
 }
 
