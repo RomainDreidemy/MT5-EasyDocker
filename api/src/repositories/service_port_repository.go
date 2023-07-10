@@ -6,10 +6,10 @@ import (
 	"gorm.io/gorm"
 )
 
-func FindServicePort(id string) (models.Service, *gorm.DB) {
-	var service models.Service
-	result := initializers.DB.First(&service, "id = ?", id)
-	return service, result
+func FindServicePort(id string) (models.ServicePort, *gorm.DB) {
+	var servicePort models.ServicePort
+	result := initializers.DB.First(&servicePort, "id = ?", id)
+	return servicePort, result
 }
 
 func FindServicePortsByServiceId(serviceId string) ([]models.ServicePort, *gorm.DB) {

@@ -14,7 +14,7 @@ import (
 // @Accept       json
 // @Produce      json
 // @Param serviceId path string true "Service ID"
-// @Success      200  {array}  models.ServiceResponse
+// @Success      200  {array}  models.ServicePortResponse
 // @Router       /services/{serviceId}/ports [get]
 func GetServicePorts(c *fiber.Ctx) error {
 	currentUser := c.Locals("user").(models.UserResponse)
@@ -30,25 +30,25 @@ func GetServicePorts(c *fiber.Ctx) error {
 }
 
 // GetServicePort godoc
-// @Summary      Get a service
-// @Tags         Services
+// @Summary      Get a port
+// @Tags         Service Ports
 // @Accept       json
 // @Produce      json
-// @Param id path string true "Service ID"
-// @Success      200  {object}  models.ServiceResponse
+// @Param id path string true "Service Port ID"
+// @Success      200  {object}  models.ServicePortResponse
 // @Router       /ports/{id} [get]
-//func GetServicePort(c *fiber.Ctx) error {
-//	currentUser := c.Locals("user").(models.UserResponse)
-//	id := c.Params("id")
-//
-//	if !policies.CanAccessService(currentUser, id) {
-//		return c.Status(fiber.StatusNotFound).JSON(factories.BuildErrorResponse("error", "Service not found"))
-//	}
-//
-//	service, _ := repositories.FindService(id)
-//
-//	return c.Status(fiber.StatusOK).JSON(factories.BuildServiceResponse(service))
-//}
+func GetServicePort(c *fiber.Ctx) error {
+	currentUser := c.Locals("user").(models.UserResponse)
+	id := c.Params("id")
+
+	servicePort, _ := repositories.FindServicePort(id)
+
+	if !policies.CanAccessService(currentUser, servicePort.ServiceID) {
+		return c.Status(fiber.StatusNotFound).JSON(factories.BuildErrorResponse("error", "Service Port not found"))
+	}
+
+	return c.Status(fiber.StatusOK).JSON(factories.BuildServicePortResponse(servicePort))
+}
 
 // CreateServicePort godoc
 // @Summary      Create a new service

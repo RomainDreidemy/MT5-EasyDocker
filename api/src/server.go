@@ -63,6 +63,9 @@ func main() {
 
 	service.Get("/:serviceId/ports", controllers.GetServicePorts)
 
+	servicePort := micro.Group("/ports", middleware.DeserializeUser)
+	servicePort.Get("/:id", controllers.GetServicePort)
+
 	app.Get("/swagger/*", swagger.HandlerDefault)
 
 	log.Fatal(app.Listen(":3000"))

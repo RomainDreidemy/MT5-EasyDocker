@@ -82,6 +82,37 @@ const docTemplate = `{
                 }
             }
         },
+        "/ports/{id}": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Service Ports"
+                ],
+                "summary": "Get a port",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Service Port ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.ServicePortResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/services/{id}": {
             "get": {
                 "consumes": [
@@ -204,7 +235,7 @@ const docTemplate = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/models.ServiceResponse"
+                                "$ref": "#/definitions/models.ServicePortResponse"
                             }
                         }
                     }
@@ -482,6 +513,20 @@ const docTemplate = `{
                 },
                 "positionY": {
                     "type": "number"
+                }
+            }
+        },
+        "models.ServicePortResponse": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "private": {
+                    "type": "integer"
+                },
+                "public": {
+                    "type": "integer"
                 }
             }
         },
