@@ -226,6 +226,28 @@ paths:
       summary: Update a service
       tags:
       - Services
+  /services/{serviceId}/ports:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Service ID
+        in: path
+        name: serviceId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.ServiceResponse'
+            type: array
+      summary: Get ports for a service
+      tags:
+      - Service Ports
   /stacks:
     get:
       consumes:

@@ -177,6 +177,40 @@ const docTemplate = `{
                 }
             }
         },
+        "/services/{serviceId}/ports": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Service Ports"
+                ],
+                "summary": "Get ports for a service",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Service ID",
+                        "name": "serviceId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.ServiceResponse"
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/stacks": {
             "get": {
                 "consumes": [

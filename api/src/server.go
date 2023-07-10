@@ -61,6 +61,8 @@ func main() {
 	service.Put("/:id", controllers.UpdateService)
 	service.Delete("/:id", controllers.DeleteService)
 
+	service.Get("/:serviceId/ports", controllers.GetServicePorts)
+
 	app.Get("/swagger/*", swagger.HandlerDefault)
 
 	log.Fatal(app.Listen(":3000"))
