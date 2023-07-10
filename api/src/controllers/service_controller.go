@@ -37,7 +37,7 @@ func GetServices(c *fiber.Ctx) error {
 // @Accept       json
 // @Produce      json
 // @Param id path string true "Service ID"
-// @Success      200  {object}  models.ServiceResponse
+// @Success      200  {object}  models.ServiceResponseItem
 // @Router       /services/{id} [get]
 func GetService(c *fiber.Ctx) error {
 	currentUser := c.Locals("user").(models.UserResponse)

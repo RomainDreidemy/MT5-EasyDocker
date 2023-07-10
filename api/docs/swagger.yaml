@@ -93,6 +93,27 @@ definitions:
       positionY:
         type: number
     type: object
+  models.ServiceResponseItem:
+    properties:
+      description:
+        type: string
+      dockerImage:
+        type: string
+      dockerTag:
+        type: string
+      entrypoint:
+        type: string
+      id:
+        type: string
+      positionX:
+        type: number
+      positionY:
+        type: number
+      volumes:
+        items:
+          $ref: '#/definitions/models.ServiceVolumeResponse'
+        type: array
+    type: object
   models.ServiceUpdateInput:
     properties:
       description:
@@ -406,7 +427,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.ServiceResponse'
+            $ref: '#/definitions/models.ServiceResponseItem'
       summary: Get a service
       tags:
       - Services

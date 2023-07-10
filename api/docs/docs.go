@@ -297,7 +297,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/models.ServiceResponse"
+                            "$ref": "#/definitions/models.ServiceResponseItem"
                         }
                     }
                 }
@@ -1063,6 +1063,38 @@ const docTemplate = `{
                 },
                 "positionY": {
                     "type": "number"
+                }
+            }
+        },
+        "models.ServiceResponseItem": {
+            "type": "object",
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "dockerImage": {
+                    "type": "string"
+                },
+                "dockerTag": {
+                    "type": "string"
+                },
+                "entrypoint": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "positionX": {
+                    "type": "number"
+                },
+                "positionY": {
+                    "type": "number"
+                },
+                "volumes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.ServiceVolumeResponse"
+                    }
                 }
             }
         },
