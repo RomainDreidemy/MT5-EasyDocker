@@ -24,7 +24,13 @@ func ConnectDB(config *Config) {
 	DB.Logger = logger.Default.LogMode(logger.Info)
 
 	log.Println("Running Migrations")
-	err = DB.AutoMigrate(&User{}, &Stack{}, &Service{}, &ServicePort{})
+	err = DB.AutoMigrate(
+		&User{},
+		&Stack{},
+		&Service{},
+		&ServicePort{},
+		&ServiceEnvVariable{},
+	)
 	if err != nil {
 		log.Fatal("Migration Failed:  \n", err.Error())
 	}
