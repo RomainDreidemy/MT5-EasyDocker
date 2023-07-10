@@ -30,7 +30,8 @@ module.exports = {
   ],
   rules: {
     '@typescript-eslint/no-extraneous-class': 'off',
-    '@typescript-eslint/no-non-null-assertion': 'off'
+    '@typescript-eslint/no-non-null-assertion': 'off',
+    '@typescript-eslint/no-dynamic-delete': 'off'
   },
   settings: {
     react: {

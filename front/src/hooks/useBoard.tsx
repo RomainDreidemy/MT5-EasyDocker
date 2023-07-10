@@ -47,8 +47,8 @@ const useBoard = (): { canvasRef: MutableRefObject<HTMLCanvasElement | null> } =
     eventEmitter.on(EventEmitters.ON_LINKER_CREATED, onLinkerCreated)
 
     return () => {
-      eventEmitter.removeListener(EventEmitters.ON_DRAWER_SELECTED, onDrawerSelected)
-      eventEmitter.removeListener(EventEmitters.ON_LINKER_CREATED, onLinkerCreated)
+      eventEmitter.removeListener(EventEmitters.ON_DRAWER_SELECTED)
+      eventEmitter.removeListener(EventEmitters.ON_LINKER_CREATED)
     }
   }, [])
 

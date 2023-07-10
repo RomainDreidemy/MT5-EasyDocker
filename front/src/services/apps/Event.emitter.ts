@@ -4,28 +4,16 @@ import { type EventListenerCallback, type EventListeners } from '../../interface
 class EventEmitter {
   private listeners: EventListeners = {}
 
-  public on (event: EventEmitters, callback: EventListenerCallback): void {
-    if (!this.listeners[event]) {
-      this.listeners[event] = []
-    }
-    this.listeners[event].push(callback)
+  public on (event: EventEmitters, ...callbacks: EventListenerCallback[]): void {
+    this.listeners[event] = callbacks
   }
 
   public emit (event: EventEmitters, data?: any): void {
-    const eventListeners = this.listeners[event]
-    if (eventListeners) {
-      eventListeners.forEach((callback: EventListenerCallback) => { callback(data) })
-    }
+    this.listeners[event].forEach((callback: EventListenerCallback) => { callback(data) })
   }
 
-  public removeListener (event: EventEmitters, callback: EventListenerCallback): void {
-    const eventListeners = this.listeners[event]
-    if (eventListeners) {
-      const index = eventListeners.indexOf(callback)
-      if (index !== -1) {
-        eventListeners.splice(index, 1)
-      }
-    }
+  public removeListener (event: EventEmitters): void {
+    delete this.listeners[event]
   }
 }
 
