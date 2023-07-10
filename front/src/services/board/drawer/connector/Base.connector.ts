@@ -2,6 +2,7 @@ import { type IPosition } from '../../../../interfaces/Position.interface'
 import StateConnector from './State.connector'
 import { type TBaseConnector } from '../../../../types/board/drawer/connectors/Base.connector'
 import CommonBases from '../Common.bases'
+import {CanvasColor} from "../../../../enums/CanvasColor";
 
 const BaseConnector: TBaseConnector = {
   ...CommonBases,
@@ -16,11 +17,10 @@ const BaseConnector: TBaseConnector = {
 
     this.context!.beginPath()
     circle.arc(this.positionX, this.positionY, this.radius, this.startAngle, this.endAngle)
-    this.context!.fillStyle = this.color
+    this.context!.fillStyle = CanvasColor.CONNECTOR;
+
     this.context!.fill(circle)
     this.context!.closePath()
-
-    this.context!.fillStyle = 'black'
 
     this.path = circle
   }

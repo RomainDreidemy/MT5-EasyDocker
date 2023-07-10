@@ -5,7 +5,8 @@ const StateLinker: TStateLinker = {
 
   selected: false,
 
-  width: 7
+  width: 2,
+  offset: 5,
 }
 
 export default StateLinker

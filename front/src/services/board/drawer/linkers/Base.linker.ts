@@ -4,6 +4,7 @@ import StateLinker from './State.linker'
 import CommonBases from '../Common.bases'
 import { type TConnector } from '../../../../types/Connector'
 import { Placements } from '../../../../enums/placements'
+import {CanvasColor} from "../../../../enums/CanvasColor";
 
 const BaseLinker: TBaseLinker = {
   ...CommonBases,
@@ -25,9 +26,9 @@ const BaseLinker: TBaseLinker = {
     })
 
     if (this.selected) {
-      this.context!.strokeStyle = '#ff0000'
+      this.context!.strokeStyle = CanvasColor.SELECTED
     } else {
-      this.context!.strokeStyle = 'black'
+      this.context!.strokeStyle = CanvasColor.DEFAULT
     }
     this.context!.lineWidth = this.width
     this.context!.stroke(line)
@@ -41,22 +42,22 @@ const BaseLinker: TBaseLinker = {
 
     switch (placement) {
       case Placements.TOP: {
-        line(positionX + width / 2, positionY)
+        line(positionX + width / 2, positionY - this.offset)
         return
       }
 
       case Placements.BOTTOM: {
-        line(positionX + width / 2, positionY + height)
+        line(positionX + width / 2, positionY + height + this.offset)
         return
       }
 
       case Placements.LEFT: {
-        line(positionX, positionY + height / 2)
+        line(positionX - this.offset, positionY + height / 2)
         return
       }
 
       case Placements.RIGHT: {
-        line(positionX + width, positionY + height / 2)
+        line(positionX + width + this.offset, positionY + height / 2)
       }
     }
   }
