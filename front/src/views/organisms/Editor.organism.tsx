@@ -22,11 +22,12 @@ const EditorOrganism = ({drawer}: { drawer: TDrawer }) => {
 
   const submitText: string = drawer?.entity?.id ? 'Update' : 'Create'
 
-  console.log(fields)
+  const validators = fields.reduce((acc, field) => ({ [field.name]: field.validator }), {});
+
   return (
     <div className="w-full h-full border-l-2 ">
       <div className="border-b-2 p-2 flex flex items-center justify-between">
-        <h2>Editor</h2>
+        <h2><strong>Editor</strong></h2>
 
         <Button
           className="bg-transparent text-blue-500 hover:text-white font-bold h-2"
@@ -35,7 +36,7 @@ const EditorOrganism = ({drawer}: { drawer: TDrawer }) => {
         />
       </div>
 
-      <form className="p-2">
+      <form className="p-2" onSubmit={onSubmit}>
 
         { fields.map((field, index) => (
           <Input

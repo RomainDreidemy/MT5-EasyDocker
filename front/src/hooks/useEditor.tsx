@@ -1,15 +1,9 @@
 import { DrawerTypes } from '../enums/DrawerTypes'
 import { type TDrawer } from '../types/Drawer'
-import { boolean, object, string } from 'yup'
+import { boolean } from 'yup'
 
 const TYPE_STRUCTURES: structure = {
   [DrawerTypes.SERVICE]: [
-    {
-      label: 'Description',
-      name: 'description',
-      type: 'text',
-      validator: boolean().nullable()
-    },
     {
       label: 'Description',
       name: 'description',
@@ -33,8 +27,6 @@ interface form {
 }
 
 const useEditor = (drawer: TDrawer): { fields: form[] } => {
-  console.log(drawer)
-
   return {
     fields: TYPE_STRUCTURES[drawer.type]
   }

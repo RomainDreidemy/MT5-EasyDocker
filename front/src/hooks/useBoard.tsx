@@ -34,8 +34,6 @@ const useBoard = (): { canvasRef: MutableRefObject<HTMLCanvasElement | null>, se
     const volumeDrawer = VolumeDrawer(volume, EventsCanvas.context!)
     volumeDrawer.create()
 
-    setSelectedDrawer(serviceDrawer)
-
     EventsCanvas.add(serviceDrawer, networkDrawer, volumeDrawer)
     EventsCanvas.startup()
   }, [canvasRef])
