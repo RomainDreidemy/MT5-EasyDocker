@@ -24,3 +24,8 @@ code {
     font-size: 1.3rem;
     vertical-align: -4.5px;
 }
+
+.board {
+    background-image: url("./assets/images/canvas.background.png");
+    background-repeat: repeat;
+}

@@ -3,7 +3,7 @@ import Button from '../atoms/Forms/Button.atom'
 
 export const Navbar = (): JSX.Element => {
   return (
-    <div className="navbar bg-base-100">
+    <div className="navbar bg-gray-100">
       <div className="navbar-start">
         <Button label={'Export as file'} variant="primary"/>
       </div>

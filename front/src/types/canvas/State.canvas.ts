@@ -12,5 +12,5 @@ export interface TStateCanvas {
   onHoverDrawer?: TDrawer
 
   isMoving: boolean
-  onDrawerClickOffset: IPosition
+  onDrawerClickOffset?: IPosition
 }

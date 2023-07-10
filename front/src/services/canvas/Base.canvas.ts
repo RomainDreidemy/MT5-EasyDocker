@@ -8,7 +8,7 @@ const BaseCanvas: TBaseCanvas = {
     this.canvas = canvas
     this.context = canvas.getContext(Contexts.ID_2D) as CanvasRenderingContext2D
 
-    const dimensions = WindowApp.dimensions()
+    const dimensions: ISize = { width: this.canvas.offsetWidth, height: this.canvas.offsetHeight }
     this.setCanvasDimensions(dimensions)
   },
 
