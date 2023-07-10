@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 
 const ManagerOrganism = ({}) => {
   return (
@@ -7,9 +7,9 @@ const ManagerOrganism = ({}) => {
         <h2>Manager</h2>
       </div>
     </div>
-  );
-};
+  )
+}
 
-ManagerOrganism.propTypes = {};
+ManagerOrganism.propTypes = {}
 
-export default ManagerOrganism;
+export default ManagerOrganism

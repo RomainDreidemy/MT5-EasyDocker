@@ -2,6 +2,8 @@ import { type TDrawerManager } from '../../types/canvas/Drawer.manager'
 import { type IPosition } from '../../interfaces/Position.interface'
 import StateCanvas from './State.canvas'
 import { type TDrawer, type TDrawerOrNullify } from '../../types/Drawer'
+import eventEmitter from '../apps/Event.emitter'
+import { EventEmitters } from '../../enums/eventEmitters'
 
 export const DrawerManager: TDrawerManager = {
   ...StateCanvas,
@@ -16,6 +18,8 @@ export const DrawerManager: TDrawerManager = {
       this.selectedDrawer.factory!.selected = false
     }
     this.selectedDrawer = undefined
+
+    eventEmitter.emit(EventEmitters.ON_DRAWER_UNSELECTED)
   },
 
   clearOnHoverDrawer (): void {

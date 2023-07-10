@@ -1,4 +1,4 @@
-import {type MutableRefObject, useEffect, useRef, useState} from 'react'
+import { type MutableRefObject, useEffect, useRef, useState } from 'react'
 import { type IService } from '../interfaces/Service.interface'
 import EventsCanvas from '../services/canvas/Events.canvas'
 import { type TServiceDrawer } from '../types/board/drawer/Service.drawer'
@@ -10,7 +10,7 @@ import { type IVolume } from '../interfaces/Volume.interface'
 import { type EventListenerCallback } from '../interfaces/EventListener.interface'
 import eventEmitter from '../services/apps/Event.emitter'
 import { EventEmitters } from '../enums/eventEmitters'
-import {TDrawer, TDrawerOrNullify} from "../types/Drawer";
+import { type TDrawerOrNullify } from '../types/Drawer'
 
 const useBoard = (): { canvasRef: MutableRefObject<HTMLCanvasElement | null>, selectedDrawer: TDrawerOrNullify } => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
@@ -41,22 +41,28 @@ const useBoard = (): { canvasRef: MutableRefObject<HTMLCanvasElement | null>, se
   }, [canvasRef])
 
   useEffect(() => {
-    const onDrawerSelected: EventListenerCallback = (data) => {
-      console.log('Moved drawer :', data)
-      setSelectedDrawer(data)
-    }
-    const onLinkerCreated: EventListenerCallback = (data) => {
-      console.log('Created linker :', data)
-    }
-
     eventEmitter.on(EventEmitters.ON_DRAWER_SELECTED, onDrawerSelected)
+    eventEmitter.on(EventEmitters.ON_DRAWER_UNSELECTED, onDrawerUnSelected)
     eventEmitter.on(EventEmitters.ON_LINKER_CREATED, onLinkerCreated)
 
     return () => {
       eventEmitter.removeListener(EventEmitters.ON_DRAWER_SELECTED)
+      eventEmitter.removeListener(EventEmitters.ON_DRAWER_UNSELECTED)
       eventEmitter.removeListener(EventEmitters.ON_LINKER_CREATED)
     }
   }, [])
+
+  const onDrawerSelected: EventListenerCallback = (data) => {
+    console.log('Moved drawer :', data)
+    setSelectedDrawer(data)
+  }
+  const onLinkerCreated: EventListenerCallback = (data) => {
+    console.log('Created linker :', data)
+  }
+
+  const onDrawerUnSelected: EventListenerCallback = (_) => {
+    setSelectedDrawer(undefined)
+  }
 
   return {
     canvasRef,

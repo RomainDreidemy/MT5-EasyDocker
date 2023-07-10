@@ -1,6 +1,6 @@
-import {TScreenEventManager} from "../../types/canvas/ScreenEvent.manager";
-import BaseManager from "./Base.manager";
-import {Events} from "../../enums/events";
+import { type TScreenEventManager } from '../../types/canvas/ScreenEvent.manager'
+import BaseManager from './Base.manager'
+import { Events } from '../../enums/events'
 
 const ScreenEventManager: TScreenEventManager = {
   ...BaseManager,
@@ -9,7 +9,7 @@ const ScreenEventManager: TScreenEventManager = {
     window.addEventListener(Events.RESIZE, () => {
       this.sizeCanvas()
       this.draw()
-    });
+    })
   }
 }
 

@@ -8,5 +8,5 @@ import { type TConnectorOrNullify } from '../Connector'
 export type TScreenEventManager =
   TBaseManager &
   {
-      screenStartup: () => void
+    screenStartup: () => void
   }

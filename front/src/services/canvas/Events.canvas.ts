@@ -7,7 +7,7 @@ import MouseEventManager from './MouseEvent.manager'
 import LinkerManager from './Linker.manager'
 import { ConnectorManager } from './Connector.manager'
 import KeyboardEventManager from './KeyboardEvent.manager'
-import ScreenEventManager from "./ScreenEvent.manager";
+import ScreenEventManager from './ScreenEvent.manager'
 
 const EventsCanvas: TEventsCanvas = {
   ...StateCanvas,
