@@ -15,4 +15,5 @@ export type TMouseEventManager =
     handleMouseUp: (event: MouseEvent) => void
     handleMouseMove: (event: MouseEvent) => void
     handleMouseUpOnLinker: (drawer: TDrawer, position: IPosition) => TConnectorOrNullify
+    boundingClientPosition: (event: MouseEvent) => IPosition
   }

@@ -2,8 +2,8 @@ import { type IPosition } from '../../../../interfaces/Position.interface'
 import { type TBaseLinker } from '../../../../types/board/drawer/linkers/Base.linker'
 import StateLinker from './State.linker'
 import CommonBases from '../Common.bases'
-import {TConnector} from "../../../../types/Connector";
-import {Placements} from "../../../../enums/placements";
+import { type TConnector } from '../../../../types/Connector'
+import { Placements } from '../../../../enums/placements'
 
 const BaseLinker: TBaseLinker = {
   ...CommonBases,

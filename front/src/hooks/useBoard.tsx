@@ -3,13 +3,13 @@ import { type IService } from '../interfaces/Service.interface'
 import EventsCanvas from '../services/canvas/Events.canvas'
 import { type TServiceDrawer } from '../types/board/drawer/Service.drawer'
 import ServiceDrawer from '../services/board/drawer/Service.drawer'
-import {INetwork} from "../interfaces/Network.interface";
-import NetworkDrawer from "../services/board/drawer/Network.drawer";
-import VolumeDrawer from "../services/board/drawer/Volume.drawer";
-import {IVolume} from "../interfaces/Volume.interface";
-import {EventListenerCallback} from "../interfaces/EventListener.interface";
-import eventEmitter from "../services/apps/Event.emitter";
-import {EventEmitters} from "../enums/eventEmitters";
+import { type INetwork } from '../interfaces/Network.interface'
+import NetworkDrawer from '../services/board/drawer/Network.drawer'
+import VolumeDrawer from '../services/board/drawer/Volume.drawer'
+import { type IVolume } from '../interfaces/Volume.interface'
+import { type EventListenerCallback } from '../interfaces/EventListener.interface'
+import eventEmitter from '../services/apps/Event.emitter'
+import { EventEmitters } from '../enums/eventEmitters'
 
 const useBoard = (): { canvasRef: MutableRefObject<HTMLCanvasElement | null> } => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
@@ -37,20 +37,20 @@ const useBoard = (): { canvasRef: MutableRefObject<HTMLCanvasElement | null> } =
 
   useEffect(() => {
     const onDrawerSelected: EventListenerCallback = (data) => {
-      console.log('Moved drawer :', data);
-    };
+      console.log('Moved drawer :', data)
+    }
     const onLinkerCreated: EventListenerCallback = (data) => {
-      console.log('Created linker :', data);
-    };
+      console.log('Created linker :', data)
+    }
 
-    eventEmitter.on(EventEmitters.ON_DRAWER_SELECTED, onDrawerSelected);
-    eventEmitter.on(EventEmitters.ON_LINKER_CREATED, onLinkerCreated);
+    eventEmitter.on(EventEmitters.ON_DRAWER_SELECTED, onDrawerSelected)
+    eventEmitter.on(EventEmitters.ON_LINKER_CREATED, onLinkerCreated)
 
     return () => {
-      eventEmitter.removeListener(EventEmitters.ON_DRAWER_SELECTED, onDrawerSelected);
-      eventEmitter.removeListener(EventEmitters.ON_LINKER_CREATED, onLinkerCreated);
-    };
-  }, []);
+      eventEmitter.removeListener(EventEmitters.ON_DRAWER_SELECTED, onDrawerSelected)
+      eventEmitter.removeListener(EventEmitters.ON_LINKER_CREATED, onLinkerCreated)
+    }
+  }, [])
 
   return {
     canvasRef

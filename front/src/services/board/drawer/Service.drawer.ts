@@ -1,16 +1,16 @@
 import ServiceFactory from './factories/Service.factory'
-import {type TServiceDrawer} from '../../../types/board/drawer/Service.drawer'
+import { type TServiceDrawer } from '../../../types/board/drawer/Service.drawer'
 import BaseDrawer from './Base.drawer'
 import ConnectorBuilder from './connector/Connector.builder'
-import {type IService} from '../../../interfaces/Service.interface'
-import CommonConnector from "./connector/Common.connector";
-import CommonLinker from "./linkers/Common.linker";
+import { type IService } from '../../../interfaces/Service.interface'
+import CommonConnector from './connector/Common.connector'
+import CommonLinker from './linkers/Common.linker'
 
 const ServiceDrawer = (service: IService, context: CanvasRenderingContext2D): TServiceDrawer => {
   return {
     ...BaseDrawer,
 
-    create() {
+    create () {
       this.entity = service
       this.context = context
       this.Linker = CommonLinker

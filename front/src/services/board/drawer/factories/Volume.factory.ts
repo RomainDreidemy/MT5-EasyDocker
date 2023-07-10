@@ -1,11 +1,11 @@
 import BaseFactory from './Base.factory'
-import {TVolumeFactory} from "../../../../types/board/drawer/factories/Volume.factory";
+import { type TVolumeFactory } from '../../../../types/board/drawer/factories/Volume.factory'
 
 const VolumeFactory = (): TVolumeFactory => {
   return {
     ...BaseFactory,
 
-    name: 'Volume',
+    name: 'Volume'
   }
 }
 

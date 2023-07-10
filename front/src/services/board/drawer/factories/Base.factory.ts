@@ -2,13 +2,13 @@ import { type TBaseFactory } from '../../../../types/board/drawer/factories/Base
 import StateFactory from './State.factory'
 import { type IPosition } from '../../../../interfaces/Position.interface'
 import CommonBases from '../Common.bases'
-import {TEntity} from "../../../../types/Entity";
+import { type TEntity } from '../../../../types/Entity'
 
 const BaseFactory: TBaseFactory = {
   ...CommonBases,
   ...StateFactory,
 
-  create(entity: TEntity, context: CanvasRenderingContext2D): void {
+  create (entity: TEntity, context: CanvasRenderingContext2D): void {
     this.context = context
     this.positionX = isNaN(entity.positionX) ? this.positionX : entity.positionX
     this.positionY = isNaN(entity.positionY) ? this.positionY : entity.positionY

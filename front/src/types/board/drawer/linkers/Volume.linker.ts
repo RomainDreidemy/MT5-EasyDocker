@@ -1,4 +1,4 @@
-import {type TBaseLinker} from './Base.linker'
+import { type TBaseLinker } from './Base.linker'
 
 export type TVolumeLinker =
   TBaseLinker

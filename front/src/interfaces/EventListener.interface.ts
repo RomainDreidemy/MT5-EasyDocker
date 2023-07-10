@@ -1,7 +1,3 @@
-export interface EventListenerCallback {
-  (data?: any): void;
-}
+export type EventListenerCallback = (data?: any) => void
 
-export interface EventListeners {
-  [event: string]: EventListenerCallback[];
-}
+export type EventListeners = Record<string, EventListenerCallback[]>
