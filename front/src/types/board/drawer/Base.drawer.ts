@@ -1,5 +1,5 @@
-import { type TStateDrawer } from './State.drawer'
-import { type TCommonBases } from './Common.bases'
+import {type TStateDrawer} from './State.drawer'
+import {type TCommonBases} from './Common.bases'
 
 export type TBaseDrawer =
   TCommonBases &

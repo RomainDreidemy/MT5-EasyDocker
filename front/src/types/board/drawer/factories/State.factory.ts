@@ -1,3 +1,5 @@
+import {DrawerTypes} from "../../../../enums/DrawerTypes";
+
 export interface TStateFactory {
   context?: CanvasRenderingContext2D
 
@@ -12,4 +14,5 @@ export interface TStateFactory {
 
   selected: boolean
   onHover: boolean
+  type: DrawerTypes
 }
