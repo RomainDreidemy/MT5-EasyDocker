@@ -511,6 +511,78 @@ const docTemplate = `{
                 }
             }
         },
+        "/services/{serviceId}/volumes": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Service Volumes"
+                ],
+                "summary": "Get volumes for a service",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Service ID",
+                        "name": "serviceId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.ServiceVolumeResponse"
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Service Volumes"
+                ],
+                "summary": "Create a new service volume",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Service ID",
+                        "name": "serviceId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "query params",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.ServiceVolumeCreateInput"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/models.ServiceVolumeResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/stacks": {
             "get": {
                 "consumes": [
@@ -755,6 +827,101 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/volumes/{id}": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Service Volumes"
+                ],
+                "summary": "Get a volume",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Service Volume ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.ServiceVolumeResponse"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Service Volumes"
+                ],
+                "summary": "Update a service volume",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Service Volume ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "query params",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.ServiceVolumeUpdateInput"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.ServiceVolumeResponse"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Service Volumes"
+                ],
+                "summary": "Delete a service port",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Service Volume ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -919,6 +1086,48 @@ const docTemplate = `{
                 },
                 "positionY": {
                     "type": "number"
+                }
+            }
+        },
+        "models.ServiceVolumeCreateInput": {
+            "type": "object",
+            "required": [
+                "localPath"
+            ],
+            "properties": {
+                "containerPath": {
+                    "type": "string"
+                },
+                "localPath": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.ServiceVolumeResponse": {
+            "type": "object",
+            "properties": {
+                "containerPath": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "localPath": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.ServiceVolumeUpdateInput": {
+            "type": "object",
+            "required": [
+                "localPath"
+            ],
+            "properties": {
+                "containerPath": {
+                    "type": "string"
+                },
+                "localPath": {
+                    "type": "string"
                 }
             }
         },

@@ -108,6 +108,33 @@ definitions:
       positionY:
         type: number
     type: object
+  models.ServiceVolumeCreateInput:
+    properties:
+      containerPath:
+        type: string
+      localPath:
+        type: string
+    required:
+    - localPath
+    type: object
+  models.ServiceVolumeResponse:
+    properties:
+      containerPath:
+        type: string
+      id:
+        type: string
+      localPath:
+        type: string
+    type: object
+  models.ServiceVolumeUpdateInput:
+    properties:
+      containerPath:
+        type: string
+      localPath:
+        type: string
+    required:
+    - localPath
+    type: object
   models.SignInInput:
     properties:
       email:
@@ -502,6 +529,53 @@ paths:
       summary: Create a new service port
       tags:
       - Service Ports
+  /services/{serviceId}/volumes:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Service ID
+        in: path
+        name: serviceId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.ServiceVolumeResponse'
+            type: array
+      summary: Get volumes for a service
+      tags:
+      - Service Volumes
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Service ID
+        in: path
+        name: serviceId
+        required: true
+        type: string
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.ServiceVolumeCreateInput'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.ServiceVolumeResponse'
+      summary: Create a new service volume
+      tags:
+      - Service Volumes
   /stacks:
     get:
       consumes:
@@ -661,4 +735,66 @@ paths:
       summary: Get current user
       tags:
       - Users
+  /volumes/{id}:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: Service Volume ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+      summary: Delete a service port
+      tags:
+      - Service Volumes
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Service Volume ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.ServiceVolumeResponse'
+      summary: Get a volume
+      tags:
+      - Service Volumes
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: Service Volume ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.ServiceVolumeUpdateInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.ServiceVolumeResponse'
+      summary: Update a service volume
+      tags:
+      - Service Volumes
 swagger: "2.0"
