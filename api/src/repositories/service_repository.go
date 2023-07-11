@@ -11,6 +11,7 @@ func FindService(id string) (models.Service, *gorm.DB) {
 	result := initializers.DB.
 		Preload("ServiceVolumes").
 		Preload("ServiceEnvVariables").
+		Preload("ServicePorts").
 		First(&service, "id = ?", id)
 	return service, result
 }

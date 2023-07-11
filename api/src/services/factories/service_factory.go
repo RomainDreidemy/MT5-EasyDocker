@@ -15,6 +15,7 @@ func BuildServiceResponse(service models.Service) models.ServiceResponseItem {
 		PositionY:    service.PositionY,
 		Volumes:      BuildServiceVolumeResponses(service.ServiceVolumes),
 		EnvVariables: BuildServiceEnvVariableResponses(service.ServiceEnvVariables),
+		Ports:        BuildServicePortResponses(service.ServicePorts),
 	}
 }
 

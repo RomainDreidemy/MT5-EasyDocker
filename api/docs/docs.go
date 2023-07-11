@@ -1090,6 +1090,12 @@ const docTemplate = `{
                 "id": {
                     "type": "string"
                 },
+                "ports": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.ServicePortResponse"
+                    }
+                },
                 "positionX": {
                     "type": "number"
                 },
