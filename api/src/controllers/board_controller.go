@@ -25,9 +25,11 @@ func GetBoard(c *fiber.Ctx) error {
 	}
 
 	services, _ := repositories.FindServicesByStackId(stackId)
+	networks, _ := repositories.FindNetworksByStackId(stackId)
 
 	board := models.Board{
 		Services: factories.BuildServiceBoardResponses(services),
+		Networks: factories.BuildNetworkBoardResponses(networks),
 	}
 
 	return c.Status(fiber.StatusOK).JSON(board)

@@ -21,6 +21,19 @@ func BuildNetworkResponses(networks []models.Network) []models.NetworkResponse {
 	return serializedNetworks
 }
 
+func BuildNetworkBoardResponses(networks []models.Network) []models.BoardItem {
+	serializedNetworks := make([]models.BoardItem, 0)
+	for i := 0; i < len(networks); i++ {
+		serializedNetworks = append(serializedNetworks, models.BoardItem{
+			ID:        networks[i].ID,
+			Name:      networks[i].Name,
+			PositionX: networks[i].PositionX,
+			PositionY: networks[i].PositionY,
+		})
+	}
+	return serializedNetworks
+}
+
 func BuildNetworkFromNetworkCreationInput(network models.NetworkCreateInput, stackId string) models.Network {
 	return models.Network{
 		Name:        network.Name,

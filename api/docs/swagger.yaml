@@ -810,6 +810,28 @@ paths:
       summary: Update a stack
       tags:
       - Stacks
+  /stacks/{stackId}/board:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Stack ID
+        in: path
+        name: stackId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.ServiceResponse'
+            type: array
+      summary: Get board
+      tags:
+      - Board
   /stacks/{stackId}/networks:
     get:
       consumes:
@@ -857,28 +879,6 @@ paths:
       summary: Create a new network
       tags:
       - Networks
-  /stacks/{stackId}/board:
-    get:
-      consumes:
-      - application/json
-      parameters:
-      - description: Stack ID
-        in: path
-        name: stackId
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            items:
-              $ref: '#/definitions/models.ServiceResponse'
-            type: array
-      summary: Get board
-      tags:
-      - Board
   /stacks/{stackId}/services:
     get:
       consumes:

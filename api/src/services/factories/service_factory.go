@@ -35,10 +35,10 @@ func BuildServiceResponses(services []models.Service) []models.ServiceResponse {
 	return serializedServices
 }
 
-func BuildServiceBoardResponses(services []models.Service) []models.ServiceBoardResponse {
-	serializedServices := make([]models.ServiceBoardResponse, 0)
+func BuildServiceBoardResponses(services []models.Service) []models.BoardItem {
+	serializedServices := make([]models.BoardItem, 0)
 	for i := 0; i < len(services); i++ {
-		serializedServices = append(serializedServices, models.ServiceBoardResponse{
+		serializedServices = append(serializedServices, models.BoardItem{
 			ID:        services[i].ID,
 			Name:      services[i].DockerImage, //todo: change this with a name field
 			PositionX: services[i].PositionX,
