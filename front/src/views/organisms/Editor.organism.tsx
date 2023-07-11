@@ -4,16 +4,17 @@ import { type TDrawer } from '../../types/Drawer'
 import EventsCanvas from '../../services/canvas/Events.canvas'
 import Input from '../atoms/Forms/Input.atom'
 import Button from '../atoms/Forms/Button.atom'
+import { object } from 'yup'
 
 const EditorOrganism = ({ drawer }: { drawer: TDrawer }): JSX.Element => {
   const { fields } = useEditor(drawer)
 
-  const [formDrawer, setFormDrawer] = useState<TDrawer>(drawer)
+  const [drawerForm, setDrawerForm] = useState<TDrawer>(drawer)
 
   const changeValue: (event: ChangeEvent<HTMLInputElement>)
   => void =
     (event: ChangeEvent<HTMLInputElement>): void => {
-      setFormDrawer({ ...formDrawer, [event.target.name]: event.target.value })
+      setDrawerForm({ ...drawerForm, [event.target.name]: event.target.value })
     }
 
   const onClose = (): void => {
@@ -21,14 +22,17 @@ const EditorOrganism = ({ drawer }: { drawer: TDrawer }): JSX.Element => {
     EventsCanvas.updateScreen()
   }
 
-  const onSubmit = (): void => {
-
+  const onSubmit = async (): Promise<void> => {
+    try {
+      console.log(await validatorsSchema.validate(drawerForm))
+    } catch (err) {
+      console.error(err)
+    }
   }
 
   const submitText: string = drawer?.entity?.id !== null ? 'Update' : 'Create'
 
-  // yup validation
-  // const validators: object = fields.reduce((acc, field) => ({ [field.name]: field.validator }), {})
+  const validatorsSchema = object(fields.reduce((acc, field) => ({ [field.name]: field.validator }), {}))
 
   return (
     <div className="w-full h-full border-l-2 ">
