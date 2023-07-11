@@ -4,6 +4,7 @@ import "github.com/google/uuid"
 
 type Service struct {
 	ID          *uuid.UUID `gorm:"type:uuid;default:uuid_generate_v4();primary_key"`
+	Name        string     `gorm:"type:varchar(255)"`
 	DockerImage string     `gorm:"type:varchar(255)"`
 	DockerTag   string     `gorm:"type:varchar(255)"`
 	Entrypoint  string     `gorm:"type:varchar(255)"`
@@ -20,6 +21,7 @@ type Service struct {
 }
 
 type ServiceCreateInput struct {
+	Name        string  `json:"name" validate:"required"`
 	DockerImage string  `json:"dockerImage"`
 	DockerTag   string  `json:"dockerTag"`
 	Entrypoint  string  `json:"entrypoint"`
@@ -29,6 +31,7 @@ type ServiceCreateInput struct {
 }
 
 type ServiceUpdateInput struct {
+	Name        string  `json:"name"`
 	DockerImage string  `json:"dockerImage"`
 	DockerTag   string  `json:"dockerTag"`
 	Entrypoint  string  `json:"entrypoint"`
@@ -39,6 +42,7 @@ type ServiceUpdateInput struct {
 
 type ServiceResponse struct {
 	ID          *uuid.UUID `json:"id"`
+	Name        string     `json:"name"`
 	DockerImage string     `json:"dockerImage"`
 	DockerTag   string     `json:"dockerTag"`
 	Entrypoint  string     `json:"entrypoint"`
@@ -49,6 +53,7 @@ type ServiceResponse struct {
 
 type ServiceResponseItem struct {
 	ID          *uuid.UUID `json:"id"`
+	Name        string     `json:"name"`
 	DockerImage string     `json:"dockerImage"`
 	DockerTag   string     `json:"dockerTag"`
 	Entrypoint  string     `json:"entrypoint"`
@@ -59,11 +64,4 @@ type ServiceResponseItem struct {
 	Volumes      []ServiceVolumeResponse      `json:"volumes"`
 	EnvVariables []ServiceEnvVariableResponse `json:"envVariables"`
 	Ports        []ServicePortResponse        `json:"ports"`
-}
-
-type ServiceBoardResponse struct {
-	ID        *uuid.UUID `json:"id"`
-	Name      string     `json:"name"`
-	PositionX float32    `json:"positionX"`
-	PositionY float32    `json:"positionY"`
 }

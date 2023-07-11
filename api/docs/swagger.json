@@ -1221,6 +1221,7 @@
         "models.ServiceCreateInput": {
             "type": "object",
             "required": [
+                "name",
                 "positionX",
                 "positionY"
             ],
@@ -1235,6 +1236,9 @@
                     "type": "string"
                 },
                 "entrypoint": {
+                    "type": "string"
+                },
+                "name": {
                     "type": "string"
                 },
                 "positionX": {
@@ -1351,6 +1355,9 @@
                 "id": {
                     "type": "string"
                 },
+                "name": {
+                    "type": "string"
+                },
                 "positionX": {
                     "type": "number"
                 },
@@ -1381,6 +1388,9 @@
                     }
                 },
                 "id": {
+                    "type": "string"
+                },
+                "name": {
                     "type": "string"
                 },
                 "ports": {
@@ -1416,6 +1426,9 @@
                     "type": "string"
                 },
                 "entrypoint": {
+                    "type": "string"
+                },
+                "name": {
                     "type": "string"
                 },
                 "positionX": {
