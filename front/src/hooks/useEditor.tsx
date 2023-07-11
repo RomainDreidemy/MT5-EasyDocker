@@ -6,6 +6,12 @@ import { string } from 'yup'
 const TYPE_STRUCTURES: structure = {
   [DrawerTypes.SERVICE]: [
     {
+      label: 'Name',
+      name: 'name',
+      type: 'text',
+      validator: string().required()
+    },
+    {
       label: 'Docker Image',
       name: 'dockerImage',
       type: 'text',
@@ -32,6 +38,12 @@ const TYPE_STRUCTURES: structure = {
   ],
   [DrawerTypes.NETWORK]: [
     {
+      label: 'Name',
+      name: 'name',
+      type: 'text',
+      validator: string().required()
+    },
+    {
       label: 'Description',
       name: 'description',
       type: 'text',
@@ -39,6 +51,12 @@ const TYPE_STRUCTURES: structure = {
     }
   ],
   [DrawerTypes.VOLUME]: [
+    {
+      label: 'Name',
+      name: 'name',
+      type: 'text',
+      validator: string().required()
+    },
     {
       label: 'Description',
       name: 'description',

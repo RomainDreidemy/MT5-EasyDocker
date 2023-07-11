@@ -1,10 +1,8 @@
 export interface INetwork {
   id: number
 
-  description: string
-  dockerImage: string
-  dockerTag: string
-  entrypoint: string
+  name: string
+  isExternal: boolean
 
   positionX: number
   positionY: number
