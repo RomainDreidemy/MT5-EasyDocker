@@ -95,6 +95,9 @@ func main() {
 
 	stacks.Get("/:stackId/board", controllers.GetBoard)
 
+	serviceNetworkLink := micro.Group("/service_network_links", middleware.DeserializeUser)
+	serviceNetworkLink.Post("/", controllers.CreateServiceNetworkLink)
+
 	app.Get("/docker_compose", controllers.GenerateDockerComposeFile)
 
 	app.Get("/swagger/*", swagger.HandlerDefault)

@@ -120,6 +120,32 @@ definitions:
     - key
     - value
     type: object
+  models.ServiceNetworkLinkCreateInput:
+    properties:
+      networkArrowPosition:
+        enum:
+        - top
+        - bottom
+        - left
+        - right
+        type: string
+      networkId:
+        type: string
+      serviceArrowPosition:
+        enum:
+        - top
+        - bottom
+        - left
+        - right
+        type: string
+      serviceId:
+        type: string
+    required:
+    - networkArrowPosition
+    - networkId
+    - serviceArrowPosition
+    - serviceId
+    type: object
   models.ServiceNetworkLinkResponse:
     properties:
       id:
@@ -560,6 +586,27 @@ paths:
       summary: Update a service port
       tags:
       - Service Ports
+  /service_network_links:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.ServiceNetworkLinkCreateInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.ServiceNetworkLinkResponse'
+      summary: Create a new link between a service and a network
+      tags:
+      - Service Network Links
   /services/{id}:
     delete:
       consumes:

@@ -19,3 +19,10 @@ type ServiceNetworkLinkResponse struct {
 	ServiceArrowPosition string     `json:"serviceArrowPosition"`
 	NetworkArrowPosition string     `json:"networkArrowPosition"`
 }
+
+type ServiceNetworkLinkCreateInput struct {
+	ServiceID            string `json:"serviceId" validate:"required,uuid4"`
+	NetworkID            string `json:"networkId" validate:"required,uuid4"`
+	ServiceArrowPosition string `json:"serviceArrowPosition" validate:"required,oneof=top bottom left right"`
+	NetworkArrowPosition string `json:"networkArrowPosition" validate:"required,oneof=top bottom left right"`
+}
