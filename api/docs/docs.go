@@ -1231,6 +1231,7 @@ const docTemplate = `{
         "models.ServiceCreateInput": {
             "type": "object",
             "required": [
+                "name",
                 "positionX",
                 "positionY"
             ],
@@ -1245,6 +1246,9 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "entrypoint": {
+                    "type": "string"
+                },
+                "name": {
                     "type": "string"
                 },
                 "positionX": {
@@ -1361,6 +1365,9 @@ const docTemplate = `{
                 "id": {
                     "type": "string"
                 },
+                "name": {
+                    "type": "string"
+                },
                 "positionX": {
                     "type": "number"
                 },
@@ -1391,6 +1398,9 @@ const docTemplate = `{
                     }
                 },
                 "id": {
+                    "type": "string"
+                },
+                "name": {
                     "type": "string"
                 },
                 "ports": {
@@ -1426,6 +1436,9 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "entrypoint": {
+                    "type": "string"
+                },
+                "name": {
                     "type": "string"
                 },
                 "positionX": {

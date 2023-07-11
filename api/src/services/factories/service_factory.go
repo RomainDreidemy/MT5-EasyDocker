@@ -7,6 +7,7 @@ import (
 func BuildServiceResponse(service models.Service) models.ServiceResponseItem {
 	return models.ServiceResponseItem{
 		ID:           service.ID,
+		Name:         service.Name,
 		DockerImage:  service.DockerImage,
 		DockerTag:    service.DockerTag,
 		Entrypoint:   service.Entrypoint,
@@ -24,6 +25,7 @@ func BuildServiceResponses(services []models.Service) []models.ServiceResponse {
 	for i := 0; i < len(services); i++ {
 		serializedServices = append(serializedServices, models.ServiceResponse{
 			ID:          services[i].ID,
+			Name:        services[i].Name,
 			DockerImage: services[i].DockerImage,
 			DockerTag:   services[i].DockerTag,
 			Entrypoint:  services[i].Entrypoint,
@@ -40,7 +42,7 @@ func BuildServiceBoardResponses(services []models.Service) []models.BoardItem {
 	for i := 0; i < len(services); i++ {
 		serializedServices = append(serializedServices, models.BoardItem{
 			ID:        services[i].ID,
-			Name:      services[i].DockerImage, //todo: change this with a name field
+			Name:      services[i].Name,
 			PositionX: services[i].PositionX,
 			PositionY: services[i].PositionY,
 		})
@@ -50,6 +52,7 @@ func BuildServiceBoardResponses(services []models.Service) []models.BoardItem {
 
 func BuildServiceFromServiceCreationInput(service models.ServiceCreateInput, stackId string) models.Service {
 	return models.Service{
+		Name:        service.Name,
 		DockerImage: service.DockerImage,
 		DockerTag:   service.DockerTag,
 		Entrypoint:  service.Entrypoint,
@@ -62,6 +65,7 @@ func BuildServiceFromServiceCreationInput(service models.ServiceCreateInput, sta
 
 func BuildServiceFromServiceUpdateInput(service models.ServiceUpdateInput) models.Service {
 	return models.Service{
+		Name:        service.Name,
 		DockerImage: service.DockerImage,
 		DockerTag:   service.DockerTag,
 		Entrypoint:  service.Entrypoint,

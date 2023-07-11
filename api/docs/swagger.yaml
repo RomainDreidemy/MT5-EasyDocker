@@ -77,11 +77,14 @@ definitions:
         type: string
       entrypoint:
         type: string
+      name:
+        type: string
       positionX:
         type: number
       positionY:
         type: number
     required:
+    - name
     - positionX
     - positionY
     type: object
@@ -155,6 +158,8 @@ definitions:
         type: string
       id:
         type: string
+      name:
+        type: string
       positionX:
         type: number
       positionY:
@@ -175,6 +180,8 @@ definitions:
           $ref: '#/definitions/models.ServiceEnvVariableResponse'
         type: array
       id:
+        type: string
+      name:
         type: string
       ports:
         items:
@@ -198,6 +205,8 @@ definitions:
       dockerTag:
         type: string
       entrypoint:
+        type: string
+      name:
         type: string
       positionX:
         type: number
