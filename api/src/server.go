@@ -55,8 +55,14 @@ func main() {
 
 	stacks.Post("/:stackId/services", controllers.CreateService)
 	stacks.Get("/:stackId/services", controllers.GetServices)
+
 	stacks.Post("/:stackId/networks", controllers.CreateNetwork)
 	stacks.Get("/:stackId/networks", controllers.GetNetworks)
+
+	network := micro.Group("/networks", middleware.DeserializeUser)
+	network.Get("/:id", controllers.GetNetwork)
+	network.Put("/:id", controllers.UpdateNetwork)
+	network.Delete("/:id", controllers.DeleteNetwork)
 
 	service := micro.Group("/services", middleware.DeserializeUser)
 	service.Get("/:id", controllers.GetService)
@@ -87,10 +93,7 @@ func main() {
 	serviceVolume.Put("/:id", controllers.UpdateServiceVolume)
 	serviceVolume.Delete("/:id", controllers.DeleteServiceVolume)
 
-	network := micro.Group("/networks", middleware.DeserializeUser)
-	network.Get("/:id", controllers.GetNetwork)
-	network.Put("/:id", controllers.UpdateNetwork)
-	network.Delete("/:id", controllers.DeleteNetwork)
+	stacks.Get("/:stackId/board", controllers.GetBoard)
 
 	app.Get("/swagger/*", swagger.HandlerDefault)
 

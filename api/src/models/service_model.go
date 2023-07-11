@@ -60,3 +60,10 @@ type ServiceResponseItem struct {
 	EnvVariables []ServiceEnvVariableResponse `json:"envVariables"`
 	Ports        []ServicePortResponse        `json:"ports"`
 }
+
+type ServiceBoardResponse struct {
+	ID        *uuid.UUID `json:"id"`
+	Name      string     `json:"name"`
+	PositionX float32    `json:"positionX"`
+	PositionY float32    `json:"positionY"`
+}
