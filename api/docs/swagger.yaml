@@ -6,6 +6,10 @@ definitions:
         items:
           $ref: '#/definitions/models.BoardItem'
         type: array
+      serviceNetworkLinks:
+        items:
+          $ref: '#/definitions/models.ServiceNetworkLinkResponse'
+        type: array
       services:
         items:
           $ref: '#/definitions/models.BoardItem'
@@ -115,6 +119,19 @@ definitions:
     required:
     - key
     - value
+    type: object
+  models.ServiceNetworkLinkResponse:
+    properties:
+      id:
+        type: string
+      networkArrowPosition:
+        type: string
+      networkId:
+        type: string
+      serviceArrowPosition:
+        type: string
+      serviceId:
+        type: string
     type: object
   models.ServicePortCreateInput:
     properties:
