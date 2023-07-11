@@ -1231,7 +1231,6 @@ const docTemplate = `{
         "models.ServiceCreateInput": {
             "type": "object",
             "required": [
-                "name",
                 "positionX",
                 "positionY"
             ],
@@ -1426,6 +1425,9 @@ const docTemplate = `{
         "models.ServiceUpdateInput": {
             "type": "object",
             "properties": {
+                "context": {
+                    "type": "string"
+                },
                 "description": {
                     "type": "string"
                 },
@@ -1433,6 +1435,9 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "dockerTag": {
+                    "type": "string"
+                },
+                "dockerfile": {
                     "type": "string"
                 },
                 "entrypoint": {

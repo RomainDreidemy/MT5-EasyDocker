@@ -95,6 +95,8 @@ func main() {
 
 	stacks.Get("/:stackId/board", controllers.GetBoard)
 
+	app.Get("/docker_compose", controllers.GenerateDockerComposeFile)
+
 	app.Get("/swagger/*", swagger.HandlerDefault)
 
 	log.Fatal(app.Listen(":3000"))
