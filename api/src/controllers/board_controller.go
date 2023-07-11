@@ -20,7 +20,7 @@ func GetBoard(c *fiber.Ctx) error {
 	stackId := c.Params("stackId")
 	currentUser := c.Locals("user").(models.UserResponse)
 
-	if policies.CanAccessStack(currentUser, stackId) {
+	if !policies.CanAccessStack(currentUser, stackId) {
 		return c.Status(fiber.StatusNotFound).JSON(factories.BuildErrorResponse("error", "Board not found"))
 	}
 
