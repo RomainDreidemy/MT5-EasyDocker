@@ -5,11 +5,14 @@ import EventsCanvas from '../../services/canvas/Events.canvas'
 import Input from '../atoms/Forms/Input.atom'
 import Button from '../atoms/Forms/Button.atom'
 import { object } from 'yup'
+import {TEntity} from "../../types/Entity";
 
 const EditorOrganism = ({ drawer }: { drawer: TDrawer }): JSX.Element => {
   const { fields } = useEditor(drawer)
 
-  const [drawerForm, setDrawerForm] = useState<TDrawer>(drawer)
+  const [drawerForm, setDrawerForm] = useState<TEntity>(drawer.entity!)
+
+  const validatorsSchema = object(fields.reduce((acc, field) => ({ [field.name]: field.validator }), {}))
 
   const changeValue: (event: ChangeEvent<HTMLInputElement>)
   => void =
@@ -32,7 +35,7 @@ const EditorOrganism = ({ drawer }: { drawer: TDrawer }): JSX.Element => {
 
   const submitText: string = drawer?.entity?.id !== null ? 'Update' : 'Create'
 
-  const validatorsSchema = object(fields.reduce((acc, field) => ({ [field.name]: field.validator }), {}))
+
 
   return (
     <div className="w-full h-full border-l-2 ">

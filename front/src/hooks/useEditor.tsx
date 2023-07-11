@@ -9,19 +9,19 @@ const TYPE_STRUCTURES: structure = {
       label: 'Docker Image',
       name: 'dockerImage',
       type: 'text',
-      validator: string().nullable()
+      validator: string().required()
     },
     {
       label: 'Docker Tag',
       name: 'dockerTag',
       type: 'text',
-      validator: string().nullable()
+      validator: string().required()
     },
     {
       label: 'Entrypoint',
       name: 'entrypoint',
       type: 'text',
-      validator: string().nullable()
+      validator: string().required()
     },
     {
       label: 'Description',
