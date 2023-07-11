@@ -1,7 +1,6 @@
 package builders
 
 import (
-	"fmt"
 	"github.com/RomainDreidemy/MT5-docker-extension/src/models"
 	"strconv"
 )
@@ -29,8 +28,6 @@ func DockerComposeServiceBuilder(service models.Service) models.DockerComposeSer
 	if service.DockerImage != "" {
 		dockerComposeService.Image = BuildDockerComposeServiceImage(service)
 	}
-
-	fmt.Println(service.ServicePorts)
 
 	if len(service.ServicePorts) > 0 {
 		dockerComposeService.Ports = BuildDockerComposeServicePorts(service.ServicePorts)
