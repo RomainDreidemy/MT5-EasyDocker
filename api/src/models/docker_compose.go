@@ -3,6 +3,7 @@ package models
 type DockerCompose struct {
 	Version  string                          `yaml:"version"`
 	Services map[string]DockerComposeService `yaml:"services"`
+	Networks map[string]DockerComposeNetwork `yaml:"networks,omitempty"`
 }
 
 type DockerComposeService struct {
@@ -15,4 +16,8 @@ type DockerComposeService struct {
 type DockerComposeServiceBuild struct {
 	Context    string `yaml:"context,omitempty"`
 	Dockerfile string `yaml:"dockerfile,omitempty"`
+}
+
+type DockerComposeNetwork struct {
+	External bool `yaml:"external"`
 }

@@ -7,8 +7,11 @@ import (
 )
 
 func GenerateDockerComposeFile(c *fiber.Ctx) error {
-	services, _ := repositories.FindServicesByStackId("85843022-39cc-4e8f-b7e5-ec8bbac57296")
-	docker_compose.BuildDockerComposeFile(services)
+	stackId := "85843022-39cc-4e8f-b7e5-ec8bbac57296"
+	services, _ := repositories.FindServicesByStackId(stackId)
+	networks, _ := repositories.FindNetworksByStackId(stackId)
+
+	docker_compose.GenerateDockerCompose(services, networks)
 
 	return c.Status(fiber.StatusOK).Send(nil)
 }
