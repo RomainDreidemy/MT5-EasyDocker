@@ -8,28 +8,41 @@ func DockerComposeServicesBuilder(services []models.Service) map[string]models.D
 	dockerComposeServices := make(map[string]models.DockerComposeService)
 
 	for _, service := range services {
-		dockerComposeService := models.DockerComposeService{
-			ContainerName: service.Name,
-		}
-
-		if service.Context != "" && service.Dockerfile != "" {
-			dockerComposeService.Build = models.DockerComposeServiceBuild{
-				Context:    service.Context,
-				Dockerfile: service.Dockerfile,
-			}
-		}
-
-		if service.DockerImage != "" {
-			tag := service.DockerTag
-			if tag == "" {
-				tag = "latest"
-			}
-
-			dockerComposeService.Image = service.DockerImage + ":" + tag
-		}
-
-		dockerComposeServices[service.Name] = dockerComposeService
+		dockerComposeServices[service.Name] = DockerComposeServiceBuilder(service)
 	}
 
 	return dockerComposeServices
+}
+
+func DockerComposeServiceBuilder(service models.Service) models.DockerComposeService {
+	dockerComposeService := models.DockerComposeService{
+		ContainerName: service.Name,
+		Entrypoint:    service.Entrypoint,
+	}
+
+	if service.Context != "" && service.Dockerfile != "" {
+		dockerComposeService.Build = BuildDockerComposeServiceBuild(service)
+	}
+
+	if service.DockerImage != "" {
+		dockerComposeService.Image = BuildDockerComposeServiceImage(service)
+	}
+
+	return dockerComposeService
+}
+
+func BuildDockerComposeServiceBuild(service models.Service) models.DockerComposeServiceBuild {
+	return models.DockerComposeServiceBuild{
+		Context:    service.Context,
+		Dockerfile: service.Dockerfile,
+	}
+}
+
+func BuildDockerComposeServiceImage(service models.Service) string {
+	tag := service.DockerTag
+	if tag == "" {
+		tag = "latest"
+	}
+
+	return service.DockerImage + ":" + tag
 }
