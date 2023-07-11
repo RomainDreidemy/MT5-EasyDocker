@@ -1081,6 +1081,12 @@ const docTemplate = `{
                 "entrypoint": {
                     "type": "string"
                 },
+                "envVariables": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.ServiceEnvVariableResponse"
+                    }
+                },
                 "id": {
                     "type": "string"
                 },

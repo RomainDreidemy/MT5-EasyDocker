@@ -8,7 +8,10 @@ import (
 
 func FindService(id string) (models.Service, *gorm.DB) {
 	var service models.Service
-	result := initializers.DB.Preload("ServiceVolumes").First(&service, "id = ?", id)
+	result := initializers.DB.
+		Preload("ServiceVolumes").
+		Preload("ServiceEnvVariables").
+		First(&service, "id = ?", id)
 	return service, result
 }
 

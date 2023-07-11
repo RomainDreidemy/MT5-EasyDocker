@@ -14,7 +14,8 @@ type Service struct {
 	StackID string `gorm:"type:uuid;not null"`
 	Stack   Stack
 
-	ServiceVolumes []ServiceVolume
+	ServiceVolumes      []ServiceVolume
+	ServiceEnvVariables []ServiceEnvVariable
 }
 
 type ServiceCreateInput struct {
@@ -54,5 +55,6 @@ type ServiceResponseItem struct {
 	PositionX   float32    `json:"positionX"`
 	PositionY   float32    `json:"positionY"`
 
-	Volumes []ServiceVolumeResponse `json:"volumes"`
+	Volumes      []ServiceVolumeResponse      `json:"volumes"`
+	EnvVariables []ServiceEnvVariableResponse `json:"envVariables"`
 }
