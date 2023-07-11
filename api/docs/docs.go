@@ -1427,8 +1427,7 @@ const docTemplate = `{
         "models.ServicePortCreateInput": {
             "type": "object",
             "required": [
-                "private",
-                "public"
+                "private"
             ],
             "properties": {
                 "private": {
@@ -1456,8 +1455,7 @@ const docTemplate = `{
         "models.ServicePortUpdateInput": {
             "type": "object",
             "required": [
-                "private",
-                "public"
+                "private"
             ],
             "properties": {
                 "private": {

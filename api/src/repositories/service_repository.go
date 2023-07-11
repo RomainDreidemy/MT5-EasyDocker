@@ -22,6 +22,17 @@ func FindServicesByStackId(stackId string) ([]models.Service, *gorm.DB) {
 	return services, result
 }
 
+func FindServicesByStackIdWithAssociation(stackId string) ([]models.Service, *gorm.DB) {
+	var services []models.Service
+	result := initializers.DB.
+		Preload("ServiceVolumes").
+		Preload("ServiceEnvVariables").
+		Preload("ServicePorts").
+		Where("stack_id = ?", stackId).
+		Find(&services)
+	return services, result
+}
+
 func CreateService(service models.Service) *gorm.DB {
 	result := initializers.DB.Create(&service)
 	return result

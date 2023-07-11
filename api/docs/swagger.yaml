@@ -167,7 +167,6 @@ definitions:
         type: integer
     required:
     - private
-    - public
     type: object
   models.ServicePortResponse:
     properties:
@@ -186,7 +185,6 @@ definitions:
         type: integer
     required:
     - private
-    - public
     type: object
   models.ServiceResponse:
     properties:

@@ -101,3 +101,49 @@ func TestDockerComposeServicesBuilder(t *testing.T) {
 		})
 	}
 }
+
+func TestBuildDockerComposeServicePorts(t *testing.T) {
+	type args struct {
+		servicePorts []models.ServicePort
+	}
+	tests := []struct {
+		name string
+		args args
+		want []string
+	}{
+		{
+			name: "should have the concatenation of public and private port",
+			args: args{
+				servicePorts: []models.ServicePort{
+					{
+						Private: 8080,
+						Public:  3000,
+					},
+				},
+			},
+			want: []string{
+				"3000:8080",
+			},
+		},
+		{
+			name: "should have only the private port",
+			args: args{
+				servicePorts: []models.ServicePort{
+					{
+						Private: 3000,
+					},
+				},
+			},
+			want: []string{
+				"3000",
+			},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := BuildDockerComposeServicePorts(tt.args.servicePorts); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("BuildDockerComposeServicePorts() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
