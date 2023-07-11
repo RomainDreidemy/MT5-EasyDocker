@@ -14,7 +14,7 @@ import (
 // @Accept       json
 // @Produce      json
 // @Param stackId path string true "Stack ID"
-// @Success      200  {array}  models.ServiceResponse
+// @Success      200  {array}  models.Board
 // @Router       /stacks/{stackId}/board [get]
 func GetBoard(c *fiber.Ctx) error {
 	stackId := c.Params("stackId")
