@@ -11,6 +11,7 @@ const BaseFactory: TBaseFactory = {
 
   create (entity: TEntity, context: CanvasRenderingContext2D): void {
     this.context = context
+    this.name = entity.name
     this.positionX = isNaN(entity.positionX) ? this.positionX : entity.positionX
     this.positionY = isNaN(entity.positionY) ? this.positionY : entity.positionY
   },
@@ -62,7 +63,7 @@ const BaseFactory: TBaseFactory = {
 
     this.context!.fillStyle = CanvasColor.CONTENT
     this.context!.font = '16px Arial'
-    this.context!.fillText('Card content...', this.positionX + this.marginText, this.positionY + this.topMarginText)
+    this.context!.fillText(this.type!, this.positionX + this.marginText, this.positionY + this.topMarginText)
 
     this.path = rectangle
   }

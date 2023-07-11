@@ -17,6 +17,41 @@ const useBoard = (board: TBoardOrNullify): {
 } => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
 
+  const test: any = {
+    services: [
+      {
+        id: "22e5004d-5f87-403f-9ad7-ef5c02c76317",
+        name: "front",
+        positionX: 100,
+        positionY: 400
+      },
+      {
+        id: "1990c0a7-e23f-483b-b1d2-4fa6dc3d6cc7",
+        name: "api",
+        positionX: 100,
+        positionY: 100
+      }
+    ],
+    networks: [
+      {
+        id: "fa1865c7-eae0-47c6-b170-01922f57ccf7",
+        name: "Mon network",
+        positionX: 400,
+        positionY: 100
+      }
+    ],
+    serviceNetworkLinks: [
+      {
+        id: "3c59aadd-2d49-418f-94c1-4d1eb1b2c80d",
+        serviceId: "22e5004d-5f87-403f-9ad7-ef5c02c76317",
+        networkId: "fa1865c7-eae0-47c6-b170-01922f57ccf7",
+        serviceArrowPosition: "bottom",
+        networkArrowPosition: "top"
+      }
+    ]
+  }
+
+
   const [selectedDrawer, setSelectedDrawer] = useState<TDrawerOrNullify>(undefined)
 
   useEffect(() => {
@@ -28,7 +63,7 @@ const useBoard = (board: TBoardOrNullify): {
   useEffect(() => {
     if (board == null) return
 
-    const {services, networks} = board
+    const {services, networks} = test
 
     const serviceDrawers: TServiceDrawer[] = services.map((service: IService) => {
       const serviceDrawer = ServiceDrawer(service, EventsCanvas.context!)
