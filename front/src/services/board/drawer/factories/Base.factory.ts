@@ -58,7 +58,11 @@ const BaseFactory: TBaseFactory = {
 
     this.context!.fillStyle = CanvasColor.TITLE
     this.context!.font = 'bold 20px Arial'
-    this.context!.fillText(this.name, this.positionX + 20, this.positionY + 40)
+    this.context!.fillText(this.name, this.positionX + this.marginText, this.positionY + this.topMarginTitle)
+
+    this.context!.fillStyle = CanvasColor.CONTENT;
+    this.context!.font = '16px Arial';
+    this.context!.fillText('Card content...', this.positionX + this.marginText, this.positionY + this.topMarginText);
 
     this.path = rectangle
   }
