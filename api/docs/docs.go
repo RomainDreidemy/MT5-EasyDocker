@@ -829,6 +829,40 @@ const docTemplate = `{
                 }
             }
         },
+        "/stacks/{stackId}/board": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Board"
+                ],
+                "summary": "Get board",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Stack ID",
+                        "name": "stackId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.ServiceResponse"
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/stacks/{stackId}/networks": {
             "get": {
                 "consumes": [

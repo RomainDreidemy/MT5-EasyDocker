@@ -23,13 +23,26 @@ func BuildServiceResponses(services []models.Service) []models.ServiceResponse {
 	var serializedServices []models.ServiceResponse
 	for i := 0; i < len(services); i++ {
 		serializedServices = append(serializedServices, models.ServiceResponse{
-			ID:          serializedServices[i].ID,
-			DockerImage: serializedServices[i].DockerImage,
-			DockerTag:   serializedServices[i].DockerTag,
-			Entrypoint:  serializedServices[i].Entrypoint,
-			Description: serializedServices[i].Description,
-			PositionX:   serializedServices[i].PositionX,
-			PositionY:   serializedServices[i].PositionY,
+			ID:          services[i].ID,
+			DockerImage: services[i].DockerImage,
+			DockerTag:   services[i].DockerTag,
+			Entrypoint:  services[i].Entrypoint,
+			Description: services[i].Description,
+			PositionX:   services[i].PositionX,
+			PositionY:   services[i].PositionY,
+		})
+	}
+	return serializedServices
+}
+
+func BuildServiceBoardResponses(services []models.Service) []models.ServiceBoardResponse {
+	serializedServices := make([]models.ServiceBoardResponse, 0)
+	for i := 0; i < len(services); i++ {
+		serializedServices = append(serializedServices, models.ServiceBoardResponse{
+			ID:        services[i].ID,
+			Name:      services[i].DockerImage, //todo: change this with a name field
+			PositionX: services[i].PositionX,
+			PositionY: services[i].PositionY,
 		})
 	}
 	return serializedServices
