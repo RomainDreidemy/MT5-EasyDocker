@@ -1,22 +1,21 @@
 package docker_compose
 
 import (
-	"fmt"
 	"github.com/RomainDreidemy/MT5-docker-extension/src/models"
 	"github.com/RomainDreidemy/MT5-docker-extension/src/services/docker_compose/builders"
 	"gopkg.in/yaml.v3"
 )
 
-func BuildDockerComposeFile(services []models.Service, networks []models.Network) string {
-	dockerCompose := models.DockerCompose{
-		Version:  "3",
-		Services: builders.DockerComposeServicesBuilder(services),
-		Networks: builders.BuildDockerComposeNetworks(networks),
-	}
+func GenerateDockerCompose(services []models.Service, networks []models.Network) string {
+	dockerCompose := builders.BuildDockerCompose(services, networks)
 
+	dockerComposeContent := DockerComposeToYaml(dockerCompose)
+
+	return dockerComposeContent
+}
+
+func DockerComposeToYaml(dockerCompose models.DockerCompose) string {
 	result, _ := yaml.Marshal(dockerCompose)
-
-	fmt.Println(string(result))
 
 	return string(result)
 }
