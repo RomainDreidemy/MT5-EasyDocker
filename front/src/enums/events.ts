@@ -6,5 +6,5 @@ export enum Events {
   ON_MOUSE_OVER = 'handleMouseOver',
   ON_MOUSE_OUT = 'handleMouseOut',
   ON_KEY_DOWN = 'keydown',
-  RESIZE = 'resize',
+  ON_RESIZE = 'resize',
 }

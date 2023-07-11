@@ -39,26 +39,26 @@ const useBoard = (): { canvasRef: MutableRefObject<HTMLCanvasElement | null>, se
   }, [canvasRef])
 
   useEffect(() => {
-    eventEmitter.on(EventEmitters.ON_DRAWER_SELECTED, onDrawerSelected)
-    eventEmitter.on(EventEmitters.ON_DRAWER_UNSELECTED, onDrawerUnSelected)
-    eventEmitter.on(EventEmitters.ON_LINKER_CREATED, onLinkerCreated)
+    eventEmitter.on(EventEmitters.ON_SELECTED_DRAWER, onSelectedDrawer)
+    eventEmitter.on(EventEmitters.ON_UNSELECTED_DRAWER, onUnselectedDrawer)
+    eventEmitter.on(EventEmitters.ON_CREATED_LINKER, onCreatedLinker)
 
     return () => {
-      eventEmitter.removeListener(EventEmitters.ON_DRAWER_SELECTED)
-      eventEmitter.removeListener(EventEmitters.ON_DRAWER_UNSELECTED)
-      eventEmitter.removeListener(EventEmitters.ON_LINKER_CREATED)
+      eventEmitter.removeListener(EventEmitters.ON_SELECTED_DRAWER)
+      eventEmitter.removeListener(EventEmitters.ON_UNSELECTED_DRAWER)
+      eventEmitter.removeListener(EventEmitters.ON_CREATED_LINKER)
     }
   }, [])
 
-  const onDrawerSelected: EventListenerCallback = (data) => {
+  const onSelectedDrawer: EventListenerCallback = (data) => {
     console.log('Moved drawer :', data)
     setSelectedDrawer(data)
   }
-  const onLinkerCreated: EventListenerCallback = (data) => {
+  const onCreatedLinker: EventListenerCallback = (data) => {
     console.log('Created linker :', data)
   }
 
-  const onDrawerUnSelected: EventListenerCallback = (_) => {
+  const onUnselectedDrawer: EventListenerCallback = (_) => {
     setSelectedDrawer(undefined)
   }
 

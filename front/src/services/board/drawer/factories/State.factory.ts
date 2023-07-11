@@ -5,8 +5,12 @@ const StateFactory: TStateFactory = {
 
   positionX: 20,
   positionY: 20,
-  width: 150,
-  height: 100,
+  width: 200,
+  height: 120,
+
+  marginText: 20,
+  topMarginTitle: 40,
+  topMarginText: 70,
 
   name: '',
 

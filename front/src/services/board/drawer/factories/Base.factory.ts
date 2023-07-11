@@ -3,6 +3,7 @@ import StateFactory from './State.factory'
 import { type IPosition } from '../../../../interfaces/Position.interface'
 import CommonBases from '../Common.bases'
 import { type TEntity } from '../../../../types/Entity'
+import { CanvasColor } from '../../../../enums/CanvasColor'
 
 const BaseFactory: TBaseFactory = {
   ...CommonBases,
@@ -23,26 +24,45 @@ const BaseFactory: TBaseFactory = {
     this.positionY = position.y
   },
 
+  position (withOffset: number = 0): IPosition {
+    return {
+      x: this.positionX - withOffset,
+      y: this.positionY - withOffset
+    }
+  },
+
   draw (): void {
     const rectangle = new Path2D()
 
     this.context!.beginPath()
-    rectangle.roundRect(this.positionX, this.positionY, this.width, this.height, [10])
 
-    this.context!.font = '25px Georgia'
+    this.context!.beginPath()
     this.context!.lineWidth = 3
+    rectangle.roundRect(this.positionX, this.positionY, this.width, this.height, [10])
+    this.context!.stroke()
+
+    this.context!.strokeStyle = CanvasColor.BORDER
+    this.context!.fillStyle = CanvasColor.BACKGROUND
+    this.context!.beginPath()
+    this.context!.roundRect(this.positionX, this.positionY, this.width, this.height, [10])
 
     if (this.selected) {
-      this.context!.strokeStyle = 'green'
+      this.context!.strokeStyle = CanvasColor.SELECTED
     } else if (this.onHover) {
-      this.context!.strokeStyle = 'orange'
-    } else {
-      this.context!.strokeStyle = 'black'
+      this.context!.strokeStyle = CanvasColor.ON_HOVER
     }
 
     this.context!.stroke(rectangle)
-    this.context!.fillText(this.name, this.positionX + 10, this.positionY + 30)
+    this.context!.fill()
     this.context!.closePath()
+
+    this.context!.fillStyle = CanvasColor.TITLE
+    this.context!.font = 'bold 20px Arial'
+    this.context!.fillText(this.name, this.positionX + this.marginText, this.positionY + this.topMarginTitle)
+
+    this.context!.fillStyle = CanvasColor.CONTENT
+    this.context!.font = '16px Arial'
+    this.context!.fillText('Card content...', this.positionX + this.marginText, this.positionY + this.topMarginText)
 
     this.path = rectangle
   }

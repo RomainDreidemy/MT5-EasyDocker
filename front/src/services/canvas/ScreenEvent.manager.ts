@@ -6,7 +6,7 @@ const ScreenEventManager: TScreenEventManager = {
   ...BaseManager,
 
   screenStartup (): void {
-    window.addEventListener(Events.RESIZE, () => {
+    window.addEventListener(Events.ON_RESIZE, () => {
       this.sizeCanvas()
       this.draw()
     })

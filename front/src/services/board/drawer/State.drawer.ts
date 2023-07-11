@@ -1,6 +1,6 @@
 import { type TStateDrawer } from '../../../types/board/drawer/State.drawer'
 
-const StateDrawer: TStateDrawer = {
+const StateDrawer: Omit<TStateDrawer, 'type'> = {
   connectors: [],
   linkers: [],
   canBeLinkedWith: []

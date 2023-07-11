@@ -1,6 +1,6 @@
-import type ServiceConnector from '../services/board/drawer/connector/Service.connector'
+import { type TServiceConnector } from '../types/board/drawer/connectors/Service.connector'
 
 export interface ILink {
-  at: ServiceConnector
-  to: ServiceConnector
+  at: TServiceConnector
+  to: TServiceConnector
 }
