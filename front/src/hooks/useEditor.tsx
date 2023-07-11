@@ -1,18 +1,50 @@
 import { DrawerTypes } from '../enums/DrawerTypes'
 import { type TDrawer } from '../types/Drawer'
-import { boolean } from 'yup'
+import { boolean, string } from 'yup'
 
 const TYPE_STRUCTURES: structure = {
   [DrawerTypes.SERVICE]: [
     {
+      label: 'Docker Image',
+      name: 'dockerImage',
+      type: 'text',
+      validator: string().nullable()
+    },
+    {
+      label: 'Docker Tag',
+      name: 'dockerTag',
+      type: 'text',
+      validator: string().nullable()
+    },
+    {
+      label: 'Entrypoint',
+      name: 'entrypoint',
+      type: 'text',
+      validator: string().nullable()
+    },
+    {
       label: 'Description',
       name: 'description',
       type: 'text',
-      validator: boolean().nullable()
+      validator: string().nullable()
+    },
+  ],
+  [DrawerTypes.NETWORK]: [
+    {
+      label: 'Description',
+      name: 'description',
+      type: 'text',
+      validator: string().nullable()
     }
   ],
-  [DrawerTypes.NETWORK]: [],
-  [DrawerTypes.VOLUME]: []
+  [DrawerTypes.VOLUME]: [
+    {
+      label: 'Description',
+      name: 'description',
+      type: 'text',
+      validator: string().nullable()
+    }
+  ]
 }
 
 type structure = {
