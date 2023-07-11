@@ -819,6 +819,40 @@
                 }
             }
         },
+        "/stacks/{stackId}/board": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Board"
+                ],
+                "summary": "Get board",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Stack ID",
+                        "name": "stackId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.Board"
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/stacks/{stackId}/networks": {
             "get": {
                 "consumes": [
@@ -886,40 +920,6 @@
                         "description": "Created",
                         "schema": {
                             "$ref": "#/definitions/models.NetworkResponse"
-                        }
-                    }
-                }
-            }
-        },
-        "/stacks/{stackId}/board": {
-            "get": {
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Board"
-                ],
-                "summary": "Get board",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "Stack ID",
-                        "name": "stackId",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/models.ServiceResponse"
-                            }
                         }
                     }
                 }
@@ -1116,6 +1116,40 @@
         }
     },
     "definitions": {
+        "models.Board": {
+            "type": "object",
+            "properties": {
+                "networks": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.BoardItem"
+                    }
+                },
+                "services": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.BoardItem"
+                    }
+                }
+            }
+        },
+        "models.BoardItem": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "positionX": {
+                    "type": "number"
+                },
+                "positionY": {
+                    "type": "number"
+                }
+            }
+        },
         "models.NetworkCreateInput": {
             "type": "object",
             "required": [
