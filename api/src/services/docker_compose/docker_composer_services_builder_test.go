@@ -21,9 +21,9 @@ func TestDockerComposeServicesBuilder(t *testing.T) {
 			args: args{
 				services: []models.Service{
 					{
-						ContainerName: "api",
-						Context:       "./go",
-						Dockerfile:    "Dockerfile",
+						Name:       "api",
+						Context:    "./go",
+						Dockerfile: "Dockerfile",
 					},
 				},
 			},
@@ -42,9 +42,9 @@ func TestDockerComposeServicesBuilder(t *testing.T) {
 			args: args{
 				services: []models.Service{
 					{
-						ContainerName: "api",
-						DockerImage:   "go",
-						DockerTag:     "1.20",
+						Name:        "api",
+						DockerImage: "go",
+						DockerTag:   "1.20",
 					},
 				},
 			},
@@ -60,8 +60,8 @@ func TestDockerComposeServicesBuilder(t *testing.T) {
 			args: args{
 				services: []models.Service{
 					{
-						ContainerName: "api",
-						DockerImage:   "go",
+						Name:        "api",
+						DockerImage: "go",
 					},
 				},
 			},
@@ -69,6 +69,25 @@ func TestDockerComposeServicesBuilder(t *testing.T) {
 				"api": {
 					ContainerName: "api",
 					Image:         "go:latest",
+				},
+			},
+		},
+		{
+			name: "should have the entrypoint if specified",
+			args: args{
+				services: []models.Service{
+					{
+						Name:        "api",
+						DockerImage: "go",
+						Entrypoint:  "go build",
+					},
+				},
+			},
+			want: map[string]models.DockerComposeService{
+				"api": {
+					ContainerName: "api",
+					Image:         "go:latest",
+					Entrypoint:    "go build",
 				},
 			},
 		},
