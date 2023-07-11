@@ -84,7 +84,6 @@ definitions:
       positionY:
         type: number
     required:
-    - name
     - positionX
     - positionY
     type: object
@@ -198,11 +197,15 @@ definitions:
     type: object
   models.ServiceUpdateInput:
     properties:
+      context:
+        type: string
       description:
         type: string
       dockerImage:
         type: string
       dockerTag:
+        type: string
+      dockerfile:
         type: string
       entrypoint:
         type: string

@@ -11,6 +11,8 @@ type Service struct {
 	Description string     `gorm:"type:text"`
 	PositionX   float32    `gorm:"type:decimal(20,8);not null"`
 	PositionY   float32    `gorm:"type:decimal(20,8);not null"`
+	Context     string     `gorm:"type:varchar(255)"`
+	Dockerfile  string     `gorm:"type:varchar(255)"`
 
 	StackID string `gorm:"type:uuid;not null"`
 	Stack   Stack
@@ -21,7 +23,7 @@ type Service struct {
 }
 
 type ServiceCreateInput struct {
-	Name        string  `json:"name" validate:"required"`
+	Name        string  `json:"name"`
 	DockerImage string  `json:"dockerImage"`
 	DockerTag   string  `json:"dockerTag"`
 	Entrypoint  string  `json:"entrypoint"`
@@ -34,6 +36,8 @@ type ServiceUpdateInput struct {
 	Name        string  `json:"name"`
 	DockerImage string  `json:"dockerImage"`
 	DockerTag   string  `json:"dockerTag"`
+	Context     string  `json:"context"`
+	Dockerfile  string  `json:"dockerfile"`
 	Entrypoint  string  `json:"entrypoint"`
 	Description string  `json:"description"`
 	PositionX   float32 `json:"positionX"`

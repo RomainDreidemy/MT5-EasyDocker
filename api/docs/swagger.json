@@ -1221,7 +1221,6 @@
         "models.ServiceCreateInput": {
             "type": "object",
             "required": [
-                "name",
                 "positionX",
                 "positionY"
             ],
@@ -1416,6 +1415,9 @@
         "models.ServiceUpdateInput": {
             "type": "object",
             "properties": {
+                "context": {
+                    "type": "string"
+                },
                 "description": {
                     "type": "string"
                 },
@@ -1423,6 +1425,9 @@
                     "type": "string"
                 },
                 "dockerTag": {
+                    "type": "string"
+                },
+                "dockerfile": {
                     "type": "string"
                 },
                 "entrypoint": {
