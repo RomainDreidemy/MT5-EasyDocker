@@ -6,6 +6,7 @@ import {Placements} from "../../../enums/placements";
 import {TConnector, TConnectorOrNullify} from "../../../types/Connector";
 import {ILink} from "../../../interfaces/Link.interface";
 import {IServiceNetworkLinks} from "../../../interfaces/Service.interface";
+import {TLinkEntity} from "../../../types/Linker";
 
 const BaseDrawer = (): TBaseDrawer => {
   return {
@@ -62,10 +63,10 @@ const BaseDrawer = (): TBaseDrawer => {
       return this.connectors.find(connector => connector.placement === placement)
     },
 
-    createLink(from: TConnector, to: TConnector): void {
+    createLink(from: TConnector, to: TConnector, entity?: TLinkEntity): void {
       const link: ILink = { from, to }
 
-      const linker = this.Linker!(this, this.context!, link)
+      const linker = this.Linker!(this, this.context!, link, entity)
       linker.create()
       this.linkers.push(linker)
     }

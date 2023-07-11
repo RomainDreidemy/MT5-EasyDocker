@@ -11,7 +11,7 @@ const ServiceDrawer = (service: IService, context: CanvasRenderingContext2D): TS
   return {
     ...BaseDrawer(),
 
-    canBeLinkedWith: [DrawerTypes.NETWORK],
+    canBeLinkedWith: [],
     type: DrawerTypes.SERVICE,
 
     create () {

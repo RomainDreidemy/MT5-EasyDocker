@@ -1,9 +1,9 @@
 import { type TDrawer } from '../../../../types/Drawer'
 import { type ILink } from '../../../../interfaces/Link.interface'
 import BaseLinker from './Base.linker'
-import { type TLinker } from '../../../../types/Linker'
+import {TLinkEntity, type TLinker} from '../../../../types/Linker'
 
-const CommonLinker = (drawer: TDrawer, context: CanvasRenderingContext2D, link: ILink): TLinker => {
+const CommonLinker = (drawer: TDrawer, context: CanvasRenderingContext2D, link: ILink, entity?: TLinkEntity): TLinker => {
   return {
     ...BaseLinker,
 
@@ -11,6 +11,7 @@ const CommonLinker = (drawer: TDrawer, context: CanvasRenderingContext2D, link: 
       this.context = context
       this.drawer = drawer
       this.link = link
+      this.entity = entity
     }
   }
 }
