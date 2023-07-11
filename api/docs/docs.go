@@ -1135,6 +1135,12 @@ const docTemplate = `{
                         "$ref": "#/definitions/models.BoardItem"
                     }
                 },
+                "serviceNetworkLinks": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.ServiceNetworkLinkResponse"
+                    }
+                },
                 "services": {
                     "type": "array",
                     "items": {
@@ -1298,6 +1304,26 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "value": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.ServiceNetworkLinkResponse": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "networkArrowPosition": {
+                    "type": "string"
+                },
+                "networkId": {
+                    "type": "string"
+                },
+                "serviceArrowPosition": {
+                    "type": "string"
+                },
+                "serviceId": {
                     "type": "string"
                 }
             }
