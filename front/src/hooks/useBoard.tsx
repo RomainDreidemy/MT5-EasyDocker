@@ -1,18 +1,20 @@
-import { type MutableRefObject, useEffect, useRef, useState } from 'react'
-import { type IService } from '../interfaces/Service.interface'
+import {type MutableRefObject, useEffect, useRef, useState} from 'react'
+import {type IService} from '../interfaces/Service.interface'
 import EventsCanvas from '../services/canvas/Events.canvas'
-import { type TServiceDrawer } from '../types/board/drawer/Service.drawer'
+import {type TServiceDrawer} from '../types/board/drawer/Service.drawer'
 import ServiceDrawer from '../services/board/drawer/Service.drawer'
-import { type INetwork } from '../interfaces/Network.interface'
+import {type INetwork} from '../interfaces/Network.interface'
 import NetworkDrawer from '../services/board/drawer/Network.drawer'
-import VolumeDrawer from '../services/board/drawer/Volume.drawer'
-import { type IVolume } from '../interfaces/Volume.interface'
-import { type EventListenerCallback } from '../interfaces/EventListener.interface'
+import {type EventListenerCallback} from '../interfaces/EventListener.interface'
 import eventEmitter from '../services/apps/Event.emitter'
-import { EventEmitters } from '../enums/eventEmitters'
-import { type TDrawerOrNullify } from '../types/Drawer'
+import {EventEmitters} from '../enums/eventEmitters'
+import {type TDrawerOrNullify} from '../types/Drawer'
+import {TBoardOrNullify} from "../types/Board";
 
-const useBoard = (): { canvasRef: MutableRefObject<HTMLCanvasElement | null>, selectedDrawer: TDrawerOrNullify } => {
+const useBoard = (board: TBoardOrNullify): {
+  canvasRef: MutableRefObject<HTMLCanvasElement | null>,
+  selectedDrawer: TDrawerOrNullify
+} => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
 
   const [selectedDrawer, setSelectedDrawer] = useState<TDrawerOrNullify>(undefined)
@@ -21,22 +23,30 @@ const useBoard = (): { canvasRef: MutableRefObject<HTMLCanvasElement | null>, se
     const canvas = canvasRef.current as unknown as HTMLCanvasElement
 
     EventsCanvas.create(canvas)
-
-    const service: IService = { id: 1, positionX: 100, positionY: 20 }
-    const serviceDrawer: TServiceDrawer = ServiceDrawer(service, EventsCanvas.context!)
-    serviceDrawer.create()
-
-    const network: INetwork = { id: 2, positionX: 400, positionY: 400 }
-    const networkDrawer = NetworkDrawer(network, EventsCanvas.context!)
-    networkDrawer.create()
-
-    const volume: IVolume = { id: 2, positionX: 400, positionY: 20 }
-    const volumeDrawer = VolumeDrawer(volume, EventsCanvas.context!)
-    volumeDrawer.create()
-
-    EventsCanvas.add(serviceDrawer, networkDrawer, volumeDrawer)
-    EventsCanvas.startup()
   }, [canvasRef])
+
+  useEffect(() => {
+    if (board == null) return
+
+    const {services, networks} = board
+
+    const serviceDrawers: TServiceDrawer[] = services.map((service: IService) => {
+      const serviceDrawer = ServiceDrawer(service, EventsCanvas.context!)
+      serviceDrawer.create()
+
+      return serviceDrawer
+    })
+
+    const networkDrawers: TServiceDrawer[] = networks.map((network: INetwork) => {
+      const serviceDrawer = NetworkDrawer(network, EventsCanvas.context!)
+      serviceDrawer.create()
+
+      return serviceDrawer
+    })
+
+    EventsCanvas.add(...serviceDrawers, ...networkDrawers)
+    EventsCanvas.startup()
+  }, [board])
 
   useEffect(() => {
     eventEmitter.on(EventEmitters.ON_SELECTED_DRAWER, onSelectedDrawer)

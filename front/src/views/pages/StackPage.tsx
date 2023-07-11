@@ -15,14 +15,17 @@ const StackPage = (): JSX.Element => {
 
   useEffect(() => {
     (async () => {
-      const {data: board} = await StackEntity.board(id)
+      const {data: boardResponse} = await StackEntity.board(id)
 
-      console.log(board)
-
+      setBoard(boardResponse)
     })()
   }, []);
 
-  const { canvasRef, selectedDrawer } = useBoard()
+  useEffect(() => {
+    console.log(board)
+  }, [board]);
+
+  const { canvasRef, selectedDrawer } = useBoard(board)
 
   return (
     <section className="h-[calc(100vh-66px)] flex relative">
