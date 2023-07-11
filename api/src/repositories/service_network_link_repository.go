@@ -16,10 +16,19 @@ func FindServiceNetworkLinksByStackId(stackId string) ([]models.ServiceNetworkLi
 	return serviceNetworkLinks, db
 }
 
-func FindServiceNetworkLink(serviceId string, networkId string) (models.ServiceNetworkLink, *gorm.DB) {
+func FindServiceNetworkLinkByServiceAndNetwork(serviceId string, networkId string) (models.ServiceNetworkLink, *gorm.DB) {
 	var serviceNetworkLink models.ServiceNetworkLink
 	db := initializers.DB.
 		Where("service_id = ? AND network_id = ?", serviceId, networkId).
+		First(&serviceNetworkLink)
+
+	return serviceNetworkLink, db
+}
+
+func FindServiceNetworkLink(id string) (models.ServiceNetworkLink, *gorm.DB) {
+	var serviceNetworkLink models.ServiceNetworkLink
+	db := initializers.DB.
+		Where("id = ?", id).
 		First(&serviceNetworkLink)
 
 	return serviceNetworkLink, db

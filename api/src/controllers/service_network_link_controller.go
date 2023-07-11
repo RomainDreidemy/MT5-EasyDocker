@@ -39,7 +39,7 @@ func CreateServiceNetworkLink(c *fiber.Ctx) error {
 			JSON(factories.BuildErrorResponse("error", "Service or network not found"))
 	}
 
-	_, db := repositories.FindServiceNetworkLink(body.ServiceID, body.NetworkID)
+	_, db := repositories.FindServiceNetworkLinkByServiceAndNetwork(body.ServiceID, body.NetworkID)
 	var linkCount int64
 	db.Count(&linkCount)
 
@@ -59,4 +59,33 @@ func CreateServiceNetworkLink(c *fiber.Ctx) error {
 
 	return c.Status(fiber.StatusCreated).
 		JSON(factories.BuildServiceNetworkLinkResponse(newServiceNetworkLink))
+}
+
+// DeleteServiceNetworkLink godoc
+// @Summary      Delete a link between a service and a network
+// @Tags         Service Network Links
+// @Accept       json
+// @Produce      json
+// @Param id path string true "Service Network Link ID"
+// @Success      204
+// @Router       /service_network_links/{id} [delete]
+func DeleteServiceNetworkLink(c *fiber.Ctx) error {
+	currentUser := c.Locals("user").(models.UserResponse)
+	linkId := c.Params("id")
+
+	if !policies.CanAccessServiceNetworkLink(currentUser, linkId) {
+		return c.Status(fiber.StatusNotFound).
+			JSON(factories.BuildErrorResponse("error", "Service or network not found"))
+	}
+
+	serviceNetworkLink, db := repositories.FindServiceNetworkLink(linkId)
+
+	result := db.Delete(&serviceNetworkLink)
+
+	if result.Error != nil {
+		return c.Status(fiber.StatusBadGateway).
+			JSON(fiber.Map{"status": "error", "message": "Something bad happened"})
+	}
+
+	return c.Status(fiber.StatusNoContent).Send(nil)
 }

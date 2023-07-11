@@ -607,6 +607,24 @@ paths:
       summary: Create a new link between a service and a network
       tags:
       - Service Network Links
+  /service_network_links/{id}:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: Service Network Link ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+      summary: Delete a link between a service and a network
+      tags:
+      - Service Network Links
   /services/{id}:
     delete:
       consumes:
