@@ -3,7 +3,9 @@ import StateDrawer from './State.drawer'
 import {Errors} from '../../../enums/errors'
 import CommonBases from './Common.bases'
 import {Placements} from "../../../enums/placements";
-import {TConnectorOrNullify} from "../../../types/Connector";
+import {TConnector, TConnectorOrNullify} from "../../../types/Connector";
+import {ILink} from "../../../interfaces/Link.interface";
+import {IServiceNetworkLinks} from "../../../interfaces/Service.interface";
 
 const BaseDrawer = (): TBaseDrawer => {
   return {
@@ -58,6 +60,14 @@ const BaseDrawer = (): TBaseDrawer => {
 
     findConnectorByPlacement(placement: Placements): TConnectorOrNullify {
       return this.connectors.find(connector => connector.placement === placement)
+    },
+
+    createLink(from: TConnector, to: TConnector): void {
+      const link: ILink = { from, to }
+
+      const linker = this.Linker!(this, this.context!, link)
+      linker.create()
+      this.linkers.push(linker)
     }
   }
 }

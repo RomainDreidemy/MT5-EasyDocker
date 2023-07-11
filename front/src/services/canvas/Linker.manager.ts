@@ -58,11 +58,7 @@ const LinkerManager: TLinkerManager = {
     const connector = this.findConnector(position)
 
     if ((this.selectedConnector != null) && (connector != null) && (this.selectedDrawer != null) && (this.onHoverDrawer != null)) {
-      const link: ILink = { to: this.selectedConnector, at: connector }
-
-      const linker = this.selectedDrawer.Linker!(this.selectedDrawer, this.context!, link)
-      linker.create()
-      this.selectedDrawer.linkers.push(linker)
+      this.selectedDrawer.createLink(this.selectedConnector, connector)
 
       eventEmitter.emit(EventEmitters.ON_CREATED_LINKER, this.selectedDrawer)
 

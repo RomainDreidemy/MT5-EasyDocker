@@ -10,8 +10,8 @@ import eventEmitter from '../services/apps/Event.emitter'
 import {EventEmitters} from '../enums/eventEmitters'
 import {type TDrawerOrNullify} from '../types/Drawer'
 import {TBoardOrNullify} from "../types/Board";
-import {TBaseDrawer} from "../types/board/drawer/Base.drawer";
 import {DrawerTypes} from "../enums/DrawerTypes";
+import {ILink} from "../interfaces/Link.interface";
 
 const useBoard = (board: TBoardOrNullify): {
   canvasRef: MutableRefObject<HTMLCanvasElement | null>,
@@ -47,8 +47,8 @@ const useBoard = (board: TBoardOrNullify): {
         id: "3c59aadd-2d49-418f-94c1-4d1eb1b2c80d",
         serviceId: "22e5004d-5f87-403f-9ad7-ef5c02c76317",
         networkId: "fa1865c7-eae0-47c6-b170-01922f57ccf7",
-        serviceArrowPosition: "bottom",
-        networkArrowPosition: "top"
+        serviceArrowPosition: "top",
+        networkArrowPosition: "bottom"
       }
     ]
   }
@@ -83,29 +83,26 @@ const useBoard = (board: TBoardOrNullify): {
 
     const drawers = [...serviceDrawers, ...networkDrawers]
 
-    // serviceNetworkLinks.forEach((link: IServiceNetworkLinks) => {
-    //   console.log('link :', link)
-    //
-    //   const serviceDrawer: TDrawerOrNullify = drawers.find((drawer: TServiceDrawer) => drawer.entity!.id === link.serviceId && drawer.type === DrawerTypes.SERVICE)
-    //   const networkDrawer: TDrawerOrNullify = drawers.find((drawer: TServiceDrawer) => drawer.entity!.id === link.networkId && drawer.type === DrawerTypes.NETWORK)
-    //   console.log(serviceDrawer, networkDrawer)
-    //
-    //   if (serviceDrawer && networkDrawer) {
-    //     const serviceConnector = serviceDrawer.findConnectorByPlacement(link.serviceArrowPosition)
-    //     const networkConnector = networkDrawer.findConnectorByPlacement(link.networkArrowPosition)
-    //
-    //     console.log('---- connector')
-    //     console.log(serviceConnector)
-    //     console.log(networkConnector)
-    //   }
-    //
-    //
-    // })
+    serviceNetworkLinks.forEach((link: IServiceNetworkLinks) => {
+      console.log('link :', link)
 
+      const serviceDrawer: TDrawerOrNullify = drawers.find((drawer: TServiceDrawer) => drawer.entity!.id === link.serviceId && drawer.type === DrawerTypes.SERVICE)
+      const networkDrawer: TDrawerOrNullify = drawers.find((drawer: TServiceDrawer) => drawer.entity!.id === link.networkId && drawer.type === DrawerTypes.NETWORK)
+      console.log(serviceDrawer, networkDrawer)
 
+      if (serviceDrawer && networkDrawer) {
+        const serviceConnector = serviceDrawer.findConnectorByPlacement(link.serviceArrowPosition)
+        const networkConnector = networkDrawer.findConnectorByPlacement(link.networkArrowPosition)
 
+        console.log('---- connector')
+        console.log(serviceConnector)
+        console.log(networkConnector)
 
-
+        if (serviceConnector && networkConnector) {
+          serviceDrawer.createLink(serviceConnector, networkConnector)
+        }
+      }
+    })
 
 
     EventsCanvas.add(...drawers)

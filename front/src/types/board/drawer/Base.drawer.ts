@@ -1,7 +1,7 @@
 import {type TStateDrawer} from './State.drawer'
 import {type TCommonBases} from './Common.bases'
 import {Placements} from "../../../enums/placements";
-import {TConnectorOrNullify} from "../../Connector";
+import {TConnector, TConnectorOrNullify} from "../../Connector";
 
 export type TBaseDrawer =
   TCommonBases &
@@ -15,5 +15,6 @@ export type TBaseDrawer =
     drawLinkers: () => void
     createConnectors: () => void
     updateConnectorPositions: () => void
+    createLink: (from: TConnector, to: TConnector) => void
     findConnectorByPlacement: (placement: Placements) => TConnectorOrNullify
   }

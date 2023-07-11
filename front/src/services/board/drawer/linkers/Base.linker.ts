@@ -18,7 +18,7 @@ const BaseLinker: TBaseLinker = {
     const line = new Path2D()
 
     this.context!.beginPath()
-    this.definePosition(this.link!.at, (x, y) => {
+    this.definePosition(this.link!.from, (x, y) => {
       line.moveTo(x, y)
     })
     this.definePosition(this.link!.to, (x, y) => {
@@ -35,7 +35,7 @@ const BaseLinker: TBaseLinker = {
 
     this.path = line
 
-    const at: IPosition = this.link!.at.factory!.position(this.offset)
+    const at: IPosition = this.link!.from.factory!.position(this.offset)
     const to: IPosition = this.link!.to.factory!.position(this.offset)
 
     this.drawArrow(to, at)
@@ -67,8 +67,8 @@ const BaseLinker: TBaseLinker = {
     }
   },
 
-  drawArrow (to: IPosition, at: IPosition): void {
-    const angle: number = Math.atan2(at.y - to.y, at.x - to.x)
+  drawArrow (from: IPosition, at: IPosition): void {
+    const angle: number = Math.atan2(at.y - from.y, at.x - from.x)
 
     this.context!.beginPath()
     if (this.selected) {
@@ -78,13 +78,13 @@ const BaseLinker: TBaseLinker = {
       this.context!.strokeStyle = CanvasColor.DEFAULT
       this.context!.fillStyle = CanvasColor.DEFAULT
     }
-    this.context!.moveTo(to.x, to.y)
+    this.context!.moveTo(from.x, from.y)
 
-    this.definePosition(this.link!.at, (x, y) => {
+    this.definePosition(this.link!.from, (x, y) => {
       this.context!.moveTo(x, y)
     })
 
-    this.definePosition(this.link!.at, (x, y) => {
+    this.definePosition(this.link!.from, (x, y) => {
       this.context!.lineTo(x - this.arrowSize * Math.cos(angle - Math.PI / 6), y - this.arrowSize * Math.sin(angle - Math.PI / 6))
       this.context!.lineTo(x - this.arrowSize * Math.cos(angle + Math.PI / 6), y - this.arrowSize * Math.sin(angle + Math.PI / 6))
     })
