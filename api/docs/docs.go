@@ -400,6 +400,34 @@ const docTemplate = `{
                 }
             }
         },
+        "/service_network_links/{id}": {
+            "delete": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Service Network Links"
+                ],
+                "summary": "Delete a link between a service and a network",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Service Network Link ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    }
+                }
+            }
+        },
         "/services/{id}": {
             "get": {
                 "consumes": [

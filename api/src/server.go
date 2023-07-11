@@ -97,6 +97,7 @@ func main() {
 
 	serviceNetworkLink := micro.Group("/service_network_links", middleware.DeserializeUser)
 	serviceNetworkLink.Post("/", controllers.CreateServiceNetworkLink)
+	serviceNetworkLink.Delete("/:id", controllers.DeleteServiceNetworkLink)
 
 	app.Get("/docker_compose", controllers.GenerateDockerComposeFile)
 
