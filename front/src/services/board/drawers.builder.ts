@@ -16,21 +16,6 @@ const createDrawers = <T>(items: T[], drawerCreator: DrawerCreator<T>, context: 
   });
 }
 
-const createLink = (
-  sourceDrawer: TDrawer,
-  targetDrawer: TDrawer,
-  link: IServiceNetworkLinks | IServiceVolumeLinks
-) => {
-  if (sourceDrawer && targetDrawer) {
-    const sourceConnector = sourceDrawer.findConnectorByPlacement(link.serviceArrowPosition);
-    const targetConnector = targetDrawer.findConnectorByPlacement(link.networkArrowPosition);
-
-    if (sourceConnector && targetConnector) {
-      sourceDrawer.createLink(sourceConnector, targetConnector, link);
-    }
-  }
-};
-
 const DrawersBuilder = (board: TBoard, context: CanvasRenderingContext2D): TDrawer[] => {
   const serviceDrawers: TServiceDrawer[] = createDrawers<IService>(board.services, ServiceDrawer, context);
   const networkDrawers: TServiceDrawer[] = createDrawers<INetwork>(board.networks, NetworkDrawer, context);
