@@ -21,3 +21,12 @@ func BuildServiceNetworkLinkResponses(links []models.ServiceNetworkLink) []model
 
 	return linkResponses
 }
+
+func BuildServiceNetworkLinkFromCreateInput(body models.ServiceNetworkLinkCreateInput) models.ServiceNetworkLink {
+	return models.ServiceNetworkLink{
+		ServiceID:            body.ServiceID,
+		NetworkID:            body.NetworkID,
+		ServiceArrowPosition: body.ServiceArrowPosition,
+		NetworkArrowPosition: body.NetworkArrowPosition,
+	}
+}

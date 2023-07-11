@@ -48,12 +48,7 @@ func CreateServiceNetworkLink(c *fiber.Ctx) error {
 			JSON(factories.BuildErrorResponse("error", "Link already exists"))
 	}
 
-	newServiceNetworkLink := models.ServiceNetworkLink{
-		ServiceID:            body.ServiceID,
-		NetworkID:            body.NetworkID,
-		ServiceArrowPosition: body.ServiceArrowPosition,
-		NetworkArrowPosition: body.NetworkArrowPosition,
-	}
+	newServiceNetworkLink := factories.BuildServiceNetworkLinkFromCreateInput(body)
 
 	result := initializers.DB.Create(&newServiceNetworkLink)
 
