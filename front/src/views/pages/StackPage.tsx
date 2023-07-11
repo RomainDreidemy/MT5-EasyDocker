@@ -1,10 +1,23 @@
 import BoardOrganism from '../organisms/Board.organism'
-import React from 'react'
+import React, {useEffect} from 'react'
+import { useParams } from "react-router-dom";
 import useBoard from '../../hooks/useBoard'
 import ManagerOrganism from '../organisms/Manager.organism'
 import EditorOrganism from '../organisms/Editor.organism'
+import StackEntity from "../../services/entities/Stack.entity";
 
 const StackPage = (): JSX.Element => {
+  const { id } = useParams();
+
+  useEffect(() => {
+    (async () => {
+      const {data: board} = await StackEntity.board(id)
+
+      console.log(board)
+
+    })()
+  }, []);
+
   const { canvasRef, selectedDrawer } = useBoard()
 
   return (
