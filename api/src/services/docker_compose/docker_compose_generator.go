@@ -7,10 +7,11 @@ import (
 	"gopkg.in/yaml.v3"
 )
 
-func BuildDockerComposeFile(services []models.Service) string {
+func BuildDockerComposeFile(services []models.Service, networks []models.Network) string {
 	dockerCompose := models.DockerCompose{
 		Version:  "3",
 		Services: builders.DockerComposeServicesBuilder(services),
+		Networks: builders.BuildDockerComposeNetworks(networks),
 	}
 
 	result, _ := yaml.Marshal(dockerCompose)
