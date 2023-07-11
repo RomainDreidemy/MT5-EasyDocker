@@ -1,16 +1,16 @@
-import {type TLinkerManager} from '../../types/canvas/Linker.manager'
-import {type IPosition} from '../../interfaces/Position.interface'
-import {type ILink} from '../../interfaces/Link.interface'
-import {ConnectorManager} from './Connector.manager'
+import { type TLinkerManager } from '../../types/canvas/Linker.manager'
+import { type IPosition } from '../../interfaces/Position.interface'
+import { type ILink } from '../../interfaces/Link.interface'
+import { ConnectorManager } from './Connector.manager'
 import BaseManager from './Base.manager'
-import {type TConnector} from '../../types/Connector'
-import {type TDrawer} from '../../types/Drawer'
-import {type TLinker, type TLinkerOrNullify} from '../../types/Linker'
-import {DrawerManager} from './Drawer.manager'
-import {type TBaseLinker} from '../../types/board/drawer/linkers/Base.linker'
-import {CanvasColor} from '../../enums/CanvasColor'
-import eventEmitter from "../apps/Event.emitter";
-import {EventEmitters} from "../../enums/eventEmitters";
+import { type TConnector } from '../../types/Connector'
+import { type TDrawer } from '../../types/Drawer'
+import { type TLinker, type TLinkerOrNullify } from '../../types/Linker'
+import { DrawerManager } from './Drawer.manager'
+import { type TBaseLinker } from '../../types/board/drawer/linkers/Base.linker'
+import { CanvasColor } from '../../enums/CanvasColor'
+import eventEmitter from '../apps/Event.emitter'
+import { EventEmitters } from '../../enums/eventEmitters'
 
 const LinkerManager: TLinkerManager = {
   ...BaseManager,

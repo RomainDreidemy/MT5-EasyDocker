@@ -10,9 +10,9 @@ export interface TStateFactory {
   width: number
   height: number
 
-  marginText: number,
-  topMarginTitle: number,
-  topMarginText: number,
+  marginText: number
+  topMarginTitle: number
+  topMarginText: number
 
   name: string
 
