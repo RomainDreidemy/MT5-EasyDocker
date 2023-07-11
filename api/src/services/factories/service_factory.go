@@ -36,7 +36,7 @@ func BuildServiceResponses(services []models.Service) []models.ServiceResponse {
 }
 
 func BuildServiceBoardResponses(services []models.Service) []models.ServiceBoardResponse {
-	var serializedServices []models.ServiceBoardResponse
+	serializedServices := make([]models.ServiceBoardResponse, 0)
 	for i := 0; i < len(services); i++ {
 		serializedServices = append(serializedServices, models.ServiceBoardResponse{
 			ID:        services[i].ID,
