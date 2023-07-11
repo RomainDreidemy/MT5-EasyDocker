@@ -42,7 +42,7 @@ func BuildServiceBoardResponses(services []models.Service) []models.BoardItem {
 	for i := 0; i < len(services); i++ {
 		serializedServices = append(serializedServices, models.BoardItem{
 			ID:        services[i].ID,
-			Name:      services[i].Name, //todo: change this with a name field
+			Name:      services[i].Name,
 			PositionX: services[i].PositionX,
 			PositionY: services[i].PositionY,
 		})
