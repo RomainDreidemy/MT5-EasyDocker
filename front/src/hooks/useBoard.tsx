@@ -1,5 +1,5 @@
 import {type MutableRefObject, useEffect, useRef, useState} from 'react'
-import {type IService} from '../interfaces/Service.interface'
+import {type IService, IServiceNetworkLinks} from '../interfaces/Service.interface'
 import EventsCanvas from '../services/canvas/Events.canvas'
 import {type TServiceDrawer} from '../types/board/drawer/Service.drawer'
 import ServiceDrawer from '../services/board/drawer/Service.drawer'
@@ -10,6 +10,8 @@ import eventEmitter from '../services/apps/Event.emitter'
 import {EventEmitters} from '../enums/eventEmitters'
 import {type TDrawerOrNullify} from '../types/Drawer'
 import {TBoardOrNullify} from "../types/Board";
+import {TBaseDrawer} from "../types/board/drawer/Base.drawer";
+import {DrawerTypes} from "../enums/DrawerTypes";
 
 const useBoard = (board: TBoardOrNullify): {
   canvasRef: MutableRefObject<HTMLCanvasElement | null>,
@@ -63,7 +65,7 @@ const useBoard = (board: TBoardOrNullify): {
   useEffect(() => {
     if (board == null) return
 
-    const {services, networks} = test
+    const {services, networks, serviceNetworkLinks} = test
 
     const serviceDrawers: TServiceDrawer[] = services.map((service: IService) => {
       const serviceDrawer = ServiceDrawer(service, EventsCanvas.context!)
@@ -79,7 +81,34 @@ const useBoard = (board: TBoardOrNullify): {
       return serviceDrawer
     })
 
-    EventsCanvas.add(...serviceDrawers, ...networkDrawers)
+    const drawers = [...serviceDrawers, ...networkDrawers]
+
+    // serviceNetworkLinks.forEach((link: IServiceNetworkLinks) => {
+    //   console.log('link :', link)
+    //
+    //   const serviceDrawer: TDrawerOrNullify = drawers.find((drawer: TServiceDrawer) => drawer.entity!.id === link.serviceId && drawer.type === DrawerTypes.SERVICE)
+    //   const networkDrawer: TDrawerOrNullify = drawers.find((drawer: TServiceDrawer) => drawer.entity!.id === link.networkId && drawer.type === DrawerTypes.NETWORK)
+    //   console.log(serviceDrawer, networkDrawer)
+    //
+    //   if (serviceDrawer && networkDrawer) {
+    //     const serviceConnector = serviceDrawer.findConnectorByPlacement(link.serviceArrowPosition)
+    //     const networkConnector = networkDrawer.findConnectorByPlacement(link.networkArrowPosition)
+    //
+    //     console.log('---- connector')
+    //     console.log(serviceConnector)
+    //     console.log(networkConnector)
+    //   }
+    //
+    //
+    // })
+
+
+
+
+
+
+
+    EventsCanvas.add(...drawers)
     EventsCanvas.startup()
   }, [board])
 

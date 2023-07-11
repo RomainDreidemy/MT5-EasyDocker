@@ -8,7 +8,7 @@ export type TBaseFactory =
   &
   {
     create: (entity: TEntity, context: CanvasRenderingContext2D) => void
-    position: (withOffset: number) => IPosition
+    position: (withOffset?: number) => IPosition
     isSelected: (position: IPosition) => boolean
     updatePosition: (position: IPosition) => void
   }

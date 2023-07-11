@@ -6,5 +6,6 @@ export type TBaseConnector =
   TCommonBases &
   TStateConnector &
   {
-    isSelected: (Position: IPosition) => boolean
+    isSelected: (position: IPosition) => boolean
+    updatePosition: (position: IPosition) => void
   }
