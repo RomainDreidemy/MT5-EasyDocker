@@ -1,5 +1,27 @@
 basePath: /
 definitions:
+  models.Board:
+    properties:
+      networks:
+        items:
+          $ref: '#/definitions/models.BoardItem'
+        type: array
+      services:
+        items:
+          $ref: '#/definitions/models.BoardItem'
+        type: array
+    type: object
+  models.BoardItem:
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+      positionX:
+        type: number
+      positionY:
+        type: number
+    type: object
   models.NetworkCreateInput:
     properties:
       description:
@@ -827,7 +849,7 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/models.ServiceResponse'
+              $ref: '#/definitions/models.Board'
             type: array
       summary: Get board
       tags:

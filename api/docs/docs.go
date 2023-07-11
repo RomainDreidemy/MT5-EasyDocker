@@ -856,7 +856,7 @@ const docTemplate = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/models.ServiceResponse"
+                                "$ref": "#/definitions/models.Board"
                             }
                         }
                     }
@@ -1126,6 +1126,40 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "models.Board": {
+            "type": "object",
+            "properties": {
+                "networks": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.BoardItem"
+                    }
+                },
+                "services": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.BoardItem"
+                    }
+                }
+            }
+        },
+        "models.BoardItem": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "positionX": {
+                    "type": "number"
+                },
+                "positionY": {
+                    "type": "number"
+                }
+            }
+        },
         "models.NetworkCreateInput": {
             "type": "object",
             "required": [
