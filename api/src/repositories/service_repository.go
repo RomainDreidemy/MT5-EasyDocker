@@ -21,3 +21,18 @@ func FindServicesByStackId(stackId string) ([]models.Service, *gorm.DB) {
 	result := initializers.DB.Where("stack_id = ?", stackId).Find(&services)
 	return services, result
 }
+
+func CreateService(service models.Service) *gorm.DB {
+	result := initializers.DB.Create(&service)
+	return result
+}
+
+func UpdateService(service models.Service, updatedService models.Service) *gorm.DB {
+	result := initializers.DB.Model(&service).Updates(updatedService)
+	return result
+}
+
+func DeleteService(service models.Service) *gorm.DB {
+	result := initializers.DB.Delete(&service)
+	return result
+}
