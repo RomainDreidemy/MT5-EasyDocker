@@ -5,6 +5,7 @@ import (
 	"github.com/RomainDreidemy/MT5-docker-extension/src/initializers"
 	"github.com/RomainDreidemy/MT5-docker-extension/src/models"
 	"github.com/RomainDreidemy/MT5-docker-extension/src/policies"
+	"github.com/RomainDreidemy/MT5-docker-extension/src/repositories"
 	"github.com/RomainDreidemy/MT5-docker-extension/src/services/factories"
 	"github.com/gofiber/fiber/v2"
 )
@@ -36,6 +37,15 @@ func CreateServiceNetworkLink(c *fiber.Ctx) error {
 		!policies.CanAccessNetwork(currentUser, body.NetworkID) {
 		return c.Status(fiber.StatusNotFound).
 			JSON(factories.BuildErrorResponse("error", "Service or network not found"))
+	}
+
+	_, db := repositories.FindServiceNetworkLink(body.ServiceID, body.NetworkID)
+	var linkCount int64
+	db.Count(&linkCount)
+
+	if linkCount > 0 {
+		return c.Status(fiber.StatusConflict).
+			JSON(factories.BuildErrorResponse("error", "Link already exists"))
 	}
 
 	newServiceNetworkLink := models.ServiceNetworkLink{
