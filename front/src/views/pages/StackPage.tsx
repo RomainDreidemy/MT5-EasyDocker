@@ -1,13 +1,17 @@
 import BoardOrganism from '../organisms/Board.organism'
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import { useParams } from "react-router-dom";
 import useBoard from '../../hooks/useBoard'
 import ManagerOrganism from '../organisms/Manager.organism'
 import EditorOrganism from '../organisms/Editor.organism'
 import StackEntity from "../../services/entities/Stack.entity";
+import {IBoard} from "../../interfaces/Board.interface";
+import {TBoardOrNullify} from "../../types/Board";
 
 const StackPage = (): JSX.Element => {
   const { id } = useParams();
+
+  const [board, setBoard] = useState<TBoardOrNullify>(undefined)
 
   useEffect(() => {
     (async () => {
