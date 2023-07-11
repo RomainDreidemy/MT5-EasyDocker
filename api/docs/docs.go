@@ -367,6 +367,39 @@ const docTemplate = `{
                 }
             }
         },
+        "/service_network_links": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Service Network Links"
+                ],
+                "summary": "Create a new link between a service and a network",
+                "parameters": [
+                    {
+                        "description": "query params",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.ServiceNetworkLinkCreateInput"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.ServiceNetworkLinkResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/services/{id}": {
             "get": {
                 "consumes": [
@@ -1304,6 +1337,41 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "value": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.ServiceNetworkLinkCreateInput": {
+            "type": "object",
+            "required": [
+                "networkArrowPosition",
+                "networkId",
+                "serviceArrowPosition",
+                "serviceId"
+            ],
+            "properties": {
+                "networkArrowPosition": {
+                    "type": "string",
+                    "enum": [
+                        "top",
+                        "bottom",
+                        "left",
+                        "right"
+                    ]
+                },
+                "networkId": {
+                    "type": "string"
+                },
+                "serviceArrowPosition": {
+                    "type": "string",
+                    "enum": [
+                        "top",
+                        "bottom",
+                        "left",
+                        "right"
+                    ]
+                },
+                "serviceId": {
                     "type": "string"
                 }
             }
