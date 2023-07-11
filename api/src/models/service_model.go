@@ -16,6 +16,7 @@ type Service struct {
 
 	ServiceVolumes      []ServiceVolume
 	ServiceEnvVariables []ServiceEnvVariable
+	ServicePorts        []ServicePort
 }
 
 type ServiceCreateInput struct {
@@ -57,4 +58,5 @@ type ServiceResponseItem struct {
 
 	Volumes      []ServiceVolumeResponse      `json:"volumes"`
 	EnvVariables []ServiceEnvVariableResponse `json:"envVariables"`
+	Ports        []ServicePortResponse        `json:"ports"`
 }

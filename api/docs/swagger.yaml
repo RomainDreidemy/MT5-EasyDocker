@@ -109,6 +109,10 @@ definitions:
         type: array
       id:
         type: string
+      ports:
+        items:
+          $ref: '#/definitions/models.ServicePortResponse'
+        type: array
       positionX:
         type: number
       positionY:
