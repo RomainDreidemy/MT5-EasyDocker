@@ -1,4 +1,4 @@
-package docker_compose
+package builders
 
 import (
 	"github.com/RomainDreidemy/MT5-docker-extension/src/models"

@@ -1,4 +1,4 @@
-package docker_compose
+package builders
 
 import (
 	"fmt"
