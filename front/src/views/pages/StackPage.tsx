@@ -4,8 +4,8 @@ import { useParams } from 'react-router-dom'
 import useBoard from '../../hooks/useBoard'
 import ManagerOrganism from '../organisms/Manager.organism'
 import EditorOrganism from '../organisms/Editor.organism'
-import StackEntity from '../../services/entities/Stack.entity'
 import { type TBoardOrNullify } from '../../types/Board'
+import StackEntity from '../../services/entities/Stack.entity'
 
 const StackPage = (): JSX.Element => {
   const { id } = useParams()
@@ -19,10 +19,6 @@ const StackPage = (): JSX.Element => {
       setBoard(boardResponse)
     })()
   }, [])
-
-  useEffect(() => {
-    console.log(board)
-  }, [board])
 
   const { canvasRef, selectedDrawer } = useBoard(board)
 

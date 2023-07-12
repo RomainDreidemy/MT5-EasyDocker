@@ -13,7 +13,11 @@ export interface IService {
   positionY: number
 }
 
+export type IServiceCreate = Omit<IService, 'id'>
+
 export interface IServiceNetworkLinks {
+  id: string
+
   serviceId: string
   serviceArrowPosition: Placements
 
@@ -22,6 +26,8 @@ export interface IServiceNetworkLinks {
 }
 
 export interface IServiceVolumeLinks {
+  id: string
+
   serviceId: string
   serviceArrowPosition: Placements
 

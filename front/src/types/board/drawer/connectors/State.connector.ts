@@ -1,9 +1,8 @@
 import { type Placements } from '../../../../enums/placements'
-import { type TFactory } from '../../../Factory'
+import { type TDrawer } from '../../../Drawer'
 
 export interface TStateConnector {
-  context?: CanvasRenderingContext2D
-  factory?: TFactory
+  drawer?: TDrawer
   placement?: Placements
 
   path: Path2D

@@ -35,15 +35,15 @@ const BaseLinker: TBaseLinker = {
 
     this.path = line
 
-    const at: IPosition = this.link!.from.factory!.position(this.offset)
-    const to: IPosition = this.link!.to.factory!.position(this.offset)
+    const at: IPosition = this.link!.from.drawer!.factory!.position(this.offset)
+    const to: IPosition = this.link!.to.drawer!.factory!.position(this.offset)
 
     this.drawArrow(to, at)
   },
 
   definePosition (connector: TConnector, line: (x: number, y: number) => void): void {
-    const { placement, factory } = connector
-    const { positionX, positionY, width, height } = factory!
+    const { placement, drawer } = connector
+    const { positionX, positionY, width, height } = drawer!.factory!
 
     switch (placement) {
       case Placements.TOP: {

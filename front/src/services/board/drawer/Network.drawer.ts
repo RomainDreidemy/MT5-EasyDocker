@@ -22,7 +22,7 @@ const NetworkDrawer = (network: INetwork, context: CanvasRenderingContext2D): TN
       this.factory = NetworkFactory()
       this.factory.create(network, context)
 
-      this.Connector = ConnectorBuilder(this.factory, context, network, CommonConnector)
+      this.Connector = ConnectorBuilder(this, CommonConnector)
       this.createConnectors()
     }
   }

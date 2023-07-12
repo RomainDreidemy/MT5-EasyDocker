@@ -1,14 +1,11 @@
 import { Placements } from '../../../../enums/placements'
 import { type TConnectorBuilder } from '../../../../types/board/drawer/connectors/Connector.builder'
-import { type TFactory } from '../../../../types/Factory'
 import { type TCallableConnectors, type TConnector } from '../../../../types/Connector'
-import { type TEntity } from '../../../../types/Entity'
 import PlacementConnector from './Placement.connector'
+import { type TDrawer } from '../../../../types/Drawer'
 
 const ConnectorBuilder = (
-  factory: TFactory,
-  context: CanvasRenderingContext2D,
-  entity: TEntity,
+  drawer: TDrawer,
   callableConnector: TCallableConnectors,
   offset: number = 0
 ): TConnectorBuilder => {
@@ -25,9 +22,9 @@ const ConnectorBuilder = (
     },
 
     constructor (placement: Placements): TConnector {
-      const position = PlacementConnector(factory, placement, offset)
+      const position = PlacementConnector(drawer.factory!, placement, offset)
 
-      const connector = callableConnector(context, factory, position)
+      const connector = callableConnector(drawer, position)
       connector.create()
       return connector
     }

@@ -1,5 +1,5 @@
 export interface INetwork {
-  id: number
+  id: string
 
   name: string
   isExternal: boolean
@@ -7,3 +7,5 @@ export interface INetwork {
   positionX: number
   positionY: number
 }
+
+export type INetworkCreate = Omit<INetwork, 'id'>
