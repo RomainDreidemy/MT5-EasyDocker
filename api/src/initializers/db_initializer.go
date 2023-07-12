@@ -33,6 +33,7 @@ func ConnectDB(config *Config) {
 		&ServiceVolume{},
 		&Network{},
 		&ServiceNetworkLink{},
+		&ManagedVolume{},
 	)
 	if err != nil {
 		log.Fatal("Migration Failed:  \n", err.Error())
