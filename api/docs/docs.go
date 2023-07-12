@@ -1233,6 +1233,12 @@ const docTemplate = `{
                         "$ref": "#/definitions/models.ServiceNetworkLinkResponse"
                     }
                 },
+                "serviceVolumeLinks": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.ServiceManagedVolumeLinkResponse"
+                    }
+                },
                 "services": {
                     "type": "array",
                     "items": {
@@ -1416,6 +1422,29 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "value": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.ServiceManagedVolumeLinkResponse": {
+            "type": "object",
+            "properties": {
+                "containerPath": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "managedVolumeId": {
+                    "type": "string"
+                },
+                "serviceArrowPosition": {
+                    "type": "string"
+                },
+                "serviceId": {
+                    "type": "string"
+                },
+                "volumeArrowPosition": {
                     "type": "string"
                 }
             }

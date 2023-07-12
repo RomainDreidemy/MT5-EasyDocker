@@ -1,7 +1,7 @@
 package models
 
 type ServiceManagedVolumeLink struct {
-	ID        string `gorm:"primary_key;type:uuid;not null"`
+	ID        string `gorm:"type:uuid;default:uuid_generate_v4();primary_key"`
 	ServiceID string `gorm:"type:uuid;not null"`
 	Service   Service
 
@@ -19,7 +19,7 @@ type ServiceManagedVolumeLinkResponse struct {
 	ServiceID                  string `json:"serviceId"`
 	ManagedVolumeID            string `json:"managedVolumeId"`
 	ServiceArrowPosition       string `json:"serviceArrowPosition"`
-	ManagedVolumeArrowPosition string `json:"managedVolumeArrowPosition"`
+	ManagedVolumeArrowPosition string `json:"volumeArrowPosition"`
 	ContainerPath              string `json:"containerPath"`
 }
 
