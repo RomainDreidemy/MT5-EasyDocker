@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/MT5-docker-extension.iml" filepath="$PROJECT_DIR$/.idea/MT5-docker-extension.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/EasyDocker.iml" filepath="$PROJECT_DIR$/.idea/EasyDocker.iml" />
     </modules>
   </component>
 </project>
