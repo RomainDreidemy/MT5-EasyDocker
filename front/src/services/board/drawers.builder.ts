@@ -33,7 +33,7 @@ const DrawersBuilder = (board: TBoard, context: CanvasRenderingContext2D): TDraw
     },
 
     generateLinks (): void {
-      const serviceNetworkLinks = board.serviceNetworkLinks || []
+      const serviceNetworkLinks = board.serviceNetworkLinks ?? []
 
       serviceNetworkLinks.forEach((link: TLinkEntity) => {
         const from: TLinkCreator = {
@@ -50,7 +50,7 @@ const DrawersBuilder = (board: TBoard, context: CanvasRenderingContext2D): TDraw
         this.createLink(link, from, to)
       })
 
-      const serviceVolumeLinks = board.serviceVolumeLinks || []
+      const serviceVolumeLinks = board.serviceVolumeLinks ?? []
 
       serviceVolumeLinks.forEach((link: TLinkEntity) => {
         const from: TLinkCreator = {
