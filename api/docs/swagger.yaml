@@ -18,6 +18,10 @@ definitions:
         items:
           $ref: '#/definitions/models.BoardItem'
         type: array
+      volumes:
+        items:
+          $ref: '#/definitions/models.BoardItem'
+        type: array
     type: object
   models.BoardItem:
     properties:

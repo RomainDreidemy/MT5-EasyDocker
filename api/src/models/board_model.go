@@ -5,6 +5,7 @@ import "github.com/google/uuid"
 type Board struct {
 	Services                  []BoardItem                        `json:"services"`
 	Networks                  []BoardItem                        `json:"networks"`
+	Volumes                   []BoardItem                        `json:"volumes"`
 	ServiceNetworkLinks       []ServiceNetworkLinkResponse       `json:"serviceNetworkLinks"`
 	ServiceManagedVolumeLinks []ServiceManagedVolumeLinkResponse `json:"serviceVolumeLinks"`
 }
