@@ -99,6 +99,7 @@ const RegisterPage = () => {
               type="password"
               name="passwordConfirm"
               onChange={(e) => changeValue(e)}
+              onKeyDown={(e) => e.key === 'Enter' && processRegister()}
               className={hasError('passwordConfirm') ? 'border-2 border-red-600' : ''}
             />
             <div className='text-red-500 mb-2 first-letter:uppercase'>
