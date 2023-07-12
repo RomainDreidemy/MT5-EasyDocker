@@ -8,7 +8,6 @@ import {type TConnector, type TConnectorOrNullify} from '../../types/Connector'
 import {type TDrawer, type TDrawerOrNullify} from '../../types/Drawer'
 import eventEmitter from '../apps/Event.emitter'
 import {EventEmitters} from '../../enums/eventEmitters'
-import debounce from "../apps/Debounce";
 
 const MouseEventManager: TMouseEventManager = {
   ...BaseManager,
@@ -25,13 +24,6 @@ const MouseEventManager: TMouseEventManager = {
     this.canvas!.addEventListener(Events.ON_MOUSE_MOVE, (event: MouseEvent): void => {
       this.handleMouseMove(event)
     })
-    this.canvas!.addEventListener(Events.ON_MOUSE_MOVE,
-      debounce(() => {
-        if (!this.isMoving && this.historicalDrawer) {
-          eventEmitter.emit(EventEmitters.ON_MOVED_DRAWER, this.historicalDrawer)
-        }
-      }, this.mouseDebounce)
-    );
   },
 
   handleMouseUp(event: MouseEvent): void {
@@ -43,6 +35,10 @@ const MouseEventManager: TMouseEventManager = {
 
     this.isMoving = false
     this.selectedConnector = undefined
+
+    if (!this.selectedDrawer && this.historicalDrawer) {
+      eventEmitter.emit(EventEmitters.ON_MOVED_DRAWER, this.historicalDrawer)
+    }
 
     this.clearOnHoverDrawer()
     this.updateScreen()

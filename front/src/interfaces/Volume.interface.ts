@@ -9,3 +9,5 @@ export interface IVolume {
   positionX: number
   positionY: number
 }
+
+export type IVolumeCreate = Omit<IVolume, 'id'>

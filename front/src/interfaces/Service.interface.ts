@@ -1,4 +1,4 @@
-import { type Placements } from '../enums/placements'
+import {type Placements} from '../enums/placements'
 
 export interface IService {
   id: string
@@ -12,6 +12,8 @@ export interface IService {
   positionX: number
   positionY: number
 }
+
+export type IServiceCreate = Omit<IService, 'id'>
 
 export interface IServiceNetworkLinks {
   id: string
