@@ -1,14 +1,14 @@
-import {type MutableRefObject, useEffect, useRef, useState} from 'react'
+import { type MutableRefObject, useEffect, useRef, useState } from 'react'
 import EventsCanvas from '../services/canvas/Events.canvas'
-import {type EventListenerCallback} from '../interfaces/EventListener.interface'
+import { type EventListenerCallback } from '../interfaces/EventListener.interface'
 import eventEmitter from '../services/apps/Event.emitter'
-import {EventEmitters} from '../enums/eventEmitters'
-import {type TDrawerOrNullify} from '../types/Drawer'
-import {TBoardOrNullify} from "../types/Board";
-import DrawersBuilder from "../services/board/drawers.builder";
+import { EventEmitters } from '../enums/eventEmitters'
+import { type TDrawerOrNullify } from '../types/Drawer'
+import { type TBoardOrNullify } from '../types/Board'
+import DrawersBuilder from '../services/board/drawers.builder'
 
 const useBoard = (board: TBoardOrNullify): {
-  canvasRef: MutableRefObject<HTMLCanvasElement | null>,
+  canvasRef: MutableRefObject<HTMLCanvasElement | null>
   selectedDrawer: TDrawerOrNullify
 } => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null)

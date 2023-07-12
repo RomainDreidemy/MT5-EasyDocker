@@ -1,7 +1,7 @@
-import {TDrawer} from "../../Drawer";
+import { type TDrawer } from '../../Drawer'
 
-export type TStateDrawers = {
-  serviceDrawers: TDrawer[],
-  networkDrawers: TDrawer[],
-  volumeDrawers: TDrawer[],
+export interface TStateDrawers {
+  serviceDrawers: TDrawer[]
+  networkDrawers: TDrawer[]
+  volumeDrawers: TDrawer[]
 }

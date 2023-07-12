@@ -3,7 +3,7 @@ import StateConnector from './State.connector'
 import { type TBaseConnector } from '../../../../types/board/drawer/connectors/Base.connector'
 import CommonBases from '../Common.bases'
 import { CanvasColor } from '../../../../enums/CanvasColor'
-import PlacementConnector from "./Placement.connector";
+import PlacementConnector from './Placement.connector'
 
 const BaseConnector: TBaseConnector = {
   ...CommonBases,

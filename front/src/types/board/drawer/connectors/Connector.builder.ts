@@ -1,6 +1,6 @@
 import { type TServiceConnector } from './Service.connector'
 import { type TConnector } from '../../../Connector'
-import {Placements} from "../../../../enums/placements";
+import { type Placements } from '../../../../enums/placements'
 
 export interface TConnectorBuilder {
   create: () => TServiceConnector[]

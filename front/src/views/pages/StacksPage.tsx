@@ -1,18 +1,18 @@
-import React, {useEffect, useState} from "react";
-import StackEntity from "../../services/entities/Stack.entity";
-import {IStack} from "../../interfaces/Stack.interface";
-import {Link} from "react-router-dom";
+import React, { useEffect, useState } from 'react'
+import StackEntity from '../../services/entities/Stack.entity'
+import { type IStack } from '../../interfaces/Stack.interface'
+import { Link } from 'react-router-dom'
 
-const StacksPage = () => {
+const StacksPage = (): JSX.Element => {
   const [stacks, setStacks] = useState<IStack[]>([])
 
   useEffect(() => {
     (async () => {
-      const {data: stacksResponse} = await StackEntity.stacks()
+      const { data: stacksResponse } = await StackEntity.stacks()
 
       setStacks(stacksResponse)
     })()
-  }, []);
+  }, [])
 
   return (
     <section>
@@ -28,7 +28,7 @@ const StacksPage = () => {
         ))
       }
     </section>
-  );
+  )
 }
 
-export default StacksPage;
+export default StacksPage

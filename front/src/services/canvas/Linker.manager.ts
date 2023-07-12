@@ -1,6 +1,5 @@
 import { type TLinkerManager } from '../../types/canvas/Linker.manager'
 import { type IPosition } from '../../interfaces/Position.interface'
-import { type ILink } from '../../interfaces/Link.interface'
 import { ConnectorManager } from './Connector.manager'
 import BaseManager from './Base.manager'
 import { type TConnector } from '../../types/Connector'

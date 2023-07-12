@@ -1,8 +1,8 @@
-import {TStateDrawers} from "./State.drawers";
-import {DrawerCreator, TDrawer, TDrawerOrNullify} from "../../Drawer";
-import {TLinkCreator, TLinkEntity} from "../../Linker";
-import {Placements} from "../../../enums/placements";
-import {TConnectorLink} from "../../Connector";
+import { type TStateDrawers } from './State.drawers'
+import { type DrawerCreator, type TDrawer, type TDrawerOrNullify } from '../../Drawer'
+import { type TLinkCreator, type TLinkEntity } from '../../Linker'
+import { type Placements } from '../../../enums/placements'
+import { type TConnectorLink } from '../../Connector'
 
 export type TDrawerBuilder =
   TStateDrawers &

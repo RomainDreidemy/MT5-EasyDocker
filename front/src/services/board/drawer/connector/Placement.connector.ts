@@ -1,6 +1,6 @@
-import {Placements} from "../../../../enums/placements";
-import {TFactory} from "../../../../types/Factory";
-import {IPosition} from "../../../../interfaces/Position.interface";
+import { Placements } from '../../../../enums/placements'
+import { type TFactory } from '../../../../types/Factory'
+import { type IPosition } from '../../../../interfaces/Position.interface'
 
 const PlacementConnector = (factory: TFactory, placement: Placements, offset: number = 0): IPosition => {
   const placements = {

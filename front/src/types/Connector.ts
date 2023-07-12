@@ -8,4 +8,4 @@ export type TConnectorOrNullify = TConnector | undefined
 export type TConnectors = TConnector[]
 export type TCallableConnectors = typeof CommonConnector
 
-export type TConnectorLink = { from: TConnectorOrNullify; to: TConnectorOrNullify; }
+export interface TConnectorLink { from: TConnectorOrNullify, to: TConnectorOrNullify }

@@ -1,23 +1,22 @@
-import {type TBaseDrawer} from '../../../types/board/drawer/Base.drawer'
+import { type TBaseDrawer } from '../../../types/board/drawer/Base.drawer'
 import StateDrawer from './State.drawer'
-import {Errors} from '../../../enums/errors'
+import { Errors } from '../../../enums/errors'
 import CommonBases from './Common.bases'
-import {Placements} from "../../../enums/placements";
-import {TConnector, TConnectorOrNullify} from "../../../types/Connector";
-import {ILink} from "../../../interfaces/Link.interface";
-import {IServiceNetworkLinks} from "../../../interfaces/Service.interface";
-import {TLinkEntity} from "../../../types/Linker";
+import { type Placements } from '../../../enums/placements'
+import { type TConnector, type TConnectorOrNullify } from '../../../types/Connector'
+import { type ILink } from '../../../interfaces/Link.interface'
+import { type TLinkEntity } from '../../../types/Linker'
 
 const BaseDrawer = (): TBaseDrawer => {
   return {
     ...CommonBases,
     ...StateDrawer(),
 
-    create(): void {
+    create (): void {
       throw new Error(Errors.NOT_IMPLEMENTED)
     },
 
-    draw(): void {
+    draw (): void {
       this.preProcessActions()
       this.updateConnectorPositions()
 
@@ -30,40 +29,40 @@ const BaseDrawer = (): TBaseDrawer => {
       this.drawLinkers()
     },
 
-    preProcessActions(): void {
+    preProcessActions (): void {
     },
 
-    shouldDrawConnectors(): boolean {
+    shouldDrawConnectors (): boolean {
       return this.factory!.selected || this.factory!.onHover
     },
 
-    drawConnectors(): void {
+    drawConnectors (): void {
       this.connectors.forEach(connector => {
         connector.draw()
       })
     },
 
-    drawLinkers(): void {
+    drawLinkers (): void {
       this.linkers.forEach(link => {
         link.draw()
       })
     },
 
-    updateConnectorPositions(): void {
+    updateConnectorPositions (): void {
       this.connectors.forEach(connector => {
         connector.updatePosition(this.factory!.position())
       })
     },
 
-    createConnectors(): void {
+    createConnectors (): void {
       this.connectors.push(...this.Connector!.create())
     },
 
-    findConnectorByPlacement(placement: Placements): TConnectorOrNullify {
+    findConnectorByPlacement (placement: Placements): TConnectorOrNullify {
       return this.connectors.find(connector => connector.placement === placement)
     },
 
-    createLink(from: TConnector, to: TConnector, entity?: TLinkEntity): void {
+    createLink (from: TConnector, to: TConnector, entity?: TLinkEntity): void {
       const link: ILink = { from, to }
 
       const linker = this.Linker!(this, this.context!, link, entity)

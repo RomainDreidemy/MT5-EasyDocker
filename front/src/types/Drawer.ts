@@ -6,4 +6,4 @@ export type TDrawer = TServiceDrawer | TNetworkDrawer | TVolumeDrawer
 export type TDrawerOrNullify = TDrawer | undefined
 export type TDrawers = TDrawer[]
 
-export type DrawerCreator<T> = (item: T, context: CanvasRenderingContext2D) => TServiceDrawer;
+export type DrawerCreator<T> = (item: T, context: CanvasRenderingContext2D) => TServiceDrawer

@@ -5,7 +5,7 @@ import EventsCanvas from '../../services/canvas/Events.canvas'
 import Input from '../atoms/Forms/Input.atom'
 import Button from '../atoms/Forms/Button.atom'
 import { object } from 'yup'
-import {TEntity} from "../../types/Entity";
+import { type TEntity } from '../../types/Entity'
 
 const EditorOrganism = ({ drawer }: { drawer: TDrawer }): JSX.Element => {
   const { fields } = useEditor(drawer)
@@ -34,8 +34,6 @@ const EditorOrganism = ({ drawer }: { drawer: TDrawer }): JSX.Element => {
   }
 
   const submitText: string = drawer?.entity?.id !== null ? 'Update' : 'Create'
-
-
 
   return (
     <div className="w-full h-full border-l-2 ">
