@@ -1277,6 +1277,12 @@ const docTemplate = `{
                     "items": {
                         "$ref": "#/definitions/models.BoardItem"
                     }
+                },
+                "volumes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.BoardItem"
+                    }
                 }
             }
         },
