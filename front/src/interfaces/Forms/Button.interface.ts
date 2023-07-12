@@ -8,4 +8,5 @@ export interface ButtonProps {
   variant?: string
   onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void
   direction?: string
+  disabled?: boolean
 }

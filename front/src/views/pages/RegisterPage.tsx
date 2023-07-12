@@ -7,11 +7,12 @@ import Warning from '../molecules/Alerts/Warning.molecule'
 import Input from '../atoms/Forms/Input.atom'
 import Button from '../atoms/Forms/Button.atom'
 import { BiLeftArrowAlt, BiRightArrowAlt } from 'react-icons/bi'
+import { type IAuthEntity, type IAuthError, type IAuthStatus } from '../../interfaces/Auth.interface'
 
-const RegisterPage = () => {
-  const [form, setForm] = useState({ email: '', password: '', passwordConfirm: '' })
-  const [status, setStatus] = useState({ success: false, errors: [] })
+const RegisterPage = (): JSX.Element => {
   const navigate = useNavigate()
+  const [form, setForm] = useState<IAuthEntity>({ email: '', password: '', passwordConfirm: '' })
+  const [status, setStatus] = useState<IAuthStatus>({ success: false, errors: [] })
 
   const registerSchema = object({
     email: string().email().required(),
@@ -19,22 +20,22 @@ const RegisterPage = () => {
     passwordConfirm: string().nullable().min(8).required()
   })
 
-  const changeValue = (e) => {
+  const changeValue = (e: React.ChangeEvent<HTMLButtonElement | HTMLInputElement>): void => {
     setForm({ ...form, [e.target.name]: e.target.value })
     if (e.target.name === 'passwordConfirm') passwordMatch(e.target.value)
   }
-  const hasError = (field) => {
+  const hasError = (field: string): boolean => {
     return status.errors?.map((e) => e.path).includes(field)
   }
-  const showErrorMessage = (field) => {
-    return status.errors?.map((e) => e.path === field ? e.message : '')
+  const showErrorMessage = (field: string): string[] => {
+    return status.errors?.map((e: IAuthError) => e.path === field ? e.message : '')
   }
-  const validateSchema = async () => {
+  const validateSchema = async (): Promise<IAuthError[]> => {
     const validationResult = await registerSchema.validate(form, { abortEarly: false }).catch((err) => err)
     return validationResult.inner ?? null
   }
 
-  const passwordMatch = (passwordConfirm) => {
+  const passwordMatch = (passwordConfirm: string): boolean => {
     const doesMatch = form.password === passwordConfirm
 
     if (!doesMatch) setStatus({ ...status, errors: [{ path: 'passwordMatch', message: 'Passwords doesn\'t match !' }] })
@@ -43,24 +44,28 @@ const RegisterPage = () => {
     return doesMatch
   }
 
-  const processRegister = async () => {
+  const processRegister = async (): Promise<void> => {
     const validationErrors = (await validateSchema())
     setStatus({ ...status, errors: validationErrors })
-    if (validationErrors !== null) return
+    if (validationErrors?.length > 0) return
 
     try {
       const registrationRes = await AuthEntity.register(form)
       if (registrationRes.data.id !== null) {
-        setStatus({ errors: [], success: true })
+        setStatus({ success: true, errors: [] })
 
         // Redirect to login page
-        setTimeout(() => {
-          navigate('/login')
-        }, 5000)
+        redirect('/login', 5000)
       }
-    } catch (e) {
+    } catch (e: any) {
       setStatus({ success: false, errors: [{ path: e.response.data.status, message: e.response.data.message }] })
     }
+  }
+
+  const redirect = (to: string, delay: number): void => {
+    setTimeout(() => {
+      navigate(to)
+    }, delay)
   }
 
   return (
@@ -73,14 +78,14 @@ const RegisterPage = () => {
         <div className="bg-white shadow w-full rounded-lg divide-y divide-gray-200">
           <div className="px-5 py-7">
 
-            {(status.success === true) ? <Success message={'Registration complete. Redirecting you to login page...'}/> : ''}
+            {(status.success) ? <Success message={'Registration complete. Redirecting you to login page...'}/> : ''}
             {status.errors?.map((e, key) => e.path === 'fail' ? <Warning key={key} message={e.message}/> : '')}
 
             <Input
               label="Email"
               type="email"
               name="email"
-              onChange={(e) => changeValue(e)}
+              onChange={(e) => { changeValue(e) }}
               className={hasError('email') ? 'border-2 border-red-600' : ''}
             />
             <div className='text-red-500 mb-5 first-letter:uppercase'>{showErrorMessage('email')}</div>
@@ -89,7 +94,7 @@ const RegisterPage = () => {
               label="Password"
               type="password"
               name="password"
-              onChange={(e) => changeValue(e)}
+              onChange={(e) => { changeValue(e) }}
               className={hasError('password') ? 'border-2 border-red-600' : ''}
             />
             <div className='text-red-500 mb-2 first-letter:uppercase'>{showErrorMessage('password')}</div>
@@ -98,8 +103,8 @@ const RegisterPage = () => {
               label="Confirm Password"
               type="password"
               name="passwordConfirm"
-              onChange={(e) => changeValue(e)}
-              onKeyDown={(e) => e.key === 'Enter' && processRegister()}
+              onChange={(e) => { changeValue(e) }}
+              onKeyDown={async (e) => await (e.key === 'Enter' && processRegister())}
               className={hasError('passwordConfirm') ? 'border-2 border-red-600' : ''}
             />
             <div className='text-red-500 mb-2 first-letter:uppercase'>

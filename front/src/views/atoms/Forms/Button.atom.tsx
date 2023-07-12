@@ -1,7 +1,7 @@
 import React from 'react'
 import { type ButtonProps } from '../../../interfaces/Forms/Button.interface'
 
-const Button = ({ label, name, className = '', icon, variant = 'primary', onClick, direction = 'left' }: ButtonProps): JSX.Element => {
+const Button = ({ label, name, className = '', icon, variant = 'primary', onClick, direction = 'left', disabled = false }: ButtonProps): JSX.Element => {
   const styles: Record<string, string> = {
     primary: 'btn-primary',
     secondary: 'btn-secondary',
@@ -17,6 +17,7 @@ const Button = ({ label, name, className = '', icon, variant = 'primary', onClic
           type="button"
           name={name}
           onClick={onClick}
+          disabled={disabled}
           className={`btn flex-nowrap ${styles[variant]} ${className}`}>
         {isDirection('right')}
         {icon}

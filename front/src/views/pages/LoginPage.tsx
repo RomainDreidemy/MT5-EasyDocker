@@ -11,12 +11,13 @@ import Button from '../atoms/Forms/Button.atom'
 import { AiOutlineUnlock } from 'react-icons/ai'
 import { BiLeftArrowAlt, BiRightArrowAlt } from 'react-icons/bi'
 import AuthEntity from '../../services/entities/Auth.entity'
+import { type IAuthEntity, type IAuthError, type IAuthStatus } from '../../interfaces/Auth.interface'
 
-const LoginPage = () => {
-  const [form, setForm] = useState({ email: '', password: '', remember: false })
-  const [errors, setErrors] = useState([])
-  const { user, setUser } = useContext(UserContext)
+const LoginPage = (): JSX.Element => {
   const navigate = useNavigate()
+  const [form, setForm] = useState<IAuthEntity>({ email: '', password: '', remember: false })
+  const [status, setStatus] = useState<IAuthStatus>({ success: false, errors: [] })
+  const { user, setUser } = useContext<any>(UserContext)
 
   const userSchema = object({
     email: string().email().required(),
@@ -24,23 +25,23 @@ const LoginPage = () => {
     remember: boolean().nullable()
   })
 
-  const changeValue = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value })
+  const changeValue = (e: React.ChangeEvent<HTMLButtonElement | HTMLInputElement>): void => {
+    setForm({ ...form, [e.target.name]: (e.target.type === 'checkbox' ? e.target?.checked : e.target.value) })
   }
-  const hasError = (field) => {
-    return errors?.map((e) => e.path).includes(field)
+  const hasError = (field: string): boolean => {
+    return status.errors?.map((e) => e.path).includes(field)
   }
-  const showErrorMessage = (field) => {
-    return errors?.map((e) => e.path === field ? e.message : '')
+  const showErrorMessage = (field: string): string[] => {
+    return status.errors?.map((e) => e.path === field ? e.message : '')
   }
-  const validateSchema = async () => {
-    const validationResult = await userSchema.validate(form, { abortEarly: false }).catch((err) => err)
-    return validationResult.inner ?? null
+  const validateSchema = async (): Promise<IAuthError[]> => {
+    const validationResult = await userSchema.validate(form, { abortEarly: false }).catch((err) => { console.log(err) })
+    return validationResult.inner ?? []
   }
-  const processLogin = async () => {
+  const processLogin = async (): Promise<void> => {
     const validationErrors = (await validateSchema())
-    setErrors(validationErrors)
-    if (validationErrors !== null) return
+    setStatus({ ...status, errors: validationErrors })
+    if (validationErrors.length > 0) return
 
     try {
       const authRes = await AuthEntity.auth(form)
@@ -52,16 +53,20 @@ const LoginPage = () => {
       Cookies.set(
         'token',
         authRes.data.token,
-        { expires: form.remember ? 365 : 1 }
+        { expires: (form.remember === true) ? 365 : 1 }
       )
 
       // Redirect to stacks page
-      setTimeout(() => {
-        navigate('/stacks')
-      }, 2000)
-    } catch (e) {
-      setErrors([{ path: e.response.data.status, message: e.response.data.message }])
+      redirect('/stacks', 2000)
+    } catch (e: any) {
+      setStatus({ ...status, errors: [{ path: e.response.data.status, message: e.response.data.message }] })
     }
+  }
+
+  const redirect = (to: string, delay: number): void => {
+    setTimeout(() => {
+      navigate(to)
+    }, delay)
   }
 
   return (
@@ -73,13 +78,13 @@ const LoginPage = () => {
                 <div className="bg-white shadow w-full rounded-lg divide-y divide-gray-200">
                     <div className="px-5 py-7">
                         {(user.token !== null && user.token !== undefined) ? <Success message={'Logged in successfully. Redirecting...'}/> : ''}
-                        {errors?.map((e, key) => e.path === 'fail' ? <Warning key={key} message={e.message}/> : '')}
+                        {status.errors?.map((e, key) => e.path === 'fail' ? <Warning key={key} message={e.message}/> : '')}
 
                         <Input
                             label="Email"
                             type="email"
                             name="email"
-                            onChange={(e) => changeValue(e)}
+                            onChange={(e) => { changeValue(e) }}
                             className={hasError('email') ? 'border-2 border-red-600' : ''}
                         />
                         <div className='text-red-500 mb-5 first-letter:uppercase'>{showErrorMessage('email')}</div>
@@ -88,8 +93,8 @@ const LoginPage = () => {
                             label="Password"
                             type="password"
                             name="password"
-                            onChange={(e) => changeValue(e)}
-                            onKeyDown={(e) => e.key === 'Enter' && processLogin()}
+                            onChange={(e) => { changeValue(e) }}
+                            onKeyDown={async (e) => await (e.key === 'Enter' && processLogin())}
                             className={hasError('password') ? 'border-2 border-red-600' : ''}
                         />
                         <div className='text-red-500 mb-2 first-letter:uppercase'>{showErrorMessage('password')}</div>
@@ -97,13 +102,13 @@ const LoginPage = () => {
                         <Checkbox
                             label={'Remember me'}
                             name={'remember'}
-                            onChange={(e) => changeValue(e)}
+                            onChange={(e) => { changeValue(e) }}
                             className={'mb-2'}
                         />
 
                         <Button
                             label={'Login'}
-                            onClick={processLogin}
+                            onClick={async () => { await processLogin() }}
                             className={'w-full'}
                             icon={<BiRightArrowAlt/>}
                             direction={'right'}
