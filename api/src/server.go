@@ -64,6 +64,9 @@ func main() {
 	network.Put("/:id", controllers.UpdateNetwork)
 	network.Delete("/:id", controllers.DeleteNetwork)
 
+	managedVolume := micro.Group("/managed_volumes", middleware.DeserializeUser)
+	managedVolume.Get("/:id", controllers.GetManagedVolume)
+
 	service := micro.Group("/services", middleware.DeserializeUser)
 	service.Get("/:id", controllers.GetService)
 	service.Put("/:id", controllers.UpdateService)

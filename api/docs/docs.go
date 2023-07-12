@@ -177,6 +177,37 @@ const docTemplate = `{
                 }
             }
         },
+        "/managed_volumes/{id}": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Managed Volumes"
+                ],
+                "summary": "Get a volume",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Volume ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.ManagedVolumeResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/networks/{id}": {
             "get": {
                 "consumes": [
@@ -1213,6 +1244,26 @@ const docTemplate = `{
         "models.BoardItem": {
             "type": "object",
             "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "positionX": {
+                    "type": "number"
+                },
+                "positionY": {
+                    "type": "number"
+                }
+            }
+        },
+        "models.ManagedVolumeResponse": {
+            "type": "object",
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
                 "id": {
                     "type": "string"
                 },
