@@ -1,5 +1,4 @@
 .idea/
-.idea/*
 .idea/dataSources.xml
 tmp/
 .env
