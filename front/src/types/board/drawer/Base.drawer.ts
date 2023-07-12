@@ -3,7 +3,7 @@ import { type TCommonBases } from './Common.bases'
 import { type Placements } from '../../../enums/placements'
 import { type TConnector, type TConnectorOrNullify } from '../../Connector'
 import { type TLinkEntity } from '../../Linker'
-import {TBaseLinker} from "./linkers/Base.linker";
+import { type TBaseLinker } from './linkers/Base.linker'
 
 export type TBaseDrawer =
   TCommonBases &

@@ -1,5 +1,5 @@
-import {type Placements} from '../../../../enums/placements'
-import {TDrawer} from "../../../Drawer";
+import { type Placements } from '../../../../enums/placements'
+import { type TDrawer } from '../../../Drawer'
 
 export interface TStateConnector {
   drawer?: TDrawer

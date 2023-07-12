@@ -6,7 +6,7 @@ import { type Placements } from '../../../enums/placements'
 import { type TConnector, type TConnectorOrNullify } from '../../../types/Connector'
 import { type ILink } from '../../../interfaces/Link.interface'
 import { type TLinkEntity } from '../../../types/Linker'
-import {TBaseLinker} from "../../../types/board/drawer/linkers/Base.linker";
+import { type TBaseLinker } from '../../../types/board/drawer/linkers/Base.linker'
 
 const BaseDrawer = (): TBaseDrawer => {
   return {

@@ -1,7 +1,7 @@
 import { type IPosition } from '../../../../interfaces/Position.interface'
 import BaseConnector from './Base.connector'
 import { type TConnector } from '../../../../types/Connector'
-import {TDrawer} from "../../../../types/Drawer";
+import { type TDrawer } from '../../../../types/Drawer'
 
 const CommonConnector = (drawer: TDrawer, position: IPosition): TConnector => {
   return {

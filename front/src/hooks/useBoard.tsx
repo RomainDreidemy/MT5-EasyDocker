@@ -1,15 +1,15 @@
-import {type MutableRefObject, useEffect, useRef, useState} from 'react'
+import { type MutableRefObject, useEffect, useRef, useState } from 'react'
 import EventsCanvas from '../services/canvas/Events.canvas'
-import {type EventListenerCallback} from '../interfaces/EventListener.interface'
+import { type EventListenerCallback } from '../interfaces/EventListener.interface'
 import eventEmitter from '../services/apps/Event.emitter'
-import {EventEmitters} from '../enums/eventEmitters'
-import {type TDrawerOrNullify} from '../types/Drawer'
-import {type TBoardOrNullify} from '../types/Board'
+import { EventEmitters } from '../enums/eventEmitters'
+import { type TDrawer, type TDrawerOrNullify } from '../types/Drawer'
+import { type TBoardOrNullify } from '../types/Board'
 import DrawersBuilder from '../services/board/drawers.builder'
-import {TLinkBody, TLinkEntity, TLinker} from "../types/Linker";
-import BoardEntity from "../services/entities/Board.entity";
-import UtilsDrawer from "../services/board/utils.drawer";
-import {AxiosResponse} from "axios";
+import { type TLinkBody, type TLinkEntity, type TLinker } from '../types/Linker'
+import BoardEntity from '../services/entities/Board.entity'
+import UtilsDrawer from '../services/board/Utils.drawer'
+import { type AxiosResponse } from 'axios'
 
 const useBoard = (board: TBoardOrNullify): {
   canvasRef: MutableRefObject<HTMLCanvasElement | null>
@@ -36,6 +36,7 @@ const useBoard = (board: TBoardOrNullify): {
   }, [board])
 
   useEffect(() => {
+    eventEmitter.on(EventEmitters.ON_MOVED_DRAWER, onMovedDrawer)
     eventEmitter.on(EventEmitters.ON_SELECTED_DRAWER, onSelectedDrawer)
     eventEmitter.on(EventEmitters.ON_UNSELECTED_DRAWER, onUnselectedDrawer)
     eventEmitter.on(EventEmitters.ON_CREATED_LINKER, onCreatedLinker)
@@ -49,12 +50,13 @@ const useBoard = (board: TBoardOrNullify): {
     }
   }, [])
 
-  const onSelectedDrawer: EventListenerCallback = (data) => {
-    setSelectedDrawer(data)
+  const onMovedDrawer: EventListenerCallback = (drawer: TDrawer) => {
+    console.log('-------')
   }
+
   const onCreatedLinker: EventListenerCallback = async (linker: TLinker) => {
     const response = await createLink(linker)
-    if (response?.data) {
+    if ((response?.data) != null) {
       linker.entity = response?.data
     }
   }
@@ -69,7 +71,6 @@ const useBoard = (board: TBoardOrNullify): {
     }
   }
 
-
   const onDeletedLinker: EventListenerCallback = async (linker: TLinker) => {
     if (UtilsDrawer.isServiceNetworkLink(linker)) {
       await BoardEntity.deleteServiceNetworkLink(linker.entity!.id)
@@ -80,6 +81,10 @@ const useBoard = (board: TBoardOrNullify): {
 
   const onUnselectedDrawer: EventListenerCallback = (_) => {
     setSelectedDrawer(undefined)
+  }
+
+  const onSelectedDrawer: EventListenerCallback = (drawer: TDrawer) => {
+    setSelectedDrawer(drawer)
   }
 
   return {
