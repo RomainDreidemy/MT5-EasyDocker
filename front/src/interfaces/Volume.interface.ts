@@ -1,5 +1,5 @@
 export interface IVolume {
-  id: number
+  id: string
 
   name: string
   description: string

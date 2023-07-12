@@ -1,11 +1,15 @@
-import { type MutableRefObject, useEffect, useRef, useState } from 'react'
+import {type MutableRefObject, useEffect, useRef, useState} from 'react'
 import EventsCanvas from '../services/canvas/Events.canvas'
-import { type EventListenerCallback } from '../interfaces/EventListener.interface'
+import {type EventListenerCallback} from '../interfaces/EventListener.interface'
 import eventEmitter from '../services/apps/Event.emitter'
-import { EventEmitters } from '../enums/eventEmitters'
-import { type TDrawerOrNullify } from '../types/Drawer'
-import { type TBoardOrNullify } from '../types/Board'
+import {EventEmitters} from '../enums/eventEmitters'
+import {type TDrawerOrNullify} from '../types/Drawer'
+import {type TBoardOrNullify} from '../types/Board'
 import DrawersBuilder from '../services/board/drawers.builder'
+import {TLinkBody, TLinkEntity, TLinker} from "../types/Linker";
+import BoardEntity from "../services/entities/Board.entity";
+import UtilsDrawer from "../services/board/utils.drawer";
+import {AxiosResponse} from "axios";
 
 const useBoard = (board: TBoardOrNullify): {
   canvasRef: MutableRefObject<HTMLCanvasElement | null>
@@ -35,20 +39,43 @@ const useBoard = (board: TBoardOrNullify): {
     eventEmitter.on(EventEmitters.ON_SELECTED_DRAWER, onSelectedDrawer)
     eventEmitter.on(EventEmitters.ON_UNSELECTED_DRAWER, onUnselectedDrawer)
     eventEmitter.on(EventEmitters.ON_CREATED_LINKER, onCreatedLinker)
+    eventEmitter.on(EventEmitters.ON_DELETED_LINKER, onDeletedLinker)
 
     return () => {
       eventEmitter.removeListener(EventEmitters.ON_SELECTED_DRAWER)
       eventEmitter.removeListener(EventEmitters.ON_UNSELECTED_DRAWER)
       eventEmitter.removeListener(EventEmitters.ON_CREATED_LINKER)
+      eventEmitter.removeListener(EventEmitters.ON_DELETED_LINKER)
     }
   }, [])
 
   const onSelectedDrawer: EventListenerCallback = (data) => {
-    console.log('Moved drawer :', data)
     setSelectedDrawer(data)
   }
-  const onCreatedLinker: EventListenerCallback = (data) => {
-    console.log('Created linker :', data)
+  const onCreatedLinker: EventListenerCallback = async (linker: TLinker) => {
+    const response = await createLink(linker)
+    if (response?.data) {
+      linker.entity = response?.data
+    }
+  }
+
+  const createLink = async (linker: TLinker): Promise<AxiosResponse<TLinkEntity> | void> => {
+    const linkBody: TLinkBody = UtilsDrawer.createLinkBodyConstructor(linker)
+
+    if (UtilsDrawer.isServiceNetworkLink(linker)) {
+      return await BoardEntity.serviceNetworkLink(linkBody)
+    } else if (UtilsDrawer.isServiceVolumeLink(linker)) {
+      return await BoardEntity.serviceVolumeLink(linkBody)
+    }
+  }
+
+
+  const onDeletedLinker: EventListenerCallback = async (linker: TLinker) => {
+    if (UtilsDrawer.isServiceNetworkLink(linker)) {
+      await BoardEntity.deleteServiceNetworkLink(linker.entity!.id)
+    } else if (UtilsDrawer.isServiceVolumeLink(linker)) {
+      await BoardEntity.deleteServiceVolumeLink(linker.entity!.id)
+    }
   }
 
   const onUnselectedDrawer: EventListenerCallback = (_) => {

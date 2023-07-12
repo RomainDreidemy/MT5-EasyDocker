@@ -1,5 +1,5 @@
 export interface INetwork {
-  id: number
+  id: string
 
   name: string
   isExternal: boolean
