@@ -1,6 +1,5 @@
 import { type TLinkerManager } from '../../types/canvas/Linker.manager'
 import { type IPosition } from '../../interfaces/Position.interface'
-import { type ILink } from '../../interfaces/Link.interface'
 import { ConnectorManager } from './Connector.manager'
 import BaseManager from './Base.manager'
 import { type TConnector } from '../../types/Connector'
@@ -58,11 +57,7 @@ const LinkerManager: TLinkerManager = {
     const connector = this.findConnector(position)
 
     if ((this.selectedConnector != null) && (connector != null) && (this.selectedDrawer != null) && (this.onHoverDrawer != null)) {
-      const link: ILink = { to: this.selectedConnector, at: connector }
-
-      const linker = this.selectedDrawer.Linker!(this.selectedDrawer, this.context!, link)
-      linker.create()
-      this.selectedDrawer.linkers.push(linker)
+      this.selectedDrawer.createLink(connector, this.selectedConnector)
 
       eventEmitter.emit(EventEmitters.ON_CREATED_LINKER, this.selectedDrawer)
 

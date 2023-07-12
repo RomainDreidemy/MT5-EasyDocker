@@ -3,6 +3,7 @@ import StateConnector from './State.connector'
 import { type TBaseConnector } from '../../../../types/board/drawer/connectors/Base.connector'
 import CommonBases from '../Common.bases'
 import { CanvasColor } from '../../../../enums/CanvasColor'
+import PlacementConnector from './Placement.connector'
 
 const BaseConnector: TBaseConnector = {
   ...CommonBases,
@@ -23,6 +24,13 @@ const BaseConnector: TBaseConnector = {
     this.context!.closePath()
 
     this.path = circle
+  },
+
+  updatePosition (): void {
+    const { x, y } = PlacementConnector(this.factory!, this.placement!)
+
+    this.positionX = x
+    this.positionY = y
   }
 }
 
