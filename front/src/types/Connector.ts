@@ -7,3 +7,5 @@ export type TConnector = TServiceConnector | TNetworkConnector | TVolumeConnecto
 export type TConnectorOrNullify = TConnector | undefined
 export type TConnectors = TConnector[]
 export type TCallableConnectors = typeof CommonConnector
+
+export type TConnectorLink = { from: TConnectorOrNullify; to: TConnectorOrNullify; }
