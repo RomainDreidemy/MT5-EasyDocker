@@ -1,67 +1,101 @@
 import {TBoard} from "../../types/Board";
 import {TServiceDrawer} from "../../types/board/drawer/Service.drawer";
-import {IService,} from "../../interfaces/Service.interface";
-import ServiceDrawer from "./drawer/Service.drawer";
-import {INetwork} from "../../interfaces/Network.interface";
-import NetworkDrawer from "./drawer/Network.drawer";
 import {DrawerCreator, TDrawer, TDrawerOrNullify} from "../../types/Drawer";
-import VolumeDrawer from "./drawer/Volume.drawer";
-import {IVolume} from "../../interfaces/Volume.interface";
 import {TLinkCreator, TLinkEntity} from "../../types/Linker";
 import {Placements} from "../../enums/placements";
 import {TConnectorLink} from "../../types/Connector";
+import {TDrawerBuilder} from "../../types/board/drawer/Drawer.builder";
+import StateDrawers from "./State.drawers";
+import {IService} from "../../interfaces/Service.interface";
+import {INetwork} from "../../interfaces/Network.interface";
+import {IVolume} from "../../interfaces/Volume.interface";
+import ServiceDrawer from "./drawer/Service.drawer";
+import NetworkDrawer from "./drawer/Network.drawer";
+import VolumeDrawer from "./drawer/Volume.drawer";
 
-const createDrawers = <T>(items: T[], drawerCreator: DrawerCreator<T>, context: CanvasRenderingContext2D): TServiceDrawer[] => {
-  return items.map(item => {
-    const drawer = drawerCreator(item, context);
-    drawer.create();
-    return drawer;
-  });
-}
+const DrawersBuilder = (board: TBoard, context: CanvasRenderingContext2D): TDrawerBuilder => {
+  return {
+    ...StateDrawers(),
 
-const findDrawer = (drawers: TDrawer[], link: TLinkEntity, id: string): TDrawerOrNullify =>
-  drawers.find((drawer: TServiceDrawer) => drawer.entity!.id === id)
+    generate() {
+      this.generateDrawers()
+      this.generateLinks()
+    },
 
-const findConnectors = (from: TDrawer, fromPlacement: Placements, to: TDrawer, toPlacement: Placements): TConnectorLink => {
-  const fromConnector = from.findConnectorByPlacement(fromPlacement)
-  const toConnector = to.findConnectorByPlacement(toPlacement)
+    drawers(): TDrawer[] {
+      return [...this.serviceDrawers, ...this.networkDrawers, ...this.volumeDrawers]
+    },
 
-  return {from: fromConnector, to: toConnector}
-}
+    generateDrawers(): void {
+      this.serviceDrawers = this.createDrawers<IService>(board.services, ServiceDrawer, context);
+      this.networkDrawers = this.createDrawers<INetwork>(board.networks, NetworkDrawer, context);
+      this.volumeDrawers = this.createDrawers<IVolume>(board.volumes, VolumeDrawer, context);
+    },
 
-const createLink = (link: TLinkEntity, from: TLinkCreator, to: TLinkCreator,) => {
-  const fromDrawer: TDrawerOrNullify = findDrawer(from.drawers, link, from.id)
-  const toDrawer: TDrawerOrNullify = findDrawer(to.drawers, link, to.id)
+    generateLinks(): void {
+      board.serviceNetworkLinks.forEach((link: TLinkEntity) => {
+        const from: TLinkCreator = {
+          id: link.serviceId,
+          placement: link.serviceArrowPosition,
+          drawers: this.serviceDrawers
+        }
+        const to: TLinkCreator = {
+          id: link.networkId,
+          placement: link.networkArrowPosition,
+          drawers: this.networkDrawers
+        }
 
-  if (!fromDrawer || !toDrawer) return
+        this.createLink(link, from, to)
+      })
 
-  const connectors = findConnectors(fromDrawer, from.placement, toDrawer, to.placement)
+      board.serviceVolumeLinks.forEach((link: TLinkEntity) => {
+        const from: TLinkCreator = {
+          id: link.serviceId,
+          placement: link.serviceArrowPosition,
+          drawers: this.serviceDrawers
+        }
+        const to: TLinkCreator = {
+          id: link.volumeId,
+          placement: link.volumeArrowPosition,
+          drawers: this.volumeDrawers
+        }
 
-  if (!connectors.from || !connectors.to) return;
+        this.createLink(link, from, to)
+      })
+    },
 
-  fromDrawer.createLink(connectors.from, connectors.to, link)
-}
+    createDrawers<T>(items: T[], drawerCreator: DrawerCreator<T>, context: CanvasRenderingContext2D): TDrawer[] {
+      return items.map(item => {
+        const drawer = drawerCreator(item, context);
+        drawer.create();
+        return drawer;
+      });
+    },
 
-const DrawersBuilder = (board: TBoard, context: CanvasRenderingContext2D): TDrawer[] => {
-  const serviceDrawers: TServiceDrawer[] = createDrawers<IService>(board.services, ServiceDrawer, context);
-  const networkDrawers: TServiceDrawer[] = createDrawers<INetwork>(board.networks, NetworkDrawer, context);
-  const volumeDrawers: TServiceDrawer[] = createDrawers<IVolume>(board.volumes, VolumeDrawer, context);
+    createLink(link: TLinkEntity, from: TLinkCreator, to: TLinkCreator) {
+      const fromDrawer: TDrawerOrNullify = this.findDrawer(from.drawers, link, from.id)
+      const toDrawer: TDrawerOrNullify = this.findDrawer(to.drawers, link, to.id)
 
-  board.serviceNetworkLinks.forEach((link: TLinkEntity) => {
-    const from: TLinkCreator = {id: link.serviceId, placement: link.serviceArrowPosition, drawers: serviceDrawers}
-    const to: TLinkCreator = {id: link.networkId, placement: link.networkArrowPosition, drawers: networkDrawers}
+      if (!fromDrawer || !toDrawer) return
 
-    createLink(link, from, to)
-  })
+      const connectors = this.findConnectors(fromDrawer, from.placement, toDrawer, to.placement)
 
-  board.serviceVolumeLinks.forEach((link: TLinkEntity) => {
-    const from: TLinkCreator = {id: link.serviceId, placement: link.serviceArrowPosition, drawers: serviceDrawers}
-    const to: TLinkCreator = {id: link.volumeId, placement: link.volumeArrowPosition, drawers: volumeDrawers}
+      if (!connectors.from || !connectors.to) return;
 
-    createLink(link, from, to)
-  })
+      fromDrawer.createLink(connectors.from, connectors.to, link)
+    },
 
-  return [...serviceDrawers, ...networkDrawers, ...volumeDrawers]
+    findDrawer(drawers: TDrawer[], link: TLinkEntity, id: string): TDrawerOrNullify {
+      return drawers.find((drawer: TServiceDrawer) => drawer.entity!.id === id)
+    },
+
+    findConnectors(from: TDrawer, fromPlacement: Placements, to: TDrawer, toPlacement: Placements): TConnectorLink {
+      return {
+        from: from.findConnectorByPlacement(fromPlacement),
+        to: to.findConnectorByPlacement(toPlacement)
+      }
+    }
+  }
 }
 
 export default DrawersBuilder
