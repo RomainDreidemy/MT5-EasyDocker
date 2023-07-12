@@ -15,3 +15,12 @@ func FindServiceManagedVolumeLinksByStackId(stackId string) ([]models.ServiceMan
 
 	return links, db
 }
+
+func FindServiceManagedVolumeLinkByServiceAndVolume(serviceId string, volumeId string) (models.ServiceManagedVolumeLink, *gorm.DB) {
+	var serviceManagedVolumeLink models.ServiceManagedVolumeLink
+	db := initializers.DB.
+		Where("service_id = ? AND managed_volume_id = ?", serviceId, volumeId).
+		First(&serviceManagedVolumeLink)
+
+	return serviceManagedVolumeLink, db
+}
