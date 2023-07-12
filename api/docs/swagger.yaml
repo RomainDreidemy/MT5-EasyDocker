@@ -26,6 +26,19 @@ definitions:
       positionY:
         type: number
     type: object
+  models.ManagedVolumeResponse:
+    properties:
+      description:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      positionX:
+        type: number
+      positionY:
+        type: number
+    type: object
   models.NetworkCreateInput:
     properties:
       description:
@@ -460,6 +473,26 @@ paths:
       summary: Update a service env variable
       tags:
       - Service Env Variables
+  /managed_volumes/{id}:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Volume ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.ManagedVolumeResponse'
+      summary: Get a volume
+      tags:
+      - Managed Volumes
   /networks/{id}:
     delete:
       consumes:
