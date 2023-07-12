@@ -33,7 +33,9 @@ const DrawersBuilder = (board: TBoard, context: CanvasRenderingContext2D): TDraw
     },
 
     generateLinks (): void {
-      board.serviceNetworkLinks.forEach((link: TLinkEntity) => {
+      const serviceNetworkLinks = board.serviceNetworkLinks || []
+
+      serviceNetworkLinks.forEach((link: TLinkEntity) => {
         const from: TLinkCreator = {
           id: link.serviceId,
           placement: link.serviceArrowPosition,
@@ -48,7 +50,9 @@ const DrawersBuilder = (board: TBoard, context: CanvasRenderingContext2D): TDraw
         this.createLink(link, from, to)
       })
 
-      board.serviceVolumeLinks.forEach((link: TLinkEntity) => {
+      const serviceVolumeLinks = board.serviceVolumeLinks || []
+
+      serviceVolumeLinks.forEach((link: TLinkEntity) => {
         const from: TLinkCreator = {
           id: link.serviceId,
           placement: link.serviceArrowPosition,
@@ -64,7 +68,7 @@ const DrawersBuilder = (board: TBoard, context: CanvasRenderingContext2D): TDraw
       })
     },
 
-    createDrawers<T>(items: T[], drawerCreator: DrawerCreator<T>, context: CanvasRenderingContext2D): TDrawer[] {
+    createDrawers<T>(items: T[] = [], drawerCreator: DrawerCreator<T>, context: CanvasRenderingContext2D): TDrawer[] {
       return items.map(item => {
         const drawer = drawerCreator(item, context)
         drawer.create()
