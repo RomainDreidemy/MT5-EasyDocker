@@ -35,6 +35,9 @@ func TestBuildDockerComposeNetwork(t *testing.T) {
 					IsExternal: false,
 				},
 			},
+			want: models.DockerComposeNetwork{
+				External: false,
+			},
 		},
 	}
 	for _, tt := range tests {

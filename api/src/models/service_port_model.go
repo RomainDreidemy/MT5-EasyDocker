@@ -5,7 +5,7 @@ import "github.com/google/uuid"
 type ServicePort struct {
 	ID      *uuid.UUID `gorm:"type:uuid;default:uuid_generate_v4();primary_key"`
 	Private int        `gorm:"type:integer;not null"`
-	Public  int        `gorm:"type:integer;not null"`
+	Public  int        `gorm:"type:integer;"`
 
 	ServiceID string `gorm:"type:uuid;not null"`
 	Service   Service
@@ -13,7 +13,7 @@ type ServicePort struct {
 
 type ServicePortCreateInput struct {
 	Private int `json:"private" validate:"required"`
-	Public  int `json:"public" validate:"required"`
+	Public  int `json:"public"`
 }
 
 type ServicePortUpdateInput struct {
