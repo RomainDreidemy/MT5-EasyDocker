@@ -1,6 +1,5 @@
 import { type TLinkerManager } from '../../types/canvas/Linker.manager'
 import { type IPosition } from '../../interfaces/Position.interface'
-import { type ILink } from '../../interfaces/Link.interface'
 import { ConnectorManager } from './Connector.manager'
 import BaseManager from './Base.manager'
 import { type TConnector } from '../../types/Connector'
@@ -39,6 +38,8 @@ const LinkerManager: TLinkerManager = {
 
   deleteLinker (drawer: TDrawer, linkerToRemove: TLinker): void {
     const index = drawer.linkers.findIndex((linker: TBaseLinker) => linkerToRemove === linker)
+    eventEmitter.emit(EventEmitters.ON_DELETED_LINKER, drawer.linkers[index])
+
     drawer.linkers.splice(index, 1)
   },
 
@@ -58,13 +59,9 @@ const LinkerManager: TLinkerManager = {
     const connector = this.findConnector(position)
 
     if ((this.selectedConnector != null) && (connector != null) && (this.selectedDrawer != null) && (this.onHoverDrawer != null)) {
-      const link: ILink = { to: this.selectedConnector, at: connector }
+      const link = this.selectedDrawer.createLink(connector, this.selectedConnector)
 
-      const linker = this.selectedDrawer.Linker!(this.selectedDrawer, this.context!, link)
-      linker.create()
-      this.selectedDrawer.linkers.push(linker)
-
-      eventEmitter.emit(EventEmitters.ON_CREATED_LINKER, this.selectedDrawer)
+      eventEmitter.emit(EventEmitters.ON_CREATED_LINKER, link)
 
       this.clearOnHoverDrawer()
       this.onSelectDrawer(false)

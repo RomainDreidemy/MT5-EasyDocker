@@ -177,6 +177,37 @@ const docTemplate = `{
                 }
             }
         },
+        "/managed_volumes/{id}": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Managed Volumes"
+                ],
+                "summary": "Get a volume",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Volume ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.ManagedVolumeResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/networks/{id}": {
             "get": {
                 "consumes": [
@@ -363,6 +394,39 @@ const docTemplate = `{
                 "responses": {
                     "204": {
                         "description": "No Content"
+                    }
+                }
+            }
+        },
+        "/service_managed_volume_links": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Service Volume Links"
+                ],
+                "summary": "Create a new link between a service and a volume",
+                "parameters": [
+                    {
+                        "description": "query params",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.ServiceManagedVolumeLinkCreateInput"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.ServiceNetworkLinkResponse"
+                        }
                     }
                 }
             }
@@ -1202,6 +1266,12 @@ const docTemplate = `{
                         "$ref": "#/definitions/models.ServiceNetworkLinkResponse"
                     }
                 },
+                "serviceVolumeLinks": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.ServiceManagedVolumeLinkResponse"
+                    }
+                },
                 "services": {
                     "type": "array",
                     "items": {
@@ -1213,6 +1283,26 @@ const docTemplate = `{
         "models.BoardItem": {
             "type": "object",
             "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "positionX": {
+                    "type": "number"
+                },
+                "positionY": {
+                    "type": "number"
+                }
+            }
+        },
+        "models.ManagedVolumeResponse": {
+            "type": "object",
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
                 "id": {
                     "type": "string"
                 },
@@ -1365,6 +1455,67 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "value": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.ServiceManagedVolumeLinkCreateInput": {
+            "type": "object",
+            "required": [
+                "managedVolumeArrowPosition",
+                "managedVolumeId",
+                "serviceArrowPosition",
+                "serviceId"
+            ],
+            "properties": {
+                "containerPath": {
+                    "type": "string"
+                },
+                "managedVolumeArrowPosition": {
+                    "type": "string",
+                    "enum": [
+                        "top",
+                        "bottom",
+                        "left",
+                        "right"
+                    ]
+                },
+                "managedVolumeId": {
+                    "type": "string"
+                },
+                "serviceArrowPosition": {
+                    "type": "string",
+                    "enum": [
+                        "top",
+                        "bottom",
+                        "left",
+                        "right"
+                    ]
+                },
+                "serviceId": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.ServiceManagedVolumeLinkResponse": {
+            "type": "object",
+            "properties": {
+                "containerPath": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "managedVolumeId": {
+                    "type": "string"
+                },
+                "serviceArrowPosition": {
+                    "type": "string"
+                },
+                "serviceId": {
+                    "type": "string"
+                },
+                "volumeArrowPosition": {
                     "type": "string"
                 }
             }

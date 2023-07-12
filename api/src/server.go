@@ -64,6 +64,9 @@ func main() {
 	network.Put("/:id", controllers.UpdateNetwork)
 	network.Delete("/:id", controllers.DeleteNetwork)
 
+	managedVolume := micro.Group("/managed_volumes", middleware.DeserializeUser)
+	managedVolume.Get("/:id", controllers.GetManagedVolume)
+
 	service := micro.Group("/services", middleware.DeserializeUser)
 	service.Get("/:id", controllers.GetService)
 	service.Put("/:id", controllers.UpdateService)
@@ -98,6 +101,9 @@ func main() {
 	serviceNetworkLink := micro.Group("/service_network_links", middleware.DeserializeUser)
 	serviceNetworkLink.Post("/", controllers.CreateServiceNetworkLink)
 	serviceNetworkLink.Delete("/:id", controllers.DeleteServiceNetworkLink)
+
+	serviceManagedVolumeLink := micro.Group("/service_managed_volume_links", middleware.DeserializeUser)
+	serviceManagedVolumeLink.Post("/", controllers.CreateServiceManagedVolumeLink)
 
 	app.Get("/docker_compose", controllers.GenerateDockerComposeFile)
 

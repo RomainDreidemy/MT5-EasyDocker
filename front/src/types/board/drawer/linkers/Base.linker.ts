@@ -8,6 +8,6 @@ export type TBaseLinker =
   TStateLinker &
   {
     isSelected: (Position: IPosition) => boolean
-    drawArrow: (to: IPosition, at: IPosition) => void
+    drawArrow: (from: IPosition, at: IPosition) => void
     definePosition: (connector: TConnector, line: (x: number, y: number) => void) => void
   }

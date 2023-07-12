@@ -10,6 +10,10 @@ definitions:
         items:
           $ref: '#/definitions/models.ServiceNetworkLinkResponse'
         type: array
+      serviceVolumeLinks:
+        items:
+          $ref: '#/definitions/models.ServiceManagedVolumeLinkResponse'
+        type: array
       services:
         items:
           $ref: '#/definitions/models.BoardItem'
@@ -17,6 +21,19 @@ definitions:
     type: object
   models.BoardItem:
     properties:
+      id:
+        type: string
+      name:
+        type: string
+      positionX:
+        type: number
+      positionY:
+        type: number
+    type: object
+  models.ManagedVolumeResponse:
+    properties:
+      description:
+        type: string
       id:
         type: string
       name:
@@ -119,6 +136,49 @@ definitions:
     required:
     - key
     - value
+    type: object
+  models.ServiceManagedVolumeLinkCreateInput:
+    properties:
+      containerPath:
+        type: string
+      managedVolumeArrowPosition:
+        enum:
+        - top
+        - bottom
+        - left
+        - right
+        type: string
+      managedVolumeId:
+        type: string
+      serviceArrowPosition:
+        enum:
+        - top
+        - bottom
+        - left
+        - right
+        type: string
+      serviceId:
+        type: string
+    required:
+    - managedVolumeArrowPosition
+    - managedVolumeId
+    - serviceArrowPosition
+    - serviceId
+    type: object
+  models.ServiceManagedVolumeLinkResponse:
+    properties:
+      containerPath:
+        type: string
+      id:
+        type: string
+      managedVolumeId:
+        type: string
+      serviceArrowPosition:
+        type: string
+      serviceId:
+        type: string
+      volumeArrowPosition:
+        type: string
     type: object
   models.ServiceNetworkLinkCreateInput:
     properties:
@@ -460,6 +520,26 @@ paths:
       summary: Update a service env variable
       tags:
       - Service Env Variables
+  /managed_volumes/{id}:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Volume ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.ManagedVolumeResponse'
+      summary: Get a volume
+      tags:
+      - Managed Volumes
   /networks/{id}:
     delete:
       consumes:
@@ -584,6 +664,27 @@ paths:
       summary: Update a service port
       tags:
       - Service Ports
+  /service_managed_volume_links:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.ServiceManagedVolumeLinkCreateInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.ServiceNetworkLinkResponse'
+      summary: Create a new link between a service and a volume
+      tags:
+      - Service Volume Links
   /service_network_links:
     post:
       consumes:

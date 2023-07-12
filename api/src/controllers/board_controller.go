@@ -27,11 +27,13 @@ func GetBoard(c *fiber.Ctx) error {
 	services, _ := repositories.FindServicesByStackId(stackId)
 	networks, _ := repositories.FindNetworksByStackId(stackId)
 	serviceNetworkLinks, _ := repositories.FindServiceNetworkLinksByStackId(stackId)
+	serviceManagedVolumeLinks, _ := repositories.FindServiceManagedVolumeLinksByStackId(stackId)
 
 	board := models.Board{
-		Services:            factories.BuildServiceBoardResponses(services),
-		Networks:            factories.BuildNetworkBoardResponses(networks),
-		ServiceNetworkLinks: factories.BuildServiceNetworkLinkResponses(serviceNetworkLinks),
+		Services:                  factories.BuildServiceBoardResponses(services),
+		Networks:                  factories.BuildNetworkBoardResponses(networks),
+		ServiceNetworkLinks:       factories.BuildServiceNetworkLinkResponses(serviceNetworkLinks),
+		ServiceManagedVolumeLinks: factories.BuildServiceManagedVolumeLinkResponses(serviceManagedVolumeLinks),
 	}
 
 	return c.Status(fiber.StatusOK).JSON(board)

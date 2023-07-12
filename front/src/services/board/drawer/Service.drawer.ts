@@ -9,9 +9,9 @@ import { DrawerTypes } from '../../../enums/DrawerTypes'
 
 const ServiceDrawer = (service: IService, context: CanvasRenderingContext2D): TServiceDrawer => {
   return {
-    ...BaseDrawer,
+    ...BaseDrawer(),
 
-    canBeLinkedWith: [DrawerTypes.NETWORK],
+    canBeLinkedWith: [],
     type: DrawerTypes.SERVICE,
 
     create () {
@@ -22,7 +22,8 @@ const ServiceDrawer = (service: IService, context: CanvasRenderingContext2D): TS
       this.factory = ServiceFactory()
       this.factory.create(service, context)
 
-      this.Connector = ConnectorBuilder(this.factory, context, service, CommonConnector)
+      this.Connector = ConnectorBuilder(this, CommonConnector)
+      this.createConnectors()
     }
   }
 }

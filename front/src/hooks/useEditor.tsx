@@ -1,18 +1,69 @@
 import { DrawerTypes } from '../enums/DrawerTypes'
 import { type TDrawer } from '../types/Drawer'
-import { boolean } from 'yup'
+import { useState } from 'react'
+import { string } from 'yup'
 
 const TYPE_STRUCTURES: structure = {
   [DrawerTypes.SERVICE]: [
     {
+      label: 'Name',
+      name: 'name',
+      type: 'text',
+      validator: string().required()
+    },
+    {
+      label: 'Docker Image',
+      name: 'dockerImage',
+      type: 'text',
+      validator: string().required()
+    },
+    {
+      label: 'Docker Tag',
+      name: 'dockerTag',
+      type: 'text',
+      validator: string().required()
+    },
+    {
+      label: 'Entrypoint',
+      name: 'entrypoint',
+      type: 'text',
+      validator: string().required()
+    },
+    {
       label: 'Description',
       name: 'description',
       type: 'text',
-      validator: boolean().nullable()
+      validator: string().nullable()
     }
   ],
-  [DrawerTypes.NETWORK]: [],
-  [DrawerTypes.VOLUME]: []
+  [DrawerTypes.NETWORK]: [
+    {
+      label: 'Name',
+      name: 'name',
+      type: 'text',
+      validator: string().required()
+    },
+    {
+      label: 'Description',
+      name: 'description',
+      type: 'text',
+      validator: string().nullable()
+    }
+  ],
+  [DrawerTypes.VOLUME]: [
+    {
+      label: 'Name',
+      name: 'name',
+      type: 'text',
+      validator: string().required()
+    },
+    {
+      label: 'Description',
+      name: 'description',
+      type: 'text',
+      validator: string().nullable()
+    }
+  ]
 }
 
 type structure = {
@@ -23,12 +74,14 @@ interface form {
   label: string
   name: string
   type: string
-  validator: string
+  validator: any
 }
 
 const useEditor = (drawer: TDrawer): { fields: form[] } => {
+  const [structure] = useState<form[]>(TYPE_STRUCTURES[drawer.type])
+
   return {
-    fields: TYPE_STRUCTURES[drawer.type]
+    fields: structure
   }
 }
 

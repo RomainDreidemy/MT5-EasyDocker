@@ -1,6 +1,13 @@
 export interface IVolume {
-  id: number
+  id: string
+
+  name: string
+  description: string
+  containerPath: string
+  localPath: string
 
   positionX: number
   positionY: number
 }
+
+export type IVolumeCreate = Omit<IVolume, 'id'>

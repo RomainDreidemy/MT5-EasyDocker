@@ -9,7 +9,7 @@ import { DrawerTypes } from '../../../enums/DrawerTypes'
 
 const VolumeDrawer = (volume: IVolume, context: CanvasRenderingContext2D): TVolumeDrawer => {
   return {
-    ...BaseDrawer,
+    ...BaseDrawer(),
 
     canBeLinkedWith: [DrawerTypes.SERVICE],
     type: DrawerTypes.VOLUME,
@@ -22,7 +22,8 @@ const VolumeDrawer = (volume: IVolume, context: CanvasRenderingContext2D): TVolu
       this.factory = VolumeFactory()
       this.factory.create(volume, context)
 
-      this.Connector = ConnectorBuilder(this.factory, context, volume, CommonConnector)
+      this.Connector = ConnectorBuilder(this, CommonConnector)
+      this.createConnectors()
     }
   }
 }

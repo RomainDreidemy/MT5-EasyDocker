@@ -36,6 +36,10 @@ const MouseEventManager: TMouseEventManager = {
     this.isMoving = false
     this.selectedConnector = undefined
 
+    if ((this.selectedDrawer == null) && (this.historicalDrawer != null)) {
+      eventEmitter.emit(EventEmitters.ON_MOVED_DRAWER, this.historicalDrawer)
+    }
+
     this.clearOnHoverDrawer()
     this.updateScreen()
 
@@ -47,7 +51,8 @@ const MouseEventManager: TMouseEventManager = {
   handleMouseMove (event: MouseEvent): void {
     const position: IPosition = { x: event.offsetX, y: event.offsetY }
 
-    if (this.isMoving && (this.selectedDrawer != null) && (this.selectedConnector == null)) {
+    const isMovingWithDrawer = this.isMoving && (this.selectedDrawer != null) && (this.selectedConnector == null)
+    if (isMovingWithDrawer) {
       const movePosition: IPosition = this.boundingClientPosition(event)
 
       const drawerPosition: IPosition = {
@@ -55,7 +60,7 @@ const MouseEventManager: TMouseEventManager = {
         y: movePosition.y - this.onDrawerClickOffset!.y
       }
 
-      this.selectedDrawer.factory!.updatePosition(drawerPosition)
+      this.selectedDrawer!.factory!.updatePosition(drawerPosition)
       this.updateScreen()
     } else if (this.selectedConnector != null) {
       this.drawConnectorLine(this.selectedConnector, position)
