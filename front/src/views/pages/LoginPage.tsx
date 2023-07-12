@@ -11,12 +11,14 @@ import Button from '../atoms/Forms/Button.atom'
 import { AiOutlineUnlock } from 'react-icons/ai'
 import { BiLeftArrowAlt, BiRightArrowAlt } from 'react-icons/bi'
 import AuthEntity from '../../services/entities/Auth.entity'
-import { type IAuthEntity, type IAuthError, type IAuthStatus } from '../../interfaces/Auth.interface'
+import { type IAuthEntity } from '../../interfaces/Auth.interface'
+import { type IValidationStatus } from '../../interfaces/Forms/Validation.interface'
+import { hasError, showErrorMessage, validateSchema } from '../../services/utils/validation.util'
 
 const LoginPage = (): JSX.Element => {
   const navigate = useNavigate()
   const [form, setForm] = useState<IAuthEntity>({ email: '', password: '', remember: false })
-  const [status, setStatus] = useState<IAuthStatus>({ success: false, errors: [] })
+  const [status, setStatus] = useState<IValidationStatus>({ success: false, errors: [] })
   const { user, setUser } = useContext<any>(UserContext)
 
   const userSchema = object({
@@ -25,21 +27,8 @@ const LoginPage = (): JSX.Element => {
     remember: boolean().nullable()
   })
 
-  const changeValue = (e: React.ChangeEvent<HTMLButtonElement | HTMLInputElement>): void => {
-    setForm({ ...form, [e.target.name]: (e.target.type === 'checkbox' ? e.target?.checked : e.target.value) })
-  }
-  const hasError = (field: string): boolean => {
-    return status.errors?.map((e) => e.path).includes(field)
-  }
-  const showErrorMessage = (field: string): string[] => {
-    return status.errors?.map((e) => e.path === field ? e.message : '')
-  }
-  const validateSchema = async (): Promise<IAuthError[]> => {
-    const validationResult = await userSchema.validate(form, { abortEarly: false }).catch((err) => { console.log(err) })
-    return validationResult.inner ?? []
-  }
   const processLogin = async (): Promise<void> => {
-    const validationErrors = (await validateSchema())
+    const validationErrors = (await validateSchema(userSchema, form))
     setStatus({ ...status, errors: validationErrors })
     if (validationErrors.length > 0) return
 
@@ -69,6 +58,10 @@ const LoginPage = (): JSX.Element => {
     }, delay)
   }
 
+  const changeValue = (e: React.ChangeEvent<any>): void => {
+    setForm({ ...form, [e.target.name]: (e.target.type === 'checkbox' ? e.target?.checked : e.target.value) })
+  }
+
   return (
         <div className="min-h-screen bg-gray-100 flex flex-col justify-center sm:py-12">
             <div className="p-10 xs:p-0 mx-auto md:w-full md:max-w-md">
@@ -85,9 +78,9 @@ const LoginPage = (): JSX.Element => {
                             type="email"
                             name="email"
                             onChange={(e) => { changeValue(e) }}
-                            className={hasError('email') ? 'border-2 border-red-600' : ''}
+                            className={hasError(status, 'email') ? 'border-2 border-red-600' : ''}
                         />
-                        <div className='text-red-500 mb-5 first-letter:uppercase'>{showErrorMessage('email')}</div>
+                        <div className='text-red-500 mb-5 first-letter:uppercase'>{showErrorMessage(status, 'email')}</div>
 
                         <Input
                             label="Password"
@@ -95,9 +88,9 @@ const LoginPage = (): JSX.Element => {
                             name="password"
                             onChange={(e) => { changeValue(e) }}
                             onKeyDown={async (e) => await (e.key === 'Enter' && processLogin())}
-                            className={hasError('password') ? 'border-2 border-red-600' : ''}
+                            className={hasError(status, 'password') ? 'border-2 border-red-600' : ''}
                         />
-                        <div className='text-red-500 mb-2 first-letter:uppercase'>{showErrorMessage('password')}</div>
+                        <div className='text-red-500 mb-2 first-letter:uppercase'>{showErrorMessage(status, 'password')}</div>
 
                         <Checkbox
                             label={'Remember me'}

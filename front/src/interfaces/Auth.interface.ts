@@ -9,13 +9,3 @@ export interface IAuthEntity {
   passwordConfirm?: string
   remember?: boolean
 }
-
-export interface IAuthStatus {
-  success: boolean
-  errors: IAuthError[]
-}
-
-export interface IAuthError {
-  path: string
-  message: string
-}
