@@ -21,3 +21,12 @@ func BuildServiceManagedVolumeLinkResponses(links []models.ServiceManagedVolumeL
 
 	return linkResponses
 }
+
+func BuildServiceManagedVolumeLinkFromCreateInput(body models.ServiceManagedVolumeLinkCreateInput) models.ServiceManagedVolumeLink {
+	return models.ServiceManagedVolumeLink{
+		ServiceID:                  body.ServiceID,
+		ManagedVolumeID:            body.ManagedVolumeID,
+		ServiceArrowPosition:       body.ServiceArrowPosition,
+		ManagedVolumeArrowPosition: body.ManagedVolumeArrowPosition,
+	}
+}

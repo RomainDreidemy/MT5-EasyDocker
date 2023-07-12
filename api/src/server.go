@@ -102,6 +102,9 @@ func main() {
 	serviceNetworkLink.Post("/", controllers.CreateServiceNetworkLink)
 	serviceNetworkLink.Delete("/:id", controllers.DeleteServiceNetworkLink)
 
+	serviceManagedVolumeLink := micro.Group("/service_managed_volume_links", middleware.DeserializeUser)
+	serviceManagedVolumeLink.Post("/", controllers.CreateServiceManagedVolumeLink)
+
 	app.Get("/docker_compose", controllers.GenerateDockerComposeFile)
 
 	app.Get("/swagger/*", swagger.HandlerDefault)

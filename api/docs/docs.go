@@ -398,6 +398,39 @@ const docTemplate = `{
                 }
             }
         },
+        "/service_managed_volume_links": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Service Volume Links"
+                ],
+                "summary": "Create a new link between a service and a volume",
+                "parameters": [
+                    {
+                        "description": "query params",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.ServiceManagedVolumeLinkCreateInput"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.ServiceNetworkLinkResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/service_network_links": {
             "post": {
                 "consumes": [
@@ -1422,6 +1455,44 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "value": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.ServiceManagedVolumeLinkCreateInput": {
+            "type": "object",
+            "required": [
+                "managedVolumeArrowPosition",
+                "managedVolumeId",
+                "serviceArrowPosition",
+                "serviceId"
+            ],
+            "properties": {
+                "containerPath": {
+                    "type": "string"
+                },
+                "managedVolumeArrowPosition": {
+                    "type": "string",
+                    "enum": [
+                        "top",
+                        "bottom",
+                        "left",
+                        "right"
+                    ]
+                },
+                "managedVolumeId": {
+                    "type": "string"
+                },
+                "serviceArrowPosition": {
+                    "type": "string",
+                    "enum": [
+                        "top",
+                        "bottom",
+                        "left",
+                        "right"
+                    ]
+                },
+                "serviceId": {
                     "type": "string"
                 }
             }

@@ -137,6 +137,34 @@ definitions:
     - key
     - value
     type: object
+  models.ServiceManagedVolumeLinkCreateInput:
+    properties:
+      containerPath:
+        type: string
+      managedVolumeArrowPosition:
+        enum:
+        - top
+        - bottom
+        - left
+        - right
+        type: string
+      managedVolumeId:
+        type: string
+      serviceArrowPosition:
+        enum:
+        - top
+        - bottom
+        - left
+        - right
+        type: string
+      serviceId:
+        type: string
+    required:
+    - managedVolumeArrowPosition
+    - managedVolumeId
+    - serviceArrowPosition
+    - serviceId
+    type: object
   models.ServiceManagedVolumeLinkResponse:
     properties:
       containerPath:
@@ -636,6 +664,27 @@ paths:
       summary: Update a service port
       tags:
       - Service Ports
+  /service_managed_volume_links:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.ServiceManagedVolumeLinkCreateInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.ServiceNetworkLinkResponse'
+      summary: Create a new link between a service and a volume
+      tags:
+      - Service Volume Links
   /service_network_links:
     post:
       consumes:
