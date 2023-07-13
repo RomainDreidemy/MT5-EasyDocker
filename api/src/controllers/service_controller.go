@@ -146,5 +146,10 @@ func DeleteService(c *fiber.Ctx) error {
 
 	repositories.DeleteService(service)
 
+	if result.Error != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(
+			fiber.Map{"status": "error", "message": "Cannot delete service"})
+	}
+
 	return c.SendStatus(fiber.StatusNoContent)
 }
