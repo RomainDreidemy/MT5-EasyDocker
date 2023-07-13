@@ -49,6 +49,7 @@ const useEditor = (drawer: TDrawer, stackId: string): {
 
       const { data: entity } = response
       drawer.entity = entity
+      setEntityForm(entity)
       EventsCanvas.updateScreen()
     } catch (err) {
       console.error(err)
@@ -104,9 +105,12 @@ const useEditor = (drawer: TDrawer, stackId: string): {
   }
 
   const onDelete = async (): Promise<void> => {
-    await deleteEntity()
+    if (!isCreating) {
+      await deleteEntity()
+    }
 
     EventsCanvas.deleteDrawer(drawer)
+    EventsCanvas.clearSelectedDrawer()
   }
 
   return {
