@@ -11,6 +11,8 @@ type ManagedVolume struct {
 
 	StackID string `gorm:"type:uuid;not null"`
 	Stack   Stack
+
+	ServiceManagedVolumeLinks []ServiceManagedVolumeLink `gorm:"constraint:OnDelete:CASCADE;"`
 }
 
 type ManagedVolumeResponse struct {

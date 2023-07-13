@@ -17,9 +17,12 @@ type Service struct {
 	StackID string `gorm:"type:uuid;not null"`
 	Stack   Stack
 
-	ServiceVolumes      []ServiceVolume
-	ServiceEnvVariables []ServiceEnvVariable
-	ServicePorts        []ServicePort
+	ServiceVolumes      []ServiceVolume      `gorm:"constraint:OnDelete:CASCADE;"`
+	ServiceEnvVariables []ServiceEnvVariable `gorm:"constraint:OnDelete:CASCADE;"`
+	ServicePorts        []ServicePort        `gorm:"constraint:OnDelete:CASCADE;"`
+
+	ServiceNetworkLinks       []ServiceNetworkLink       `gorm:"constraint:OnDelete:CASCADE;"`
+	ServiceManagedVolumeLinks []ServiceManagedVolumeLink `gorm:"constraint:OnDelete:CASCADE;"`
 }
 
 type ServiceCreateInput struct {

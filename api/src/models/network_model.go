@@ -12,6 +12,8 @@ type Network struct {
 
 	StackID string `gorm:"type:uuid;not null"`
 	Stack   Stack
+
+	ServiceNetworkLinks []ServiceNetworkLink `gorm:"constraint:OnDelete:CASCADE;"`
 }
 
 type NetworkResponse struct {
