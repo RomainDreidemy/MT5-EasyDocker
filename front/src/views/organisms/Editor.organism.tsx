@@ -5,17 +5,19 @@ import EventsCanvas from '../../services/canvas/Events.canvas'
 import Button from '../atoms/Forms/Button.atom'
 import { object } from 'yup'
 import { type TEntity } from '../../types/Entity'
+import { type TOnChange } from '../../interfaces/Forms/Input.interface'
 
 const EditorOrganism = ({ drawer }: { drawer: TDrawer }): JSX.Element => {
   const { fields } = useEditor(drawer)
 
   const [drawerForm, setDrawerForm] = useState<TEntity>(drawer.entity!)
 
-  const validatorsSchema = object(fields.reduce((acc, field) => ({ [field.name]: field.validator }), {}))
+  const validatorsSchema = object(fields.reduce((acc, field) =>
+    ({ [field.name]: field.validator }), {}))
 
-  const changeValue: (event: ChangeEvent<HTMLInputElement>)
+  const changeValue: (event: TOnChange)
   => void =
-    (event: ChangeEvent<HTMLInputElement>): void => {
+    (event: TOnChange): void => {
       setDrawerForm({ ...drawerForm, [event.target.name]: event.target.value })
     }
 
@@ -37,7 +39,7 @@ const EditorOrganism = ({ drawer }: { drawer: TDrawer }): JSX.Element => {
 
   return (
     <div className="w-full h-full border-l-2 ">
-      <div className="border-b-2 p-2 flex flex items-center justify-between">
+      <div className="h-[70px] border-b-2 p-2 flex flex items-center justify-between">
         <h2><strong>Editor</strong></h2>
 
         <Button
@@ -51,6 +53,7 @@ const EditorOrganism = ({ drawer }: { drawer: TDrawer }): JSX.Element => {
 
         {fields.map((field, index) => {
           const Component = field.component
+          // const value = drawerForm[field.name]
 
           return (
             <Component
@@ -58,6 +61,7 @@ const EditorOrganism = ({ drawer }: { drawer: TDrawer }): JSX.Element => {
               label={field.label}
               type={field.type}
               name={field.name}
+              // value={value}
               onChange={changeValue}
             />)
         })}

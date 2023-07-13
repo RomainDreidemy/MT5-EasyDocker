@@ -2,6 +2,7 @@ import {DrawerTypes} from '../enums/DrawerTypes'
 import {boolean, string} from 'yup'
 import Input from "../views/atoms/Forms/Input.atom";
 import Checkbox from "../views/atoms/Forms/Checkbox.atom";
+import TextArea from "../views/atoms/Forms/TextArea.atom";
 
 export type EditorStructure = {
   [key in DrawerTypes]: EditorForm[]
@@ -12,7 +13,7 @@ export interface EditorForm {
   name: string
   type: string
   validator: any
-  component: typeof Input | typeof Checkbox
+  component: typeof Input | typeof Checkbox | typeof TextArea
 }
 
 export const TYPE_STRUCTURES: EditorStructure = {
@@ -32,13 +33,6 @@ export const TYPE_STRUCTURES: EditorStructure = {
       validator: string().required()
     },
     {
-      label: 'External',
-      name: 'isExternal',
-      type: 'text',
-      component: Checkbox,
-      validator: boolean().required()
-    },
-    {
       label: 'Docker Tag',
       name: 'dockerTag',
       type: 'text',
@@ -56,9 +50,16 @@ export const TYPE_STRUCTURES: EditorStructure = {
       label: 'Description',
       name: 'description',
       type: 'text',
-      component: Input,
-      validator: string().nullable()
-    }
+      component: TextArea,
+      validator: string().required()
+    },
+    {
+      label: 'External',
+      name: 'isExternal',
+      type: 'text',
+      component: Checkbox,
+      validator: boolean().required()
+    },
   ],
   [DrawerTypes.NETWORK]: [
     {
@@ -72,8 +73,15 @@ export const TYPE_STRUCTURES: EditorStructure = {
       label: 'Description',
       name: 'description',
       type: 'text',
-      component: Input,
+      component: TextArea,
       validator: string().nullable()
+    },
+    {
+      label: 'External',
+      name: 'isExternal',
+      type: 'text',
+      component: Checkbox,
+      validator: boolean().required()
     }
   ],
   [DrawerTypes.VOLUME]: [
@@ -88,8 +96,22 @@ export const TYPE_STRUCTURES: EditorStructure = {
       label: 'Description',
       name: 'description',
       type: 'text',
-      component: Input,
+      component: TextArea,
       validator: string().nullable()
+    },
+    {
+      label: 'Container Path',
+      name: 'containerPath',
+      type: 'text',
+      component: Input,
+      validator: string().required()
+    },
+    {
+      label: 'Local Path',
+      name: 'localPath',
+      type: 'text',
+      component: Input,
+      validator: string().required()
     }
   ]
 }
