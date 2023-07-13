@@ -2,7 +2,6 @@ import React, { type ChangeEvent, useState } from 'react'
 import useEditor from '../../hooks/useEditor'
 import { type TDrawer } from '../../types/Drawer'
 import EventsCanvas from '../../services/canvas/Events.canvas'
-import Input from '../atoms/Forms/Input.atom'
 import Button from '../atoms/Forms/Button.atom'
 import { object } from 'yup'
 import { type TEntity } from '../../types/Entity'
@@ -33,7 +32,8 @@ const EditorOrganism = ({ drawer }: { drawer: TDrawer }): JSX.Element => {
     }
   }
 
-  const submitText: string = drawer?.entity?.id !== null ? 'Update' : 'Create'
+  const isCreating: boolean = drawer?.entity?.id !== null
+  const submitText: string = isCreating ? 'Update' : 'Create'
 
   return (
     <div className="w-full h-full border-l-2 ">
@@ -49,15 +49,18 @@ const EditorOrganism = ({ drawer }: { drawer: TDrawer }): JSX.Element => {
 
       <form className="p-2" onSubmit={onSubmit}>
 
-        {fields.map((field, index) => (
-          <Input
-            label={field.label}
-            type={field.type}
-            name={field.name}
-            onChange={changeValue}
-            key={index}
-          />
-        ))}
+        {fields.map((field, index) => {
+          const Component = field.component
+
+          return (
+            <Component
+              key={index}
+              label={field.label}
+              type={field.type}
+              name={field.name}
+              onChange={changeValue}
+            />)
+        })}
 
         <div className="mt-5">
           <Button
