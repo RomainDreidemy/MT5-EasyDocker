@@ -25,7 +25,7 @@ const StackPage = (): JSX.Element => {
   return (
     <section className="h-[calc(100vh-66px)] flex relative">
 
-      <div className="basis-1/12">
+      <div className="w-[calc(200px)]">
         <ManagerOrganism/>
       </div>
 
