@@ -110,6 +110,7 @@ const useEditor = (drawer: TDrawer, stackId: string): {
     }
 
     EventsCanvas.deleteDrawer(drawer)
+    EventsCanvas.clearSelectedDrawer()
   }
 
   return {
