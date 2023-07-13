@@ -33,7 +33,7 @@ func FindServicesByStackIdWithAssociation(stackId string) ([]models.Service, *go
 	return services, result
 }
 
-func CreateService(service models.Service) *gorm.DB {
+func CreateService(service *models.Service) *gorm.DB {
 	result := initializers.DB.Create(&service)
 	return result
 }

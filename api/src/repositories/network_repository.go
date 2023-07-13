@@ -18,8 +18,8 @@ func FindNetworksByStackId(stackId string) ([]models.Network, *gorm.DB) {
 	return networks, result
 }
 
-func CreateNetwork(network models.Network) *gorm.DB {
-	result := initializers.DB.Create(&network)
+func CreateNetwork(network *models.Network) *gorm.DB {
+	result := initializers.DB.Create(network)
 	return result
 }
 
