@@ -67,7 +67,7 @@ export const TYPE_STRUCTURES: EditorStructure = {
       name: 'name',
       type: 'text',
       component: Input,
-      validator: string().required()
+      validator: string().nullable()
     },
     {
       label: 'Description',
