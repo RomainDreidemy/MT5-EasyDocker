@@ -6,9 +6,10 @@ import Button from '../atoms/Forms/Button.atom'
 import { type TEntity } from '../../types/Entity'
 
 const EditorOrganism = ({ drawer, stackId }: { drawer: TDrawer, stackId: string }): JSX.Element => {
-  const { fields, onSubmit, onChange, entityForm } = useEditor(drawer, stackId)
+  const { fields, onSubmit, onChange, entityForm, onDelete } = useEditor(drawer, stackId)
 
-  const submitText: string = drawer.isCreatingEntity() ? 'Create' : 'Update'
+  const isCreating: boolean = drawer.isCreatingEntity()
+  const submitText: string = isCreating ? 'Create' : 'Update'
 
   const onClose = (): void => {
     EventsCanvas.clearSelectedDrawer()
@@ -48,9 +49,16 @@ const EditorOrganism = ({ drawer, stackId }: { drawer: TDrawer, stackId: string 
           <Button
             label={submitText}
             onClick={onSubmit}
-            className={'w-full'}
-            direction={'right'}
+            className="w-full"
           />
+
+          {!isCreating && (
+            <Button
+              label="Delete"
+              onClick={onDelete}
+              className="w-full bg-red-500 hover:bg-red-700 border border-red-500 text-white font-bold py-2 px-4 mt-5"
+            />
+          )}
         </div>
 
       </form>

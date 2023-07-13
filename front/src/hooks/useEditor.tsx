@@ -19,6 +19,7 @@ const useEditor = (drawer: TDrawer, stackId: string): {
   fields: EditorForm[]
   onSubmit: () => void
   onChange: (event: TOnChange) => void
+  onDelete: () => void
   entityForm: TEntity
 } => {
   const [entityForm, setEntityForm] = useState<TEntity>(drawer.entity!)
@@ -43,8 +44,8 @@ const useEditor = (drawer: TDrawer, stackId: string): {
       entityForm.positionY = drawer.factory!.positionY
 
       const response = isCreating
-        ? await create()
-        : await update()
+        ? await createEntity()
+        : await updateEntity()
 
       const { data: entity } = response
       drawer.entity = entity
@@ -54,7 +55,7 @@ const useEditor = (drawer: TDrawer, stackId: string): {
     }
   }
 
-  const create = async (): Promise<AxiosResponse<TEntity>> => {
+  const createEntity = async (): Promise<AxiosResponse<TEntity>> => {
     switch (drawer.type) {
       case DrawerTypes.SERVICE:
         return await ServiceEntity.create(stackId, entityForm as IServiceCreate)
@@ -70,7 +71,7 @@ const useEditor = (drawer: TDrawer, stackId: string): {
     }
   }
 
-  const update = async (): Promise<AxiosResponse<TEntity>> => {
+  const updateEntity = async (): Promise<AxiosResponse<TEntity>> => {
     switch (drawer.type) {
       case DrawerTypes.SERVICE:
         return await ServiceEntity.update(entityForm as IService)
@@ -86,11 +87,34 @@ const useEditor = (drawer: TDrawer, stackId: string): {
     }
   }
 
+  const deleteEntity = async (): Promise<AxiosResponse<any>> => {
+    switch (drawer.type) {
+      case DrawerTypes.SERVICE:
+        return await ServiceEntity.delete(entityForm.id)
+
+      case DrawerTypes.NETWORK:
+        return await NetworkEntity.delete(entityForm.id)
+
+      case DrawerTypes.VOLUME:
+        return await VolumeEntity.delete(entityForm.id)
+
+      default:
+        throw new Error(Errors.NOT_IMPLEMENTED)
+    }
+  }
+
+  const onDelete = async (): Promise<void> => {
+    await deleteEntity()
+
+    EventsCanvas.deleteDrawer(drawer)
+  }
+
   return {
     fields: structure,
     entityForm,
     onSubmit,
-    onChange
+    onChange,
+    onDelete
   }
 }
 

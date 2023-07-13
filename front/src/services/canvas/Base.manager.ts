@@ -15,6 +15,13 @@ const BaseManager: TBaseManager = {
     this.drawers.push(...drawers)
   },
 
+  deleteDrawer (drawer: TDrawer): void {
+    if (drawer.isCreatingEntity()) return
+
+    this.drawers = this.drawers.filter(d => d.entity!.id !== drawer.entity!.id)
+    this.updateScreen()
+  },
+
   addAndSelectNewDrawer (drawer: TDrawer): void {
     this.drawers.push(drawer)
     this.selectDrawer(drawer)

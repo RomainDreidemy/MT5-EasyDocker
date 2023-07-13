@@ -11,4 +11,5 @@ export type TBaseManager =
     addAndSelectNewDrawer: (drawer: TDrawer) => void
     draw: () => void
     updateScreen: () => void
+    deleteDrawer: (drawer: TDrawer) => void
   }
