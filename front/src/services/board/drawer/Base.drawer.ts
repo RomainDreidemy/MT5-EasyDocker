@@ -76,7 +76,7 @@ const BaseDrawer = (): TBaseDrawer => {
     },
 
     isCreatingEntity (): boolean {
-      return this.entity!.id === undefined
+      return !this.entity!.hasOwnProperty('id')
     }
   }
 }

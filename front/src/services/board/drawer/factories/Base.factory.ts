@@ -1,38 +1,38 @@
-import { type TBaseFactory } from '../../../../types/board/drawer/factories/Base.factory'
+import {type TBaseFactory} from '../../../../types/board/drawer/factories/Base.factory'
 import StateFactory from './State.factory'
-import { type IPosition } from '../../../../interfaces/Position.interface'
+import {type IPosition} from '../../../../interfaces/Position.interface'
 import CommonBases from '../Common.bases'
-import { type TEntity } from '../../../../types/Entity'
-import { CanvasColor } from '../../../../enums/CanvasColor'
+import {TEntityOrCreate} from '../../../../types/Entity'
+import {CanvasColor} from '../../../../enums/CanvasColor'
 
 const BaseFactory: TBaseFactory = {
   ...CommonBases,
   ...StateFactory,
 
-  create (entity: TEntity, context: CanvasRenderingContext2D): void {
+  create(entity: TEntityOrCreate, context: CanvasRenderingContext2D): void {
     this.context = context
     this.name = entity.name
     this.positionX = isNaN(entity.positionX) ? this.positionX : entity.positionX
     this.positionY = isNaN(entity.positionY) ? this.positionY : entity.positionY
   },
 
-  isSelected ({ x, y }: IPosition): boolean {
+  isSelected({x, y}: IPosition): boolean {
     return this.context!.isPointInPath(this.path, x, y)
   },
 
-  updatePosition (position: IPosition): void {
+  updatePosition(position: IPosition): void {
     this.positionX = position.x
     this.positionY = position.y
   },
 
-  position (withOffset: number = 0): IPosition {
+  position(withOffset: number = 0): IPosition {
     return {
       x: this.positionX - withOffset,
       y: this.positionY - withOffset
     }
   },
 
-  draw (): void {
+  draw(): void {
     const rectangle = new Path2D()
 
     this.context!.beginPath()

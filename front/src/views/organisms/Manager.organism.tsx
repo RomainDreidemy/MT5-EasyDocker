@@ -1,12 +1,15 @@
 import React from 'react'
 import ServiceDrawer from '../../services/board/drawer/Service.drawer'
 import EventsCanvas from '../../services/canvas/Events.canvas'
-import { type TServiceDrawer } from '../../types/board/drawer/Service.drawer'
-import { type IService, type IServiceCreate } from '../../interfaces/Service.interface'
+import {type TServiceDrawer} from '../../types/board/drawer/Service.drawer'
+import {type IServiceCreate} from '../../interfaces/Service.interface'
 import EntityButtonAtom from '../atoms/Forms/EntityButton.atom'
-import { type INetwork, type INetworkCreate } from '../../interfaces/Network.interface'
+import {type INetworkCreate} from '../../interfaces/Network.interface'
 import NetworkDrawer from '../../services/board/drawer/Network.drawer'
-import { type TNetworkDrawer } from '../../types/board/drawer/Network.drawer'
+import {type TNetworkDrawer} from '../../types/board/drawer/Network.drawer'
+import {IVolumeCreate} from "../../interfaces/Volume.interface";
+import VolumeDrawer from "../../services/board/drawer/Volume.drawer";
+import {TVolumeDrawer} from "../../types/board/drawer/Volume.drawer";
 
 const ManagerOrganism = (): JSX.Element => {
   /**
@@ -24,7 +27,7 @@ const ManagerOrganism = (): JSX.Element => {
       positionY: 20,
       name: 'Unnamed'
     }
-    const serviceDrawer: TServiceDrawer = ServiceDrawer(service as IService, EventsCanvas.context!)
+    const serviceDrawer: TServiceDrawer = ServiceDrawer(service, EventsCanvas.context!)
     serviceDrawer.create()
 
     EventsCanvas.addAndSelectNewDrawer(serviceDrawer)
@@ -34,13 +37,28 @@ const ManagerOrganism = (): JSX.Element => {
     const network: INetworkCreate = {
       isExternal: false,
       name: 'Unnamed',
-      positionX: 0,
-      positionY: 0
+      positionX: 100,
+      positionY: 20
     }
-    const networkDrawer: TNetworkDrawer = NetworkDrawer(network as INetwork, EventsCanvas.context!)
+    const networkDrawer: TNetworkDrawer = NetworkDrawer(network, EventsCanvas.context!)
     networkDrawer.create()
 
     EventsCanvas.addAndSelectNewDrawer(networkDrawer)
+  }
+
+  const createVolume = (): void => {
+    const volume: IVolumeCreate = {
+      containerPath: "",
+      description: "",
+      localPath: "",
+      name: 'Unnamed',
+      positionX: 100,
+      positionY: 20
+    }
+    const volumeDrawer: TVolumeDrawer = VolumeDrawer(volume, EventsCanvas.context!)
+    volumeDrawer.create()
+
+    EventsCanvas.addAndSelectNewDrawer(volumeDrawer)
   }
 
   return (
@@ -53,7 +71,7 @@ const ManagerOrganism = (): JSX.Element => {
 
       <EntityButtonAtom name="Service" onClick={createService}/>
       <EntityButtonAtom name="Network" onClick={createNetwork}/>
-      <EntityButtonAtom name="Volume" onClick={createService}/>
+      <EntityButtonAtom name="Volume" onClick={createVolume}/>
 
     </div>
   )
