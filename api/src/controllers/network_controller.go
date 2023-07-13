@@ -75,7 +75,7 @@ func CreateNetwork(c *fiber.Ctx) error {
 
 	network := factories.BuildNetworkFromNetworkCreationInput(body, stackId)
 
-	result := repositories.CreateNetwork(network)
+	result := repositories.CreateNetwork(&network)
 
 	if result.Error != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(factories.BuildErrorResponse("error", "Cannot create service"))
