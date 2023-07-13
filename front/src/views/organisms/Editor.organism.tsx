@@ -21,8 +21,8 @@ const EditorOrganism = ({ drawer, stackId }: { drawer: TDrawer, stackId: string 
 
   const [entityForm, setEntityForm] = useState<TEntity>(drawer.entity!)
 
-  const isUpdating: boolean = drawer.entity!.id !== undefined
-  const submitText: string = isUpdating ? 'Update' : 'Create'
+  const isCreating: boolean = drawer.isCreatingEntity()
+  const submitText: string = isCreating ? 'Create' : 'Update'
 
   const validatorsSchema = object(fields.reduce((acc, field) =>
     ({ [field.name]: field.validator }), {}))
@@ -42,12 +42,16 @@ const EditorOrganism = ({ drawer, stackId }: { drawer: TDrawer, stackId: string 
     try {
       await validatorsSchema.validate(entityForm)
 
-      const response = isUpdating
-        ? await update()
-        : await create()
+      entityForm.positionX = drawer.factory!.positionX
+      entityForm.positionY = drawer.factory!.positionY
+
+      const response = isCreating
+        ? await create()
+        : await update()
 
       const { data: entity } = response
       drawer.entity = entity
+      EventsCanvas.updateScreen()
     } catch (err) {
       console.error(err)
     }

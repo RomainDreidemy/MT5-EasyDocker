@@ -1,8 +1,8 @@
-import {DrawerTypes} from '../enums/DrawerTypes'
-import {boolean, string} from 'yup'
-import Input from "../views/atoms/Forms/Input.atom";
-import Checkbox from "../views/atoms/Forms/Checkbox.atom";
-import TextArea from "../views/atoms/Forms/TextArea.atom";
+import { DrawerTypes } from '../enums/DrawerTypes'
+import { boolean, string } from 'yup'
+import Input from '../views/atoms/Forms/Input.atom'
+import Checkbox from '../views/atoms/Forms/Checkbox.atom'
+import TextArea from '../views/atoms/Forms/TextArea.atom'
 
 export type EditorStructure = {
   [key in DrawerTypes]: EditorForm[]
@@ -59,7 +59,7 @@ export const TYPE_STRUCTURES: EditorStructure = {
       type: 'text',
       component: Checkbox,
       validator: boolean().required()
-    },
+    }
   ],
   [DrawerTypes.NETWORK]: [
     {
