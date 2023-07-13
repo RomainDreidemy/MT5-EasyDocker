@@ -9,6 +9,8 @@ export interface IService {
   dockerTag: string
   entrypoint: string
 
+  isExternal: boolean
+
   positionX: number
   positionY: number
 }

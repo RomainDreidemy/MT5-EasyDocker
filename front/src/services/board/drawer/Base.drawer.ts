@@ -34,6 +34,7 @@ const BaseDrawer = (): TBaseDrawer => {
     },
 
     shouldDrawConnectors (): boolean {
+      if (this.isCreatingEntity()) return false
       if (this.factory!.onHover) return true
       return ((this.canBeLinkedWith.length > 0) && this.factory!.selected)
     },
@@ -72,6 +73,10 @@ const BaseDrawer = (): TBaseDrawer => {
       this.linkers.push(linker)
 
       return linker
+    },
+
+    isCreatingEntity (): boolean {
+      return this.entity!.id === undefined
     }
   }
 }

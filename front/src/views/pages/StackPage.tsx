@@ -1,6 +1,6 @@
 import BoardOrganism from '../organisms/Board.organism'
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import useBoard from '../../hooks/useBoard'
 import ManagerOrganism from '../organisms/Manager.organism'
 import EditorOrganism from '../organisms/Editor.organism'
@@ -8,7 +8,13 @@ import { type TBoardOrNullify } from '../../types/Board'
 import StackEntity from '../../services/entities/Stack.entity'
 
 const StackPage = (): JSX.Element => {
+  const navigate = useNavigate()
+
   const { id } = useParams()
+
+  useEffect(() => {
+    if (id == null) navigate('/stacks')
+  }, [id])
 
   const [board, setBoard] = useState<TBoardOrNullify>(undefined)
 
@@ -25,7 +31,7 @@ const StackPage = (): JSX.Element => {
   return (
     <section className="h-[calc(100vh-66px)] flex relative">
 
-      <div className="basis-1/12">
+      <div className="w-[calc(200px)]">
         <ManagerOrganism/>
       </div>
 
@@ -34,8 +40,8 @@ const StackPage = (): JSX.Element => {
         <BoardOrganism canvasRef={canvasRef}/>
       </div>
 
-      {(selectedDrawer != null) && <div className="absolute top-0 right-0 h-full w-80 bg-white">
-          <EditorOrganism drawer={selectedDrawer}/>
+      {(selectedDrawer != null) && (id != null) && <div className="absolute top-0 right-0 h-full w-80 bg-white">
+          <EditorOrganism drawer={selectedDrawer} stackId={id}/>
       </div>}
     </section>
   )

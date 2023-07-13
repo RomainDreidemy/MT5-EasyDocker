@@ -7,6 +7,8 @@ export interface InputProps {
   name?: string
   value?: string
   className?: string
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
+  onChange?: (e: TOnChange) => void
   onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void
 }
+
+export type TOnChange = React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
