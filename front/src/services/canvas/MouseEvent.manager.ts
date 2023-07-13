@@ -36,14 +36,14 @@ const MouseEventManager: TMouseEventManager = {
     this.isMoving = false
     this.selectedConnector = undefined
 
-    if ((this.selectedDrawer == null) && (this.historicalDrawer != null)) {
-      eventEmitter.emit(EventEmitters.ON_MOVED_DRAWER, this.historicalDrawer)
-    }
-
     this.clearOnHoverDrawer()
     this.updateScreen()
 
     if (this.selectedDrawer != null) {
+      if (!this.selectedDrawer.isCreatingEntity()) {
+        eventEmitter.emit(EventEmitters.ON_MOVED_DRAWER, this.selectedDrawer)
+      }
+
       eventEmitter.emit(EventEmitters.ON_SELECTED_DRAWER, this.selectedDrawer)
     }
   },

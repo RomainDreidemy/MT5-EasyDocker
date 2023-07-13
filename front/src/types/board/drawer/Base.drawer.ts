@@ -17,6 +17,7 @@ export type TBaseDrawer =
     drawLinkers: () => void
     createConnectors: () => void
     updateConnectorPositions: () => void
+    isCreatingEntity: () => boolean
     createLink: (from: TConnector, to: TConnector, entity?: TLinkEntity) => TBaseLinker
     findConnectorByPlacement: (placement: Placements) => TConnectorOrNullify
   }

@@ -1,43 +1,24 @@
-import React, { type ChangeEvent, useState } from 'react'
+import React from 'react'
 import useEditor from '../../hooks/useEditor'
 import { type TDrawer } from '../../types/Drawer'
 import EventsCanvas from '../../services/canvas/Events.canvas'
-import Input from '../atoms/Forms/Input.atom'
 import Button from '../atoms/Forms/Button.atom'
-import { object } from 'yup'
 import { type TEntity } from '../../types/Entity'
 
-const EditorOrganism = ({ drawer }: { drawer: TDrawer }): JSX.Element => {
-  const { fields } = useEditor(drawer)
+const EditorOrganism = ({ drawer, stackId }: { drawer: TDrawer, stackId: string }): JSX.Element => {
+  const { fields, onSubmit, onChange, entityForm, onDelete } = useEditor(drawer, stackId)
 
-  const [drawerForm, setDrawerForm] = useState<TEntity>(drawer.entity!)
-
-  const validatorsSchema = object(fields.reduce((acc, field) => ({ [field.name]: field.validator }), {}))
-
-  const changeValue: (event: ChangeEvent<HTMLInputElement>)
-  => void =
-    (event: ChangeEvent<HTMLInputElement>): void => {
-      setDrawerForm({ ...drawerForm, [event.target.name]: event.target.value })
-    }
+  const isCreating: boolean = drawer.isCreatingEntity()
+  const submitText: string = isCreating ? 'Create' : 'Update'
 
   const onClose = (): void => {
     EventsCanvas.clearSelectedDrawer()
     EventsCanvas.updateScreen()
   }
 
-  const onSubmit = async (): Promise<void> => {
-    try {
-      console.log(await validatorsSchema.validate(drawerForm))
-    } catch (err) {
-      console.error(err)
-    }
-  }
-
-  const submitText: string = drawer?.entity?.id !== null ? 'Update' : 'Create'
-
   return (
     <div className="w-full h-full border-l-2 ">
-      <div className="border-b-2 p-2 flex flex items-center justify-between">
+      <div className="h-[70px] border-b-2 p-2 flex flex items-center justify-between">
         <h2><strong>Editor</strong></h2>
 
         <Button
@@ -49,23 +30,35 @@ const EditorOrganism = ({ drawer }: { drawer: TDrawer }): JSX.Element => {
 
       <form className="p-2" onSubmit={onSubmit}>
 
-        {fields.map((field, index) => (
-          <Input
-            label={field.label}
-            type={field.type}
-            name={field.name}
-            onChange={changeValue}
-            key={index}
-          />
-        ))}
+        {fields.map((field, index) => {
+          const Component = field.component
+          const value = entityForm[field.name as keyof TEntity]
+
+          return (
+            <Component
+              key={index}
+              label={field.label}
+              type={field.type}
+              name={field.name}
+              value={value as string}
+              onChange={onChange}
+            />)
+        })}
 
         <div className="mt-5">
           <Button
             label={submitText}
             onClick={onSubmit}
-            className={'w-full'}
-            direction={'right'}
+            className="w-full"
           />
+
+          {!isCreating && (
+            <Button
+              label="Delete"
+              onClick={onDelete}
+              className="w-full bg-red-500 hover:bg-red-700 border border-red-500 text-white font-bold py-2 px-4 mt-5"
+            />
+          )}
         </div>
 
       </form>
