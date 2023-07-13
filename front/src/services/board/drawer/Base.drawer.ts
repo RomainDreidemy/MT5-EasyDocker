@@ -34,7 +34,8 @@ const BaseDrawer = (): TBaseDrawer => {
     },
 
     shouldDrawConnectors (): boolean {
-      return this.factory!.selected || this.factory!.onHover
+      if (this.factory!.onHover) return true
+      return ((this.canBeLinkedWith.length > 0) && this.factory!.selected)
     },
 
     drawConnectors (): void {
