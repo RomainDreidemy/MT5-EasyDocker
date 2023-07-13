@@ -30,7 +30,6 @@ const BaseManager: TBaseManager = {
   },
 
   updateScreen (): void {
-    console.log('000000')
     this.clearArea()
     this.draw()
   }

@@ -2,14 +2,22 @@ import React from 'react'
 import ServiceDrawer from '../../services/board/drawer/Service.drawer'
 import EventsCanvas from '../../services/canvas/Events.canvas'
 import { type TServiceDrawer } from '../../types/board/drawer/Service.drawer'
-import { type IService } from '../../interfaces/Service.interface'
+import { type IService, type IServiceCreate } from '../../interfaces/Service.interface'
 import EntityButtonAtom from '../atoms/Forms/EntityButton.atom'
 
 const ManagerOrganism = (): JSX.Element => {
-  const createService = () => {
-    console.log('---')
-    const service: IService = { id: 1, positionX: 100, positionY: 20, name: 'Unnamed' }
-    const serviceDrawer: TServiceDrawer = ServiceDrawer(service, EventsCanvas.context!)
+  const createService = (): void => {
+    const service: IServiceCreate = {
+      description: '',
+      dockerImage: '',
+      dockerTag: '',
+      entrypoint: '',
+      isExternal: false,
+      positionX: 100,
+      positionY: 20,
+      name: 'Unnamed'
+    }
+    const serviceDrawer: TServiceDrawer = ServiceDrawer(service as IService, EventsCanvas.context!)
     serviceDrawer.create()
 
     EventsCanvas.addAndSelectNewDrawer(serviceDrawer)

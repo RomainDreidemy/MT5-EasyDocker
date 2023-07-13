@@ -1,4 +1,4 @@
-import React, { type ChangeEvent, useState } from 'react'
+import React, { useState } from 'react'
 import useEditor from '../../hooks/useEditor'
 import { type TDrawer } from '../../types/Drawer'
 import EventsCanvas from '../../services/canvas/Events.canvas'
@@ -6,11 +6,23 @@ import Button from '../atoms/Forms/Button.atom'
 import { object } from 'yup'
 import { type TEntity } from '../../types/Entity'
 import { type TOnChange } from '../../interfaces/Forms/Input.interface'
+import ServiceEntity from '../../services/entities/Service.entity'
+import { type IService, type IServiceCreate } from '../../interfaces/Service.interface'
+import { DrawerTypes } from '../../enums/DrawerTypes'
+import NetworkEntity from '../../services/entities/Network.entity'
+import { type INetwork, type INetworkCreate } from '../../interfaces/Network.interface'
+import VolumeEntity from '../../services/entities/Volume.entity'
+import { type IVolume, type IVolumeCreate } from '../../interfaces/Volume.interface'
+import { Errors } from '../../enums/errors'
+import { type AxiosResponse } from 'axios'
 
-const EditorOrganism = ({ drawer }: { drawer: TDrawer }): JSX.Element => {
+const EditorOrganism = ({ drawer, stackId }: { drawer: TDrawer, stackId: string }): JSX.Element => {
   const { fields } = useEditor(drawer)
 
-  const [drawerForm, setDrawerForm] = useState<TEntity>(drawer.entity!)
+  const [entityForm, setEntityForm] = useState<TEntity>(drawer.entity!)
+
+  const isUpdating: boolean = drawer.entity!.id !== undefined
+  const submitText: string = isUpdating ? 'Update' : 'Create'
 
   const validatorsSchema = object(fields.reduce((acc, field) =>
     ({ [field.name]: field.validator }), {}))
@@ -18,7 +30,7 @@ const EditorOrganism = ({ drawer }: { drawer: TDrawer }): JSX.Element => {
   const changeValue: (event: TOnChange)
   => void =
     (event: TOnChange): void => {
-      setDrawerForm({ ...drawerForm, [event.target.name]: event.target.value })
+      setEntityForm({ ...entityForm, [event.target.name]: event.target.value })
     }
 
   const onClose = (): void => {
@@ -28,14 +40,50 @@ const EditorOrganism = ({ drawer }: { drawer: TDrawer }): JSX.Element => {
 
   const onSubmit = async (): Promise<void> => {
     try {
-      console.log(await validatorsSchema.validate(drawerForm))
+      await validatorsSchema.validate(entityForm)
+
+      const response = isUpdating
+        ? await update()
+        : await create()
+
+      const { data: entity } = response
+      drawer.entity = entity
     } catch (err) {
       console.error(err)
     }
   }
 
-  const isCreating: boolean = drawer?.entity?.id !== null
-  const submitText: string = isCreating ? 'Update' : 'Create'
+  const create = async (): Promise<AxiosResponse<TEntity>> => {
+    switch (drawer.type) {
+      case DrawerTypes.SERVICE:
+        return await ServiceEntity.create(stackId, entityForm as IServiceCreate)
+
+      case DrawerTypes.NETWORK:
+        return await NetworkEntity.create(stackId, entityForm as INetworkCreate)
+
+      case DrawerTypes.VOLUME:
+        return await VolumeEntity.create(stackId, entityForm as IVolumeCreate)
+
+      default:
+        throw new Error(Errors.NOT_IMPLEMENTED)
+    }
+  }
+
+  const update = async (): Promise<AxiosResponse<TEntity>> => {
+    switch (drawer.type) {
+      case DrawerTypes.SERVICE:
+        return await ServiceEntity.update(entityForm as IService)
+
+      case DrawerTypes.NETWORK:
+        return await NetworkEntity.update(entityForm as INetwork)
+
+      case DrawerTypes.VOLUME:
+        return await VolumeEntity.update(entityForm as IVolume)
+
+      default:
+        throw new Error(Errors.NOT_IMPLEMENTED)
+    }
+  }
 
   return (
     <div className="w-full h-full border-l-2 ">
@@ -53,7 +101,7 @@ const EditorOrganism = ({ drawer }: { drawer: TDrawer }): JSX.Element => {
 
         {fields.map((field, index) => {
           const Component = field.component
-          // const value = drawerForm[field.name]
+          const value = entityForm[field.name as keyof TEntity]
 
           return (
             <Component
@@ -61,7 +109,7 @@ const EditorOrganism = ({ drawer }: { drawer: TDrawer }): JSX.Element => {
               label={field.label}
               type={field.type}
               name={field.name}
-              // value={value}
+              value={value as string}
               onChange={changeValue}
             />)
         })}
