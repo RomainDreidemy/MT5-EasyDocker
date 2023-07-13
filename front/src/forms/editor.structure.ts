@@ -23,42 +23,42 @@ export const TYPE_STRUCTURES: EditorStructure = {
       name: 'name',
       type: 'text',
       component: Input,
-      validator: string().required()
+      validator: string().nullable()
     },
     {
       label: 'Docker Image',
       name: 'dockerImage',
       type: 'text',
       component: Input,
-      validator: string().required()
+      validator: string().nullable()
     },
     {
       label: 'Docker Tag',
       name: 'dockerTag',
       type: 'text',
       component: Input,
-      validator: string().required()
+      validator: string().nullable()
     },
     {
       label: 'Entrypoint',
       name: 'entrypoint',
       type: 'text',
       component: Input,
-      validator: string().required()
+      validator: string().nullable()
     },
     {
       label: 'Description',
       name: 'description',
       type: 'text',
       component: TextArea,
-      validator: string().required()
+      validator: string().nullable()
     },
     {
       label: 'External',
       name: 'isExternal',
       type: 'text',
       component: Checkbox,
-      validator: boolean().required()
+      validator: boolean().nullable()
     }
   ],
   [DrawerTypes.NETWORK]: [
@@ -81,7 +81,7 @@ export const TYPE_STRUCTURES: EditorStructure = {
       name: 'isExternal',
       type: 'text',
       component: Checkbox,
-      validator: boolean().required()
+      validator: boolean().nullable()
     }
   ],
   [DrawerTypes.VOLUME]: [
@@ -90,7 +90,7 @@ export const TYPE_STRUCTURES: EditorStructure = {
       name: 'name',
       type: 'text',
       component: Input,
-      validator: string().required()
+      validator: string().nullable()
     },
     {
       label: 'Description',
@@ -104,14 +104,14 @@ export const TYPE_STRUCTURES: EditorStructure = {
       name: 'containerPath',
       type: 'text',
       component: Input,
-      validator: string().required()
+      validator: string().nullable()
     },
     {
       label: 'Local Path',
       name: 'localPath',
       type: 'text',
       component: Input,
-      validator: string().required()
+      validator: string().nullable()
     }
   ]
 }

@@ -1,6 +1,6 @@
-import {type IService, IServiceCreate} from '../interfaces/Service.interface'
-import {type INetwork, INetworkCreate} from '../interfaces/Network.interface'
-import {type IVolume, IVolumeCreate} from '../interfaces/Volume.interface'
+import { type IService, type IServiceCreate } from '../interfaces/Service.interface'
+import { type INetwork, type INetworkCreate } from '../interfaces/Network.interface'
+import { type IVolume, type IVolumeCreate } from '../interfaces/Volume.interface'
 
 export type TEntity = IService | INetwork | IVolume
 export type TEntityCreate = IServiceCreate | INetworkCreate | IVolumeCreate

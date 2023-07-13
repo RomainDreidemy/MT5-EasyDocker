@@ -1,19 +1,19 @@
-import {type TDrawer} from '../types/Drawer'
-import {useState} from 'react'
-import {type EditorForm, TYPE_STRUCTURES} from '../forms/editor.structure'
+import { type TDrawer } from '../types/Drawer'
+import { useState } from 'react'
+import { type EditorForm, TYPE_STRUCTURES } from '../forms/editor.structure'
 import EventsCanvas from '../services/canvas/Events.canvas'
-import {type AxiosResponse} from 'axios'
-import {type TEntity} from '../types/Entity'
-import {DrawerTypes} from '../enums/DrawerTypes'
+import { type AxiosResponse } from 'axios'
+import { type TEntity } from '../types/Entity'
+import { DrawerTypes } from '../enums/DrawerTypes'
 import ServiceEntity from '../services/entities/Service.entity'
-import {type IService, type IServiceCreate} from '../interfaces/Service.interface'
+import { type IService, type IServiceCreate } from '../interfaces/Service.interface'
 import NetworkEntity from '../services/entities/Network.entity'
-import {type INetwork, type INetworkCreate} from '../interfaces/Network.interface'
+import { type INetwork, type INetworkCreate } from '../interfaces/Network.interface'
 import VolumeEntity from '../services/entities/Volume.entity'
-import {type IVolume, type IVolumeCreate} from '../interfaces/Volume.interface'
-import {Errors} from '../enums/errors'
-import {object} from 'yup'
-import {type TOnChange} from '../interfaces/Forms/Input.interface'
+import { type IVolume, type IVolumeCreate } from '../interfaces/Volume.interface'
+import { Errors } from '../enums/errors'
+import { object } from 'yup'
+import { type TOnChange } from '../interfaces/Forms/Input.interface'
 
 const useEditor = (drawer: TDrawer, stackId: string): {
   fields: EditorForm[]
@@ -28,17 +28,17 @@ const useEditor = (drawer: TDrawer, stackId: string): {
   const isCreating: boolean = drawer.isCreatingEntity()
 
   const validatorsSchema = object(structure.reduce((acc, field) =>
-    ({[field.name]: field.validator}), {}))
+    ({ [field.name]: field.validator }), {}))
 
   const onChange: (event: TOnChange)
-    => void =
+  => void =
     (event: TOnChange): void => {
-      setEntityForm({...entityForm, [event.target.name]: event.target.value})
+      setEntityForm({ ...entityForm, [event.target.name]: event.target.value })
     }
 
   const onSubmit = async (): Promise<void> => {
     try {
-      // await validatorsSchema.validate(entityForm)
+      await validatorsSchema.validate(entityForm)
 
       entityForm.positionX = drawer.factory!.positionX
       entityForm.positionY = drawer.factory!.positionY
@@ -47,7 +47,7 @@ const useEditor = (drawer: TDrawer, stackId: string): {
         ? await createEntity()
         : await updateEntity()
 
-      const {data: entity} = response
+      const { data: entity } = response
       drawer.entity = entity
       setEntityForm(entity)
       EventsCanvas.updateScreen()

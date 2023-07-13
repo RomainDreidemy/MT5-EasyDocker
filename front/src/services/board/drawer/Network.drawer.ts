@@ -1,6 +1,6 @@
 import BaseDrawer from './Base.drawer'
 import ConnectorBuilder from './connector/Connector.builder'
-import {type INetwork, INetworkCreate} from '../../../interfaces/Network.interface'
+import { type INetwork, type INetworkCreate } from '../../../interfaces/Network.interface'
 import NetworkFactory from './factories/Network.factory'
 import { type TNetworkDrawer } from '../../../types/board/drawer/Network.drawer'
 import CommonConnector from './connector/Common.connector'
