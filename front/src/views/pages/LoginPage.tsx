@@ -1,5 +1,5 @@
 import { boolean, object, string } from 'yup'
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Warning from '../molecules/Alerts/Warning.molecule'
 import Success from '../molecules/Alerts/Success.molecule'
 import Input from '../atoms/Forms/Input.atom'
@@ -20,6 +20,12 @@ const LoginPage = (): JSX.Element => {
   const [form, setForm] = useState<IAuthEntity>({ email: '', password: '', remember: false })
   const [status, setStatus] = useState<IValidationStatus>({ success: false, errors: [] })
   const { user, setUser } = useContext<any>(UserContext)
+
+  useEffect(() => {
+    AuthEntity.isLogged()
+      .then((res) => { navigate('/') })
+      .catch(() => { })
+  }, [])
 
   const userSchema = object({
     email: string().email().required(),

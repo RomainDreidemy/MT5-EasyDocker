@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { object, string } from 'yup'
 import AuthEntity from '../../services/entities/Auth.entity'
@@ -9,12 +9,18 @@ import Button from '../atoms/Forms/Button.atom'
 import { BiLeftArrowAlt, BiRightArrowAlt } from 'react-icons/bi'
 import { type IAuthEntity } from '../../interfaces/Auth.interface'
 import { type IValidationStatus } from '../../interfaces/Forms/Validation.interface'
-import {hasError, showErrorMessage, validateSchema} from '../../services/utils/validation.util'
+import { hasError, showErrorMessage, validateSchema } from '../../services/utils/validation.util'
 
 const RegisterPage = (): JSX.Element => {
   const navigate = useNavigate()
   const [form, setForm] = useState<IAuthEntity>({ email: '', password: '', passwordConfirm: '' })
   const [status, setStatus] = useState<IValidationStatus>({ success: false, errors: [] })
+
+  useEffect(() => {
+    AuthEntity.isLogged()
+      .then((res) => { navigate('/') })
+      .catch(() => { })
+  }, [])
 
   const registerSchema = object({
     email: string().email().required(),
