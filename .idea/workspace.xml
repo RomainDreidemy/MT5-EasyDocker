@@ -4,15 +4,11 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="93a38079-b24e-4c0d-a7db-694c7ba74bab" name="Changes" comment="feat(managed volume): fix creation">
+    <list default="true" id="93a38079-b24e-4c0d-a7db-694c7ba74bab" name="Changes" comment="feat(managed volume): delete a managed volume">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/docs/docs.go" beforeDir="false" afterPath="$PROJECT_DIR$/api/docs/docs.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/docs/swagger.json" beforeDir="false" afterPath="$PROJECT_DIR$/api/docs/swagger.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/docs/swagger.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api/docs/swagger.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/controllers/managed_volume_controller.go" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/controllers/managed_volume_controller.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/models/managed_volume_model.go" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/models/managed_volume_model.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/repositories/common_repository.go" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/repositories/common_repository.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/server.go" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/server.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/controllers/docker_compose_controller.go" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/controllers/docker_compose_controller.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/models/docker_compose.go" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/models/docker_compose.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/services/docker_compose/builders/service_builder.go" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/services/docker_compose/builders/service_builder.go" afterDir="false" />
     </list>
     <list id="9d6ec37d-1338-4257-80e2-d39852ceb11b" name="DO NOT COMMIT" comment="">
       <change afterPath="$PROJECT_DIR$/.idea/dataSources/a4fc63ff-103a-423d-8750-567e380e051e.xml" afterDir="false" />
@@ -31,7 +27,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="feat/I_want_to_create_a_manageed_volume" />
+        <entry key="$PROJECT_DIR$" value="feat/I_want_to_delete_a_mounted_volume" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -44,6 +40,10 @@
             <RecentBranchesForRepo>
               <option name="branches">
                 <list>
+                  <RecentBranch>
+                    <option name="branchName" value="feat/I_want_to_see_the_volumes_in_the_yaml_file" />
+                    <option name="lastUsedInstant" value="1689330749" />
+                  </RecentBranch>
                   <RecentBranch>
                     <option name="branchName" value="feat/I_want_to_delete_a_mounted_volume" />
                     <option name="lastUsedInstant" value="1689328512" />
@@ -76,7 +76,7 @@
     "RunOnceActivity.go.migrated.go.modules.settings": "true",
     "RunOnceActivity.go.modules.go.list.on.any.changes.was.set": "true",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "feat/I__want__to__delete__a__mounted__volume",
+    "git-widget-placeholder": "feat/I__want__to__see__the__volumes__in__the__yaml__file",
     "go.import.settings.migrated": "true",
     "go.sdk.automatically.set": "true",
     "last_opened_file_path": "/Users/romain.dreidemy",
@@ -99,7 +99,19 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="main" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
@@ -108,7 +120,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="feat(managed volume): create managed volume with api" />
     <MESSAGE value="feat(managed volume): fix creation" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat(managed volume): fix creation" />
+    <MESSAGE value="feat(managed volume): delete a managed volume" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat(managed volume): delete a managed volume" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
