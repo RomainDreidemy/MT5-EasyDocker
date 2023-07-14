@@ -110,7 +110,7 @@ func UpdateNetwork(c *fiber.Ctx) error {
 
 	updatedNetwork := factories.BuildNetworkFromNetworkUpdateInput(body)
 
-	result := repositories.UpdateNetwork(network, updatedNetwork)
+	result := repositories.Update(network, &updatedNetwork)
 
 	if result.Error != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(factories.BuildErrorResponse("error", "Cannot update network"))

@@ -38,11 +38,6 @@ func CreateService(service *models.Service) *gorm.DB {
 	return result
 }
 
-func UpdateService(service models.Service, updatedService models.Service) *gorm.DB {
-	result := initializers.DB.Model(&service).Updates(updatedService)
-	return result
-}
-
 func DeleteService(service models.Service) *gorm.DB {
 	result := initializers.DB.Delete(&service)
 	return result
