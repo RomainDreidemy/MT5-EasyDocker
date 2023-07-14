@@ -988,6 +988,46 @@ const docTemplate = `{
                 }
             }
         },
+        "/stacks/{stackId}/managed_volumes": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Managed Volumes"
+                ],
+                "summary": "Create a volume",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Stack ID",
+                        "name": "stackId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Volume",
+                        "name": "volume",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.ManagedVolumeCreateInput"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/models.ManagedVolumeResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/stacks/{stackId}/networks": {
             "get": {
                 "consumes": [
@@ -1290,6 +1330,28 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "positionX": {
+                    "type": "number"
+                },
+                "positionY": {
+                    "type": "number"
+                }
+            }
+        },
+        "models.ManagedVolumeCreateInput": {
+            "type": "object",
+            "required": [
+                "name",
+                "positionX",
+                "positionY"
+            ],
+            "properties": {
+                "description": {
                     "type": "string"
                 },
                 "name": {

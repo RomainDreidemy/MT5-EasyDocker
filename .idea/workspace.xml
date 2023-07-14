@@ -4,17 +4,13 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="93a38079-b24e-4c0d-a7db-694c7ba74bab" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/MT5-EasyDocker.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/MT5-EasyDocker.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/MT5-docker-extension.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/git_toolbox_prj.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+    <list default="true" id="93a38079-b24e-4c0d-a7db-694c7ba74bab" name="Changes" comment="feat(managed volume): create managed volume with api">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/docs/docs.go" beforeDir="false" afterPath="$PROJECT_DIR$/api/docs/docs.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/docs/swagger.json" beforeDir="false" afterPath="$PROJECT_DIR$/api/docs/swagger.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/docs/swagger.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api/docs/swagger.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/src/controllers/managed_volume_controller.go" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/controllers/managed_volume_controller.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/repositories/common_repository.go" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/repositories/common_repository.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/services/factories/managed_volume_factory.go" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/services/factories/managed_volume_factory.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/server.go" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/server.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,6 +53,10 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="feat(managed volume): create managed volume with api" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat(managed volume): create managed volume with api" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>

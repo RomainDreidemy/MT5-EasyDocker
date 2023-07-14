@@ -34,6 +34,21 @@ definitions:
       positionY:
         type: number
     type: object
+  models.ManagedVolumeCreateInput:
+    properties:
+      description:
+        type: string
+      name:
+        type: string
+      positionX:
+        type: number
+      positionY:
+        type: number
+    required:
+    - name
+    - positionX
+    - positionY
+    type: object
   models.ManagedVolumeResponse:
     properties:
       description:
@@ -1051,6 +1066,32 @@ paths:
       summary: Get board
       tags:
       - Board
+  /stacks/{stackId}/managed_volumes:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Stack ID
+        in: path
+        name: stackId
+        required: true
+        type: string
+      - description: Volume
+        in: body
+        name: volume
+        required: true
+        schema:
+          $ref: '#/definitions/models.ManagedVolumeCreateInput'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.ManagedVolumeResponse'
+      summary: Create a volume
+      tags:
+      - Managed Volumes
   /stacks/{stackId}/networks:
     get:
       consumes:

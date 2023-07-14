@@ -35,15 +35,16 @@ func GetManagedVolume(c *fiber.Ctx) error {
 // @Tags         Managed Volumes
 // @Accept       json
 // @Produce      json
-// @Param volume body VolumeRequest true "Volume"
+// @Param stackId path string true "Stack ID"
+// @Param volume body models.ManagedVolumeCreateInput true "Volume"
 // @Success      201  {object}  models.ManagedVolumeResponse
-// @Router       /stacks/{id}/managed_volumes [post]
+// @Router       /stacks/{stackId}/managed_volumes [post]
 func CreateManagedVolume(c *fiber.Ctx) error {
 	currentUser := c.Locals("user").(models.UserResponse)
 	stackId := c.Params("stackId")
 
 	if !policies.CanAccessStack(currentUser, stackId) {
-		return c.Status(fiber.StatusNotFound).JSON(factories.BuildErrorResponse("error", "Stack not found"))
+		return c.Status(fiber.StatusNotFound).JSON(factories.BuildErrorResponse("error", "Stack TOTO not found"))
 	}
 
 	body, err := helpers.BodyParse[models.ManagedVolumeCreateInput](c)
