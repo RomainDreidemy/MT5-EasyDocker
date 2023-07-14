@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"github.com/RomainDreidemy/MT5-docker-extension/src/helpers"
 	"github.com/RomainDreidemy/MT5-docker-extension/src/models"
 	"github.com/RomainDreidemy/MT5-docker-extension/src/policies"
 	"github.com/RomainDreidemy/MT5-docker-extension/src/repositories"
@@ -27,4 +28,37 @@ func GetManagedVolume(c *fiber.Ctx) error {
 	volume, _ := repositories.Find[models.ManagedVolume](id)
 
 	return c.Status(fiber.StatusOK).JSON(factories.BuildManagedVolumeResponse(volume))
+}
+
+// CreateManagedVolume godoc
+// @Summary      Create a volume
+// @Tags         Managed Volumes
+// @Accept       json
+// @Produce      json
+// @Param stackId path string true "Stack ID"
+// @Param volume body models.ManagedVolumeCreateInput true "Volume"
+// @Success      201  {object}  models.ManagedVolumeResponse
+// @Router       /stacks/{stackId}/managed_volumes [post]
+func CreateManagedVolume(c *fiber.Ctx) error {
+	currentUser := c.Locals("user").(models.UserResponse)
+	stackId := c.Params("stackId")
+
+	if !policies.CanAccessStack(currentUser, stackId) {
+		return c.Status(fiber.StatusNotFound).JSON(factories.BuildErrorResponse("error", "Stack TOTO not found"))
+	}
+
+	body, err := helpers.BodyParse[models.ManagedVolumeCreateInput](c)
+	if err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(factories.BuildErrorResponse("error", "Cannot parse JSON"))
+	}
+
+	volume := factories.BuildManagedVolumeFromCreationInput(body, stackId)
+
+	result := repositories.Create[models.ManagedVolume](&volume)
+
+	if result.Error != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(factories.BuildErrorResponse("error", "Cannot create service"))
+	}
+
+	return c.Status(fiber.StatusCreated).JSON(factories.BuildManagedVolumeResponse(volume))
 }

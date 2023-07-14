@@ -64,6 +64,8 @@ func main() {
 	network.Put("/:id", controllers.UpdateNetwork)
 	network.Delete("/:id", controllers.DeleteNetwork)
 
+	stacks.Post("/:stackId/managed_volumes", controllers.CreateManagedVolume)
+
 	managedVolume := micro.Group("/managed_volumes", middleware.DeserializeUser)
 	managedVolume.Get("/:id", controllers.GetManagedVolume)
 
