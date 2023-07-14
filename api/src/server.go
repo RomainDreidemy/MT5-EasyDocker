@@ -68,6 +68,7 @@ func main() {
 
 	managedVolume := micro.Group("/managed_volumes", middleware.DeserializeUser)
 	managedVolume.Get("/:id", controllers.GetManagedVolume)
+	managedVolume.Delete("/:id", controllers.DeleteManagedVolume)
 
 	service := micro.Group("/services", middleware.DeserializeUser)
 	service.Get("/:id", controllers.GetService)

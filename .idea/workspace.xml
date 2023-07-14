@@ -4,13 +4,23 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="93a38079-b24e-4c0d-a7db-694c7ba74bab" name="Changes" comment="feat(managed volume): create managed volume with api">
+    <list default="true" id="93a38079-b24e-4c0d-a7db-694c7ba74bab" name="Changes" comment="feat(managed volume): fix creation">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/docs/docs.go" beforeDir="false" afterPath="$PROJECT_DIR$/api/docs/docs.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/docs/swagger.json" beforeDir="false" afterPath="$PROJECT_DIR$/api/docs/swagger.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/docs/swagger.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api/docs/swagger.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/src/controllers/managed_volume_controller.go" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/controllers/managed_volume_controller.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/models/managed_volume_model.go" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/models/managed_volume_model.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/repositories/common_repository.go" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/repositories/common_repository.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/src/server.go" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/server.go" afterDir="false" />
+    </list>
+    <list id="9d6ec37d-1338-4257-80e2-d39852ceb11b" name="DO NOT COMMIT" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources/a4fc63ff-103a-423d-8750-567e380e051e.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources/a4fc63ff-103a-423d-8750-567e380e051e/storage_v2/_src_/database/postgres.edMnLQ.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources/a4fc63ff-103a-423d-8750-567e380e051e/storage_v2/_src_/database/postgres.edMnLQ/schema/information_schema.FNRwLQ.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources/a4fc63ff-103a-423d-8750-567e380e051e/storage_v2/_src_/database/postgres.edMnLQ/schema/pg_catalog.0S1ZNQ.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources/a4fc63ff-103a-423d-8750-567e380e051e/storage_v2/_src_/database/postgres.edMnLQ/schema/public.abK9xQ.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/git_toolbox_prj.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,7 +29,37 @@
   </component>
   <component name="GOROOT" url="file://$USER_HOME$/go/go1.20.5" />
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="feat/I_want_to_create_a_manageed_volume" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitToolBoxStore">
+    <option name="recentBranches">
+      <RecentBranches>
+        <option name="branchesForRepo">
+          <list>
+            <RecentBranchesForRepo>
+              <option name="branches">
+                <list>
+                  <RecentBranch>
+                    <option name="branchName" value="feat/I_want_to_delete_a_mounted_volume" />
+                    <option name="lastUsedInstant" value="1689328512" />
+                  </RecentBranch>
+                  <RecentBranch>
+                    <option name="branchName" value="feat/I_want_to_create_a_manageed_volume" />
+                    <option name="lastUsedInstant" value="1689328511" />
+                  </RecentBranch>
+                </list>
+              </option>
+              <option name="repositoryRootUrl" value="file://$PROJECT_DIR$" />
+            </RecentBranchesForRepo>
+          </list>
+        </option>
+      </RecentBranches>
+    </option>
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -36,7 +76,7 @@
     "RunOnceActivity.go.migrated.go.modules.settings": "true",
     "RunOnceActivity.go.modules.go.list.on.any.changes.was.set": "true",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "feat/I__want__to__create__a__manageed__volume",
+    "git-widget-placeholder": "feat/I__want__to__delete__a__mounted__volume",
     "go.import.settings.migrated": "true",
     "go.sdk.automatically.set": "true",
     "last_opened_file_path": "/Users/romain.dreidemy",
@@ -54,9 +94,21 @@
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="feat(managed volume): create managed volume with api" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat(managed volume): create managed volume with api" />
+    <MESSAGE value="feat(managed volume): fix creation" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat(managed volume): fix creation" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>

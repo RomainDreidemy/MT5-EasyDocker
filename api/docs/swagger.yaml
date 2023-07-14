@@ -540,6 +540,23 @@ paths:
       tags:
       - Service Env Variables
   /managed_volumes/{id}:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: Volume ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+      summary: Delete a volume
+      tags:
+      - Managed Volumes
     get:
       consumes:
       - application/json
