@@ -147,3 +147,36 @@ func TestBuildDockerComposeServicePorts(t *testing.T) {
 		})
 	}
 }
+
+func TestBuildDockerComposeServiceVolumes(t *testing.T) {
+	type args struct {
+		serviceVolumes []models.ServiceVolume
+	}
+	tests := []struct {
+		name string
+		args args
+		want []string
+	}{
+		{
+			name: "should have the concatenation of source and target",
+			args: args{
+				serviceVolumes: []models.ServiceVolume{
+					{
+						LocalPath:     "./api",
+						ContainerPath: "/app",
+					},
+				},
+			},
+			want: []string{
+				"./api:/app",
+			},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := BuildDockerComposeServiceVolumes(tt.args.serviceVolumes); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("BuildDockerComposeServiceVolumes() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}

@@ -7,7 +7,7 @@ import (
 )
 
 func GenerateDockerComposeFile(c *fiber.Ctx) error {
-	stackId := "85843022-39cc-4e8f-b7e5-ec8bbac57296"
+	stackId := "26cf2081-b4b5-41b0-9246-af3b8e93894b"
 	services, _ := repositories.FindServicesByStackIdWithAssociation(stackId)
 	networks, _ := repositories.FindNetworksByStackId(stackId)
 
