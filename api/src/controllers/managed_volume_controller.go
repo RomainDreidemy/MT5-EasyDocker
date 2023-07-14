@@ -62,3 +62,24 @@ func CreateManagedVolume(c *fiber.Ctx) error {
 
 	return c.Status(fiber.StatusCreated).JSON(factories.BuildManagedVolumeResponse(volume))
 }
+
+// DeleteManagedVolume godoc
+// @Summary      Delete a volume
+// @Tags         Managed Volumes
+// @Accept       json
+// @Produce      json
+// @Param id path string true "Volume ID"
+// @Success      204
+// @Router       /managed_volumes/{id} [delete]
+func DeleteManagedVolume(c *fiber.Ctx) error {
+	id := c.Params("id")
+	currentUser := c.Locals("user").(models.UserResponse)
+
+	if !policies.CanAccessVolume(currentUser, id) {
+		return c.Status(fiber.StatusNotFound).JSON(factories.BuildErrorResponse("error", "Volume not found"))
+	}
+
+	repositories.DeleteById[models.ManagedVolume](id)
+
+	return c.SendStatus(fiber.StatusNoContent)
+}
