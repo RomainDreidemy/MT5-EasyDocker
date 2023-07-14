@@ -10,3 +10,8 @@ func Find[Model interface{}](id string) (Model, *gorm.DB) {
 	result := initializers.DB.First(&object, "id = ?", id)
 	return object, result
 }
+
+func Create[Model interface{}](object *Model) *gorm.DB {
+	result := initializers.DB.Create(object)
+	return result
+}
