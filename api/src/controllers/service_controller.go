@@ -110,7 +110,7 @@ func UpdateService(c *fiber.Ctx) error {
 
 	updatedService := factories.BuildServiceFromServiceUpdateInput(body)
 
-	result := repositories.UpdateService(service, updatedService)
+	result := repositories.Update(service, &updatedService)
 
 	if result.Error != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(factories.BuildErrorResponse("error", "Cannot update service"))
