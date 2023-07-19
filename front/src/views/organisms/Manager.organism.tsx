@@ -13,32 +13,43 @@ import VolumeEntity from '../../services/entities/Volume.entity'
 import { Errors } from '../../enums/errors'
 import { type TServiceDrawer } from '../../types/board/drawer/Service.drawer'
 import ServiceDrawer from '../../services/board/drawer/Service.drawer'
+import NetworkDrawer from '../../services/board/drawer/Network.drawer'
+import VolumeDrawer from '../../services/board/drawer/Volume.drawer'
 
 const ManagerOrganism = ({ stackId }: { stackId: string }): JSX.Element => {
   const entityForm = {
     [DrawerTypes.SERVICE]: {
-      description: '',
-      dockerImage: '',
-      dockerTag: '',
-      entrypoint: '',
-      isExternal: false,
-      positionX: 100,
-      positionY: 20,
-      name: 'Unnamed'
+      drawer: ServiceDrawer,
+      form: {
+        description: '',
+        dockerImage: '',
+        dockerTag: '',
+        entrypoint: '',
+        isExternal: false,
+        positionX: 0,
+        positionY: 0,
+        name: 'Unnamed'
+      }
     },
     [DrawerTypes.NETWORK]: {
-      isExternal: false,
-      name: 'Unnamed',
-      positionX: 100,
-      positionY: 20
+      drawer: NetworkDrawer,
+      form: {
+        isExternal: false,
+        name: 'Unnamed',
+        positionX: 0,
+        positionY: 0
+      }
     },
     [DrawerTypes.VOLUME]: {
-      containerPath: '',
-      description: '',
-      localPath: '',
-      name: 'Unnamed',
-      positionX: 100,
-      positionY: 20
+      drawer: VolumeDrawer,
+      form: {
+        containerPath: '',
+        description: '',
+        localPath: '',
+        name: 'Unnamed',
+        positionX: 0,
+        positionY: 0
+      }
     }
   }
 
@@ -59,9 +70,16 @@ const ManagerOrganism = ({ stackId }: { stackId: string }): JSX.Element => {
   }
 
   const createEntityAndDraw = async (type: DrawerTypes): Promise<void> => {
-    const { data: entityCreated } = await createEntity(entityForm[type] as TEntityCreate, type)
+    const { form, drawer } = entityForm[type]
 
-    const entityDrawer: TServiceDrawer = ServiceDrawer(entityCreated, EventsCanvas.context!)
+    const { x, y } = EventsCanvas.emptyPosition()
+
+    form.positionX = x
+    form.positionY = y
+
+    const { data: entityCreated } = await createEntity(form, type)
+
+    const entityDrawer: TServiceDrawer = drawer(entityCreated, EventsCanvas.context!)
     entityDrawer.create()
 
     EventsCanvas.addAndSelectNewDrawer(entityDrawer)
