@@ -12,4 +12,5 @@ export type TBaseManager =
     draw: () => void
     updateScreen: () => void
     deleteDrawer: (drawer: TDrawer) => void
+    deleteLinkers: (drawer: TDrawer) => void
   }
