@@ -4,10 +4,19 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="93a38079-b24e-4c0d-a7db-694c7ba74bab" name="Changes" comment="feat(linker): linker rules">
+    <list default="true" id="93a38079-b24e-4c0d-a7db-694c7ba74bab" name="Changes" comment="feat(entity): adding loading">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/src/views/atoms/Forms/EntityButton.atom.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/views/atoms/Forms/EntityButton.atom.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/src/forms/editor.structure.ts" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/forms/editor.structure.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/src/views/atoms/Forms/Button.atom.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/views/atoms/forms/Button.atom.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/src/views/atoms/Forms/Checkbox.atom.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/views/atoms/forms/Checkbox.atom.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/src/views/atoms/Forms/EntityButton.atom.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/views/atoms/forms/EntityButton.atom.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/src/views/atoms/Forms/Input.atom.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/views/atoms/forms/Input.atom.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/src/views/atoms/Forms/TextArea.atom.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/views/atoms/forms/TextArea.atom.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/src/views/organisms/Editor.organism.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/views/organisms/Editor.organism.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/front/src/views/organisms/Manager.organism.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/views/organisms/Manager.organism.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/src/views/organisms/Navbar.organism.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/views/organisms/Navbar.organism.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/src/views/pages/LoginPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/views/pages/LoginPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/src/views/pages/RegisterPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/views/pages/RegisterPage.tsx" afterDir="false" />
     </list>
     <list id="9d6ec37d-1338-4257-80e2-d39852ceb11b" name="DO NOT COMMIT" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -119,7 +128,8 @@
     <MESSAGE value="feat(managed volume): delete a managed volume" />
     <MESSAGE value="feat(linker): delete a linker" />
     <MESSAGE value="feat(linker): linker rules" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat(linker): linker rules" />
+    <MESSAGE value="feat(entity): adding loading" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat(entity): adding loading" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>

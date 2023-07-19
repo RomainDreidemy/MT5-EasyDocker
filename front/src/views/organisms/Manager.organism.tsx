@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import EventsCanvas from '../../services/canvas/Events.canvas'
 import { type IServiceCreate } from '../../interfaces/Service.interface'
-import EntityButtonAtom from '../atoms/Forms/EntityButton.atom'
+import EntityButtonAtom from '../atoms/forms/EntityButton.atom'
 import { type INetworkCreate } from '../../interfaces/Network.interface'
 import { type IVolumeCreate } from '../../interfaces/Volume.interface'
 import { type AxiosResponse } from 'axios'
