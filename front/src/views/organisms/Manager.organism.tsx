@@ -15,6 +15,8 @@ import { type TServiceDrawer } from '../../types/board/drawer/Service.drawer'
 import ServiceDrawer from '../../services/board/drawer/Service.drawer'
 import NetworkDrawer from '../../services/board/drawer/Network.drawer'
 import VolumeDrawer from '../../services/board/drawer/Volume.drawer'
+import StateFactory from '../../services/board/drawer/factories/State.factory'
+import { type ISize } from '../../interfaces/Window.interface'
 
 const ManagerOrganism = ({ stackId }: { stackId: string }): JSX.Element => {
   const entityForm = {
@@ -72,7 +74,9 @@ const ManagerOrganism = ({ stackId }: { stackId: string }): JSX.Element => {
   const createEntityAndDraw = async (type: DrawerTypes): Promise<void> => {
     const { form, drawer } = entityForm[type]
 
-    const { x, y } = EventsCanvas.emptyPosition()
+    const size: ISize = { width: StateFactory.width, height: StateFactory.height }
+
+    const { x, y } = EventsCanvas.emptyPosition(size)
 
     form.positionX = x
     form.positionY = y

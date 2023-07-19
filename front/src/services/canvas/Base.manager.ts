@@ -6,6 +6,7 @@ import { DrawerManager } from './Drawer.manager'
 import eventEmitter from '../apps/Event.emitter'
 import { EventEmitters } from '../../enums/eventEmitters'
 import { type IPosition } from '../../interfaces/Position.interface'
+import { type ISize } from '../../interfaces/Window.interface'
 
 const BaseManager: TBaseManager = {
   ...BaseCanvas,
@@ -37,12 +38,21 @@ const BaseManager: TBaseManager = {
     eventEmitter.emit(EventEmitters.ON_SELECTED_DRAWER, drawer)
   },
 
-  emptyPosition (offset: number = 20): IPosition {
+  emptyPosition (size: ISize, offset: number = 20): IPosition {
+    const { width } = this.canvas!
     const position: IPosition = { x: offset, y: offset }
 
     do {
-      position.x += offset
-      position.y += offset
+      const hasEmptyX = this.drawers.some((drawer: TDrawer) => drawer.isOnX(position.x + size.width))
+      const hasEmptyY = this.drawers.some((drawer: TDrawer) => drawer.isOnY(position.y + size.height))
+      const isOutOfCanvas = position.x + size.width > width
+
+      if (hasEmptyX && !isOutOfCanvas) {
+        position.x += offset + size.width
+      } else if (hasEmptyY) {
+        position.x = offset
+        position.y += offset + size.height
+      }
     } while (this.drawers.some((drawer: TDrawer) => drawer.isOnPosition(position)))
 
     return position
