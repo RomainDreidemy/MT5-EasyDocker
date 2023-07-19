@@ -4,11 +4,9 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="93a38079-b24e-4c0d-a7db-694c7ba74bab" name="Changes" comment="feat(linker): delete a linker">
+    <list default="true" id="93a38079-b24e-4c0d-a7db-694c7ba74bab" name="Changes" comment="feat(linker): linker rules">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/front/src/services/board/drawer/Base.drawer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/services/board/drawer/Base.drawer.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/src/services/canvas/Linker.manager.ts" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/services/canvas/Linker.manager.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/src/types/board/drawer/Base.drawer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/types/board/drawer/Base.drawer.ts" afterDir="false" />
     </list>
     <list id="9d6ec37d-1338-4257-80e2-d39852ceb11b" name="DO NOT COMMIT" comment="">
       <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
@@ -121,7 +119,8 @@
     <MESSAGE value="feat(managed volume): fix creation" />
     <MESSAGE value="feat(managed volume): delete a managed volume" />
     <MESSAGE value="feat(linker): delete a linker" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat(linker): delete a linker" />
+    <MESSAGE value="feat(linker): linker rules" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat(linker): linker rules" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>

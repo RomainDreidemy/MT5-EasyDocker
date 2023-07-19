@@ -36,7 +36,10 @@ const BaseDrawer = (): TBaseDrawer => {
     shouldDrawConnectors(): boolean {
       if (this.isCreatingEntity() || this.hasAlreadyLinkWithDrawer()) return false
       if (this.factory!.onHover) return true
-      return ((this.canBeLinkedWith.length > 0) && this.factory!.selected)
+
+      const hasRulesAndSelected =
+        (this.canBeLinkedWith.length > 0) && this.factory!.selected
+      return (hasRulesAndSelected)
     },
 
     drawConnectors(): void {
