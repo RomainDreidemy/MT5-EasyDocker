@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import EventsCanvas from '../../services/canvas/Events.canvas'
 import { type IServiceCreate } from '../../interfaces/Service.interface'
 import EntityButtonAtom from '../atoms/Forms/EntityButton.atom'
@@ -19,6 +19,8 @@ import StateFactory from '../../services/board/drawer/factories/State.factory'
 import { type ISize } from '../../interfaces/Window.interface'
 
 const ManagerOrganism = ({ stackId }: { stackId: string }): JSX.Element => {
+  const [loading, setLoading] = useState<boolean>(false)
+
   const entityForm = {
     [DrawerTypes.SERVICE]: {
       drawer: ServiceDrawer,
@@ -72,21 +74,29 @@ const ManagerOrganism = ({ stackId }: { stackId: string }): JSX.Element => {
   }
 
   const createEntityAndDraw = async (type: DrawerTypes): Promise<void> => {
-    const { form, drawer } = entityForm[type]
+    try {
+      setLoading(true)
 
-    const size: ISize = { width: StateFactory.width, height: StateFactory.height }
+      const { form, drawer } = entityForm[type]
 
-    const { x, y } = EventsCanvas.emptyPosition(size)
+      const size: ISize = { width: StateFactory.width, height: StateFactory.height }
 
-    form.positionX = x
-    form.positionY = y
+      const { x, y } = EventsCanvas.emptyPosition(size)
 
-    const { data: entityCreated } = await createEntity(form, type)
+      form.positionX = x
+      form.positionY = y
 
-    const entityDrawer: TServiceDrawer = drawer(entityCreated, EventsCanvas.context!)
-    entityDrawer.create()
+      const { data: entityCreated } = await createEntity(form, type)
 
-    EventsCanvas.addAndSelectNewDrawer(entityDrawer)
+      const entityDrawer: TServiceDrawer = drawer(entityCreated, EventsCanvas.context!)
+      entityDrawer.create()
+
+      EventsCanvas.addAndSelectNewDrawer(entityDrawer)
+    } catch (err) {
+      console.error(err)
+    } finally {
+      setLoading(false)
+    }
   }
 
   const createService = async (): Promise<void> => {
@@ -107,9 +117,9 @@ const ManagerOrganism = ({ stackId }: { stackId: string }): JSX.Element => {
         </h2>
       </div>
 
-      <EntityButtonAtom name="Service" onClick={createService}/>
-      <EntityButtonAtom name="Network" onClick={createNetwork}/>
-      <EntityButtonAtom name="Volume" onClick={createVolume}/>
+      <EntityButtonAtom name="Service" onClick={createService} disabled={loading}/>
+      <EntityButtonAtom name="Network" onClick={createNetwork} disabled={loading}/>
+      <EntityButtonAtom name="Volume" onClick={createVolume} disabled={loading}/>
 
     </div>
   )
