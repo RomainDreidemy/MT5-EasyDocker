@@ -39,8 +39,8 @@ const LinkerManager: TLinkerManager = {
   deleteLinker (drawer: TDrawer, linkerToRemove: TLinker): void {
     const index = drawer.linkers.findIndex((linker: TBaseLinker) => linkerToRemove === linker)
     eventEmitter.emit(EventEmitters.ON_DELETED_LINKER, drawer.linkers[index])
-
     drawer.linkers.splice(index, 1)
+    this.clearSelectedLinker()
   },
 
   findLinker (position: IPosition): TLinkerOrNullify {
@@ -59,7 +59,7 @@ const LinkerManager: TLinkerManager = {
     const connector = this.findConnector(position)
 
     if ((this.selectedConnector != null) && (connector != null) && (this.selectedDrawer != null) && (this.onHoverDrawer != null)) {
-      const link = this.selectedDrawer.createLink(connector, this.selectedConnector)
+      const link = connector.drawer!.createLink(connector, this.selectedConnector)
 
       eventEmitter.emit(EventEmitters.ON_CREATED_LINKER, link)
 
