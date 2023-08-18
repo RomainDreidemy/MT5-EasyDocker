@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - dockerize-application
 
 env:
   GITHUB_CONTAINER_REGISTRY: ghcr.io
