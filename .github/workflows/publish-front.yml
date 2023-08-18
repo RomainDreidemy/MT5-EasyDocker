@@ -62,6 +62,8 @@ jobs:
         with:
           context: "./front"
           file: "./front/Dockerfile.prod"
+          build-args: |
+            VITE_API_URL=${{ secrets.API_URL }}
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
