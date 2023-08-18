@@ -29,18 +29,10 @@ make watch # watch file changes and build
 
 If you want to kill your docker container, run `make down`.
 
-## Under the hood
+# Production
 
-Things we did on top of Create React App TypeScript template
+## Build api Docker image
 
-* We inline `index.html` content in `ext-src/extension.ts` when creating the webview
-* We set strict security policy for accessing resources in the webview.
-  * Only resources in `/build` can be accessed
-  * Onlu resources whose scheme is `vscode-resource` can be accessed.
-* For all resources we are going to use in the webview, we change their schemes to `vscode-resource`
-* Since we only allow local resources, absolute path for styles/images (e.g., `/static/media/logo.svg`) will not work. We add a `.env` file which sets `PUBLIC_URL` to `./` and after bundling, resource urls will be relative.
-* We add baseUrl `<base href="${vscode.Uri.file(path.join(this._extensionPath, 'build')).with({ scheme: 'vscode-resource' })}/">` and then all relative paths work.
-
-## Limitations
-
-Right now you can only run production bits (`yarn run build`) in the webview, how to make dev bits work (webpack dev server) is still unknown yet. Suggestions and PRs welcome !
+```shell
+docker build -t easydocker/api -f ./api/Dockerfile ./api
+```
