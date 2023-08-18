@@ -3,18 +3,9 @@ version: '3'
 services:
   front:
     container_name: front
-    build:
-      context: ./front
-      dockerfile: Dockerfile
-    environment:
-        VITE_API_URL: ${VITE_API_URL}
-    volumes:
-      - ./front/:/app
-      - /app/node_modules
-      - ./.env:/app/.env
+    image: easydocker/front
     ports:
-      - "${FRONT_PORT}:3000"
-    entrypoint: ["yarn", "start"]
+      - "${FRONT_PORT}:80"
 
   api:
     container_name: api

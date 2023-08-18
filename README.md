@@ -36,3 +36,11 @@ If you want to kill your docker container, run `make down`.
 ```shell
 docker build -t easydocker/api -f ./api/Dockerfile ./api
 ```
+
+## Build front Docker image
+
+```shell
+docker build --tag easydocker/front \
+  --build-arg VITE_API_URL=<API_URL> \
+  -f front/Dockerfile.prod ./front
+```
