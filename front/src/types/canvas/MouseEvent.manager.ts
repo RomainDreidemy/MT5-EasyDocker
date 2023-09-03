@@ -10,7 +10,8 @@ export type TMouseEventManager =
   TDrawerManager &
   TLinkerManager &
   {
-    mouseClickPosition: IPosition | undefined
+    onMouseScroll: (position: IPosition) => void
+    isMouseScrollClick: (event: MouseEvent) => boolean
     mouseStartup: () => void
     handleMouseDown: (event: MouseEvent) => void
     handleMouseUp: (event: MouseEvent) => void

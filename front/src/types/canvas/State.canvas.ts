@@ -10,7 +10,9 @@ export interface TStateCanvas {
   selectedDrawer?: TDrawer
   selectedConnector?: TConnector
   onHoverDrawer?: TDrawer
+
   mouseDebounce: number
+  mouseClickPosition?: IPosition
 
   isMoving: boolean
   onDrawerClickOffset?: IPosition
