@@ -49,15 +49,33 @@ const MouseEventManager: TMouseEventManager = {
   },
 
   handleMouseMove (event: MouseEvent): void {
-    const position: IPosition = { x: event.offsetX, y: event.offsetY }
+    const position: IPosition = this.boundingClientPosition(event)
+
+    if (event.buttons === 4) {
+      const delta: IPosition = {
+        x: position.x - this.mouseClickPosition!.x,
+        y: position.y - this.mouseClickPosition!.y
+      }
+
+      console.log(delta)
+      this.drawers.forEach((drawer: TDrawer) => {
+        const drawerPosition: IPosition = {
+          x: drawer.factory!.positionX + delta.x,
+          y: drawer.factory!.positionY + delta.y
+        }
+
+        drawer.factory?.updatePosition(drawerPosition)
+
+        this.mouseClickPosition = position
+      })
+      this.updateScreen()
+    }
 
     const isMovingWithDrawer = this.isMoving && (this.selectedDrawer != null) && (this.selectedConnector == null)
     if (isMovingWithDrawer) {
-      const movePosition: IPosition = this.boundingClientPosition(event)
-
       const drawerPosition: IPosition = {
-        x: movePosition.x - this.onDrawerClickOffset!.x,
-        y: movePosition.y - this.onDrawerClickOffset!.y
+        x: position.x - this.onDrawerClickOffset!.x,
+        y: position.y - this.onDrawerClickOffset!.y
       }
 
       this.selectedDrawer!.factory!.updatePosition(drawerPosition)
@@ -71,6 +89,11 @@ const MouseEventManager: TMouseEventManager = {
   handleMouseDown (event: MouseEvent): void {
     const position: IPosition = { x: event.offsetX, y: event.offsetY }
     this.isMoving = true
+
+    if (event.buttons === 4) {
+      this.mouseClickPosition = position
+      console.log(this.mouseClickPosition)
+    }
 
     if (this.selectedDrawer != null) {
       this.selectedConnector = this.handleMouseUpOnLinker(this.selectedDrawer, position)

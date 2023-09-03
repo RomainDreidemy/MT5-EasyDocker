@@ -10,6 +10,7 @@ export type TMouseEventManager =
   TDrawerManager &
   TLinkerManager &
   {
+    mouseClickPosition: IPosition | undefined
     mouseStartup: () => void
     handleMouseDown: (event: MouseEvent) => void
     handleMouseUp: (event: MouseEvent) => void
