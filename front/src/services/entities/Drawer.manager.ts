@@ -5,7 +5,7 @@ import ServiceEntity from './Service.entity'
 import { type IService, type IServiceCreate } from '../../interfaces/Service.interface'
 import NetworkEntity from './Network.entity'
 import { type INetwork, type INetworkCreate } from '../../interfaces/Network.interface'
-import VolumeEntity from './Volume.entity'
+import ManagedVolumeEntity from './Volume.entity'
 import { type IVolume, type IVolumeCreate } from '../../interfaces/Volume.interface'
 import { Errors } from '../../enums/errors'
 
@@ -19,7 +19,7 @@ const DrawerManager = {
         return await NetworkEntity.create(stackId, entity as INetworkCreate)
 
       case DrawerTypes.VOLUME:
-        return await VolumeEntity.create(stackId, entity as IVolumeCreate)
+        return await ManagedVolumeEntity.create(stackId, entity as IVolumeCreate)
 
       default:
         throw new Error(Errors.NOT_IMPLEMENTED)
@@ -35,7 +35,7 @@ const DrawerManager = {
         return await NetworkEntity.update(entity as INetwork)
 
       case DrawerTypes.VOLUME:
-        return await VolumeEntity.update(entity as IVolume)
+        return await ManagedVolumeEntity.update(entity as IVolume)
 
       default:
         throw new Error(Errors.NOT_IMPLEMENTED)
@@ -51,7 +51,7 @@ const DrawerManager = {
         return await NetworkEntity.delete(entity.id)
 
       case DrawerTypes.VOLUME:
-        return await VolumeEntity.delete(entity.id)
+        return await ManagedVolumeEntity.delete(entity.id)
 
       default:
         throw new Error(Errors.NOT_IMPLEMENTED)

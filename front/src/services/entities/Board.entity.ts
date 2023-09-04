@@ -19,13 +19,13 @@ const BoardEntity = {
     from,
     to
   }: TLinkBody):
-  Promise<AxiosResponse<TLinkEntity>> => await axios.post('/service_volume_links', {
+  Promise<AxiosResponse<TLinkEntity>> => await axios.post('/service_managed_volume_links', {
     serviceArrowPosition: from.placement,
     serviceId: from.id,
-    volumeArrowPosition: to.placement,
-    volumeId: to.id
+    managedVolumeArrowPosition: to.placement,
+    managedVolumeId: to.id
   }),
-  deleteServiceVolumeLink: async (id: string): Promise<AxiosResponse<void>> => await axios.delete(`/service_volume_links/${id}`)
+  deleteServiceVolumeLink: async (id: string): Promise<AxiosResponse<void>> => await axios.delete(`/service_managed_volume_links/${id}`)
 }
 
 export default BoardEntity

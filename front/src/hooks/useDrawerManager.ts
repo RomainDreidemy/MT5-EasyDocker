@@ -9,7 +9,6 @@ import { type ISize } from '../interfaces/Window.interface'
 import StateFactory from '../services/board/drawer/factories/State.factory'
 import EventsCanvas from '../services/canvas/Events.canvas'
 import { type TServiceDrawer } from '../types/board/drawer/Service.drawer'
-import ManagedVolumeEntity from "../services/entities/Volume.entity";
 import DrawerManager from '../services/entities/Drawer.manager'
 
 const useDrawerManager = (stackId: string): {

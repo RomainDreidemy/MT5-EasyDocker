@@ -43,7 +43,7 @@ const StackPage = (): JSX.Element => {
       </div>
 
       {((selectedDrawer != null) || (selectedLinker != null)) && (stackId != null) && (
-        <div className="absolute top-0 right-0 h-full w-80 bg-white">
+        <div className="absolute top-0 right-0 h-full w-80">
           {(selectedDrawer != null) && (
             <EditorOrganism entity={selectedDrawer} stackId={stackId} useEditor={useDrawerEditor}/>)}
           {(selectedLinker != null && UtilsDrawer.isServiceVolumeLink(selectedLinker)) && (
