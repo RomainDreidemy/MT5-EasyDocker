@@ -19,6 +19,7 @@ export type TBaseDrawer =
     drawConnectors: () => void
     drawLinkers: () => void
     createConnectors: () => void
+    updateEntityPosition: () => void
     updateConnectorPositions: () => void
     isCreatingEntity: () => boolean
     isOnX: (x: number) => boolean

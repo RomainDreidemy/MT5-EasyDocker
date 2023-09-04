@@ -29,9 +29,7 @@ const useBoard = (board: TBoardOrNullify): {
   }
 
   const onMovedDrawer: EventListenerCallback = async (drawer: TDrawer) => {
-    drawer.entity!.positionX = drawer.factory!.positionX
-    drawer.entity!.positionY = drawer.factory!.positionY
-
+    drawer.updateEntityPosition()
     await onSelectDrawer(drawer, DrawerManager.update)
   }
 

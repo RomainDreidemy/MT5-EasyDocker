@@ -24,6 +24,11 @@ const BaseDrawer = (): TBaseDrawer => {
       this.factory!.update(entity)
     },
 
+    updateEntityPosition () {
+      this.entity!.positionX = this.factory!.positionX
+      this.entity!.positionY = this.factory!.positionY
+    },
+
     draw (): void {
       this.preProcessActions()
       this.updateConnectorPositions()
