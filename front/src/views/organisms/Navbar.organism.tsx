@@ -1,5 +1,5 @@
 import React from 'react'
-import Button from '../atoms/Forms/Button.atom'
+import Button from '../atoms/forms/Button.atom'
 
 export const Navbar = (): JSX.Element => {
   return (

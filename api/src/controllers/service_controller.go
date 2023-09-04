@@ -75,7 +75,7 @@ func CreateService(c *fiber.Ctx) error {
 
 	service := factories.BuildServiceFromServiceCreationInput(body, stackId)
 
-	result := repositories.CreateService(service)
+	result := repositories.CreateService(&service)
 
 	if result.Error != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(factories.BuildErrorResponse("error", "Cannot create service"))
@@ -110,7 +110,7 @@ func UpdateService(c *fiber.Ctx) error {
 
 	updatedService := factories.BuildServiceFromServiceUpdateInput(body)
 
-	result := repositories.UpdateService(service, updatedService)
+	result := repositories.Update(service, &updatedService)
 
 	if result.Error != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(factories.BuildErrorResponse("error", "Cannot update service"))
@@ -145,6 +145,11 @@ func DeleteService(c *fiber.Ctx) error {
 	}
 
 	repositories.DeleteService(service)
+
+	if result.Error != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(
+			fiber.Map{"status": "error", "message": "Cannot delete service"})
+	}
 
 	return c.SendStatus(fiber.StatusNoContent)
 }

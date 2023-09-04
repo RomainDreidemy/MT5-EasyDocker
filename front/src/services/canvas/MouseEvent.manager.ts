@@ -27,37 +27,44 @@ const MouseEventManager: TMouseEventManager = {
   },
 
   handleMouseUp (event: MouseEvent): void {
-    const position: IPosition = { x: event.offsetX, y: event.offsetY }
+    const position: IPosition = this.boundingClientPosition(event)
 
     if ((this.selectedConnector != null) && (this.onHoverDrawer != null)) {
       this.createLinker(position)
     }
 
-    this.isMoving = false
-    this.selectedConnector = undefined
+    if (this.mouseClickPosition != null) {
+      eventEmitter.emit(EventEmitters.ON_MOVED_SCROLL_CLICK_MOUSE)
+      this.mouseClickPosition = undefined
+    }
 
     this.clearOnHoverDrawer()
     this.updateScreen()
 
     if (this.selectedDrawer != null) {
-      if (!this.selectedDrawer.isCreatingEntity()) {
+      if (!this.selectedDrawer.isCreatingEntity() && this.isMoving) {
         eventEmitter.emit(EventEmitters.ON_MOVED_DRAWER, this.selectedDrawer)
       }
 
       eventEmitter.emit(EventEmitters.ON_SELECTED_DRAWER, this.selectedDrawer)
     }
+
+    this.isMoving = false
+    this.selectedConnector = undefined
   },
 
   handleMouseMove (event: MouseEvent): void {
-    const position: IPosition = { x: event.offsetX, y: event.offsetY }
+    const position: IPosition = this.boundingClientPosition(event)
+
+    if (this.isMouseScrollClick(event)) {
+      this.onMouseScroll(position)
+    }
 
     const isMovingWithDrawer = this.isMoving && (this.selectedDrawer != null) && (this.selectedConnector == null)
     if (isMovingWithDrawer) {
-      const movePosition: IPosition = this.boundingClientPosition(event)
-
       const drawerPosition: IPosition = {
-        x: movePosition.x - this.onDrawerClickOffset!.x,
-        y: movePosition.y - this.onDrawerClickOffset!.y
+        x: position.x - this.onDrawerClickOffset!.x,
+        y: position.y - this.onDrawerClickOffset!.y
       }
 
       this.selectedDrawer!.factory!.updatePosition(drawerPosition)
@@ -69,8 +76,12 @@ const MouseEventManager: TMouseEventManager = {
   },
 
   handleMouseDown (event: MouseEvent): void {
-    const position: IPosition = { x: event.offsetX, y: event.offsetY }
+    const position: IPosition = this.boundingClientPosition(event)
     this.isMoving = true
+
+    if (this.isMouseScrollClick(event)) {
+      this.mouseClickPosition = position
+    }
 
     if (this.selectedDrawer != null) {
       this.selectedConnector = this.handleMouseUpOnLinker(this.selectedDrawer, position)
@@ -108,6 +119,29 @@ const MouseEventManager: TMouseEventManager = {
     const rect: DOMRect = this.context!.canvas.getBoundingClientRect()
 
     return { x: event.clientX - rect.left, y: event.clientY - rect.top }
+  },
+
+  isMouseScrollClick (event: MouseEvent): boolean {
+    return event.buttons === 4
+  },
+
+  onMouseScroll (position: IPosition) {
+    const delta: IPosition = {
+      x: position.x - this.mouseClickPosition!.x,
+      y: position.y - this.mouseClickPosition!.y
+    }
+
+    this.drawers.forEach((drawer: TDrawer) => {
+      const drawerPosition: IPosition = {
+        x: drawer.factory!.positionX + delta.x,
+        y: drawer.factory!.positionY + delta.y
+      }
+
+      drawer.factory?.updatePosition(drawerPosition)
+    })
+
+    this.mouseClickPosition = position
+    this.updateScreen()
   }
 }
 

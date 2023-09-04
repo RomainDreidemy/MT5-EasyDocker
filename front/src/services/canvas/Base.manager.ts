@@ -5,6 +5,8 @@ import StateCanvas from './State.canvas'
 import { DrawerManager } from './Drawer.manager'
 import eventEmitter from '../apps/Event.emitter'
 import { EventEmitters } from '../../enums/eventEmitters'
+import { type IPosition } from '../../interfaces/Position.interface'
+import { type ISize } from '../../interfaces/Window.interface'
 
 const BaseManager: TBaseManager = {
   ...BaseCanvas,
@@ -16,10 +18,16 @@ const BaseManager: TBaseManager = {
   },
 
   deleteDrawer (drawer: TDrawer): void {
-    if (drawer.isCreatingEntity()) return
+    this.drawers = this.drawers.filter(d => d !== drawer)
 
-    this.drawers = this.drawers.filter(d => d.entity!.id !== drawer.entity!.id)
+    this.deleteLinkers(drawer)
     this.updateScreen()
+  },
+
+  deleteLinkers (drawer: TDrawer): void {
+    this.drawers.forEach(d => {
+      d.linkers = d.linkers.filter(linker => linker.link!.to.drawer !== drawer)
+    })
   },
 
   addAndSelectNewDrawer (drawer: TDrawer): void {
@@ -28,6 +36,26 @@ const BaseManager: TBaseManager = {
     this.updateScreen()
 
     eventEmitter.emit(EventEmitters.ON_SELECTED_DRAWER, drawer)
+  },
+
+  emptyPosition (size: ISize, offset: number = 20): IPosition {
+    const { width } = this.canvas!
+    const position: IPosition = { x: offset, y: offset }
+
+    do {
+      const hasEmptyX = this.drawers.some((drawer: TDrawer) => drawer.isOnX(position.x + size.width))
+      const hasEmptyY = this.drawers.some((drawer: TDrawer) => drawer.isOnY(position.y + size.height))
+      const isOutOfCanvas = position.x + size.width > width
+
+      if (hasEmptyX && !isOutOfCanvas) {
+        position.x += offset + size.width
+      } else if (hasEmptyY) {
+        position.x = offset
+        position.y += offset + size.height
+      }
+    } while (this.drawers.some((drawer: TDrawer) => drawer.isOnPosition(position)))
+
+    return position
   },
 
   draw (): void {

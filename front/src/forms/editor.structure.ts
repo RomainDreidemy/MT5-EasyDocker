@@ -1,8 +1,8 @@
 import { DrawerTypes } from '../enums/DrawerTypes'
 import { boolean, string } from 'yup'
-import Input from '../views/atoms/Forms/Input.atom'
-import Checkbox from '../views/atoms/Forms/Checkbox.atom'
-import TextArea from '../views/atoms/Forms/TextArea.atom'
+import Input from '../views/atoms/forms/Input.atom'
+import Checkbox from '../views/atoms/forms/Checkbox.atom'
+import TextArea from '../views/atoms/forms/TextArea.atom'
 
 export type EditorStructure = {
   [key in DrawerTypes]: EditorForm[]
@@ -23,51 +23,28 @@ export const TYPE_STRUCTURES: EditorStructure = {
       name: 'name',
       type: 'text',
       component: Input,
-      validator: string().required()
+      validator: string().nullable()
     },
     {
       label: 'Docker Image',
       name: 'dockerImage',
       type: 'text',
       component: Input,
-      validator: string().required()
+      validator: string().nullable()
     },
     {
       label: 'Docker Tag',
       name: 'dockerTag',
       type: 'text',
       component: Input,
-      validator: string().required()
+      validator: string().nullable()
     },
     {
       label: 'Entrypoint',
       name: 'entrypoint',
       type: 'text',
       component: Input,
-      validator: string().required()
-    },
-    {
-      label: 'Description',
-      name: 'description',
-      type: 'text',
-      component: TextArea,
-      validator: string().required()
-    },
-    {
-      label: 'External',
-      name: 'isExternal',
-      type: 'text',
-      component: Checkbox,
-      validator: boolean().required()
-    }
-  ],
-  [DrawerTypes.NETWORK]: [
-    {
-      label: 'Name',
-      name: 'name',
-      type: 'text',
-      component: Input,
-      validator: string().required()
+      validator: string().nullable()
     },
     {
       label: 'Description',
@@ -81,7 +58,30 @@ export const TYPE_STRUCTURES: EditorStructure = {
       name: 'isExternal',
       type: 'text',
       component: Checkbox,
-      validator: boolean().required()
+      validator: boolean().nullable()
+    }
+  ],
+  [DrawerTypes.NETWORK]: [
+    {
+      label: 'Name',
+      name: 'name',
+      type: 'text',
+      component: Input,
+      validator: string().nullable()
+    },
+    {
+      label: 'Description',
+      name: 'description',
+      type: 'text',
+      component: TextArea,
+      validator: string().nullable()
+    },
+    {
+      label: 'External',
+      name: 'isExternal',
+      type: 'text',
+      component: Checkbox,
+      validator: boolean().nullable()
     }
   ],
   [DrawerTypes.VOLUME]: [
@@ -90,7 +90,7 @@ export const TYPE_STRUCTURES: EditorStructure = {
       name: 'name',
       type: 'text',
       component: Input,
-      validator: string().required()
+      validator: string().nullable()
     },
     {
       label: 'Description',
@@ -104,14 +104,14 @@ export const TYPE_STRUCTURES: EditorStructure = {
       name: 'containerPath',
       type: 'text',
       component: Input,
-      validator: string().required()
+      validator: string().nullable()
     },
     {
       label: 'Local Path',
       name: 'localPath',
       type: 'text',
       component: Input,
-      validator: string().required()
+      validator: string().nullable()
     }
   ]
 }

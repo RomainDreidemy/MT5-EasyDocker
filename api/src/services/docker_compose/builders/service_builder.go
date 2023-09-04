@@ -33,6 +33,14 @@ func DockerComposeServiceBuilder(service models.Service) models.DockerComposeSer
 		dockerComposeService.Ports = BuildDockerComposeServicePorts(service.ServicePorts)
 	}
 
+	if len(service.ServiceVolumes) > 0 {
+		dockerComposeService.Volumes = BuildDockerComposeServiceVolumes(service.ServiceVolumes)
+	}
+
+	if len(service.ServiceEnvVariables) > 0 {
+		dockerComposeService.Environment = BuildDockerComposeServiceEnvironments(service.ServiceEnvVariables)
+	}
+
 	return dockerComposeService
 }
 
@@ -68,4 +76,24 @@ func BuildDockerComposeServicePorts(servicePorts []models.ServicePort) []string 
 	}
 
 	return ports
+}
+
+func BuildDockerComposeServiceVolumes(serviceVolumes []models.ServiceVolume) []string {
+	var volumes []string
+
+	for _, serviceVolume := range serviceVolumes {
+		volumes = append(volumes, serviceVolume.LocalPath+":"+serviceVolume.ContainerPath)
+	}
+
+	return volumes
+}
+
+func BuildDockerComposeServiceEnvironments(serviceEnvironments []models.ServiceEnvVariable) map[string]string {
+	environments := make(map[string]string)
+
+	for _, serviceEnvironment := range serviceEnvironments {
+		environments[serviceEnvironment.Key] = serviceEnvironment.Value
+	}
+
+	return environments
 }

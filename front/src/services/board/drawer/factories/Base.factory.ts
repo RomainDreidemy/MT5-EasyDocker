@@ -2,18 +2,22 @@ import { type TBaseFactory } from '../../../../types/board/drawer/factories/Base
 import StateFactory from './State.factory'
 import { type IPosition } from '../../../../interfaces/Position.interface'
 import CommonBases from '../Common.bases'
-import { type TEntity } from '../../../../types/Entity'
+import { type TEntityOrCreate } from '../../../../types/Entity'
 import { CanvasColor } from '../../../../enums/CanvasColor'
 
 const BaseFactory: TBaseFactory = {
   ...CommonBases,
   ...StateFactory,
 
-  create (entity: TEntity, context: CanvasRenderingContext2D): void {
+  create (entity: TEntityOrCreate, context: CanvasRenderingContext2D): void {
     this.context = context
     this.name = entity.name
     this.positionX = isNaN(entity.positionX) ? this.positionX : entity.positionX
     this.positionY = isNaN(entity.positionY) ? this.positionY : entity.positionY
+  },
+
+  update (entity: TEntityOrCreate): void {
+    this.name = entity.name
   },
 
   isSelected ({ x, y }: IPosition): boolean {

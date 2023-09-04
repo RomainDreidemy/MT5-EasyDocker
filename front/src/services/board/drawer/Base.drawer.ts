@@ -7,6 +7,8 @@ import { type TConnector, type TConnectorOrNullify } from '../../../types/Connec
 import { type ILink } from '../../../interfaces/Link.interface'
 import { type TLinkEntity } from '../../../types/Linker'
 import { type TBaseLinker } from '../../../types/board/drawer/linkers/Base.linker'
+import { type IPosition } from '../../../interfaces/Position.interface'
+import { type TEntityOrCreate } from '../../../types/Entity'
 
 const BaseDrawer = (): TBaseDrawer => {
   return {
@@ -15,6 +17,11 @@ const BaseDrawer = (): TBaseDrawer => {
 
     create (): void {
       throw new Error(Errors.NOT_IMPLEMENTED)
+    },
+
+    update (entity: TEntityOrCreate) {
+      this.entity = entity
+      this.factory!.update(entity)
     },
 
     draw (): void {
@@ -34,9 +41,12 @@ const BaseDrawer = (): TBaseDrawer => {
     },
 
     shouldDrawConnectors (): boolean {
-      if (this.isCreatingEntity()) return false
+      if (this.isCreatingEntity() || this.hasAlreadyLinkWithDrawer()) return false
       if (this.factory!.onHover) return true
-      return ((this.canBeLinkedWith.length > 0) && this.factory!.selected)
+
+      const hasRulesAndSelected =
+        (this.canBeLinkedWith.length > 0) && this.factory!.selected
+      return (hasRulesAndSelected)
     },
 
     drawConnectors (): void {
@@ -76,7 +86,23 @@ const BaseDrawer = (): TBaseDrawer => {
     },
 
     isCreatingEntity (): boolean {
-      return this.entity!.id === undefined
+      return !Object.prototype.hasOwnProperty.call(this.entity, 'id')
+    },
+
+    isOnPosition ({ x, y }: IPosition): boolean {
+      return this.isOnX(x) && this.isOnY(y)
+    },
+
+    isOnX (x: number): boolean {
+      return this.factory!.positionX <= x && x <= this.factory!.positionX + this.factory!.width
+    },
+
+    isOnY (y: number): boolean {
+      return this.factory!.positionY <= y && y <= this.factory!.positionY + this.factory!.height
+    },
+
+    hasAlreadyLinkWithDrawer (): boolean {
+      return this.linkers.some(linker => linker.link!.to.drawer !== this)
     }
   }
 }

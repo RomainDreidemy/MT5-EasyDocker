@@ -2,7 +2,7 @@ import React from 'react'
 import useEditor from '../../hooks/useEditor'
 import { type TDrawer } from '../../types/Drawer'
 import EventsCanvas from '../../services/canvas/Events.canvas'
-import Button from '../atoms/Forms/Button.atom'
+import Button from '../atoms/forms/Button.atom'
 import { type TEntity } from '../../types/Entity'
 
 const EditorOrganism = ({ drawer, stackId }: { drawer: TDrawer, stackId: string }): JSX.Element => {
@@ -52,13 +52,11 @@ const EditorOrganism = ({ drawer, stackId }: { drawer: TDrawer, stackId: string 
             className="w-full"
           />
 
-          {!isCreating && (
-            <Button
-              label="Delete"
-              onClick={onDelete}
-              className="w-full bg-red-500 hover:bg-red-700 border border-red-500 text-white font-bold py-2 px-4 mt-5"
-            />
-          )}
+          <Button
+            label="Delete"
+            onClick={onDelete}
+            className="w-full bg-red-500 hover:bg-red-700 border border-red-500 text-white font-bold py-2 px-4 mt-5"
+          />
         </div>
 
       </form>

@@ -147,3 +147,74 @@ func TestBuildDockerComposeServicePorts(t *testing.T) {
 		})
 	}
 }
+
+func TestBuildDockerComposeServiceVolumes(t *testing.T) {
+	type args struct {
+		serviceVolumes []models.ServiceVolume
+	}
+	tests := []struct {
+		name string
+		args args
+		want []string
+	}{
+		{
+			name: "should have the concatenation of source and target",
+			args: args{
+				serviceVolumes: []models.ServiceVolume{
+					{
+						LocalPath:     "./api",
+						ContainerPath: "/app",
+					},
+				},
+			},
+			want: []string{
+				"./api:/app",
+			},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := BuildDockerComposeServiceVolumes(tt.args.serviceVolumes); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("BuildDockerComposeServiceVolumes() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestBuildDockerComposeServiceEnvironments(t *testing.T) {
+	type args struct {
+		serviceEnvironments []models.ServiceEnvVariable
+	}
+	tests := []struct {
+		name string
+		args args
+		want map[string]string
+	}{
+		{
+			name: "should have the concatenation of source and target",
+			args: args{
+				serviceEnvironments: []models.ServiceEnvVariable{
+					{
+						Key:   "POSTGRES_USER",
+						Value: "postgres",
+					},
+					{
+						Key:   "POSTGRES_PASSWORD",
+						Value: "password123",
+					},
+				},
+			},
+			want: map[string]string{
+				"POSTGRES_USER":     "postgres",
+				"POSTGRES_PASSWORD": "password123",
+			},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := BuildDockerComposeServiceEnvironments(tt.args.serviceEnvironments); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("BuildDockerComposeServiceEnvironments() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}

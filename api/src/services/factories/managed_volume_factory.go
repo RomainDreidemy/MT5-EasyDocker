@@ -24,3 +24,13 @@ func BuildManagedVolumeBoardResponses(managedVolumes []models.ManagedVolume) []m
 	}
 	return serializedManagedVolumes
 }
+
+func BuildManagedVolumeFromCreationInput(body models.ManagedVolumeCreateInput, stackId string) models.ManagedVolume {
+	return models.ManagedVolume{
+		Name:        body.Name,
+		Description: body.Description,
+		PositionX:   body.PositionX,
+		PositionY:   body.PositionY,
+		StackID:     stackId,
+	}
+}

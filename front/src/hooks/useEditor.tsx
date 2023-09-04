@@ -6,14 +6,15 @@ import { type AxiosResponse } from 'axios'
 import { type TEntity } from '../types/Entity'
 import { DrawerTypes } from '../enums/DrawerTypes'
 import ServiceEntity from '../services/entities/Service.entity'
-import { type IService, type IServiceCreate } from '../interfaces/Service.interface'
+import { type IService } from '../interfaces/Service.interface'
 import NetworkEntity from '../services/entities/Network.entity'
-import { type INetwork, type INetworkCreate } from '../interfaces/Network.interface'
+import { type INetwork } from '../interfaces/Network.interface'
 import VolumeEntity from '../services/entities/Volume.entity'
-import { type IVolume, type IVolumeCreate } from '../interfaces/Volume.interface'
+import { type IVolume } from '../interfaces/Volume.interface'
 import { Errors } from '../enums/errors'
 import { object } from 'yup'
 import { type TOnChange } from '../interfaces/Forms/Input.interface'
+import useDrawerManager from './useDrawerManager'
 
 const useEditor = (drawer: TDrawer, stackId: string): {
   fields: EditorForm[]
@@ -22,6 +23,7 @@ const useEditor = (drawer: TDrawer, stackId: string): {
   onDelete: () => void
   entityForm: TEntity
 } => {
+  const { createEntity } = useDrawerManager(stackId)
   const [entityForm, setEntityForm] = useState<TEntity>(drawer.entity!)
   const [structure] = useState<EditorForm[]>(TYPE_STRUCTURES[drawer.type!])
 
@@ -44,30 +46,17 @@ const useEditor = (drawer: TDrawer, stackId: string): {
       entityForm.positionY = drawer.factory!.positionY
 
       const response = isCreating
-        ? await createEntity()
+        ? await createEntity(entityForm, drawer.type!)
         : await updateEntity()
 
       const { data: entity } = response
-      drawer.entity = entity
+
+      drawer.update(entity)
+      setEntityForm(entity)
+
       EventsCanvas.updateScreen()
     } catch (err) {
       console.error(err)
-    }
-  }
-
-  const createEntity = async (): Promise<AxiosResponse<TEntity>> => {
-    switch (drawer.type) {
-      case DrawerTypes.SERVICE:
-        return await ServiceEntity.create(stackId, entityForm as IServiceCreate)
-
-      case DrawerTypes.NETWORK:
-        return await NetworkEntity.create(stackId, entityForm as INetworkCreate)
-
-      case DrawerTypes.VOLUME:
-        return await VolumeEntity.create(stackId, entityForm as IVolumeCreate)
-
-      default:
-        throw new Error(Errors.NOT_IMPLEMENTED)
     }
   }
 
@@ -104,9 +93,12 @@ const useEditor = (drawer: TDrawer, stackId: string): {
   }
 
   const onDelete = async (): Promise<void> => {
-    await deleteEntity()
+    if (!isCreating) {
+      await deleteEntity()
+    }
 
     EventsCanvas.deleteDrawer(drawer)
+    EventsCanvas.clearSelectedDrawer()
   }
 
   return {

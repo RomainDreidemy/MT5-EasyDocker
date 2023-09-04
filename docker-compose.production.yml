@@ -3,24 +3,14 @@ version: '3'
 services:
   front:
     container_name: front
-    build:
-      context: ./front
-      dockerfile: Dockerfile
-    volumes:
-      - ./front/:/app
-      - /app/node_modules
-      - ./.env:/app/.env
+    image: ghcr.io/romaindreidemy/mt5-easydocker/front:latest
     ports:
-      - "${FRONT_PORT}:3000"
-    entrypoint: ["yarn", "start"]
+      - "${FRONT_PORT}:80"
 
   api:
     container_name: api
-    build:
-      context: ./api
-      dockerfile: Dockerfile
+    image: ghcr.io/romaindreidemy/mt5-easydocker/api:latest
     volumes:
-      - ./api/:/app
       - ./.env:/app/.env
     ports:
       - "${API_PORT}:3000"
