@@ -1487,12 +1487,16 @@
         "models.NetworkCreateInput": {
             "type": "object",
             "required": [
+                "driver",
                 "name",
                 "positionX",
                 "positionY"
             ],
             "properties": {
                 "description": {
+                    "type": "string"
+                },
+                "driver": {
                     "type": "string"
                 },
                 "isExternal": {
@@ -1513,6 +1517,9 @@
             "type": "object",
             "properties": {
                 "description": {
+                    "type": "string"
+                },
+                "driver": {
                     "type": "string"
                 },
                 "id": {
@@ -1536,6 +1543,9 @@
             "type": "object",
             "properties": {
                 "description": {
+                    "type": "string"
+                },
+                "driver": {
                     "type": "string"
                 },
                 "isExternal": {

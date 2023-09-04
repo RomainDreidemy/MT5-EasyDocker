@@ -495,6 +495,34 @@ const docTemplate = `{
                 }
             }
         },
+        "/service_managed_volume_links/{id}": {
+            "delete": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Service Volume Links"
+                ],
+                "summary": "Delete a link between a service and a volume",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Service Volume Link ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    }
+                }
+            }
+        },
         "/service_network_links": {
             "post": {
                 "consumes": [
@@ -1469,12 +1497,16 @@ const docTemplate = `{
         "models.NetworkCreateInput": {
             "type": "object",
             "required": [
+                "driver",
                 "name",
                 "positionX",
                 "positionY"
             ],
             "properties": {
                 "description": {
+                    "type": "string"
+                },
+                "driver": {
                     "type": "string"
                 },
                 "isExternal": {
@@ -1495,6 +1527,9 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "description": {
+                    "type": "string"
+                },
+                "driver": {
                     "type": "string"
                 },
                 "id": {
@@ -1518,6 +1553,9 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "description": {
+                    "type": "string"
+                },
+                "driver": {
                     "type": "string"
                 },
                 "isExternal": {
