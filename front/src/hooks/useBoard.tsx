@@ -50,6 +50,7 @@ const useBoard = (board: TBoardOrNullify): {
     eventEmitter.on(EventEmitters.ON_SELECTED_DRAWER, onSelectedDrawer)
     eventEmitter.on(EventEmitters.ON_UNSELECTED_DRAWER, onUnselectedDrawer)
     eventEmitter.on(EventEmitters.ON_MOVED_SCROLL_CLICK_MOUSE, onMovedScrollClickMouse)
+    eventEmitter.on(EventEmitters.ON_SELECTED_LINKER, onSelectedLinker)
 
     return () => {
       eventEmitter.removeListener(EventEmitters.ON_MOVED_DRAWER)
@@ -58,6 +59,7 @@ const useBoard = (board: TBoardOrNullify): {
       eventEmitter.removeListener(EventEmitters.ON_CREATED_LINKER)
       eventEmitter.removeListener(EventEmitters.ON_DELETED_LINKER)
       eventEmitter.removeListener(EventEmitters.ON_MOVED_SCROLL_CLICK_MOUSE)
+      eventEmitter.removeListener(EventEmitters.ON_SELECTED_LINKER)
     }
   }, [])
 
@@ -115,6 +117,10 @@ const useBoard = (board: TBoardOrNullify): {
 
   const onSelectedDrawer: EventListenerCallback = (drawer: TDrawer) => {
     setSelectedDrawer(drawer)
+  }
+
+  const onSelectedLinker: EventListenerCallback = (linker: TLinker) => {
+    console.log('----', linker)
   }
 
   return {
