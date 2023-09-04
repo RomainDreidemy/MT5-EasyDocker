@@ -27,10 +27,14 @@ const StacksPage = (): JSX.Element => {
       {
         stacks ?
         (stacks.map((stack: IStack) => (
-          <div key={stack.id}>
-            <h2>{stack.name}</h2>
-            <p>{stack.description}</p>
-            <Link to={`/stacks/${stack.id}`}>View</Link>
+          <div key={stack.id} className="card w-96 bg-base-100 shadow-xl">
+            <div className="card-body">
+              <h2 className="card-title">{stack.name}</h2>
+              <p>{stack.description}</p>
+              <div className="card-actions justify-end">
+              <Link className="btn btn-primary" to={`/stacks/${stack.id}`}>View</Link>
+              </div>
+            </div>
           </div>
         ))) :
         <h2>You don't have any stacks yet</h2>
