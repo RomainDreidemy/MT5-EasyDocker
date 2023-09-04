@@ -14,7 +14,7 @@ import { Errors } from '../enums/errors'
 import { object } from 'yup'
 import { type TOnChange } from '../interfaces/Forms/Input.interface'
 import useDrawerManager from './useDrawerManager'
-import ManagedVolumeEntity from "../services/entities/Volume.entity";
+import ManagedVolumeEntity from '../services/entities/Volume.entity'
 
 const useEditor = (drawer: TDrawer, stackId: string): {
   fields: EditorForm[]

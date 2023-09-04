@@ -8,10 +8,9 @@ const AuthEntity = (): IAuth => ({
   isLogged: async () => {
     try {
       await axios.get('/users/me')
+      return true
     } catch (e) {
       return false
-    } finally {
-      return true
     }
   }
 })

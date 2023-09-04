@@ -21,13 +21,13 @@ const LoginPage = (): JSX.Element => {
   const [status, setStatus] = useState<IValidationStatus>({ success: false, errors: [] })
   const { user, setUser } = useContext<any>(UserContext)
 
- useEffect(() => {
-    async () => {
-        const response = await AuthEntity.isLogged()
-        if (response) {
-            navigate('/')
-        }
-    }
+  useEffect(() => {
+    (async () => {
+      const response = await AuthEntity.isLogged()
+      if (response) {
+        navigate('/')
+      }
+    })()
   }, [])
 
   const userSchema = object({

@@ -17,12 +17,12 @@ const RegisterPage = (): JSX.Element => {
   const [status, setStatus] = useState<IValidationStatus>({ success: false, errors: [] })
 
   useEffect(() => {
-    async () => {
+    (async () => {
       const response = await AuthEntity.isLogged()
       if (response) {
         navigate('/')
       }
-    }
+    })()
   }, [])
 
   const registerSchema = object({
