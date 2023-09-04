@@ -56,7 +56,24 @@ const DrawerManager = {
       default:
         throw new Error(Errors.NOT_IMPLEMENTED)
     }
+  },
+
+  get: async (entity: TEntity, type: DrawerTypes): Promise<AxiosResponse<TEntity>> => {
+    switch (type) {
+      case DrawerTypes.SERVICE:
+        return await ServiceEntity.get(entity as IService)
+
+      case DrawerTypes.NETWORK:
+        return await NetworkEntity.get(entity as INetwork)
+
+      case DrawerTypes.VOLUME:
+        return await ManagedVolumeEntity.get(entity as IVolume)
+
+      default:
+        throw new Error(Errors.NOT_IMPLEMENTED)
+    }
   }
+
 }
 
 export default DrawerManager

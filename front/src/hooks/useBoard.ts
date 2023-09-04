@@ -11,6 +11,7 @@ import BoardEntity from '../services/entities/Board.entity'
 import UtilsDrawer from '../services/board/Utils.drawer'
 import { type AxiosResponse } from 'axios'
 import DrawerManager from '../services/entities/Drawer.manager'
+import { Errors } from '../enums/errors'
 
 const useBoard = (board: TBoardOrNullify): {
   canvasRef: MutableRefObject<HTMLCanvasElement | null>
@@ -48,6 +49,8 @@ const useBoard = (board: TBoardOrNullify): {
     } else if (UtilsDrawer.isServiceVolumeLink(linker)) {
       return await BoardEntity.serviceVolumeLink(linkBody)
     }
+
+    throw new Error(Errors.NOT_IMPLEMENTED)
   }
 
   const onDeletedLinker: EventListenerCallback = async (linker: TLinker) => {
@@ -56,13 +59,18 @@ const useBoard = (board: TBoardOrNullify): {
     } else if (UtilsDrawer.isServiceVolumeLink(linker)) {
       await BoardEntity.deleteServiceVolumeLink(linker.entity!.id)
     }
+
+    throw new Error(Errors.NOT_IMPLEMENTED)
   }
 
   const onUnselectedDrawer: EventListenerCallback = (_) => {
     setSelectedDrawer(undefined)
   }
 
-  const onSelectedDrawer: EventListenerCallback = (drawer: TDrawer) => {
+  const onSelectedDrawer: EventListenerCallback = async (drawer: TDrawer) => {
+    const { data: entity } = await DrawerManager.update(drawer.entity!, drawer.type!)
+    drawer.update(entity)
+
     setSelectedDrawer(drawer)
   }
 
@@ -70,7 +78,7 @@ const useBoard = (board: TBoardOrNullify): {
     setSelectedLinker(linker)
   }
 
-  const onUnselectedLinker: EventListenerCallback = (linker: TLinker) => {
+  const onUnselectedLinker: EventListenerCallback = (_) => {
     setSelectedLinker(undefined)
   }
 
