@@ -28,7 +28,7 @@ const EditorOrganism = ({ entity, stackId, useEditor }: {
 
         {fields.map((field, index) => {
           const Component = field.component
-          const value = entityForm[field.name as keyof TEntity & keyof TLinkEntity]
+          const value = entityForm[field.key as keyof TEntity & keyof TLinkEntity]
 
           return (
             <Component
