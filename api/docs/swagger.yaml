@@ -757,6 +757,24 @@ paths:
       summary: Create a new link between a service and a volume
       tags:
       - Service Volume Links
+  /service_managed_volume_links/{id}:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: Service Volume Link ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+      summary: Delete a link between a service and a volume
+      tags:
+      - Service Volume Links
   /service_network_links:
     post:
       consumes:
