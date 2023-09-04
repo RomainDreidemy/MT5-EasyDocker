@@ -1,6 +1,8 @@
 export interface IAuth {
   auth: (data: IAuthEntity) => Promise<any>
   register: (data: IAuthEntity) => Promise<any>
+  me: () => Promise<any>
+  isLogged: () => Promise<boolean>
 }
 
 export interface IAuthEntity {
@@ -8,14 +10,4 @@ export interface IAuthEntity {
   password: string
   passwordConfirm?: string
   remember?: boolean
-}
-
-export interface IAuthStatus {
-  success: boolean
-  errors: IAuthError[]
-}
-
-export interface IAuthError {
-  path: string
-  message: string
 }

@@ -1,7 +1,16 @@
 import React from 'react'
 import Button from '../atoms/forms/Button.atom'
+import Cookies from 'js-cookie'
+import { useNavigate } from 'react-router-dom'
 
 export const Navbar = (): JSX.Element => {
+  const navigate = useNavigate()
+
+  const logout = (): void => {
+    Cookies.remove('token')
+    navigate('/login')
+  }
+
   return (
     <div className="navbar bg-base-100 border-b-2">
       <div className="navbar-start">
@@ -12,6 +21,7 @@ export const Navbar = (): JSX.Element => {
       </div>
       <div className="navbar-end">
         <Button label={'Account'} variant="secondary"/>
+        <Button label={'Logout'} variant="accent" className={'ml-2'} onClick={logout} />
       </div>
     </div>
   )

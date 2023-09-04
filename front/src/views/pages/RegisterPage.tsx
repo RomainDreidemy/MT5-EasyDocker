@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { object, string } from 'yup'
 import AuthEntity from '../../services/entities/Auth.entity'
@@ -7,12 +7,23 @@ import Warning from '../molecules/Alerts/Warning.molecule'
 import Input from '../atoms/forms/Input.atom'
 import Button from '../atoms/forms/Button.atom'
 import { BiLeftArrowAlt, BiRightArrowAlt } from 'react-icons/bi'
-import { type IAuthEntity, type IAuthError, type IAuthStatus } from '../../interfaces/Auth.interface'
+import { type IAuthEntity } from '../../interfaces/Auth.interface'
+import { type IValidationStatus } from '../../interfaces/Forms/Validation.interface'
+import { hasError, showErrorMessage, validateSchema } from '../../services/utils/validation.util'
 
 const RegisterPage = (): JSX.Element => {
   const navigate = useNavigate()
   const [form, setForm] = useState<IAuthEntity>({ email: '', password: '', passwordConfirm: '' })
-  const [status, setStatus] = useState<IAuthStatus>({ success: false, errors: [] })
+  const [status, setStatus] = useState<IValidationStatus>({ success: false, errors: [] })
+
+  useEffect(() => {
+    (async () => {
+      const response = await AuthEntity.isLogged()
+      if (response) {
+        navigate('/')
+      }
+    })()
+  }, [])
 
   const registerSchema = object({
     email: string().email().required(),
@@ -20,32 +31,8 @@ const RegisterPage = (): JSX.Element => {
     passwordConfirm: string().nullable().min(8).required()
   })
 
-  const changeValue = (e: React.ChangeEvent<HTMLButtonElement | HTMLInputElement>): void => {
-    setForm({ ...form, [e.target.name]: e.target.value })
-    if (e.target.name === 'passwordConfirm') passwordMatch(e.target.value)
-  }
-  const hasError = (field: string): boolean => {
-    return status.errors?.map((e) => e.path).includes(field)
-  }
-  const showErrorMessage = (field: string): string[] => {
-    return status.errors?.map((e: IAuthError) => e.path === field ? e.message : '')
-  }
-  const validateSchema = async (): Promise<IAuthError[]> => {
-    const validationResult = await registerSchema.validate(form, { abortEarly: false }).catch((err) => err)
-    return validationResult.inner ?? null
-  }
-
-  const passwordMatch = (passwordConfirm: string): boolean => {
-    const doesMatch = form.password === passwordConfirm
-
-    if (!doesMatch) setStatus({ ...status, errors: [{ path: 'passwordMatch', message: 'Passwords doesn\'t match !' }] })
-    else setStatus({ ...status, errors: [] })
-
-    return doesMatch
-  }
-
   const processRegister = async (): Promise<void> => {
-    const validationErrors = (await validateSchema())
+    const validationErrors = (await validateSchema(registerSchema, form))
     setStatus({ ...status, errors: validationErrors })
     if (validationErrors?.length > 0) return
 
@@ -62,6 +49,18 @@ const RegisterPage = (): JSX.Element => {
     }
   }
 
+  const changeValue = (e: React.ChangeEvent<any>): void => {
+    setForm({ ...form, [e.target.name]: e.target.value })
+    if (e.target.name === 'passwordConfirm') passwordMatch(e.target.value)
+  }
+  const passwordMatch = (passwordConfirm: string): boolean => {
+    const doesMatch = form.password === passwordConfirm
+
+    if (!doesMatch) setStatus({ ...status, errors: [{ path: 'passwordMatch', message: 'Passwords doesn\'t match !' }] })
+    else setStatus({ ...status, errors: [] })
+
+    return doesMatch
+  }
   const redirect = (to: string, delay: number): void => {
     setTimeout(() => {
       navigate(to)
@@ -86,18 +85,18 @@ const RegisterPage = (): JSX.Element => {
               type="email"
               name="email"
               onChange={(e) => { changeValue(e) }}
-              className={hasError('email') ? 'border-2 border-red-600' : ''}
+              className={hasError(status, 'email') ? 'border-2 border-red-600' : ''}
             />
-            <div className='text-red-500 mb-5 first-letter:uppercase'>{showErrorMessage('email')}</div>
+            <div className='text-red-500 mb-5 first-letter:uppercase'>{showErrorMessage(status, 'email')}</div>
 
             <Input
               label="Password"
               type="password"
               name="password"
               onChange={(e) => { changeValue(e) }}
-              className={hasError('password') ? 'border-2 border-red-600' : ''}
+              className={hasError(status, 'password') ? 'border-2 border-red-600' : ''}
             />
-            <div className='text-red-500 mb-2 first-letter:uppercase'>{showErrorMessage('password')}</div>
+            <div className='text-red-500 mb-2 first-letter:uppercase'>{showErrorMessage(status, 'password')}</div>
 
             <Input
               label="Confirm Password"
@@ -105,11 +104,11 @@ const RegisterPage = (): JSX.Element => {
               name="passwordConfirm"
               onChange={(e) => { changeValue(e) }}
               onKeyDown={async (e) => await (e.key === 'Enter' && processRegister())}
-              className={hasError('passwordConfirm') ? 'border-2 border-red-600' : ''}
+              className={hasError(status, 'passwordConfirm') ? 'border-2 border-red-600' : ''}
             />
             <div className='text-red-500 mb-2 first-letter:uppercase'>
-              {showErrorMessage('password')}
-              {showErrorMessage('passwordMatch')}
+              {showErrorMessage(status, 'password')}
+              {showErrorMessage(status, 'passwordMatch')}
             </div>
 
             <Button
