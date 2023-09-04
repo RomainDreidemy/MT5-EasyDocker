@@ -6,43 +6,50 @@ import ManagerOrganism from '../organisms/Manager.organism'
 import EditorOrganism from '../organisms/Editor.organism'
 import { type TBoardOrNullify } from '../../types/Board'
 import StackEntity from '../../services/entities/Stack.entity'
+import useDrawerEditor from '../../hooks/useDrawerEditor'
+import useLinkerEditor from '../../hooks/useLinkerEditor'
+import UtilsDrawer from '../../services/board/Utils.drawer'
 
 const StackPage = (): JSX.Element => {
   const navigate = useNavigate()
 
-  const { id } = useParams()
+  const { id: stackId } = useParams()
 
   useEffect(() => {
-    if (id == null) navigate('/stacks')
-  }, [id])
+    if (stackId == null) navigate('/stacks')
+  }, [stackId])
 
   const [board, setBoard] = useState<TBoardOrNullify>(undefined)
 
   useEffect(() => {
     (async () => {
-      const { data: boardResponse } = await StackEntity.board(id!)
+      const { data: boardResponse } = await StackEntity.board(stackId!)
 
       setBoard(boardResponse)
     })()
   }, [])
 
-  const { canvasRef, selectedDrawer } = useBoard(board)
+  const { canvasRef, selectedDrawer, selectedLinker } = useBoard(board)
 
   return (
     <section className="h-[calc(100vh-66px)] flex relative">
 
       <div className="w-[calc(200px)]">
-        { (id != null) && (<ManagerOrganism stackId={id}/>)}
+        {(stackId != null) && (<ManagerOrganism stackId={stackId}/>)}
       </div>
 
       <div className="flex-1 w-64">
-
         <BoardOrganism canvasRef={canvasRef}/>
       </div>
 
-      {(selectedDrawer != null) && (id != null) && <div className="absolute top-0 right-0 h-full w-80 bg-white">
-          <EditorOrganism drawer={selectedDrawer} stackId={id}/>
-      </div>}
+      {((selectedDrawer != null) || (selectedLinker != null)) && (stackId != null) && (
+        <div className="absolute top-0 right-0 h-full w-80">
+          {(selectedDrawer != null) && (
+            <EditorOrganism entity={selectedDrawer} stackId={stackId} useEditor={useDrawerEditor}/>)}
+          {(selectedLinker != null && UtilsDrawer.isServiceVolumeLink(selectedLinker)) && (
+            <EditorOrganism entity={selectedLinker} stackId={stackId} useEditor={useLinkerEditor}/>)}
+        </div>
+      )}
     </section>
   )
 }

@@ -59,8 +59,8 @@ const DrawersBuilder = (board: TBoard, context: CanvasRenderingContext2D): TDraw
           drawers: this.serviceDrawers
         }
         const to: TLinkCreator = {
-          id: link.volumeId,
-          placement: link.volumeArrowPosition,
+          id: link.managedVolumeId,
+          placement: link.managedVolumeArrowPosition,
           drawers: this.volumeDrawers
         }
 

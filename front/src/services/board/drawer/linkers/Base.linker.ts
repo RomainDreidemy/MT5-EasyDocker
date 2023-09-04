@@ -5,6 +5,7 @@ import CommonBases from '../Common.bases'
 import { type TConnector } from '../../../../types/Connector'
 import { Placements } from '../../../../enums/placements'
 import { CanvasColor } from '../../../../enums/CanvasColor'
+import { type TLinkEntity } from '../../../../types/Linker'
 
 const BaseLinker: TBaseLinker = {
   ...CommonBases,
@@ -12,6 +13,10 @@ const BaseLinker: TBaseLinker = {
 
   isSelected ({ x, y }: IPosition): boolean {
     return this.context!.isPointInStroke(this.path, x, y)
+  },
+
+  update (entity: TLinkEntity) {
+    this.entity = entity
   },
 
   draw (): void {

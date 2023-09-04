@@ -33,6 +33,6 @@ export interface IServiceVolumeLinks {
   serviceId: string
   serviceArrowPosition: Placements
 
-  volumeId: string
-  volumeArrowPosition: Placements
+  managedVolumeId: string
+  managedVolumeArrowPosition: Placements
 }
