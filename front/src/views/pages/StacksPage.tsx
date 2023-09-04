@@ -25,13 +25,15 @@ const StacksPage = (): JSX.Element => {
       <h1>Stacks</h1>
 
       {
-        stacks.map((stack: IStack) => (
+        stacks ?
+        (stacks.map((stack: IStack) => (
           <div key={stack.id}>
             <h2>{stack.name}</h2>
             <p>{stack.description}</p>
             <Link to={`/stacks/${stack.id}`}>View</Link>
           </div>
-        ))
+        ))) :
+        <h2>You don't have any stacks yet</h2>
       }
     </section>
   )
