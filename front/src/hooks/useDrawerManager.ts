@@ -5,21 +5,17 @@ import NetworkDrawer from '../services/board/drawer/Network.drawer'
 import VolumeDrawer from '../services/board/drawer/Volume.drawer'
 import { type TEntity, type TEntityCreate } from '../types/Entity'
 import { type AxiosResponse } from 'axios'
-import ServiceEntity from '../services/entities/Service.entity'
-import { type IServiceCreate } from '../interfaces/Service.interface'
-import NetworkEntity from '../services/entities/Network.entity'
-import { type INetworkCreate } from '../interfaces/Network.interface'
-import { type IVolumeCreate } from '../interfaces/Volume.interface'
-import { Errors } from '../enums/errors'
 import { type ISize } from '../interfaces/Window.interface'
 import StateFactory from '../services/board/drawer/factories/State.factory'
 import EventsCanvas from '../services/canvas/Events.canvas'
 import { type TServiceDrawer } from '../types/board/drawer/Service.drawer'
-import ManagedVolumeEntity from '../services/entities/Volume.entity'
+import DrawerManager from '../services/entities/Drawer.manager'
 
 const useDrawerManager = (stackId: string): {
   createEntityAndDraw: (type: DrawerTypes) => Promise<void>
-  createEntity: (entity: TEntityCreate, type: DrawerTypes) => Promise<AxiosResponse<TEntity>>
+  createEntity: (stackId: string, entity: TEntityCreate, type: DrawerTypes) => Promise<AxiosResponse<TEntity>>
+  updateEntity: (entity: TEntity, type: DrawerTypes) => Promise<AxiosResponse<TEntity>>
+  deleteEntity: (entity: TEntity, type: DrawerTypes) => Promise<any>
   loading: boolean
 } => {
   const [loading, setLoading] = useState<boolean>(false)
@@ -60,21 +56,9 @@ const useDrawerManager = (stackId: string): {
     }
   }
 
-  const createEntity = async (entity: TEntityCreate, type: DrawerTypes): Promise<AxiosResponse<TEntity>> => {
-    switch (type) {
-      case DrawerTypes.SERVICE:
-        return await ServiceEntity.create(stackId, entity as IServiceCreate)
-
-      case DrawerTypes.NETWORK:
-        return await NetworkEntity.create(stackId, entity as INetworkCreate)
-
-      case DrawerTypes.VOLUME:
-        return await ManagedVolumeEntity.create(stackId, entity as IVolumeCreate)
-
-      default:
-        throw new Error(Errors.NOT_IMPLEMENTED)
-    }
-  }
+  const createEntity = DrawerManager.create
+  const updateEntity = DrawerManager.update
+  const deleteEntity = DrawerManager.delete
 
   const createEntityAndDraw = async (type: DrawerTypes): Promise<void> => {
     try {
@@ -89,7 +73,8 @@ const useDrawerManager = (stackId: string): {
       form.positionX = x
       form.positionY = y
 
-      const { data: entityCreated } = await createEntity(form, type)
+      const { data: entityCreated } = await DrawerManager.create(stackId, form, type)
+      console.log(entityCreated)
 
       const entityDrawer: TServiceDrawer = drawer(entityCreated, EventsCanvas.context!)
       entityDrawer.create()
@@ -105,6 +90,8 @@ const useDrawerManager = (stackId: string): {
   return {
     createEntityAndDraw,
     createEntity,
+    updateEntity,
+    deleteEntity,
     loading
   }
 }

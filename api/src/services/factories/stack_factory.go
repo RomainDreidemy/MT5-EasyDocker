@@ -14,7 +14,7 @@ func BuildStackResponse(stack models.Stack) models.StackResponse {
 }
 
 func BuildStackResponses(stacks []models.Stack) []models.StackResponse {
-	var serializedStacks []models.StackResponse
+	serializedStacks := make([]models.StackResponse, 0)
 	for i := 0; i < len(stacks); i++ {
 		serializedStacks = append(serializedStacks, BuildStackResponse(stacks[i]))
 	}

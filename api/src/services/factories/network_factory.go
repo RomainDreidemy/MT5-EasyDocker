@@ -10,6 +10,7 @@ func BuildNetworkResponse(network models.Network) models.NetworkResponse {
 		Description: network.Description,
 		PositionX:   network.PositionX,
 		PositionY:   network.PositionY,
+		Driver:      network.Driver,
 	}
 }
 
@@ -41,6 +42,7 @@ func BuildNetworkFromNetworkCreationInput(network models.NetworkCreateInput, sta
 		Description: network.Description,
 		PositionX:   network.PositionX,
 		PositionY:   network.PositionY,
+		Driver:      network.Driver,
 		StackID:     stackId,
 	}
 }
@@ -52,5 +54,6 @@ func BuildNetworkFromNetworkUpdateInput(network models.NetworkUpdateInput) model
 		Description: network.Description,
 		PositionX:   network.PositionX,
 		PositionY:   network.PositionY,
+		Driver:      network.Driver,
 	}
 }

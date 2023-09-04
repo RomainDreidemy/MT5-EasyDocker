@@ -1,6 +1,7 @@
 import axios from '../utils/axios'
 import { type AxiosResponse } from 'axios'
 import { type TLinkBody, type TLinkEntity } from '../../types/Linker'
+import { type IServiceVolumeLinks } from '../../interfaces/Service.interface'
 
 const BoardEntity = {
   serviceNetworkLink: async ({
@@ -19,13 +20,14 @@ const BoardEntity = {
     from,
     to
   }: TLinkBody):
-  Promise<AxiosResponse<TLinkEntity>> => await axios.post('/service_volume_links', {
+  Promise<AxiosResponse<TLinkEntity>> => await axios.post('/service_managed_volume_links', {
     serviceArrowPosition: from.placement,
     serviceId: from.id,
-    volumeArrowPosition: to.placement,
-    volumeId: to.id
+    managedVolumeArrowPosition: to.placement,
+    managedVolumeId: to.id
   }),
-  deleteServiceVolumeLink: async (id: string): Promise<AxiosResponse<void>> => await axios.delete(`/service_volume_links/${id}`)
+  deleteServiceVolumeLink: async (id: string): Promise<AxiosResponse<void>> => await axios.delete(`/service_managed_volume_links/${id}`),
+  updateServiceVolumeLink: async (serviceVolume: IServiceVolumeLinks): Promise<AxiosResponse<IServiceVolumeLinks>> => await axios.put(`/service_managed_volume_links/${serviceVolume.id}`, serviceVolume)
 }
 
 export default BoardEntity

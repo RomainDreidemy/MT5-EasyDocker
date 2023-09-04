@@ -77,6 +77,8 @@ definitions:
     properties:
       description:
         type: string
+      driver:
+        type: string
       isExternal:
         type: boolean
       name:
@@ -86,6 +88,7 @@ definitions:
       positionY:
         type: number
     required:
+    - driver
     - name
     - positionX
     - positionY
@@ -93,6 +96,8 @@ definitions:
   models.NetworkResponse:
     properties:
       description:
+        type: string
+      driver:
         type: string
       id:
         type: string
@@ -108,6 +113,8 @@ definitions:
   models.NetworkUpdateInput:
     properties:
       description:
+        type: string
+      driver:
         type: string
       isExternal:
         type: boolean

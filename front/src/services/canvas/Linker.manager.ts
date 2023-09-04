@@ -53,6 +53,7 @@ const LinkerManager: TLinkerManager = {
     this.clearSelectedLinker()
     this.selectedLinker = linker
     this.selectedLinker.selected = true
+    eventEmitter.emit(EventEmitters.ON_SELECTED_LINKER, linker)
   },
 
   createLinker (position: IPosition): void {
@@ -79,6 +80,7 @@ const LinkerManager: TLinkerManager = {
       this.selectedLinker.selected = false
     }
     this.selectedLinker = undefined
+    eventEmitter.emit(EventEmitters.ON_UNSELECTED_LINKER)
   }
 }
 

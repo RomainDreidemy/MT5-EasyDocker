@@ -1,23 +1,19 @@
 import React from 'react'
-import useEditor from '../../hooks/useEditor'
-import { type TDrawer } from '../../types/Drawer'
-import EventsCanvas from '../../services/canvas/Events.canvas'
 import Button from '../atoms/forms/Button.atom'
 import { type TEntity } from '../../types/Entity'
+import type useDrawerEditor from '../../hooks/useDrawerEditor'
+import type useLinkerEditor from '../../hooks/useLinkerEditor'
+import { type TLinkEntity } from '../../types/Linker'
 
-const EditorOrganism = ({ drawer, stackId }: { drawer: TDrawer, stackId: string }): JSX.Element => {
-  const { fields, onSubmit, onChange, entityForm, onDelete } = useEditor(drawer, stackId)
-
-  const isCreating: boolean = drawer.isCreatingEntity()
-  const submitText: string = isCreating ? 'Create' : 'Update'
-
-  const onClose = (): void => {
-    EventsCanvas.clearSelectedDrawer()
-    EventsCanvas.updateScreen()
-  }
+const EditorOrganism = ({ entity, stackId, useEditor }: {
+  entity: any
+  stackId: string
+  useEditor: typeof useDrawerEditor | typeof useLinkerEditor
+}): JSX.Element => {
+  const { fields, onSubmit, onChange, entityForm, onDelete, onClose } = useEditor(entity, stackId)
 
   return (
-    <div className="w-full h-full border-l-2 ">
+    <div className="w-full h-full border-l-2 bg-white">
       <div className="h-[70px] border-b-2 p-2 flex flex items-center justify-between">
         <h2><strong>Editor</strong></h2>
 
@@ -32,31 +28,31 @@ const EditorOrganism = ({ drawer, stackId }: { drawer: TDrawer, stackId: string 
 
         {fields.map((field, index) => {
           const Component = field.component
-          const value = entityForm[field.name as keyof TEntity]
+          const value = entityForm[field.key as keyof TEntity & keyof TLinkEntity]
 
           return (
             <Component
               key={index}
               label={field.label}
               type={field.type}
-              name={field.name}
-              value={value as string}
+              name={field.key}
+              value={value}
               onChange={onChange}
             />)
         })}
 
         <div className="mt-5">
           <Button
-            label={submitText}
+            label="Update"
             onClick={onSubmit}
             className="w-full"
           />
 
-          <Button
+          {(onDelete != null) && (<Button
             label="Delete"
             onClick={onDelete}
             className="w-full bg-red-500 hover:bg-red-700 border border-red-500 text-white font-bold py-2 px-4 mt-5"
-          />
+          />)}
         </div>
 
       </form>
