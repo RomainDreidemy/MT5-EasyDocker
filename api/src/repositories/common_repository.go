@@ -16,7 +16,7 @@ func Create[Model interface{}](object *Model) *gorm.DB {
 	return result
 }
 
-func Update[Model interface{}](object Model, updatedObject *Model) *gorm.DB {
+func Update[Model interface{}](object *Model, updatedObject *Model) *gorm.DB {
 	result := initializers.DB.Model(&object).Updates(updatedObject)
 	return result
 }
