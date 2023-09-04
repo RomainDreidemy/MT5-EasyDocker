@@ -96,11 +96,11 @@ export const DRAWER_TYPE_STRUCTURES: EditorStructure = {
     },
     {
       label: 'Driver',
-      name: 'driver',
+      key: 'driver',
       type: 'text',
       component: Input,
       validator: string().nullable()
-    },
+    }
   ],
   [DrawerTypes.VOLUME]: [
     {
