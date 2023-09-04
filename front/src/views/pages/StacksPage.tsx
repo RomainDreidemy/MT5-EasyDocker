@@ -1,13 +1,19 @@
 import React, { useEffect, useState } from 'react'
 import StackEntity from '../../services/entities/Stack.entity'
 import { type IStack } from '../../interfaces/Stack.interface'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import AuthEntity from '../../services/entities/Auth.entity'
 
 const StacksPage = (): JSX.Element => {
+  const navigate = useNavigate()
   const [stacks, setStacks] = useState<IStack[]>([])
 
   useEffect(() => {
     (async () => {
+      AuthEntity.isLogged()
+        .then((res) => { if (!res) navigate('/login') })
+        .catch(() => {})
+
       const { data: stacksResponse } = await StackEntity.stacks()
 
       setStacks(stacksResponse)

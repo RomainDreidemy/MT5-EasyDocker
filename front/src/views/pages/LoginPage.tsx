@@ -23,8 +23,8 @@ const LoginPage = (): JSX.Element => {
 
   useEffect(() => {
     AuthEntity.isLogged()
-      .then((res) => { navigate('/') })
-      .catch(() => { })
+      .then((res) => { if (res) navigate('/') })
+      .catch(() => {})
   }, [])
 
   const userSchema = object({
@@ -52,13 +52,13 @@ const LoginPage = (): JSX.Element => {
       )
 
       // Redirect to stacks page
-      redirect('/stacks', 2000)
+      smoothRedirect('/stacks', 2000)
     } catch (e: any) {
       setStatus({ ...status, errors: [{ path: e.response.data.status, message: e.response.data.message }] })
     }
   }
 
-  const redirect = (to: string, delay: number): void => {
+  const smoothRedirect = (to: string, delay: number): void => {
     setTimeout(() => {
       navigate(to)
     }, delay)

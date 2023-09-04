@@ -18,7 +18,7 @@ const RegisterPage = (): JSX.Element => {
 
   useEffect(() => {
     AuthEntity.isLogged()
-      .then((res) => { navigate('/') })
+      .then((res) => { if (res) navigate('/') })
       .catch(() => { })
   }, [])
 

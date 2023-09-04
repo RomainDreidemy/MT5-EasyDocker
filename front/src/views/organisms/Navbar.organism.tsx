@@ -2,6 +2,11 @@ import React from 'react'
 import Button from '../atoms/forms/Button.atom'
 
 export const Navbar = (): JSX.Element => {
+  const logout = (): void => {
+    localStorage.removeItem('token')
+    window.location.href = '/login'
+  }
+
   return (
     <div className="navbar bg-base-100 border-b-2">
       <div className="navbar-start">
@@ -12,6 +17,7 @@ export const Navbar = (): JSX.Element => {
       </div>
       <div className="navbar-end">
         <Button label={'Account'} variant="secondary"/>
+        <Button label={'Logout'} variant="accent" className={'ml-2'} onClick={logout} />
       </div>
     </div>
   )
