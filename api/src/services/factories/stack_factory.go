@@ -1,7 +1,6 @@
 package factories
 
 import (
-	"fmt"
 	"github.com/RomainDreidemy/MT5-docker-extension/src/models"
 	"github.com/google/uuid"
 )
@@ -19,8 +18,6 @@ func BuildStackResponses(stacks []models.Stack) []models.StackResponse {
 	for i := 0; i < len(stacks); i++ {
 		serializedStacks = append(serializedStacks, BuildStackResponse(stacks[i]))
 	}
-	fmt.Println("serializedStacks")
-	fmt.Println(serializedStacks)
 	return serializedStacks
 }
 
