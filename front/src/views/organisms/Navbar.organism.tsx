@@ -1,9 +1,10 @@
 import React from 'react'
 import Button from '../atoms/forms/Button.atom'
+import Cookies from "js-cookie";
 
 export const Navbar = (): JSX.Element => {
   const logout = (): void => {
-    localStorage.removeItem('token')
+    Cookies.remove('token')
     window.location.href = '/login'
   }
 
