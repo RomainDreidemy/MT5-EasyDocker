@@ -60,7 +60,7 @@ const BaseManager: TBaseManager = {
 
   draw (): void {
     this.drawers.forEach(drawer => {
-      drawer.draw()
+      drawer.draw(this.selectedDrawer)
     })
   },
 
