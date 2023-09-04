@@ -207,6 +207,44 @@ const docTemplate = `{
                     }
                 }
             },
+            "put": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Managed Volumes"
+                ],
+                "summary": "Update a volume",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Managed Volume ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "query params",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.ManagedVolumeUpdateInput"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.ManagedVolumeResponse"
+                        }
+                    }
+                }
+            },
             "delete": {
                 "consumes": [
                     "application/json"
@@ -453,6 +491,34 @@ const docTemplate = `{
                         "schema": {
                             "$ref": "#/definitions/models.ServiceNetworkLinkResponse"
                         }
+                    }
+                }
+            }
+        },
+        "/service_managed_volume_links/{id}": {
+            "delete": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Service Volume Links"
+                ],
+                "summary": "Delete a link between a service and a volume",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Service Volume Link ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
                     }
                 }
             }
@@ -1411,15 +1477,36 @@ const docTemplate = `{
                 }
             }
         },
+        "models.ManagedVolumeUpdateInput": {
+            "type": "object",
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "positionX": {
+                    "type": "number"
+                },
+                "positionY": {
+                    "type": "number"
+                }
+            }
+        },
         "models.NetworkCreateInput": {
             "type": "object",
             "required": [
+                "driver",
                 "name",
                 "positionX",
                 "positionY"
             ],
             "properties": {
                 "description": {
+                    "type": "string"
+                },
+                "driver": {
                     "type": "string"
                 },
                 "isExternal": {
@@ -1440,6 +1527,9 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "description": {
+                    "type": "string"
+                },
+                "driver": {
                     "type": "string"
                 },
                 "id": {
@@ -1463,6 +1553,9 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "description": {
+                    "type": "string"
+                },
+                "driver": {
                     "type": "string"
                 },
                 "isExternal": {

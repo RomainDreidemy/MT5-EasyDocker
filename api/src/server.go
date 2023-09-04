@@ -26,12 +26,13 @@ func init() {
 func main() {
 	app := fiber.New()
 	micro := fiber.New()
+	config, _ := initializers.LoadConfig(".")
 	frontUrl := viper.GetString("FRONT_URL")
 	frontPort := viper.GetString("FRONT_PORT")
 
 	app.Use(logger.New())
 	app.Use(cors.New(cors.Config{
-		AllowOrigins:     frontUrl + ", http://localhost, http://localhost:" + frontPort,
+		AllowOrigins:     frontUrl + ", http://localhost, http://localhost:" + frontPort + ", " + config.CORSUrl,
 		AllowHeaders:     "Origin, Content-Type, Accept, X-Requested-With",
 		AllowMethods:     "GET, POST, PUT, DELETE",
 		AllowCredentials: true,
@@ -68,6 +69,7 @@ func main() {
 
 	managedVolume := micro.Group("/managed_volumes", middleware.DeserializeUser)
 	managedVolume.Get("/:id", controllers.GetManagedVolume)
+	managedVolume.Put("/:id", controllers.UpdateManagedVolume)
 	managedVolume.Delete("/:id", controllers.DeleteManagedVolume)
 
 	service := micro.Group("/services", middleware.DeserializeUser)

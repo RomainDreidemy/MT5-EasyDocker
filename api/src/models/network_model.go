@@ -9,6 +9,7 @@ type Network struct {
 	Description string     `gorm:"type:text"`
 	PositionX   float32    `gorm:"type:decimal(20,8);not null"`
 	PositionY   float32    `gorm:"type:decimal(20,8);not null"`
+	Driver      string     `gorm:"type:varchar(255);not null"`
 
 	StackID string `gorm:"type:uuid;not null"`
 	Stack   Stack
@@ -23,6 +24,7 @@ type NetworkResponse struct {
 	Description string     `json:"description"`
 	PositionX   float32    `json:"positionX"`
 	PositionY   float32    `json:"positionY"`
+	Driver      string     `json:"driver"`
 }
 
 type NetworkCreateInput struct {
@@ -31,6 +33,7 @@ type NetworkCreateInput struct {
 	Description string  `json:"description"`
 	PositionX   float32 `json:"positionX" validate:"required"`
 	PositionY   float32 `json:"positionY" validate:"required"`
+	Driver      string  `json:"driver" validate:"required"`
 }
 
 type NetworkUpdateInput struct {
@@ -39,4 +42,5 @@ type NetworkUpdateInput struct {
 	Description string  `json:"description"`
 	PositionX   float32 `json:"positionX"`
 	PositionY   float32 `json:"positionY"`
+	Driver      string  `json:"driver"`
 }
