@@ -16,7 +16,7 @@ export interface EditorForm {
   component: typeof Input | typeof Checkbox | typeof TextArea
 }
 
-export const TYPE_STRUCTURES: EditorStructure = {
+export const DRAWER_TYPE_STRUCTURES: EditorStructure = {
   [DrawerTypes.SERVICE]: [
     {
       label: 'Name',

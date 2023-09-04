@@ -26,13 +26,13 @@ const StackPage = (): JSX.Element => {
     })()
   }, [])
 
-  const { canvasRef, selectedDrawer } = useBoard(board)
+  const { canvasRef, selectedDrawer, selectedLinker } = useBoard(board)
 
   return (
     <section className="h-[calc(100vh-66px)] flex relative">
 
       <div className="w-[calc(200px)]">
-        { (id != null) && (<ManagerOrganism stackId={id}/>)}
+        {(id != null) && (<ManagerOrganism stackId={id}/>)}
       </div>
 
       <div className="flex-1 w-64">

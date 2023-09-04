@@ -6,7 +6,7 @@ import { EventEmitters } from '../enums/eventEmitters'
 import { type TDrawer, type TDrawerOrNullify } from '../types/Drawer'
 import { type TBoardOrNullify } from '../types/Board'
 import DrawersBuilder from '../services/board/drawers.builder'
-import { type TLinkBody, type TLinkEntity, type TLinker } from '../types/Linker'
+import { type TLinkBody, type TLinkEntity, type TLinker, type TLinkerOrNullify } from '../types/Linker'
 import BoardEntity from '../services/entities/Board.entity'
 import UtilsDrawer from '../services/board/Utils.drawer'
 import { type AxiosResponse } from 'axios'
@@ -22,50 +22,12 @@ import { Errors } from '../enums/errors'
 const useBoard = (board: TBoardOrNullify): {
   canvasRef: MutableRefObject<HTMLCanvasElement | null>
   selectedDrawer: TDrawerOrNullify
+  selectedLinker: TLinkerOrNullify
 } => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
 
   const [selectedDrawer, setSelectedDrawer] = useState<TDrawerOrNullify>(undefined)
-
-  useEffect(() => {
-    const canvas = canvasRef.current as unknown as HTMLCanvasElement
-
-    EventsCanvas.create(canvas)
-  }, [canvasRef])
-
-  useEffect(() => {
-    if (board == null || EventsCanvas.context == null) return
-
-    const drawersBuilder = DrawersBuilder(board, EventsCanvas.context)
-    drawersBuilder.generate()
-
-    EventsCanvas.add(...drawersBuilder.drawers())
-    EventsCanvas.startup()
-  }, [board])
-
-  useEffect(() => {
-    eventEmitter.on(EventEmitters.ON_MOVED_DRAWER, onMovedDrawer)
-    eventEmitter.on(EventEmitters.ON_CREATED_LINKER, onCreatedLinker)
-    eventEmitter.on(EventEmitters.ON_DELETED_LINKER, onDeletedLinker)
-    eventEmitter.on(EventEmitters.ON_SELECTED_DRAWER, onSelectedDrawer)
-    eventEmitter.on(EventEmitters.ON_UNSELECTED_DRAWER, onUnselectedDrawer)
-    eventEmitter.on(EventEmitters.ON_MOVED_SCROLL_CLICK_MOUSE, onMovedScrollClickMouse)
-    eventEmitter.on(EventEmitters.ON_SELECTED_LINKER, onSelectedLinker)
-
-    return () => {
-      eventEmitter.removeListener(EventEmitters.ON_MOVED_DRAWER)
-      eventEmitter.removeListener(EventEmitters.ON_SELECTED_DRAWER)
-      eventEmitter.removeListener(EventEmitters.ON_UNSELECTED_DRAWER)
-      eventEmitter.removeListener(EventEmitters.ON_CREATED_LINKER)
-      eventEmitter.removeListener(EventEmitters.ON_DELETED_LINKER)
-      eventEmitter.removeListener(EventEmitters.ON_MOVED_SCROLL_CLICK_MOUSE)
-      eventEmitter.removeListener(EventEmitters.ON_SELECTED_LINKER)
-    }
-  }, [])
-
-  const onMovedScrollClickMouse: EventListenerCallback = async () => {
-    EventsCanvas.drawers.forEach(onMovedDrawer)
-  }
+  const [selectedLinker, setSelectedLinker] = useState<TLinkerOrNullify>(undefined)
 
   const onMovedDrawer: EventListenerCallback = async (drawer: TDrawer) => {
     drawer.entity!.positionX = drawer.factory!.positionX
@@ -84,6 +46,10 @@ const useBoard = (board: TBoardOrNullify): {
       default:
         throw new Error(Errors.NOT_IMPLEMENTED)
     }
+  }
+
+  const onMovedScrollClickMouse: EventListenerCallback = async () => {
+    EventsCanvas.drawers.forEach(onMovedDrawer)
   }
 
   const onCreatedLinker: EventListenerCallback = async (linker: TLinker) => {
@@ -121,11 +87,51 @@ const useBoard = (board: TBoardOrNullify): {
 
   const onSelectedLinker: EventListenerCallback = (linker: TLinker) => {
     console.log('----', linker)
+    setSelectedLinker(linker)
   }
+
+  useEffect(() => {
+    const canvas = canvasRef.current as unknown as HTMLCanvasElement
+
+    EventsCanvas.create(canvas)
+  }, [canvasRef])
+
+  const events = [
+    { name: EventEmitters.ON_MOVED_DRAWER, action: onMovedDrawer },
+    { name: EventEmitters.ON_CREATED_LINKER, action: onCreatedLinker },
+    { name: EventEmitters.ON_DELETED_LINKER, action: onDeletedLinker },
+    { name: EventEmitters.ON_SELECTED_DRAWER, action: onSelectedDrawer },
+    { name: EventEmitters.ON_UNSELECTED_DRAWER, action: onUnselectedDrawer },
+    { name: EventEmitters.ON_MOVED_SCROLL_CLICK_MOUSE, action: onMovedScrollClickMouse },
+    { name: EventEmitters.ON_SELECTED_LINKER, action: onSelectedLinker }
+  ]
+
+  useEffect(() => {
+    if (board == null || EventsCanvas.context == null) return
+
+    const drawersBuilder = DrawersBuilder(board, EventsCanvas.context)
+    drawersBuilder.generate()
+
+    EventsCanvas.add(...drawersBuilder.drawers())
+    EventsCanvas.startup()
+  }, [board])
+
+  useEffect(() => {
+    events.forEach(({ name, action }) => {
+      eventEmitter.on(name, action)
+    })
+
+    return () => {
+      events.forEach(({ name }) => {
+        eventEmitter.removeListener(name)
+      })
+    }
+  }, [])
 
   return {
     canvasRef,
-    selectedDrawer
+    selectedDrawer,
+    selectedLinker
   }
 }
 

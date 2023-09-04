@@ -1,17 +1,8 @@
 import { type TDrawer } from '../types/Drawer'
 import { useState } from 'react'
-import { type EditorForm, TYPE_STRUCTURES } from '../forms/editor.structure'
+import { DRAWER_TYPE_STRUCTURES, type EditorForm } from '../forms/editor.structure'
 import EventsCanvas from '../services/canvas/Events.canvas'
-import { type AxiosResponse } from 'axios'
 import { type TEntity } from '../types/Entity'
-import { DrawerTypes } from '../enums/DrawerTypes'
-import ServiceEntity from '../services/entities/Service.entity'
-import { type IService } from '../interfaces/Service.interface'
-import NetworkEntity from '../services/entities/Network.entity'
-import { type INetwork } from '../interfaces/Network.interface'
-import VolumeEntity from '../services/entities/Volume.entity'
-import { type IVolume } from '../interfaces/Volume.interface'
-import { Errors } from '../enums/errors'
 import { object } from 'yup'
 import { type TOnChange } from '../interfaces/Forms/Input.interface'
 import useDrawerManager from './useDrawerManager'
@@ -23,9 +14,9 @@ const useEditor = (drawer: TDrawer, stackId: string): {
   onDelete: () => void
   entityForm: TEntity
 } => {
-  const { createEntity } = useDrawerManager(stackId)
+  const { createEntity, updateEntity, deleteEntity } = useDrawerManager(stackId)
   const [entityForm, setEntityForm] = useState<TEntity>(drawer.entity!)
-  const [structure] = useState<EditorForm[]>(TYPE_STRUCTURES[drawer.type!])
+  const [structure] = useState<EditorForm[]>(DRAWER_TYPE_STRUCTURES[drawer.type!])
 
   const isCreating: boolean = drawer.isCreatingEntity()
 
@@ -47,7 +38,7 @@ const useEditor = (drawer: TDrawer, stackId: string): {
 
       const response = isCreating
         ? await createEntity(entityForm, drawer.type!)
-        : await updateEntity()
+        : await updateEntity(entityForm, drawer.type!)
 
       const { data: entity } = response
 
@@ -60,41 +51,9 @@ const useEditor = (drawer: TDrawer, stackId: string): {
     }
   }
 
-  const updateEntity = async (): Promise<AxiosResponse<TEntity>> => {
-    switch (drawer.type) {
-      case DrawerTypes.SERVICE:
-        return await ServiceEntity.update(entityForm as IService)
-
-      case DrawerTypes.NETWORK:
-        return await NetworkEntity.update(entityForm as INetwork)
-
-      case DrawerTypes.VOLUME:
-        return await VolumeEntity.update(entityForm as IVolume)
-
-      default:
-        throw new Error(Errors.NOT_IMPLEMENTED)
-    }
-  }
-
-  const deleteEntity = async (): Promise<AxiosResponse<any>> => {
-    switch (drawer.type) {
-      case DrawerTypes.SERVICE:
-        return await ServiceEntity.delete(entityForm.id)
-
-      case DrawerTypes.NETWORK:
-        return await NetworkEntity.delete(entityForm.id)
-
-      case DrawerTypes.VOLUME:
-        return await VolumeEntity.delete(entityForm.id)
-
-      default:
-        throw new Error(Errors.NOT_IMPLEMENTED)
-    }
-  }
-
   const onDelete = async (): Promise<void> => {
     if (!isCreating) {
-      await deleteEntity()
+      await deleteEntity(entityForm, drawer.type!)
     }
 
     EventsCanvas.deleteDrawer(drawer)
