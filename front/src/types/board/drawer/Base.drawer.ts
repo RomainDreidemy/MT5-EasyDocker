@@ -27,4 +27,5 @@ export type TBaseDrawer =
     createLink: (from: TConnector, to: TConnector, entity?: TLinkEntity) => TBaseLinker
     findConnectorByPlacement: (placement: Placements) => TConnectorOrNullify
     hasAlreadyLinkWithDrawer: () => boolean
+    hasMoved: (initialPosition?: IPosition) => boolean
   }

@@ -14,6 +14,7 @@ export interface TStateCanvas {
   mouseDebounce: number
   mouseClickPosition?: IPosition
 
+  initialDrawerPosition?: IPosition
   isMoving: boolean
   onDrawerClickOffset?: IPosition
 

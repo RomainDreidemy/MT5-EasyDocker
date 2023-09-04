@@ -103,6 +103,14 @@ const BaseDrawer = (): TBaseDrawer => {
 
     hasAlreadyLinkWithDrawer (): boolean {
       return this.linkers.some(linker => linker.link!.to.drawer !== this)
+    },
+
+    hasMoved (initialPosition?: IPosition): boolean {
+      if (initialPosition == null) return false
+
+      const finalPosition = this.factory!.position()
+
+      return initialPosition.x !== finalPosition.x && initialPosition.y !== finalPosition.y
     }
   }
 }

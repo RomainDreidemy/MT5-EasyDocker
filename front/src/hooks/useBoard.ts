@@ -12,6 +12,7 @@ import UtilsDrawer from '../services/board/Utils.drawer'
 import { type AxiosResponse } from 'axios'
 import DrawerManager from '../services/entities/Drawer.manager'
 import { Errors } from '../enums/errors'
+import type drawerManager from '../services/entities/Drawer.manager'
 
 const useBoard = (board: TBoardOrNullify): {
   canvasRef: MutableRefObject<HTMLCanvasElement | null>
@@ -23,11 +24,22 @@ const useBoard = (board: TBoardOrNullify): {
   const [selectedDrawer, setSelectedDrawer] = useState<TDrawerOrNullify>(undefined)
   const [selectedLinker, setSelectedLinker] = useState<TLinkerOrNullify>(undefined)
 
+  const onSelectedDrawer: EventListenerCallback = async (drawer: TDrawer) => {
+    await onSelectDrawer(drawer, DrawerManager.get)
+  }
+
   const onMovedDrawer: EventListenerCallback = async (drawer: TDrawer) => {
     drawer.entity!.positionX = drawer.factory!.positionX
     drawer.entity!.positionY = drawer.factory!.positionY
 
-    await DrawerManager.update(drawer.entity!, drawer.type!)
+    await onSelectDrawer(drawer, DrawerManager.update)
+  }
+
+  const onSelectDrawer = async (drawer: TDrawer, method: typeof drawerManager['update' | 'get']): Promise<void> => {
+    const { data: entity } = await method(drawer.entity!, drawer.type!)
+    drawer.update(entity)
+
+    setSelectedDrawer(drawer)
   }
 
   const onMovedScrollClickMouse: EventListenerCallback = async () => {
@@ -65,13 +77,6 @@ const useBoard = (board: TBoardOrNullify): {
 
   const onUnselectedDrawer: EventListenerCallback = (_) => {
     setSelectedDrawer(undefined)
-  }
-
-  const onSelectedDrawer: EventListenerCallback = async (drawer: TDrawer) => {
-    const { data: entity } = await DrawerManager.update(drawer.entity!, drawer.type!)
-    drawer.update(entity)
-
-    setSelectedDrawer(drawer)
   }
 
   const onSelectedLinker: EventListenerCallback = (linker: TLinker) => {
