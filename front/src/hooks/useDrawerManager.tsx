@@ -16,6 +16,7 @@ import { type ISize } from '../interfaces/Window.interface'
 import StateFactory from '../services/board/drawer/factories/State.factory'
 import EventsCanvas from '../services/canvas/Events.canvas'
 import { type TServiceDrawer } from '../types/board/drawer/Service.drawer'
+import ManagedVolumeEntity from "../services/entities/Volume.entity";
 
 const useDrawerManager = (stackId: string): {
   createEntityAndDraw: (type: DrawerTypes) => Promise<void>
@@ -69,7 +70,7 @@ const useDrawerManager = (stackId: string): {
         return await NetworkEntity.create(stackId, entity as INetworkCreate)
 
       case DrawerTypes.VOLUME:
-        return await VolumeEntity.create(stackId, entity as IVolumeCreate)
+        return await ManagedVolumeEntity.create(stackId, entity as IVolumeCreate)
 
       default:
         throw new Error(Errors.NOT_IMPLEMENTED)
