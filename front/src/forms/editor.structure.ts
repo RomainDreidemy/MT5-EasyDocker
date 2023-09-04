@@ -9,8 +9,9 @@ export type EditorStructure = {
 }
 
 export interface EditorForm {
+  [key: string]: any
   label: string
-  name: string
+  key: string
   type: string
   validator: any
   component: typeof Input | typeof Checkbox | typeof TextArea
@@ -19,7 +20,7 @@ export interface EditorForm {
 export const LINKER_STRUCTURE: EditorForm[] = [
   {
     label: 'Container path',
-    name: 'containerPath',
+    key: 'containerPath',
     type: 'text',
     component: Input,
     validator: string().nullable()
@@ -30,42 +31,42 @@ export const DRAWER_TYPE_STRUCTURES: EditorStructure = {
   [DrawerTypes.SERVICE]: [
     {
       label: 'Name',
-      name: 'name',
+      key: 'name',
       type: 'text',
       component: Input,
       validator: string().nullable()
     },
     {
       label: 'Docker Image',
-      name: 'dockerImage',
+      key: 'dockerImage',
       type: 'text',
       component: Input,
       validator: string().nullable()
     },
     {
       label: 'Docker Tag',
-      name: 'dockerTag',
+      key: 'dockerTag',
       type: 'text',
       component: Input,
       validator: string().nullable()
     },
     {
       label: 'Entrypoint',
-      name: 'entrypoint',
+      key: 'entrypoint',
       type: 'text',
       component: Input,
       validator: string().nullable()
     },
     {
       label: 'Description',
-      name: 'description',
+      key: 'description',
       type: 'text',
       component: TextArea,
       validator: string().nullable()
     },
     {
       label: 'External',
-      name: 'isExternal',
+      key: 'isExternal',
       type: 'text',
       component: Checkbox,
       validator: boolean().nullable()
@@ -74,21 +75,21 @@ export const DRAWER_TYPE_STRUCTURES: EditorStructure = {
   [DrawerTypes.NETWORK]: [
     {
       label: 'Name',
-      name: 'name',
+      key: 'name',
       type: 'text',
       component: Input,
       validator: string().nullable()
     },
     {
       label: 'Description',
-      name: 'description',
+      key: 'description',
       type: 'text',
       component: TextArea,
       validator: string().nullable()
     },
     {
       label: 'External',
-      name: 'isExternal',
+      key: 'isExternal',
       type: 'text',
       component: Checkbox,
       validator: boolean().nullable()
@@ -97,28 +98,28 @@ export const DRAWER_TYPE_STRUCTURES: EditorStructure = {
   [DrawerTypes.VOLUME]: [
     {
       label: 'Name',
-      name: 'name',
+      key: 'name',
       type: 'text',
       component: Input,
       validator: string().nullable()
     },
     {
       label: 'Description',
-      name: 'description',
+      key: 'description',
       type: 'text',
       component: TextArea,
       validator: string().nullable()
     },
     {
       label: 'Container Path',
-      name: 'containerPath',
+      key: 'containerPath',
       type: 'text',
       component: Input,
       validator: string().nullable()
     },
     {
       label: 'Local Path',
-      name: 'localPath',
+      key: 'localPath',
       type: 'text',
       component: Input,
       validator: string().nullable()

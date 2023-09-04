@@ -35,7 +35,7 @@ const useDrawerEditor = (linker: TBaseLinker, _: string): TEditor<TLinkEntity> =
   }
 
   const onClose = (): void => {
-    // EventsCanvas.clearSelectedDrawer()
+    EventsCanvas.clearSelectedLinker()
     EventsCanvas.updateScreen()
   }
 

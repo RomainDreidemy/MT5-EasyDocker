@@ -1,14 +1,12 @@
 import React from 'react'
 import Button from '../atoms/forms/Button.atom'
 import { type TEntity } from '../../types/Entity'
-import { type TDrawer } from '../../types/Drawer'
 import type useDrawerEditor from '../../hooks/useDrawerEditor'
 import type useLinkerEditor from '../../hooks/useLinkerEditor'
-import { type TBaseLinker } from '../../types/board/drawer/linkers/Base.linker'
 import { type TLinkEntity } from '../../types/Linker'
 
 const EditorOrganism = ({ entity, stackId, useEditor }: {
-  entity: TDrawer | TBaseLinker
+  entity: any
   stackId: string
   useEditor: typeof useDrawerEditor | typeof useLinkerEditor
 }): JSX.Element => {
@@ -30,15 +28,15 @@ const EditorOrganism = ({ entity, stackId, useEditor }: {
 
         {fields.map((field, index) => {
           const Component = field.component
-          const value = entityForm[field.name as keyof TEntity]
+          const value = entityForm[field.name as keyof TEntity & keyof TLinkEntity]
 
           return (
             <Component
               key={index}
               label={field.label}
               type={field.type}
-              name={field.name}
-              value={value as string}
+              name={field.key}
+              value={value}
               onChange={onChange}
             />)
         })}

@@ -8,6 +8,7 @@ import { type TBoardOrNullify } from '../../types/Board'
 import StackEntity from '../../services/entities/Stack.entity'
 import useDrawerEditor from '../../hooks/useDrawerEditor'
 import useLinkerEditor from '../../hooks/useLinkerEditor'
+import { type TBaseLinker } from '../../types/board/drawer/linkers/Base.linker'
 
 const StackPage = (): JSX.Element => {
   const navigate = useNavigate()
@@ -41,14 +42,12 @@ const StackPage = (): JSX.Element => {
         <BoardOrganism canvasRef={canvasRef}/>
       </div>
 
-      <div className="absolute top-0 right-0 h-full w-80 bg-white">
-         {(selectedDrawer != null) && (stackId != null) &&
-            <EditorOrganism entity={selectedDrawer} stackId={stackId} useEditor={useDrawerEditor}/>}
-        {(selectedLinker != null) && (stackId != null) &&
-            <EditorOrganism entity={selectedLinker} stackId={stackId} useEditor={useLinkerEditor}/>}
-      </div>
-
-      useDrawerEditor
+      {((selectedDrawer != null) || (selectedLinker != null)) && (stackId != null) && (
+        <div className="absolute top-0 right-0 h-full w-80 bg-white">
+          {(selectedDrawer != null) && (<EditorOrganism entity={selectedDrawer} stackId={stackId} useEditor={useDrawerEditor}/>)}
+          {(selectedLinker != null) && (<EditorOrganism entity={selectedLinker} stackId={stackId} useEditor={useLinkerEditor}/>)}
+        </div>
+      )}
     </section>
   )
 }

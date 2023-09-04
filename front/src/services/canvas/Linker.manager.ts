@@ -80,6 +80,7 @@ const LinkerManager: TLinkerManager = {
       this.selectedLinker.selected = false
     }
     this.selectedLinker = undefined
+    eventEmitter.emit(EventEmitters.ON_UNSELECTED_LINKER)
   }
 }
 

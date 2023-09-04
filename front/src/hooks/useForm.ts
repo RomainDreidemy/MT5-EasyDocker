@@ -18,7 +18,7 @@ const useForm = <T>(initialForm: T, formStructure: EditorForm[]): IForm<T> => {
   }
 
   const validatorsSchema = object(
-    formStructure.reduce((acc, field) => ({ [field.name]: field.validator }), {})
+    formStructure.reduce((acc, field) => ({ [field.key]: field.validator }), {})
   )
 
   return {

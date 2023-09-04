@@ -67,8 +67,11 @@ const useBoard = (board: TBoardOrNullify): {
   }
 
   const onSelectedLinker: EventListenerCallback = (linker: TLinker) => {
-    console.log('----', linker)
     setSelectedLinker(linker)
+  }
+
+  const onUnselectedLinker: EventListenerCallback = (linker: TLinker) => {
+    setSelectedLinker(undefined)
   }
 
   useEffect(() => {
@@ -84,7 +87,8 @@ const useBoard = (board: TBoardOrNullify): {
     { name: EventEmitters.ON_SELECTED_DRAWER, action: onSelectedDrawer },
     { name: EventEmitters.ON_UNSELECTED_DRAWER, action: onUnselectedDrawer },
     { name: EventEmitters.ON_MOVED_SCROLL_CLICK_MOUSE, action: onMovedScrollClickMouse },
-    { name: EventEmitters.ON_SELECTED_LINKER, action: onSelectedLinker }
+    { name: EventEmitters.ON_SELECTED_LINKER, action: onSelectedLinker },
+    { name: EventEmitters.ON_UNSELECTED_LINKER, action: onUnselectedLinker }
   ]
 
   useEffect(() => {
