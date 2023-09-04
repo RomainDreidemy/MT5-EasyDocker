@@ -82,7 +82,14 @@ export const TYPE_STRUCTURES: EditorStructure = {
       type: 'text',
       component: Checkbox,
       validator: boolean().nullable()
-    }
+    },
+    {
+      label: 'Driver',
+      name: 'driver',
+      type: 'text',
+      component: Input,
+      validator: string().nullable()
+    },
   ],
   [DrawerTypes.VOLUME]: [
     {

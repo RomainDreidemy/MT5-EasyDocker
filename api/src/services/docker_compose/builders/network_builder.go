@@ -15,5 +15,6 @@ func BuildDockerComposeNetworks(networks []models.Network) map[string]models.Doc
 func BuildDockerComposeNetwork(network models.Network) models.DockerComposeNetwork {
 	return models.DockerComposeNetwork{
 		External: network.IsExternal,
+		Driver:   network.Driver,
 	}
 }
