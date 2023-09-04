@@ -63,6 +63,41 @@ func CreateManagedVolume(c *fiber.Ctx) error {
 	return c.Status(fiber.StatusCreated).JSON(factories.BuildManagedVolumeResponse(volume))
 }
 
+// UpdateManagedVolume godoc
+// @Summary      Update a volume
+// @Tags         Managed Volumes
+// @Accept       json
+// @Produce      json
+// @Param id path string true "Managed Volume ID"
+// @Param request body models.ManagedVolumeUpdateInput true "query params"
+// @Success      200  {object}  models.ManagedVolumeResponse
+// @Router       /managed_volumes/{id} [put]
+func UpdateManagedVolume(c *fiber.Ctx) error {
+	currentUser := c.Locals("user").(models.UserResponse)
+	id := c.Params("id")
+
+	if !policies.CanAccessVolume(currentUser, id) {
+		return c.Status(fiber.StatusNotFound).JSON(factories.BuildErrorResponse("error", "Managed Volume not found"))
+	}
+
+	volume, _ := repositories.Find[models.ManagedVolume](id)
+
+	body, err := helpers.BodyParse[models.ManagedVolumeUpdateInput](c)
+	if err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(factories.BuildErrorResponse("error", "Cannot parse JSON"))
+	}
+
+	updatedVolume := factories.BuildManagedVolumeFromUpdateInput(body)
+
+	result := repositories.Update(&volume, &updatedVolume)
+
+	if result.Error != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(factories.BuildErrorResponse("error", "Cannot update network"))
+	}
+
+	return c.Status(fiber.StatusOK).JSON(factories.BuildManagedVolumeResponse(volume))
+}
+
 // DeleteManagedVolume godoc
 // @Summary      Delete a volume
 // @Tags         Managed Volumes

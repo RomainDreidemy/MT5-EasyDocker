@@ -62,6 +62,17 @@ definitions:
       positionY:
         type: number
     type: object
+  models.ManagedVolumeUpdateInput:
+    properties:
+      description:
+        type: string
+      name:
+        type: string
+      positionX:
+        type: number
+      positionY:
+        type: number
+    type: object
   models.NetworkCreateInput:
     properties:
       description:
@@ -574,6 +585,31 @@ paths:
           schema:
             $ref: '#/definitions/models.ManagedVolumeResponse'
       summary: Get a volume
+      tags:
+      - Managed Volumes
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: Managed Volume ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.ManagedVolumeUpdateInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.ManagedVolumeResponse'
+      summary: Update a volume
       tags:
       - Managed Volumes
   /networks/{id}:
