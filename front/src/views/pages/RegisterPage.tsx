@@ -17,9 +17,12 @@ const RegisterPage = (): JSX.Element => {
   const [status, setStatus] = useState<IValidationStatus>({ success: false, errors: [] })
 
   useEffect(() => {
-    AuthEntity.isLogged()
-      .then((res) => { if (res) navigate('/') })
-      .catch(() => { })
+    async () => {
+      const response = await AuthEntity.isLogged()
+      if (response) {
+        navigate('/')
+      }
+    }
   }, [])
 
   const registerSchema = object({

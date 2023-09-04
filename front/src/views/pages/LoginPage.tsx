@@ -23,7 +23,7 @@ const LoginPage = (): JSX.Element => {
 
  useEffect(() => {
     async () => {
-        const response = AuthEntity.isLogged()
+        const response = await AuthEntity.isLogged()
         if (response) {
             navigate('/')
         }
@@ -55,16 +55,10 @@ const LoginPage = (): JSX.Element => {
       )
 
       // Redirect to stacks page
-      smoothRedirect('/stacks', 2000)
+      navigate('/stacks')
     } catch (e: any) {
       setStatus({ ...status, errors: [{ path: e.response.data.status, message: e.response.data.message }] })
     }
-  }
-
-  const smoothRedirect = (to: string, delay: number): void => {
-    setTimeout(() => {
-      navigate(to)
-    }, delay)
   }
 
   const changeValue = (e: React.ChangeEvent<any>): void => {

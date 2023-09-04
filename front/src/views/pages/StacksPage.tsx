@@ -10,10 +10,10 @@ const StacksPage = (): JSX.Element => {
 
   useEffect(() => {
     (async () => {
-      AuthEntity.isLogged()
-        .then((res) => { if (!res) navigate('/login') })
-        .catch(() => {})
-
+      const response = await AuthEntity.isLogged()
+      if (!response) {
+        navigate('/login')
+      }
       const { data: stacksResponse } = await StackEntity.stacks()
 
       setStacks(stacksResponse)
