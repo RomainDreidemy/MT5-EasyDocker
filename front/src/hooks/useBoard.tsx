@@ -10,14 +10,7 @@ import { type TLinkBody, type TLinkEntity, type TLinker, type TLinkerOrNullify }
 import BoardEntity from '../services/entities/Board.entity'
 import UtilsDrawer from '../services/board/Utils.drawer'
 import { type AxiosResponse } from 'axios'
-import ServiceEntity from '../services/entities/Service.entity'
-import { type IService } from '../interfaces/Service.interface'
-import { DrawerTypes } from '../enums/DrawerTypes'
-import NetworkEntity from '../services/entities/Network.entity'
-import { type INetwork } from '../interfaces/Network.interface'
-import VolumeEntity from '../services/entities/Volume.entity'
-import { type IVolume } from '../interfaces/Volume.interface'
-import { Errors } from '../enums/errors'
+import DrawerManager from '../services/entities/Drawer.manager'
 
 const useBoard = (board: TBoardOrNullify): {
   canvasRef: MutableRefObject<HTMLCanvasElement | null>
@@ -33,19 +26,7 @@ const useBoard = (board: TBoardOrNullify): {
     drawer.entity!.positionX = drawer.factory!.positionX
     drawer.entity!.positionY = drawer.factory!.positionY
 
-    switch (drawer.type) {
-      case DrawerTypes.SERVICE:
-        return await ServiceEntity.update(drawer.entity! as IService)
-
-      case DrawerTypes.NETWORK:
-        return await NetworkEntity.update(drawer.entity! as INetwork)
-
-      case DrawerTypes.VOLUME:
-        return await VolumeEntity.update(drawer.entity! as IVolume)
-
-      default:
-        throw new Error(Errors.NOT_IMPLEMENTED)
-    }
+    await DrawerManager.update(drawer.entity!, drawer.type!)
   }
 
   const onMovedScrollClickMouse: EventListenerCallback = async () => {

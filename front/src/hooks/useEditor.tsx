@@ -14,11 +14,9 @@ const useEditor = (drawer: TDrawer, stackId: string): {
   onDelete: () => void
   entityForm: TEntity
 } => {
-  const { createEntity, updateEntity, deleteEntity } = useDrawerManager(stackId)
+  const { updateEntity, deleteEntity } = useDrawerManager(stackId)
   const [entityForm, setEntityForm] = useState<TEntity>(drawer.entity!)
   const [structure] = useState<EditorForm[]>(DRAWER_TYPE_STRUCTURES[drawer.type!])
-
-  const isCreating: boolean = drawer.isCreatingEntity()
 
   const validatorsSchema = object(structure.reduce((acc, field) =>
     ({ [field.name]: field.validator }), {}))
@@ -36,9 +34,8 @@ const useEditor = (drawer: TDrawer, stackId: string): {
       entityForm.positionX = drawer.factory!.positionX
       entityForm.positionY = drawer.factory!.positionY
 
-      const response = isCreating
-        ? await createEntity(entityForm, drawer.type!)
-        : await updateEntity(entityForm, drawer.type!)
+      const response =
+        await updateEntity(entityForm, drawer.type!)
 
       const { data: entity } = response
 
@@ -52,9 +49,9 @@ const useEditor = (drawer: TDrawer, stackId: string): {
   }
 
   const onDelete = async (): Promise<void> => {
-    if (!isCreating) {
-      await deleteEntity(entityForm, drawer.type!)
-    }
+    if (drawer.isCreatingEntity()) return
+
+    await deleteEntity(entityForm, drawer.type!)
 
     EventsCanvas.deleteDrawer(drawer)
     EventsCanvas.clearSelectedDrawer()
