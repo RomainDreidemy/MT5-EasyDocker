@@ -34,3 +34,12 @@ func BuildManagedVolumeFromCreationInput(body models.ManagedVolumeCreateInput, s
 		StackID:     stackId,
 	}
 }
+
+func BuildManagedVolumeFromUpdateInput(body models.ManagedVolumeUpdateInput) models.ManagedVolume {
+	return models.ManagedVolume{
+		Name:        body.Name,
+		Description: body.Description,
+		PositionX:   body.PositionX,
+		PositionY:   body.PositionY,
+	}
+}

@@ -9,12 +9,12 @@ import ServiceEntity from '../services/entities/Service.entity'
 import { type IService } from '../interfaces/Service.interface'
 import NetworkEntity from '../services/entities/Network.entity'
 import { type INetwork } from '../interfaces/Network.interface'
-import VolumeEntity from '../services/entities/Volume.entity'
 import { type IVolume } from '../interfaces/Volume.interface'
 import { Errors } from '../enums/errors'
 import { object } from 'yup'
 import { type TOnChange } from '../interfaces/Forms/Input.interface'
 import useDrawerManager from './useDrawerManager'
+import ManagedVolumeEntity from "../services/entities/Volume.entity";
 
 const useEditor = (drawer: TDrawer, stackId: string): {
   fields: EditorForm[]
@@ -69,7 +69,7 @@ const useEditor = (drawer: TDrawer, stackId: string): {
         return await NetworkEntity.update(entityForm as INetwork)
 
       case DrawerTypes.VOLUME:
-        return await VolumeEntity.update(entityForm as IVolume)
+        return await ManagedVolumeEntity.update(entityForm as IVolume)
 
       default:
         throw new Error(Errors.NOT_IMPLEMENTED)
@@ -85,7 +85,7 @@ const useEditor = (drawer: TDrawer, stackId: string): {
         return await NetworkEntity.delete(entityForm.id)
 
       case DrawerTypes.VOLUME:
-        return await VolumeEntity.delete(entityForm.id)
+        return await ManagedVolumeEntity.delete(entityForm.id)
 
       default:
         throw new Error(Errors.NOT_IMPLEMENTED)
