@@ -9,6 +9,7 @@ import { type TLinkEntity } from '../../../types/Linker'
 import { type TBaseLinker } from '../../../types/board/drawer/linkers/Base.linker'
 import { type IPosition } from '../../../interfaces/Position.interface'
 import { type TEntityOrCreate } from '../../../types/Entity'
+import { type TDrawer } from '../../../types/Drawer'
 
 const BaseDrawer = (): TBaseDrawer => {
   return {
@@ -29,13 +30,13 @@ const BaseDrawer = (): TBaseDrawer => {
       this.entity!.positionY = this.factory!.positionY
     },
 
-    draw (): void {
+    draw (drawerToCompare?: TDrawer): void {
       this.preProcessActions()
       this.updateConnectorPositions()
 
       this.factory!.draw()
 
-      if (this.shouldDrawConnectors()) {
+      if (this.shouldDrawConnectors(drawerToCompare)) {
         this.drawConnectors()
       }
 
@@ -45,8 +46,10 @@ const BaseDrawer = (): TBaseDrawer => {
     preProcessActions (): void {
     },
 
-    shouldDrawConnectors (): boolean {
-      if (this.isCreatingEntity() || this.hasAlreadyLinkWithDrawer()) return false
+    shouldDrawConnectors (drawerToCompare?: TDrawer): boolean {
+      if (this.isCreatingEntity()) return false
+      if (drawerToCompare == null) return false
+      if (this.hasAlreadyLinkWithSameDrawer(drawerToCompare)) return false
       if (this.factory!.onHover) return true
 
       const hasRulesAndSelected =
@@ -106,8 +109,8 @@ const BaseDrawer = (): TBaseDrawer => {
       return this.factory!.positionY <= y && y <= this.factory!.positionY + this.factory!.height
     },
 
-    hasAlreadyLinkWithDrawer (): boolean {
-      return this.linkers.some(linker => linker.link!.to.drawer !== this)
+    hasAlreadyLinkWithSameDrawer (drawerToCompare: TDrawer): boolean {
+      return this.linkers.some(linker => linker.link!.to.drawer!.entity!.id === drawerToCompare.entity!.id)
     },
 
     hasMoved (initialPosition?: IPosition): boolean {

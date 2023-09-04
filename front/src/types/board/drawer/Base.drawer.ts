@@ -6,16 +6,15 @@ import { type TLinkEntity } from '../../Linker'
 import { type TBaseLinker } from './linkers/Base.linker'
 import { type IPosition } from '../../../interfaces/Position.interface'
 import { type TEntityOrCreate } from '../../Entity'
+import { type TDrawer } from '../../Drawer'
 
 export type TBaseDrawer =
-  TCommonBases &
-  TStateDrawer &
-  {
+  Omit<TCommonBases & TStateDrawer, 'draw'> & {
     create: () => void
     update: (entity: TEntityOrCreate) => void
     preProcessActions: () => void
-    draw: () => void
-    shouldDrawConnectors: () => boolean
+    draw: (drawerToCompare?: TDrawer) => void
+    shouldDrawConnectors: (drawerToCompare?: TDrawer) => boolean
     drawConnectors: () => void
     drawLinkers: () => void
     createConnectors: () => void
@@ -27,6 +26,6 @@ export type TBaseDrawer =
     isOnPosition: (position: IPosition) => boolean
     createLink: (from: TConnector, to: TConnector, entity?: TLinkEntity) => TBaseLinker
     findConnectorByPlacement: (placement: Placements) => TConnectorOrNullify
-    hasAlreadyLinkWithDrawer: () => boolean
+    hasAlreadyLinkWithSameDrawer: (drawerToCompare: TDrawer) => boolean
     hasMoved: (initialPosition?: IPosition) => boolean
   }
