@@ -16,6 +16,16 @@ export interface EditorForm {
   component: typeof Input | typeof Checkbox | typeof TextArea
 }
 
+export const LINKER_STRUCTURE: EditorForm[] = [
+  {
+    label: 'Container path',
+    name: 'containerPath',
+    type: 'text',
+    component: Input,
+    validator: string().nullable()
+  }
+]
+
 export const DRAWER_TYPE_STRUCTURES: EditorStructure = {
   [DrawerTypes.SERVICE]: [
     {

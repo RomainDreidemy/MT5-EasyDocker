@@ -2,30 +2,19 @@ import { type TDrawer } from '../types/Drawer'
 import { useState } from 'react'
 import { DRAWER_TYPE_STRUCTURES, type EditorForm } from '../forms/editor.structure'
 import EventsCanvas from '../services/canvas/Events.canvas'
-import { type TEntity } from '../types/Entity'
-import { object } from 'yup'
-import { type TOnChange } from '../interfaces/Forms/Input.interface'
 import useDrawerManager from './useDrawerManager'
+import { type TEditor } from '../types/board/drawer/Common.bases'
+import useForm from './useForm'
+import { type TEntity } from '../types/Entity'
 
-const useEditor = (drawer: TDrawer, stackId: string): {
-  fields: EditorForm[]
-  onSubmit: () => void
-  onChange: (event: TOnChange) => void
-  onDelete: () => void
-  entityForm: TEntity
-} => {
+const useDrawerEditor = (drawer: TDrawer, stackId: string): TEditor<TEntity> => {
   const { updateEntity, deleteEntity } = useDrawerManager(stackId)
-  const [entityForm, setEntityForm] = useState<TEntity>(drawer.entity!)
   const [structure] = useState<EditorForm[]>(DRAWER_TYPE_STRUCTURES[drawer.type!])
-
-  const validatorsSchema = object(structure.reduce((acc, field) =>
-    ({ [field.name]: field.validator }), {}))
-
-  const onChange: (event: TOnChange)
-  => void =
-    (event: TOnChange): void => {
-      setEntityForm({ ...entityForm, [event.target.name]: event.target.value })
-    }
+  const {
+    form: entityForm,
+    setForm: setEntityForm,
+    onChange, validatorsSchema
+  } = useForm<TEntity>(drawer.entity!, structure)
 
   const onSubmit = async (): Promise<void> => {
     try {
@@ -57,13 +46,19 @@ const useEditor = (drawer: TDrawer, stackId: string): {
     EventsCanvas.clearSelectedDrawer()
   }
 
+  const onClose = (): void => {
+    EventsCanvas.clearSelectedDrawer()
+    EventsCanvas.updateScreen()
+  }
+
   return {
     fields: structure,
     entityForm,
     onSubmit,
     onChange,
-    onDelete
+    onDelete,
+    onClose
   }
 }
 
-export default useEditor
+export default useDrawerEditor
