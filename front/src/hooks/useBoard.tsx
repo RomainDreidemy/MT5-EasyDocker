@@ -45,10 +45,11 @@ const useBoard = (board: TBoardOrNullify): {
 
   useEffect(() => {
     eventEmitter.on(EventEmitters.ON_MOVED_DRAWER, onMovedDrawer)
-    eventEmitter.on(EventEmitters.ON_SELECTED_DRAWER, onSelectedDrawer)
-    eventEmitter.on(EventEmitters.ON_UNSELECTED_DRAWER, onUnselectedDrawer)
     eventEmitter.on(EventEmitters.ON_CREATED_LINKER, onCreatedLinker)
     eventEmitter.on(EventEmitters.ON_DELETED_LINKER, onDeletedLinker)
+    eventEmitter.on(EventEmitters.ON_SELECTED_DRAWER, onSelectedDrawer)
+    eventEmitter.on(EventEmitters.ON_UNSELECTED_DRAWER, onUnselectedDrawer)
+    eventEmitter.on(EventEmitters.ON_MOVED_SCROLL_CLICK_MOUSE, onMovedScrollClickMouse)
 
     return () => {
       eventEmitter.removeListener(EventEmitters.ON_MOVED_DRAWER)
@@ -56,8 +57,13 @@ const useBoard = (board: TBoardOrNullify): {
       eventEmitter.removeListener(EventEmitters.ON_UNSELECTED_DRAWER)
       eventEmitter.removeListener(EventEmitters.ON_CREATED_LINKER)
       eventEmitter.removeListener(EventEmitters.ON_DELETED_LINKER)
+      eventEmitter.removeListener(EventEmitters.ON_MOVED_SCROLL_CLICK_MOUSE)
     }
   }, [])
+
+  const onMovedScrollClickMouse: EventListenerCallback = async () => {
+    EventsCanvas.drawers.forEach(onMovedDrawer)
+  }
 
   const onMovedDrawer: EventListenerCallback = async (drawer: TDrawer) => {
     drawer.entity!.positionX = drawer.factory!.positionX

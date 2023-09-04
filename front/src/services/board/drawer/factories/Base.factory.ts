@@ -16,6 +16,10 @@ const BaseFactory: TBaseFactory = {
     this.positionY = isNaN(entity.positionY) ? this.positionY : entity.positionY
   },
 
+  update (entity: TEntityOrCreate): void {
+    this.name = entity.name
+  },
+
   isSelected ({ x, y }: IPosition): boolean {
     return this.context!.isPointInPath(this.path, x, y)
   },

@@ -50,8 +50,10 @@ const useEditor = (drawer: TDrawer, stackId: string): {
         : await updateEntity()
 
       const { data: entity } = response
-      drawer.entity = entity
+
+      drawer.update(entity)
       setEntityForm(entity)
+
       EventsCanvas.updateScreen()
     } catch (err) {
       console.error(err)

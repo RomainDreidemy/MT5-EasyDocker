@@ -8,6 +8,7 @@ import { type ILink } from '../../../interfaces/Link.interface'
 import { type TLinkEntity } from '../../../types/Linker'
 import { type TBaseLinker } from '../../../types/board/drawer/linkers/Base.linker'
 import { type IPosition } from '../../../interfaces/Position.interface'
+import { type TEntityOrCreate } from '../../../types/Entity'
 
 const BaseDrawer = (): TBaseDrawer => {
   return {
@@ -16,6 +17,11 @@ const BaseDrawer = (): TBaseDrawer => {
 
     create (): void {
       throw new Error(Errors.NOT_IMPLEMENTED)
+    },
+
+    update (entity: TEntityOrCreate) {
+      this.entity = entity
+      this.factory!.update(entity)
     },
 
     draw (): void {
