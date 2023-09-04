@@ -11,6 +11,8 @@ import BoardEntity from '../services/entities/Board.entity'
 import UtilsDrawer from '../services/board/Utils.drawer'
 import { type AxiosResponse } from 'axios'
 import DrawerManager from '../services/entities/Drawer.manager'
+import { Errors } from '../enums/errors'
+import type drawerManager from '../services/entities/Drawer.manager'
 
 const useBoard = (board: TBoardOrNullify): {
   canvasRef: MutableRefObject<HTMLCanvasElement | null>
@@ -22,11 +24,20 @@ const useBoard = (board: TBoardOrNullify): {
   const [selectedDrawer, setSelectedDrawer] = useState<TDrawerOrNullify>(undefined)
   const [selectedLinker, setSelectedLinker] = useState<TLinkerOrNullify>(undefined)
 
-  const onMovedDrawer: EventListenerCallback = async (drawer: TDrawer) => {
-    drawer.entity!.positionX = drawer.factory!.positionX
-    drawer.entity!.positionY = drawer.factory!.positionY
+  const onSelectedDrawer: EventListenerCallback = async (drawer: TDrawer) => {
+    await onSelectDrawer(drawer, DrawerManager.get)
+  }
 
-    await DrawerManager.update(drawer.entity!, drawer.type!)
+  const onMovedDrawer: EventListenerCallback = async (drawer: TDrawer) => {
+    drawer.updateEntityPosition()
+    await onSelectDrawer(drawer, DrawerManager.update)
+  }
+
+  const onSelectDrawer = async (drawer: TDrawer, method: typeof drawerManager['update' | 'get']): Promise<void> => {
+    const { data: entity } = await method(drawer.entity!, drawer.type!)
+    drawer.update(entity)
+
+    setSelectedDrawer(drawer)
   }
 
   const onMovedScrollClickMouse: EventListenerCallback = async () => {
@@ -48,6 +59,8 @@ const useBoard = (board: TBoardOrNullify): {
     } else if (UtilsDrawer.isServiceVolumeLink(linker)) {
       return await BoardEntity.serviceVolumeLink(linkBody)
     }
+
+    throw new Error(Errors.NOT_IMPLEMENTED)
   }
 
   const onDeletedLinker: EventListenerCallback = async (linker: TLinker) => {
@@ -56,21 +69,19 @@ const useBoard = (board: TBoardOrNullify): {
     } else if (UtilsDrawer.isServiceVolumeLink(linker)) {
       await BoardEntity.deleteServiceVolumeLink(linker.entity!.id)
     }
+
+    throw new Error(Errors.NOT_IMPLEMENTED)
   }
 
   const onUnselectedDrawer: EventListenerCallback = (_) => {
     setSelectedDrawer(undefined)
   }
 
-  const onSelectedDrawer: EventListenerCallback = (drawer: TDrawer) => {
-    setSelectedDrawer(drawer)
-  }
-
   const onSelectedLinker: EventListenerCallback = (linker: TLinker) => {
     setSelectedLinker(linker)
   }
 
-  const onUnselectedLinker: EventListenerCallback = (linker: TLinker) => {
+  const onUnselectedLinker: EventListenerCallback = (_) => {
     setSelectedLinker(undefined)
   }
 

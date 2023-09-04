@@ -24,6 +24,11 @@ const BaseDrawer = (): TBaseDrawer => {
       this.factory!.update(entity)
     },
 
+    updateEntityPosition () {
+      this.entity!.positionX = this.factory!.positionX
+      this.entity!.positionY = this.factory!.positionY
+    },
+
     draw (): void {
       this.preProcessActions()
       this.updateConnectorPositions()
@@ -103,6 +108,14 @@ const BaseDrawer = (): TBaseDrawer => {
 
     hasAlreadyLinkWithDrawer (): boolean {
       return this.linkers.some(linker => linker.link!.to.drawer !== this)
+    },
+
+    hasMoved (initialPosition?: IPosition): boolean {
+      if (initialPosition == null) return false
+
+      const finalPosition = this.factory!.position()
+
+      return initialPosition.x !== finalPosition.x && initialPosition.y !== finalPosition.y
     }
   }
 }

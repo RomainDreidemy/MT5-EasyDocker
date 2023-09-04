@@ -19,6 +19,7 @@ export type TBaseDrawer =
     drawConnectors: () => void
     drawLinkers: () => void
     createConnectors: () => void
+    updateEntityPosition: () => void
     updateConnectorPositions: () => void
     isCreatingEntity: () => boolean
     isOnX: (x: number) => boolean
@@ -27,4 +28,5 @@ export type TBaseDrawer =
     createLink: (from: TConnector, to: TConnector, entity?: TLinkEntity) => TBaseLinker
     findConnectorByPlacement: (placement: Placements) => TConnectorOrNullify
     hasAlreadyLinkWithDrawer: () => boolean
+    hasMoved: (initialPosition?: IPosition) => boolean
   }

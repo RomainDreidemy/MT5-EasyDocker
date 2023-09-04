@@ -42,16 +42,17 @@ const MouseEventManager: TMouseEventManager = {
     this.updateScreen()
 
     if (this.selectedDrawer != null) {
-      if (!this.selectedDrawer.isCreatingEntity() && this.isMoving) {
+      if (this.selectedDrawer.hasMoved(this.initialDrawerPosition)) {
         eventEmitter.emit(EventEmitters.ON_MOVED_DRAWER, this.selectedDrawer)
+      } else {
+        eventEmitter.emit(EventEmitters.ON_SELECTED_DRAWER, this.selectedDrawer)
       }
-
-      eventEmitter.emit(EventEmitters.ON_SELECTED_DRAWER, this.selectedDrawer)
     }
 
     this.gradCursor()
     this.isMoving = false
     this.selectedConnector = undefined
+    this.initialDrawerPosition = undefined
   },
 
   handleMouseMove (event: MouseEvent): void {
@@ -92,11 +93,11 @@ const MouseEventManager: TMouseEventManager = {
     const drawer: TDrawerOrNullify = this.findDrawer(position)
 
     if (drawer != null) {
-      const clickPosition: IPosition = this.boundingClientPosition(event)
+      this.initialDrawerPosition = drawer.factory!.position()
 
       this.onDrawerClickOffset = {
-        x: clickPosition.x - drawer.factory!.positionX,
-        y: clickPosition.y - drawer.factory!.positionY
+        x: position.x - drawer.factory!.positionX,
+        y: position.y - drawer.factory!.positionY
       }
 
       this.selectDrawer(drawer)
