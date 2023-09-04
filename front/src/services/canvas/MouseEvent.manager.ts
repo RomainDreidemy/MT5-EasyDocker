@@ -49,6 +49,7 @@ const MouseEventManager: TMouseEventManager = {
       eventEmitter.emit(EventEmitters.ON_SELECTED_DRAWER, this.selectedDrawer)
     }
 
+    this.gradCursor()
     this.isMoving = false
     this.selectedConnector = undefined
   },
@@ -81,6 +82,7 @@ const MouseEventManager: TMouseEventManager = {
 
     if (this.isMouseScrollClick(event)) {
       this.mouseClickPosition = position
+      this.gradCursor(true)
     }
 
     if (this.selectedDrawer != null) {

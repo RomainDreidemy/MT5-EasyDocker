@@ -2,6 +2,7 @@ import WindowApp from '../apps/window.app'
 import { type ISize } from '../../interfaces/Window.interface'
 import { Contexts } from '../../enums/contexts'
 import { type TBaseCanvas } from '../../types/canvas/Base.canvas'
+import { CursorTypes } from '../../enums/CursorTypes'
 
 const BaseCanvas: TBaseCanvas = {
   create (canvas: HTMLCanvasElement): void {
@@ -36,6 +37,12 @@ const BaseCanvas: TBaseCanvas = {
   setCanvasDimensions ({ width, height }: ISize): void {
     this.canvas!.width = width
     this.canvas!.height = height
+  },
+
+  gradCursor (add: boolean = false): void {
+    add
+      ? this.canvas!.classList.add(CursorTypes.GRAB)
+      : this.canvas!.classList.remove(CursorTypes.GRAB)
   }
 }
 

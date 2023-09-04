@@ -9,4 +9,5 @@ export interface TBaseCanvas {
   updateContext: () => void
   setCanvasDimensions: (size: ISize) => void
   sizeCanvas: () => void
+  gradCursor: (add?: boolean) => void
 }
