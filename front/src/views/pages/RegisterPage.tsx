@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { object, string } from 'yup'
 import AuthEntity from '../../services/entities/Auth.entity'
@@ -15,15 +15,6 @@ const RegisterPage = (): JSX.Element => {
   const navigate = useNavigate()
   const [form, setForm] = useState<IAuthEntity>({ email: '', password: '', passwordConfirm: '' })
   const [status, setStatus] = useState<IValidationStatus>({ success: false, errors: [] })
-
-  useEffect(() => {
-    (async () => {
-      const response = await AuthEntity.isLogged()
-      if (response) {
-        navigate('/')
-      }
-    })()
-  }, [])
 
   const registerSchema = object({
     email: string().email().required(),
@@ -42,7 +33,7 @@ const RegisterPage = (): JSX.Element => {
         setStatus({ success: true, errors: [] })
 
         // Redirect to login page
-        redirect('/login', 5000)
+        navigate('/login')
       }
     } catch (e: any) {
       setStatus({ success: false, errors: [{ path: e.response.data.status, message: e.response.data.message }] })
@@ -60,11 +51,6 @@ const RegisterPage = (): JSX.Element => {
     else setStatus({ ...status, errors: [] })
 
     return doesMatch
-  }
-  const redirect = (to: string, delay: number): void => {
-    setTimeout(() => {
-      navigate(to)
-    }, delay)
   }
 
   return (
@@ -84,7 +70,9 @@ const RegisterPage = (): JSX.Element => {
               label="Email"
               type="email"
               name="email"
-              onChange={(e) => { changeValue(e) }}
+              onChange={(e) => {
+                changeValue(e)
+              }}
               className={hasError(status, 'email') ? 'border-2 border-red-600' : ''}
             />
             <div className='text-red-500 mb-5 first-letter:uppercase'>{showErrorMessage(status, 'email')}</div>
@@ -93,7 +81,9 @@ const RegisterPage = (): JSX.Element => {
               label="Password"
               type="password"
               name="password"
-              onChange={(e) => { changeValue(e) }}
+              onChange={(e) => {
+                changeValue(e)
+              }}
               className={hasError(status, 'password') ? 'border-2 border-red-600' : ''}
             />
             <div className='text-red-500 mb-2 first-letter:uppercase'>{showErrorMessage(status, 'password')}</div>
@@ -102,7 +92,9 @@ const RegisterPage = (): JSX.Element => {
               label="Confirm Password"
               type="password"
               name="passwordConfirm"
-              onChange={(e) => { changeValue(e) }}
+              onChange={(e) => {
+                changeValue(e)
+              }}
               onKeyDown={async (e) => await (e.key === 'Enter' && processRegister())}
               className={hasError(status, 'passwordConfirm') ? 'border-2 border-red-600' : ''}
             />
@@ -125,8 +117,8 @@ const RegisterPage = (): JSX.Element => {
         <div className="py-5">
           <div className="grid grid-cols-2 gap-1">
             <div className="text-center sm:text-left whitespace-nowrap">
-              <NavLink to={'/'}>
-                <Button label={'Back to home'} icon={<BiLeftArrowAlt/>} variant={'ghost'}/>
+              <NavLink to={'/login'}>
+                <Button label={'Login'} icon={<BiLeftArrowAlt/>} variant={'ghost'}/>
               </NavLink>
             </div>
           </div>
