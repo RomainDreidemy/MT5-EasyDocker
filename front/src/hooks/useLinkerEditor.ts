@@ -3,8 +3,9 @@ import { type EditorForm, LINKER_STRUCTURE } from '../forms/editor.structure'
 import EventsCanvas from '../services/canvas/Events.canvas'
 import { type TEditor } from '../types/board/drawer/Common.bases'
 import useForm from './useForm'
-import { type TBaseLinker } from '../types/board/drawer/linkers/Base.linker'
 import { type TLinkEntity } from '../types/Linker'
+import BoardEntity from '../services/entities/Board.entity'
+import { type TBaseLinker } from '../types/board/drawer/linkers/Base.linker'
 
 const useDrawerEditor = (linker: TBaseLinker, _: string): TEditor<TLinkEntity> => {
   const [structure] = useState<EditorForm[]>(LINKER_STRUCTURE)
@@ -14,21 +15,19 @@ const useDrawerEditor = (linker: TBaseLinker, _: string): TEditor<TLinkEntity> =
     onChange, validatorsSchema
   } = useForm<TLinkEntity>(linker.entity!, structure)
 
-  console.log(linker.entity!)
-
   const onSubmit = async (): Promise<void> => {
     try {
       await validatorsSchema.validate(linkerForm)
 
-      // const response =
-      //   await updateEntity(entityForm, linker.type!)
-      //
-      // const { data: entity } = response
-      //
-      // linker.update(entity)
-      // setEntityForm(entity)
-      //
-      // EventsCanvas.updateScreen()
+      const response =
+        await BoardEntity.updateServiceVolumeLink(linkerForm)
+
+      const { data: link } = response
+
+      linker.update(link as TLinkEntity)
+      setLinkerForm(link as TLinkEntity)
+
+      EventsCanvas.updateScreen()
     } catch (err) {
       console.error(err)
     }

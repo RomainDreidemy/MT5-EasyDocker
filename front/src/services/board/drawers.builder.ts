@@ -81,15 +81,10 @@ const DrawersBuilder = (board: TBoard, context: CanvasRenderingContext2D): TDraw
       const toDrawer: TDrawerOrNullify = this.findDrawer(to.drawers, link, to.id)
 
       if ((fromDrawer == null) || (toDrawer == null)) return
-      console.log(1)
 
       const connectors = this.findConnectors(fromDrawer, from.placement, toDrawer, to.placement)
 
-      console.log(connectors.from)
-      console.log(connectors.to)
-
       if ((connectors.from == null) || (connectors.to == null)) return
-      console.log(2)
 
       fromDrawer.createLink(connectors.from, connectors.to, link)
     },
