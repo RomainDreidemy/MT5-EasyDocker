@@ -1,64 +1,19 @@
 import React from 'react'
-import ServiceDrawer from '../../services/board/drawer/Service.drawer'
-import EventsCanvas from '../../services/canvas/Events.canvas'
-import { type TServiceDrawer } from '../../types/board/drawer/Service.drawer'
-import { type IServiceCreate } from '../../interfaces/Service.interface'
-import EntityButtonAtom from '../atoms/Forms/EntityButton.atom'
-import { type INetworkCreate } from '../../interfaces/Network.interface'
-import NetworkDrawer from '../../services/board/drawer/Network.drawer'
-import { type TNetworkDrawer } from '../../types/board/drawer/Network.drawer'
-import { type IVolumeCreate } from '../../interfaces/Volume.interface'
-import VolumeDrawer from '../../services/board/drawer/Volume.drawer'
-import { type TVolumeDrawer } from '../../types/board/drawer/Volume.drawer'
+import EntityButtonAtom from '../atoms/forms/EntityButton.atom'
+import { DrawerTypes } from '../../enums/DrawerTypes'
+import useDrawerManager from '../../hooks/useDrawerManager'
 
-const ManagerOrganism = (): JSX.Element => {
-  /**
-   * Dirty code, but it's just for testing
-   */
+const ManagerOrganism = ({ stackId }: { stackId: string }): JSX.Element => {
+  const { createEntityAndDraw, loading } = useDrawerManager(stackId)
 
-  const createService = (): void => {
-    const service: IServiceCreate = {
-      description: '',
-      dockerImage: '',
-      dockerTag: '',
-      entrypoint: '',
-      isExternal: false,
-      positionX: 100,
-      positionY: 20,
-      name: 'Unnamed'
-    }
-    const serviceDrawer: TServiceDrawer = ServiceDrawer(service, EventsCanvas.context!)
-    serviceDrawer.create()
-
-    EventsCanvas.addAndSelectNewDrawer(serviceDrawer)
+  const createService = async (): Promise<void> => {
+    await createEntityAndDraw(DrawerTypes.SERVICE)
   }
-
-  const createNetwork = (): void => {
-    const network: INetworkCreate = {
-      isExternal: false,
-      name: 'Unnamed',
-      positionX: 100,
-      positionY: 20
-    }
-    const networkDrawer: TNetworkDrawer = NetworkDrawer(network, EventsCanvas.context!)
-    networkDrawer.create()
-
-    EventsCanvas.addAndSelectNewDrawer(networkDrawer)
+  const createNetwork = async (): Promise<void> => {
+    await createEntityAndDraw(DrawerTypes.NETWORK)
   }
-
-  const createVolume = (): void => {
-    const volume: IVolumeCreate = {
-      containerPath: '',
-      description: '',
-      localPath: '',
-      name: 'Unnamed',
-      positionX: 100,
-      positionY: 20
-    }
-    const volumeDrawer: TVolumeDrawer = VolumeDrawer(volume, EventsCanvas.context!)
-    volumeDrawer.create()
-
-    EventsCanvas.addAndSelectNewDrawer(volumeDrawer)
+  const createVolume = async (): Promise<void> => {
+    await createEntityAndDraw(DrawerTypes.VOLUME)
   }
 
   return (
@@ -69,14 +24,12 @@ const ManagerOrganism = (): JSX.Element => {
         </h2>
       </div>
 
-      <EntityButtonAtom name="Service" onClick={createService}/>
-      <EntityButtonAtom name="Network" onClick={createNetwork}/>
-      <EntityButtonAtom name="Volume" onClick={createVolume}/>
+      <EntityButtonAtom name="Service" onClick={createService} disabled={loading}/>
+      <EntityButtonAtom name="Network" onClick={createNetwork} disabled={loading}/>
+      <EntityButtonAtom name="Volume" onClick={createVolume} disabled={loading}/>
 
     </div>
   )
 }
-
-ManagerOrganism.propTypes = {}
 
 export default ManagerOrganism

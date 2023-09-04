@@ -32,7 +32,7 @@ const StackPage = (): JSX.Element => {
     <section className="h-[calc(100vh-66px)] flex relative">
 
       <div className="w-[calc(200px)]">
-        <ManagerOrganism/>
+        { (id != null) && (<ManagerOrganism stackId={id}/>)}
       </div>
 
       <div className="flex-1 w-64">
