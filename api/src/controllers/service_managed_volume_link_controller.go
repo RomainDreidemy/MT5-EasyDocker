@@ -58,3 +58,32 @@ func CreateServiceManagedVolumeLink(c *fiber.Ctx) error {
 	return c.Status(fiber.StatusCreated).
 		JSON(factories.BuildServiceManagedVolumeLinkResponse(newServiceManagedVolumeLink))
 }
+
+// DeleteServiceManagedVolumeLink godoc
+// @Summary      Delete a link between a service and a volume
+// @Tags         Service Volume Links
+// @Accept       json
+// @Produce      json
+// @Param id path string true "Service Volume Link ID"
+// @Success      204
+// @Router       /service_managed_volume_links/{id} [delete]
+func DeleteServiceManagedVolumeLink(c *fiber.Ctx) error {
+	currentUser := c.Locals("user").(models.UserResponse)
+	linkId := c.Params("id")
+
+	if !policies.CanAccessServiceNetworkLink(currentUser, linkId) {
+		return c.Status(fiber.StatusNotFound).
+			JSON(factories.BuildErrorResponse("error", "Service or volume not found"))
+	}
+
+	link, db := repositories.FindServiceNetworkLink(linkId)
+
+	result := db.Delete(&link)
+
+	if result.Error != nil {
+		return c.Status(fiber.StatusBadGateway).
+			JSON(fiber.Map{"status": "error", "message": "Something bad happened"})
+	}
+
+	return c.Status(fiber.StatusNoContent).Send(nil)
+}
