@@ -1,11 +1,15 @@
 import React from 'react'
 import Button from '../atoms/forms/Button.atom'
 import Cookies from "js-cookie";
+import {useNavigate} from "react-router-dom";
 
 export const Navbar = (): JSX.Element => {
+
+  const navigate = useNavigate()
+
   const logout = (): void => {
     Cookies.remove('token')
-    window.location.href = '/login'
+    navigate('/login')
   }
 
   return (
