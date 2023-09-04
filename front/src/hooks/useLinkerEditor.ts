@@ -34,6 +34,11 @@ const useDrawerEditor = (linker: TBaseLinker, _: string): TEditor<TLinkEntity> =
     }
   }
 
+  const onDelete = async (): Promise<void> => {
+    EventsCanvas.deleteLinker(linker.drawer!, linker)
+    EventsCanvas.updateScreen()
+  }
+
   const onClose = (): void => {
     EventsCanvas.clearSelectedLinker()
     EventsCanvas.updateScreen()
@@ -43,6 +48,7 @@ const useDrawerEditor = (linker: TBaseLinker, _: string): TEditor<TLinkEntity> =
     fields: structure,
     entityForm: linkerForm,
     onSubmit,
+    onDelete,
     onChange,
     onClose
   }
