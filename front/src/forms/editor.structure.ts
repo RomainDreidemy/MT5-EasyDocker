@@ -3,25 +3,31 @@ import { boolean, string } from 'yup'
 import Input from '../views/atoms/forms/Input.atom'
 import Checkbox from '../views/atoms/forms/Checkbox.atom'
 import TextArea from '../views/atoms/forms/TextArea.atom'
+import EnvVariablesMolecule from '../views/molecules/EnvVariables.molecule'
 
 export type EditorStructure = {
   [key in DrawerTypes]: EditorForm[]
 }
 
+export enum TypeList {
+  TEXT = 'text',
+  CUSTOM = 'custom',
+}
+
 export interface EditorForm {
   [key: string]: any
   label: string
-  key: string
-  type: string
-  validator: any
-  component: typeof Input | typeof Checkbox | typeof TextArea
+  key?: string
+  type: TypeList
+  validator?: any
+  component: typeof Input | typeof Checkbox | typeof TextArea | typeof EnvVariablesMolecule
 }
 
 export const LINKER_STRUCTURE: EditorForm[] = [
   {
     label: 'Container path',
     key: 'containerPath',
-    type: 'text',
+    type: TypeList.TEXT,
     component: Input,
     validator: string().nullable()
   }
@@ -30,44 +36,49 @@ export const LINKER_STRUCTURE: EditorForm[] = [
 export const DRAWER_TYPE_STRUCTURES: EditorStructure = {
   [DrawerTypes.SERVICE]: [
     {
+      label: 'Env variables',
+      type: TypeList.CUSTOM,
+      component: EnvVariablesMolecule
+    },
+    {
       label: 'Name',
       key: 'name',
-      type: 'text',
+      type: TypeList.TEXT,
       component: Input,
       validator: string().nullable()
     },
     {
       label: 'Docker Image',
       key: 'dockerImage',
-      type: 'text',
+      type: TypeList.TEXT,
       component: Input,
       validator: string().nullable()
     },
     {
       label: 'Docker Tag',
       key: 'dockerTag',
-      type: 'text',
+      type: TypeList.TEXT,
       component: Input,
       validator: string().nullable()
     },
     {
       label: 'Entrypoint',
       key: 'entrypoint',
-      type: 'text',
+      type: TypeList.TEXT,
       component: Input,
       validator: string().nullable()
     },
     {
       label: 'Description',
       key: 'description',
-      type: 'text',
+      type: TypeList.TEXT,
       component: TextArea,
       validator: string().nullable()
     },
     {
       label: 'External',
       key: 'isExternal',
-      type: 'text',
+      type: TypeList.TEXT,
       component: Checkbox,
       validator: boolean().nullable()
     }
@@ -76,28 +87,28 @@ export const DRAWER_TYPE_STRUCTURES: EditorStructure = {
     {
       label: 'Name',
       key: 'name',
-      type: 'text',
+      type: TypeList.TEXT,
       component: Input,
       validator: string().nullable()
     },
     {
       label: 'Description',
       key: 'description',
-      type: 'text',
+      type: TypeList.TEXT,
       component: TextArea,
       validator: string().nullable()
     },
     {
       label: 'External',
       key: 'isExternal',
-      type: 'text',
+      type: TypeList.TEXT,
       component: Checkbox,
       validator: boolean().nullable()
     },
     {
       label: 'Driver',
       key: 'driver',
-      type: 'text',
+      type: TypeList.TEXT,
       component: Input,
       validator: string().nullable()
     }
@@ -106,28 +117,28 @@ export const DRAWER_TYPE_STRUCTURES: EditorStructure = {
     {
       label: 'Name',
       key: 'name',
-      type: 'text',
+      type: TypeList.TEXT,
       component: Input,
       validator: string().nullable()
     },
     {
       label: 'Description',
       key: 'description',
-      type: 'text',
+      type: TypeList.TEXT,
       component: TextArea,
       validator: string().nullable()
     },
     {
       label: 'Container Path',
       key: 'containerPath',
-      type: 'text',
+      type: TypeList.TEXT,
       component: Input,
       validator: string().nullable()
     },
     {
       label: 'Local Path',
       key: 'localPath',
-      type: 'text',
+      type: TypeList.TEXT,
       component: Input,
       validator: string().nullable()
     }
