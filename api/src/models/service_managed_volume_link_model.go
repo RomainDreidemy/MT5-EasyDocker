@@ -30,3 +30,7 @@ type ServiceManagedVolumeLinkCreateInput struct {
 	ManagedVolumeArrowPosition string `json:"managedVolumeArrowPosition" validate:"required,oneof=top bottom left right"`
 	ContainerPath              string `json:"containerPath"`
 }
+
+type ServiceManagedVolumeLinkUpdateInput struct {
+	ContainerPath string `json:"containerPath"`
+}

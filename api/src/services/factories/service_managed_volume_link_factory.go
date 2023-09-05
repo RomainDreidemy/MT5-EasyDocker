@@ -9,6 +9,7 @@ func BuildServiceManagedVolumeLinkResponse(link models.ServiceManagedVolumeLink)
 		ManagedVolumeID:            link.ManagedVolumeID,
 		ServiceArrowPosition:       link.ServiceArrowPosition,
 		ManagedVolumeArrowPosition: link.ManagedVolumeArrowPosition,
+		ContainerPath:              link.ContainerPath,
 	}
 }
 
@@ -28,5 +29,11 @@ func BuildServiceManagedVolumeLinkFromCreateInput(body models.ServiceManagedVolu
 		ManagedVolumeID:            body.ManagedVolumeID,
 		ServiceArrowPosition:       body.ServiceArrowPosition,
 		ManagedVolumeArrowPosition: body.ManagedVolumeArrowPosition,
+	}
+}
+
+func BuildServiceManagedVolumeLinkFromUpdateInput(body models.ServiceManagedVolumeLinkUpdateInput) models.ServiceManagedVolumeLink {
+	return models.ServiceManagedVolumeLink{
+		ContainerPath: body.ContainerPath,
 	}
 }

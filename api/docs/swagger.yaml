@@ -217,6 +217,11 @@ definitions:
       serviceId:
         type: string
     type: object
+  models.ServiceManagedVolumeLinkUpdateInput:
+    properties:
+      containerPath:
+        type: string
+    type: object
   models.ServiceNetworkLinkCreateInput:
     properties:
       networkArrowPosition:
@@ -780,6 +785,31 @@ paths:
         "204":
           description: No Content
       summary: Delete a link between a service and a volume
+      tags:
+      - Service Volume Links
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.ServiceManagedVolumeLinkUpdateInput'
+      - description: Service Volume Link ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.ServiceNetworkLinkResponse'
+      summary: Update a link between a service and a volume
       tags:
       - Service Volume Links
   /service_network_links:
