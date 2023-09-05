@@ -3,7 +3,7 @@ import { boolean, string } from 'yup'
 import Input from '../views/atoms/forms/Input.atom'
 import Checkbox from '../views/atoms/forms/Checkbox.atom'
 import TextArea from '../views/atoms/forms/TextArea.atom'
-import EnvVariablesMolecule from '../views/molecules/EnvVariables.molecule'
+import EnvVariablesOrganism from '../views/organisms/EnvVariables.organism'
 
 export type EditorStructure = {
   [key in DrawerTypes]: EditorForm[]
@@ -20,7 +20,7 @@ export interface EditorForm {
   key?: string
   type: TypeList
   validator?: any
-  component: typeof Input | typeof Checkbox | typeof TextArea | typeof EnvVariablesMolecule
+  component: typeof Input | typeof Checkbox | typeof TextArea
 }
 
 export const LINKER_STRUCTURE: EditorForm[] = [
@@ -38,7 +38,7 @@ export const DRAWER_TYPE_STRUCTURES: EditorStructure = {
     {
       label: 'Env variables',
       type: TypeList.CUSTOM,
-      component: EnvVariablesMolecule
+      component: EnvVariablesOrganism
     },
     {
       label: 'Name',
