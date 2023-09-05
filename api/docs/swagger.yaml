@@ -208,13 +208,13 @@ definitions:
         type: string
       id:
         type: string
+      managedVolumeArrowPosition:
+        type: string
       managedVolumeId:
         type: string
       serviceArrowPosition:
         type: string
       serviceId:
-        type: string
-      volumeArrowPosition:
         type: string
     type: object
   models.ServiceNetworkLinkCreateInput:

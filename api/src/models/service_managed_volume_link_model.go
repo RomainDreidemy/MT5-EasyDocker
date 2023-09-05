@@ -19,7 +19,7 @@ type ServiceManagedVolumeLinkResponse struct {
 	ServiceID                  string `json:"serviceId"`
 	ManagedVolumeID            string `json:"managedVolumeId"`
 	ServiceArrowPosition       string `json:"serviceArrowPosition"`
-	ManagedVolumeArrowPosition string `json:"volumeArrowPosition"`
+	ManagedVolumeArrowPosition string `json:"managedVolumeArrowPosition"`
 	ContainerPath              string `json:"containerPath"`
 }
 
