@@ -5,19 +5,22 @@ import RegisterPage from '../views/pages/RegisterPage'
 import StacksPage from '../views/pages/StacksPage'
 import StackPage from '../views/pages/StackPage'
 import ProtectedRoute from './Protected.route'
+import Redirect from './Redirect'
 
 export const Router = (): JSX.Element => {
   return (
     <BrowserRouter>
-        <Routes>
-          <Route path='/stacks' element={<ProtectedRoute/>}>
-            <Route path='/stacks' element={<StacksPage/>}/>
-            <Route path="/stacks/:id" element={<StackPage/>} />
-          </Route>
+      <Routes>
+        <Route path='/stacks' element={<ProtectedRoute/>}>
+          <Route path='/stacks' element={<StacksPage/>}/>
+          <Route path="/stacks/:id" element={<StackPage/>} />
+        </Route>
 
-           <Route path='/register' element={<RegisterPage/>}/>
-           <Route path='/login' element={<LoginPage/>}/>
-        </Routes>
+        <Route path='/register' element={<RegisterPage/>}/>
+        <Route path='/login' element={<LoginPage/>}/>
+
+        <Redirect from="/" to="/stacks" />
+      </Routes>
     </BrowserRouter>
   )
 }
