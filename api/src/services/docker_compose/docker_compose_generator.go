@@ -6,8 +6,8 @@ import (
 	"gopkg.in/yaml.v3"
 )
 
-func GenerateDockerCompose(services []models.Service, networks []models.Network) string {
-	dockerCompose := builders.BuildDockerCompose(services, networks)
+func GenerateDockerCompose(services []models.Service, networks []models.Network, volumes []models.ManagedVolume) string {
+	dockerCompose := builders.BuildDockerCompose(services, networks, volumes)
 
 	dockerComposeContent := DockerComposeToYaml(dockerCompose)
 

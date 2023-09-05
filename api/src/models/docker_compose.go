@@ -4,6 +4,7 @@ type DockerCompose struct {
 	Version  string                          `yaml:"version"`
 	Services map[string]DockerComposeService `yaml:"services"`
 	Networks map[string]DockerComposeNetwork `yaml:"networks,omitempty"`
+	Volumes  map[string]struct{}             `yaml:"volumes,omitempty"`
 }
 
 type DockerComposeService struct {

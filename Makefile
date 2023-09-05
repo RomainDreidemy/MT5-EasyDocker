@@ -38,3 +38,6 @@ front-sh:
 
 database-sh:
 	$(DOCKER_COMPOSE) exec -it database sh
+
+api-test:
+	$(DOCKER_COMPOSE) exec -it api go test -v ./...
