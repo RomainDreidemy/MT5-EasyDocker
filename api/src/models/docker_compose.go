@@ -23,5 +23,5 @@ type DockerComposeServiceBuild struct {
 
 type DockerComposeNetwork struct {
 	External bool   `yaml:"external"`
-	Driver   string `yaml:"driver"`
+	Driver   string `yaml:"driver,omitempty"`
 }

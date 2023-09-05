@@ -110,7 +110,7 @@ func main() {
 	serviceManagedVolumeLink := micro.Group("/service_managed_volume_links", middleware.DeserializeUser)
 	serviceManagedVolumeLink.Post("/", controllers.CreateServiceManagedVolumeLink)
 
-	app.Get("/docker_compose", controllers.GenerateDockerComposeFile)
+	stacks.Get("/:stackId/docker_compose", controllers.GenerateDockerComposeFile)
 
 	app.Get("/swagger/*", swagger.HandlerDefault)
 
