@@ -42,6 +42,7 @@ func main() {
 	micro.Route("/auth", func(router fiber.Router) {
 		router.Post("/register", controllers.SignUpUser)
 		router.Post("/login", controllers.SignInUser)
+		router.Post("/logout", controllers.LogoutUser)
 	})
 
 	users := micro.Group("/users", middleware.DeserializeUser)

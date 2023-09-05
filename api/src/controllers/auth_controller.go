@@ -122,3 +122,18 @@ func SignInUser(c *fiber.Ctx) error {
 		Token: tokenString,
 	})
 }
+
+func LogoutUser(c *fiber.Ctx) error {
+	config, _ := initializers.LoadConfig(".")
+	c.Cookie(&fiber.Cookie{
+		Name:     "token",
+		Value:    "",
+		Path:     "/",
+		MaxAge:   -1,
+		Secure:   false,
+		HTTPOnly: true,
+		Domain:   config.Domain,
+	})
+
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "message": "User logged out successfully"})
+}
