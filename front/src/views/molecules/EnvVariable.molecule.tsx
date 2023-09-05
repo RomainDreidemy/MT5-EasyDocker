@@ -1,48 +1,32 @@
 import React from 'react'
 import { type IServiceEnvVariable, type IServiceEnvVariableCreate } from '../../interfaces/ServiceEnvVariable.interface'
-import Input from '../atoms/forms/Input.atom'
 import useForm from '../../hooks/useForm'
-import { string } from 'yup'
-import { type EditorForm, TypeList } from '../../forms/editor.structure'
+import { type EditorForm } from '../../forms/editor.structure'
 import Button from '../atoms/forms/Button.atom'
 import { GoPencil } from 'react-icons/go'
-import ServiceEnvVariableEntity from '../../services/entities/ServiceEnvVariable.entity'
+import type ServiceEnvVariableEntity from '../../services/entities/ServiceEnvVariable.entity'
 import { AiOutlineDelete } from 'react-icons/ai'
 
-const EnvVariableMolecule = ({ variable, serviceId, addCallback, deleteCallback }: {
+const EnvVariableMolecule = ({ variable, serviceId, addCallback, deleteCallback, fields, Requester }: {
+  fields: EditorForm[]
   variable?: IServiceEnvVariable
   serviceId: string
   addCallback?: (envVariable: IServiceEnvVariable) => void
   deleteCallback?: (envVariable: IServiceEnvVariable) => void
+  Requester: typeof ServiceEnvVariableEntity
 }): JSX.Element => {
-  const fields: EditorForm[] = [
-    {
-      label: 'Key',
-      key: 'key',
-      type: TypeList.TEXT,
-      component: Input,
-      validator: string().required()
-    },
-    {
-      label: 'Value',
-      key: 'value',
-      type: TypeList.TEXT,
-      component: Input,
-      validator: string().required()
-    }
-  ]
-
-  const initialForm = {
-    key: '',
-    value: ''
-  }
+  const keyList =
+    fields.map(({ key }) => ({ [key]: '' }))
+  const initialForm = keyList.reduce((result, currentObj) => {
+    return { ...result, ...currentObj }
+  }, {})
 
   const {
     form,
     setForm,
     onChange,
     validatorsSchema
-  } = useForm<IServiceEnvVariable | IServiceEnvVariableCreate>(variable ?? initialForm, fields)
+  } = useForm(variable ?? initialForm, fields)
 
   const isCreating = variable?.id == null
 
@@ -55,13 +39,13 @@ const EnvVariableMolecule = ({ variable, serviceId, addCallback, deleteCallback 
 
       const response =
         isCreating
-          ? await ServiceEnvVariableEntity.create(serviceId, form as IServiceEnvVariableCreate)
-          : await ServiceEnvVariableEntity.update(form as IServiceEnvVariable)
+          ? await Requester.create(serviceId, form as IServiceEnvVariableCreate)
+          : await Requester.update(form as IServiceEnvVariable)
 
-      const { data: envVariable } = response
+      const { data: variable } = response
 
       if (isCreating && (addCallback != null)) {
-        addCallback(envVariable)
+        addCallback(variable)
         setForm(initialForm)
       }
     } catch (err) {
@@ -73,7 +57,7 @@ const EnvVariableMolecule = ({ variable, serviceId, addCallback, deleteCallback 
     try {
       if (isCreating) return
 
-      await ServiceEnvVariableEntity.delete(variable.id)
+      await Requester.delete(variable.id)
 
       if (deleteCallback == null) return
 

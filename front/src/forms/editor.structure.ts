@@ -17,7 +17,7 @@ export enum TypeList {
 export interface EditorForm {
   [key: string]: any
   label: string
-  key?: string
+  key: string
   type: TypeList
   validator?: any
   component: any
@@ -97,6 +97,7 @@ export const DRAWER_TYPE_STRUCTURES: EditorStructure = {
     {
       label: 'Env variables',
       type: TypeList.CUSTOM,
+      key: 'envVariables',
       component: EnvVariablesOrganism
     }
   ],

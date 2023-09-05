@@ -11,13 +11,14 @@ const ServiceVariablesOrganism = ({ entity: drawer, useEditor }: {
 }): JSX.Element => {
   const [open, toggle] = useToggle()
 
+  const editor = useEditor(drawer, open)
   const {
     variables,
     setVariables,
     buttonText,
     Icon,
     Component
-  } = useEditor(drawer, open)
+  } = editor
 
   const addCallback = (envVariable: IServiceEnvVariable): void => {
     setVariables([...variables, envVariable])
@@ -39,10 +40,16 @@ const ServiceVariablesOrganism = ({ entity: drawer, useEditor }: {
             <div className="flex flex-wrap -mx-2 p-2 ">
 
               {variables.map((variable, index) => (
-                <Component key={index} variable={variable} serviceId={drawer.entity!.id}
-                           deleteCallback={deleteCallback}/>))}
+                <Component key={index}
+                           variable={variable}
+                           serviceId={drawer.entity!.id}
+                           deleteCallback={deleteCallback}
+                           {...editor}/>
+              ))}
 
-              <Component serviceId={drawer.entity!.id} addCallback={addCallback}/>
+              <Component serviceId={drawer.entity!.id}
+                         addCallback={addCallback}
+                         {...editor} />
             </div>
           </div>
         )}

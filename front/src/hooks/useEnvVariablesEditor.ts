@@ -5,16 +5,24 @@ import { type IService } from '../interfaces/Service.interface'
 import { AiOutlineLock, AiOutlineUnlock } from 'react-icons/ai'
 import EnvVariableMolecule from '../views/molecules/EnvVariable.molecule'
 import { type IconType } from 'react-icons'
+import { type EditorForm, ENV_VARIABLE_STRUCTURE, LINKER_STRUCTURE } from '../forms/editor.structure'
+import ServiceEnvVariableEntity from '../services/entities/ServiceEnvVariable.entity'
 
-export interface TVariablesEditor<T, C> {
-  variables: T[]
-  setVariables: Dispatch<SetStateAction<T[]>>
+export interface TVariablesEditor<IVariable, Component, Requester> {
+  variables: IVariable[]
+  setVariables: Dispatch<SetStateAction<IVariable[]>>
   buttonText: string
+  fields: EditorForm[]
+
   Icon: IconType
-  Component: C
+  Component: Component
+
+  Requester: Requester
 }
 
-const useEnvVariablesEditor = (drawer: TDrawer, open: boolean): TVariablesEditor<IServiceEnvVariable, typeof EnvVariableMolecule> => {
+const useEnvVariablesEditor = (drawer: TDrawer, open: boolean): TVariablesEditor<IServiceEnvVariable, typeof EnvVariableMolecule, typeof ServiceEnvVariableEntity> => {
+  const [structure] = useState<EditorForm[]>(ENV_VARIABLE_STRUCTURE)
+
   const entity: IService = drawer.entity! as IService
 
   const [envVariables, setEnvVariables] = useState<IServiceEnvVariable[]>(entity.envVariables)
@@ -33,8 +41,11 @@ const useEnvVariablesEditor = (drawer: TDrawer, open: boolean): TVariablesEditor
     variables: envVariables,
     setVariables: setEnvVariables,
     buttonText,
+    fields: structure,
+
     Icon,
-    Component: EnvVariableMolecule
+    Component: EnvVariableMolecule,
+    Requester: ServiceEnvVariableEntity
   }
 }
 
