@@ -14,6 +14,7 @@ function VariableMolecule<ICreate, IEntity> ({ variable, serviceId, addCallback,
   deleteCallback?: (envVariable: IEntity) => void
   Requester: IVariableRequester<ICreate, IEntity>
 }): JSX.Element {
+  console.log(fields)
   const keyList =
     fields.map(({ key }) => ({ [key]: '' }))
   const initialForm = keyList.reduce((result, currentObj) => {
@@ -27,7 +28,7 @@ function VariableMolecule<ICreate, IEntity> ({ variable, serviceId, addCallback,
     validatorsSchema
   } = useForm(variable ?? initialForm, fields)
 
-  const isCreating: boolean = !(variable === null || variable === undefined)
+  const isCreating: boolean = variable?.id == null
 
   const buttonText =
     isCreating ? 'Add' : <GoPencil size={15}/>
@@ -60,7 +61,7 @@ function VariableMolecule<ICreate, IEntity> ({ variable, serviceId, addCallback,
 
       if (deleteCallback == null) return
 
-      deleteCallback(variable)
+      deleteCallback(variable as IEntity)
     } catch (err) {
       console.error(err)
     }

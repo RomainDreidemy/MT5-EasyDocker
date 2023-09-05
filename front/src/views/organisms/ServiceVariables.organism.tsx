@@ -4,10 +4,11 @@ import Button from '../atoms/forms/Button.atom'
 import { type IServiceEnvVariable } from '../../interfaces/ServiceEnvVariable.interface'
 import { type TDrawer } from '../../types/Drawer'
 import type useEnvVariablesEditor from '../../hooks/useEnvVariablesEditor'
+import type usePortVariablesEditor from '../../hooks/usePortVariablesEditor'
 
 const ServiceVariablesOrganism = ({ entity: drawer, useEditor }: {
   entity: TDrawer
-  useEditor: typeof useEnvVariablesEditor
+  useEditor: typeof useEnvVariablesEditor & typeof usePortVariablesEditor
 }): JSX.Element => {
   const [open, toggle] = useToggle()
 
@@ -45,7 +46,7 @@ const ServiceVariablesOrganism = ({ entity: drawer, useEditor }: {
                            serviceId={drawer.entity!.id}
                            deleteCallback={deleteCallback}
                            {...editor}
-                           />
+                />
               ))}
 
               <Component serviceId={drawer.entity!.id}

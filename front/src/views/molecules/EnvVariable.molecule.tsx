@@ -1,9 +1,8 @@
 import React from 'react'
 import { type IServiceEnvVariable, type IServiceEnvVariableCreate } from '../../interfaces/ServiceEnvVariable.interface'
 import { type EditorForm } from '../../forms/editor.structure'
-import type ServiceEnvVariableEntity from '../../services/entities/ServiceEnvVariable.entity'
-import VariableMolecule from './Variable.molecule'
 import { type IVariableRequester } from '../../services/entities/ServiceEnvVariable.entity'
+import VariableMolecule from './Variable.molecule'
 
 const EnvVariableMolecule = (props: {
   fields: EditorForm[]

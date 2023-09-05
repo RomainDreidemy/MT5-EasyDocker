@@ -1,8 +1,8 @@
-export interface IServicePort {
+export interface IServicePortVariable {
   id: string
 
   private: string
   public: string
 }
 
-export type IServicePortCreate = Omit<IServicePort, 'id'>
+export type IServicePortVariableCreate = Omit<IServicePortVariable, 'id'>
