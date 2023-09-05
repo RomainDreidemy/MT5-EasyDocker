@@ -44,7 +44,8 @@ const ServiceVariablesOrganism = ({ entity: drawer, useEditor }: {
                            variable={variable}
                            serviceId={drawer.entity!.id}
                            deleteCallback={deleteCallback}
-                           {...editor}/>
+                           {...editor}
+                           />
               ))}
 
               <Component serviceId={drawer.entity!.id}
