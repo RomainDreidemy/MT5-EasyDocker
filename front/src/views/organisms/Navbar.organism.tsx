@@ -1,7 +1,7 @@
 import React from 'react'
 import Button from '../atoms/forms/Button.atom'
 import Cookies from 'js-cookie'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 export const Navbar = (): JSX.Element => {
   const navigate = useNavigate()
@@ -16,11 +16,10 @@ export const Navbar = (): JSX.Element => {
       <div className="navbar-start">
         <Button label={'Export as file'} variant="primary"/>
       </div>
-      <div className="navbar-center">
+      <Link to="/stacks" className="navbar-center">
         <img src={'/assets/logo.png'} alt="logo" className={'w-60'}/>
-      </div>
+      </Link>
       <div className="navbar-end">
-        <Button label={'Account'} variant="secondary"/>
         <Button label={'Logout'} variant="accent" className={'ml-2'} onClick={logout} />
       </div>
     </div>
