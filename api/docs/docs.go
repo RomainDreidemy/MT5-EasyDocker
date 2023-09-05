@@ -496,6 +496,44 @@ const docTemplate = `{
             }
         },
         "/service_managed_volume_links/{id}": {
+            "put": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Service Volume Links"
+                ],
+                "summary": "Update a link between a service and a volume",
+                "parameters": [
+                    {
+                        "description": "query params",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.ServiceManagedVolumeLinkUpdateInput"
+                        }
+                    },
+                    {
+                        "type": "string",
+                        "description": "Service Volume Link ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.ServiceNetworkLinkResponse"
+                        }
+                    }
+                }
+            },
             "delete": {
                 "consumes": [
                     "application/json"
@@ -1703,6 +1741,14 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "serviceId": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.ServiceManagedVolumeLinkUpdateInput": {
+            "type": "object",
+            "properties": {
+                "containerPath": {
                     "type": "string"
                 }
             }

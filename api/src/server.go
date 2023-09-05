@@ -109,6 +109,8 @@ func main() {
 
 	serviceManagedVolumeLink := micro.Group("/service_managed_volume_links", middleware.DeserializeUser)
 	serviceManagedVolumeLink.Post("/", controllers.CreateServiceManagedVolumeLink)
+	serviceManagedVolumeLink.Put("/:id", controllers.UpdateServiceManagedVolumeLink)
+	serviceManagedVolumeLink.Delete("/:id", controllers.DeleteServiceManagedVolumeLink)
 
 	stacks.Get("/:stackId/docker_compose", controllers.GenerateDockerComposeFile)
 
