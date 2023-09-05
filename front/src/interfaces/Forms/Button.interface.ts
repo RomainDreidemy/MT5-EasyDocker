@@ -1,7 +1,7 @@
 import type React from 'react'
 
 export interface ButtonProps {
-  label: string | Element | JSX.Element
+  label?: string | Element | JSX.Element
   name?: string
   className?: string
   icon?: JSX.Element

@@ -4,6 +4,7 @@ import { type TEntity } from '../../types/Entity'
 import type useDrawerEditor from '../../hooks/useDrawerEditor'
 import type useLinkerEditor from '../../hooks/useLinkerEditor'
 import { type TLinkEntity } from '../../types/Linker'
+import { AiOutlineClose } from 'react-icons/ai'
 
 const EditorOrganism = ({ entity, stackId, useEditor }: {
   entity: any
@@ -19,7 +20,8 @@ const EditorOrganism = ({ entity, stackId, useEditor }: {
 
         <Button
           className="bg-transparent text-blue-500 hover:text-white font-bold h-2"
-          label={'X'}
+          icon={<AiOutlineClose />}
+          variant={'ghost'}
           onClick={onClose}
         />
       </div>
