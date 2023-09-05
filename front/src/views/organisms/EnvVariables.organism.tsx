@@ -33,7 +33,7 @@ const EnvVariablesOrganism = ({ entity: drawer }: { entity: TDrawer }): JSX.Elem
   }
 
   return (
-    <section className="mb-3">
+    <section className="mb-3 mt-5">
       <hr/>
 
       <article className="pt-3">

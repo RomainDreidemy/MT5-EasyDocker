@@ -20,7 +20,7 @@ export interface EditorForm {
   key?: string
   type: TypeList
   validator?: any
-  component: typeof Input | typeof Checkbox | typeof TextArea
+  component: any
 }
 
 export const LINKER_STRUCTURE: EditorForm[] = [
@@ -35,11 +35,6 @@ export const LINKER_STRUCTURE: EditorForm[] = [
 
 export const DRAWER_TYPE_STRUCTURES: EditorStructure = {
   [DrawerTypes.SERVICE]: [
-    {
-      label: 'Env variables',
-      type: TypeList.CUSTOM,
-      component: EnvVariablesOrganism
-    },
     {
       label: 'Name',
       key: 'name',
@@ -81,6 +76,11 @@ export const DRAWER_TYPE_STRUCTURES: EditorStructure = {
       type: TypeList.TEXT,
       component: Checkbox,
       validator: boolean().nullable()
+    },
+    {
+      label: 'Env variables',
+      type: TypeList.CUSTOM,
+      component: EnvVariablesOrganism
     }
   ],
   [DrawerTypes.NETWORK]: [

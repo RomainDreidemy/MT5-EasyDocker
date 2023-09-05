@@ -42,17 +42,19 @@ const EditorOrganism = ({ entity, stackId, useEditor }: {
             />)
         })}
 
-        <div className="mt-5">
+        <hr />
+
+        <div className="mt-5 w-full flex space-x-4">
           <Button
             label="Update"
             onClick={onSubmit}
-            className="w-full"
+            className="flex-grow"
           />
 
           {(onDelete != null) && (<Button
             label="Delete"
             onClick={onDelete}
-            className="w-full bg-red-500 hover:bg-red-700 border border-red-500 text-white font-bold py-2 px-4 mt-5"
+            className="flex-grow bg-red-500 hover:bg-red-700 border border-red-500 text-white font-bold"
           />)}
         </div>
 
