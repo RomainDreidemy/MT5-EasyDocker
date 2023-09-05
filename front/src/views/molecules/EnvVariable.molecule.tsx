@@ -9,8 +9,8 @@ import { GoPencil } from 'react-icons/go'
 import ServiceEnvVariableEntity from '../../services/entities/ServiceEnvVariable.entity'
 import { AiOutlineDelete } from 'react-icons/ai'
 
-const EnvVariableMolecule = ({ envVariable, serviceId, addCallback, deleteCallback }: {
-  envVariable?: IServiceEnvVariable
+const EnvVariableMolecule = ({ variable, serviceId, addCallback, deleteCallback }: {
+  variable?: IServiceEnvVariable
   serviceId: string
   addCallback?: (envVariable: IServiceEnvVariable) => void
   deleteCallback?: (envVariable: IServiceEnvVariable) => void
@@ -42,9 +42,9 @@ const EnvVariableMolecule = ({ envVariable, serviceId, addCallback, deleteCallba
     setForm,
     onChange,
     validatorsSchema
-  } = useForm<IServiceEnvVariable | IServiceEnvVariableCreate>(envVariable ?? initialForm, fields)
+  } = useForm<IServiceEnvVariable | IServiceEnvVariableCreate>(variable ?? initialForm, fields)
 
-  const isCreating = envVariable?.id == null
+  const isCreating = variable?.id == null
 
   const buttonText =
     isCreating ? 'Add' : <GoPencil size={15}/>
@@ -73,11 +73,11 @@ const EnvVariableMolecule = ({ envVariable, serviceId, addCallback, deleteCallba
     try {
       if (isCreating) return
 
-      await ServiceEnvVariableEntity.delete(envVariable.id)
+      await ServiceEnvVariableEntity.delete(variable.id)
 
       if (deleteCallback == null) return
 
-      deleteCallback(envVariable)
+      deleteCallback(variable)
     } catch (err) {
       console.error(err)
     }

@@ -33,6 +33,23 @@ export const LINKER_STRUCTURE: EditorForm[] = [
   }
 ]
 
+export const ENV_VARIABLE_STRUCTURE: EditorForm[] = [
+  {
+    label: 'Key',
+    key: 'key',
+    type: TypeList.TEXT,
+    component: Input,
+    validator: string().required()
+  },
+  {
+    label: 'Value',
+    key: 'value',
+    type: TypeList.TEXT,
+    component: Input,
+    validator: string().required()
+  }
+]
+
 export const DRAWER_TYPE_STRUCTURES: EditorStructure = {
   [DrawerTypes.SERVICE]: [
     {
