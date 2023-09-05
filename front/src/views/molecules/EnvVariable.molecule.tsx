@@ -1,4 +1,4 @@
-import React, { type Dispatch, type SetStateAction, useEffect, useState } from 'react'
+import React from 'react'
 import { type IServiceEnvVariable, type IServiceEnvVariableCreate } from '../../interfaces/ServiceEnvVariable.interface'
 import Input from '../atoms/forms/Input.atom'
 import useForm from '../../hooks/useForm'
@@ -21,14 +21,14 @@ const EnvVariableMolecule = ({ envVariable, serviceId, addCallback, deleteCallba
       key: 'key',
       type: TypeList.TEXT,
       component: Input,
-      validator: string().nullable()
+      validator: string().required()
     },
     {
       label: 'Value',
       key: 'value',
       type: TypeList.TEXT,
       component: Input,
-      validator: string().nullable()
+      validator: string().required()
     }
   ]
 
@@ -47,7 +47,7 @@ const EnvVariableMolecule = ({ envVariable, serviceId, addCallback, deleteCallba
   const isCreating = envVariable?.id == null
 
   const buttonText =
-    isCreating ? 'Add' : <GoPencil/>
+    isCreating ? 'Add' : <GoPencil size={15}/>
 
   const onSubmit = async (): Promise<void> => {
     try {
@@ -84,27 +84,30 @@ const EnvVariableMolecule = ({ envVariable, serviceId, addCallback, deleteCallba
   }
 
   return (
-    <article className="flex">
-
+    <>
       {fields.map((field, index) => {
         const Component = field.component
-        const value =
-          (form != null)
-            ? form[field.key as keyof IServiceEnvVariable & keyof IServiceEnvVariableCreate]
-            : ''
+        const value = form[field.key as keyof IServiceEnvVariable & keyof IServiceEnvVariableCreate]
 
         return (
-          <Component
-            key={index}
-            type={field.type}
-            name={field.key}
-            value={value}
-            onChange={onChange}
-          />)
+          <div className="w-1/3 flex items-center" key={index}>
+            <div className="mr-1">
+              <Component
+                type={field.type}
+                name={field.key}
+                value={value}
+                onChange={onChange}
+              /></div>
+          </div>)
       })}
-      <Button label={buttonText} onClick={onSubmit} variant="ghost"/>
-      {!isCreating && (<Button label={<AiOutlineDelete />} onClick={onDelete} variant="ghost"/>)}
-    </article>
+
+      <div className="w-1/3 flex items-center">
+        <div className="flex">
+          <Button label={buttonText} onClick={onSubmit} variant="ghost"/>
+          {!isCreating && (<Button label={<AiOutlineDelete size={15}/>} onClick={onDelete} variant="ghost"/>)}
+        </div>
+      </div>
+    </>
   )
 }
 
