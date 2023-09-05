@@ -5,6 +5,10 @@ on:
     branches:
       - main
 
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
+
 env:
   GITHUB_CONTAINER_REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}/front
