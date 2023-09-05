@@ -18,8 +18,9 @@ func GenerateDockerComposeFile(c *fiber.Ctx) error {
 
 	services, _ := repositories.FindServicesByStackIdWithAssociation(stackId)
 	networks, _ := repositories.FindNetworksByStackId(stackId)
+	volumes, _ := repositories.FindManagedVolumesByStackId(stackId)
 
-	yaml := docker_compose.GenerateDockerCompose(services, networks)
+	yaml := docker_compose.GenerateDockerCompose(services, networks, volumes)
 
 	return c.Status(fiber.StatusOK).Send([]byte(yaml))
 }
