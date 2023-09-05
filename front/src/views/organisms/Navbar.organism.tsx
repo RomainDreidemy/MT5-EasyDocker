@@ -1,13 +1,13 @@
 import React from 'react'
 import Button from '../atoms/forms/Button.atom'
-import Cookies from 'js-cookie'
 import { Link, useNavigate } from 'react-router-dom'
+import AuthEntity from '../../services/entities/Auth.entity'
 
 export const Navbar = (): JSX.Element => {
   const navigate = useNavigate()
 
-  const logout = (): void => {
-    Cookies.remove('token')
+  const logout = async (): Promise<void> => {
+    await AuthEntity.logout()
     navigate('/login')
   }
 

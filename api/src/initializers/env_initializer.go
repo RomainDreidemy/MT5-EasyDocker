@@ -19,6 +19,7 @@ type Config struct {
 	CORSUrl string `mapstructure:"CORS_URL"`
 
 	ClientOrigin string `mapstructure:"CLIENT_ORIGIN"`
+	Domain       string `mapstructure:"DOMAIN"`
 }
 
 func LoadConfig(path string) (config Config, err error) {
