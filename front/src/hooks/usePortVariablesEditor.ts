@@ -1,16 +1,19 @@
 import { type TDrawer } from '../types/Drawer'
 import { useState } from 'react'
 import { type IService } from '../interfaces/Service.interface'
-import { AiOutlineLock, AiOutlineUnlock } from 'react-icons/ai'
 import { type EditorForm, PORT_VARIABLE_STRUCTURE } from '../forms/editor.structure'
 import { type IVariableRequester } from '../services/entities/ServiceEnvVariable.entity'
-import { type TVariablesEditor } from './useEnvVariablesEditor'
+import { type TVariableEditorCaller, type TVariablesEditor } from './useEnvVariablesEditor'
 import { type IServicePortVariable, type IServicePortVariableCreate } from '../interfaces/ServicePort.interface'
 import PortVariableMolecule from '../views/molecules/PortVariable.molecule'
 import ServicePortEntity from '../services/entities/ServicePort.entity'
 import { TbReportMedical, TbReportSearch } from 'react-icons/tb'
+import { type IconType } from 'react-icons'
 
-const useEnvVariablesEditor = (drawer: TDrawer, open: boolean): TVariablesEditor<IServicePortVariable, typeof PortVariableMolecule, IVariableRequester<IServicePortVariableCreate, IServicePortVariable>> => {
+export type TPortEditor = TVariablesEditor<IServicePortVariable, typeof PortVariableMolecule, IVariableRequester<IServicePortVariableCreate, IServicePortVariable>>
+export type TPortEditorCaller = TVariableEditorCaller<TPortEditor>
+
+const useEnvVariablesEditor = (drawer: TDrawer): TPortEditor => {
   const [structure] = useState<EditorForm[]>(PORT_VARIABLE_STRUCTURE)
 
   const entity: IService = drawer.entity! as IService
@@ -18,14 +21,18 @@ const useEnvVariablesEditor = (drawer: TDrawer, open: boolean): TVariablesEditor
   const [ports, setPorts] = useState<IServicePortVariable[]>(entity.ports)
 
   const buttonText =
-    open
-      ? 'Hide Port Vars'
-      : 'Reveal Port Vars'
+    (open: boolean): string => {
+      return open
+        ? 'Hide Port Vars'
+        : 'Reveal Port Vars'
+    }
 
   const Icon =
-    open
-      ? TbReportSearch
-      : TbReportMedical
+    (open: boolean): IconType => {
+      return open
+        ? TbReportSearch
+        : TbReportMedical
+    }
 
   return {
     variables: ports,
@@ -33,7 +40,7 @@ const useEnvVariablesEditor = (drawer: TDrawer, open: boolean): TVariablesEditor
     buttonText,
     fields: structure,
 
-    Icon,
+    icon: Icon,
     Component: PortVariableMolecule,
     Requester: ServicePortEntity
   }

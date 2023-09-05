@@ -7,20 +7,25 @@ import EnvVariableMolecule from '../views/molecules/EnvVariable.molecule'
 import { type IconType } from 'react-icons'
 import { type EditorForm, ENV_VARIABLE_STRUCTURE } from '../forms/editor.structure'
 import ServiceEnvVariableEntity, { type IVariableRequester } from '../services/entities/ServiceEnvVariable.entity'
+import { TbReportMedical, TbReportSearch } from 'react-icons/tb'
 
 export interface TVariablesEditor<IVariable, Component, Requester> {
   variables: IVariable[]
   setVariables: Dispatch<SetStateAction<IVariable[]>>
-  buttonText: string
+  buttonText: (open: boolean) => string
   fields: EditorForm[]
 
-  Icon: IconType
+  icon: (open: boolean) => IconType
   Component: Component
 
   Requester: Requester
 }
 
-const useEnvVariablesEditor = (drawer: TDrawer, open: boolean): TVariablesEditor<IServiceEnvVariable, typeof EnvVariableMolecule, IVariableRequester<IServiceEnvVariableCreate, IServiceEnvVariable>> => {
+export type TVariableEditorCaller<C> = (drawer: TDrawer) => C
+export type TEnvVariableEditor = TVariablesEditor<IServiceEnvVariable, typeof EnvVariableMolecule, IVariableRequester<IServiceEnvVariableCreate, IServiceEnvVariable>>
+export type TEnvVariableEditorCaller = TVariableEditorCaller<TEnvVariableEditor>
+
+const useEnvVariablesEditor = (drawer: TDrawer): TEnvVariableEditor => {
   const [structure] = useState<EditorForm[]>(ENV_VARIABLE_STRUCTURE)
 
   const entity: IService = drawer.entity! as IService
@@ -28,14 +33,18 @@ const useEnvVariablesEditor = (drawer: TDrawer, open: boolean): TVariablesEditor
   const [envVariables, setEnvVariables] = useState<IServiceEnvVariable[]>(entity.envVariables)
 
   const buttonText =
-    open
-      ? 'Hide Config Vars'
-      : 'Reveal config Vars'
+    (open: boolean): string => {
+      return open
+        ? 'Hide Config Vars'
+        : 'Reveal config Vars'
+    }
 
-  const Icon =
-    open
-      ? AiOutlineUnlock
-      : AiOutlineLock
+  const icon =
+    (open: boolean): IconType => {
+      return open
+        ? AiOutlineUnlock
+        : AiOutlineLock
+    }
 
   return {
     variables: envVariables,
@@ -43,7 +52,7 @@ const useEnvVariablesEditor = (drawer: TDrawer, open: boolean): TVariablesEditor
     buttonText,
     fields: structure,
 
-    Icon,
+    icon,
     Component: EnvVariableMolecule,
     Requester: ServiceEnvVariableEntity
   }

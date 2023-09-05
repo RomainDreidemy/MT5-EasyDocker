@@ -57,7 +57,7 @@ function VariableMolecule<ICreate, IEntity> ({ variable, serviceId, addCallback,
     try {
       if (isCreating) return
 
-      await Requester.delete(variable.id)
+      await Requester.delete(variable!.id!)
 
       if (deleteCallback == null) return
 
@@ -81,7 +81,8 @@ function VariableMolecule<ICreate, IEntity> ({ variable, serviceId, addCallback,
                 name={field.key}
                 value={value}
                 onChange={onChange}
-              /></div>
+              />
+            </div>
           </div>)
       })}
 

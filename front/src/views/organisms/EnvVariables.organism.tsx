@@ -4,7 +4,9 @@ import ServiceVariablesOrganism from './ServiceVariables.organism'
 import useEnvVariablesEditor from '../../hooks/useEnvVariablesEditor'
 
 const EnvVariablesOrganism = ({ entity: drawer }: { entity: TDrawer }): JSX.Element => {
-  return <ServiceVariablesOrganism entity={drawer} useEditor={useEnvVariablesEditor}/>
+  const editor = useEnvVariablesEditor(drawer)
+
+  return <ServiceVariablesOrganism entity={drawer} editor={editor}/>
 }
 
 export default EnvVariablesOrganism
