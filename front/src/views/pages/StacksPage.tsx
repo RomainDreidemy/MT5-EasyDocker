@@ -16,23 +16,24 @@ const StacksPage = (): JSX.Element => {
 
   return (
     <section>
-      <h1 className='text-center mt-4 mb-4'>Stacks list</h1>
-
-      <div className='grid grid-cols-3 gap-2'>
+      <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-4 p-5'>
+        <button
+          onClick={() => alert('implement stack creation')}
+          className="card shadow-md mb-2 rounded bg-blue-100 border border-blue-100 hover:border-blue-200">
+          <div className="card-body">
+            <h2 className="card-title">+ Create a new stack</h2>
+            <p>Click here to create a new stack</p>
+          </div>
+        </button>
       {
-        stacks.length > 0
-          ? (stacks.map((stack: IStack) => (
-          <div key={stack.id} className="card w-96 shadow-xl">
+        (stacks.map((stack: IStack) => (
+          <Link to={`/stacks/${stack.id}`} key={stack.id} className="card shadow-md mb-2 rounded border border-blue-100 hover:border-blue-200">
             <div className="card-body">
               <h2 className="card-title">{stack.name}</h2>
               <p>{stack.description}</p>
-              <div className="card-actions justify-end">
-              <Link className="btn btn-primary" to={`/stacks/${stack.id}`}>View</Link>
-              </div>
             </div>
-          </div>
-            )))
-          : <h2>You do not have any stacks yet</h2>
+          </Link>
+        )))
       }
       </div>
     </section>
