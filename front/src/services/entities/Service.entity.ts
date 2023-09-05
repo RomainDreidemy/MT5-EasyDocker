@@ -3,7 +3,7 @@ import { type IService, type IServiceCreate } from '../../interfaces/Service.int
 import { type AxiosResponse } from 'axios'
 
 const ServiceEntity = {
-  get: async (service: IService): Promise<AxiosResponse<IService>> => await axios.put(`/services/${service.id}`),
+  get: async (service: IService): Promise<AxiosResponse<IService>> => await axios.get(`/services/${service.id}`),
   create: async (stackId: string, service: IServiceCreate): Promise<AxiosResponse<IService>> =>
     await axios.post(`/stacks/${stackId}/services`, service),
   update: async (service: IService): Promise<AxiosResponse<IService>> => await axios.put(`/services/${service.id}`, service),
