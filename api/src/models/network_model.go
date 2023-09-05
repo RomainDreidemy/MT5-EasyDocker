@@ -9,7 +9,7 @@ type Network struct {
 	Description string     `gorm:"type:text"`
 	PositionX   float32    `gorm:"type:decimal(20,8);not null"`
 	PositionY   float32    `gorm:"type:decimal(20,8);not null"`
-	Driver      string     `gorm:"type:varchar(255);not null"`
+	Driver      string     `gorm:"type:varchar(255)"`
 
 	StackID string `gorm:"type:uuid;not null"`
 	Stack   Stack
