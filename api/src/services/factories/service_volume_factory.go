@@ -13,7 +13,7 @@ func BuildServiceVolumeResponse(serviceVolume models.ServiceVolume) models.Servi
 }
 
 func BuildServiceVolumeResponses(serviceVolume []models.ServiceVolume) []models.ServiceVolumeResponse {
-	var serializedServiceVolumes []models.ServiceVolumeResponse
+	serializedServiceVolumes := make([]models.ServiceVolumeResponse, 0)
 	for i := 0; i < len(serviceVolume); i++ {
 		serializedServiceVolumes = append(serializedServiceVolumes, BuildServiceVolumeResponse(serviceVolume[i]))
 	}

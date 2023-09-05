@@ -13,7 +13,7 @@ func BuildServicePortResponse(servicePort models.ServicePort) models.ServicePort
 }
 
 func BuildServicePortResponses(servicePort []models.ServicePort) []models.ServicePortResponse {
-	var serializedServicePorts []models.ServicePortResponse
+	serializedServicePorts := make([]models.ServicePortResponse, 0)
 	for i := 0; i < len(servicePort); i++ {
 		serializedServicePorts = append(serializedServicePorts, BuildServicePortResponse(servicePort[i]))
 	}

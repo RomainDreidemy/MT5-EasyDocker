@@ -13,7 +13,7 @@ func BuildServiceEnvVariableResponse(serviceEnvVariable models.ServiceEnvVariabl
 }
 
 func BuildServiceEnvVariableResponses(serviceEnvVariable []models.ServiceEnvVariable) []models.ServiceEnvVariableResponse {
-	var serializedServiceEnvVariable []models.ServiceEnvVariableResponse
+	serializedServiceEnvVariable := make([]models.ServiceEnvVariableResponse, 0)
 	for i := 0; i < len(serviceEnvVariable); i++ {
 		serializedServiceEnvVariable = append(serializedServiceEnvVariable, BuildServiceEnvVariableResponse(serviceEnvVariable[i]))
 	}
