@@ -5,13 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="93a38079-b24e-4c0d-a7db-694c7ba74bab" name="Changes" comment="feat(entity): adding loading">
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/public/favicon.ico" beforeDir="false" afterPath="$PROJECT_DIR$/front/public/favicon.ico" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/public/logo192.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/public/logo512.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/src/views/organisms/Navbar.organism.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/views/organisms/Navbar.organism.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/src/views/pages/LoginPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/views/pages/LoginPage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/src/views/pages/RegisterPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/views/pages/RegisterPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/src/interfaces/Stack.interface.ts" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/interfaces/Stack.interface.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/src/services/entities/Stack.entity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/services/entities/Stack.entity.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/src/views/organisms/CreateStackModal.organism.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/views/organisms/CreateStackModal.organism.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/front/src/views/pages/StacksPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/views/pages/StacksPage.tsx" afterDir="false" />
     </list>
     <list id="9d6ec37d-1338-4257-80e2-d39852ceb11b" name="DO NOT COMMIT" comment="" />
@@ -70,33 +68,38 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.go.formatter.settings.were.checked": "true",
-    "RunOnceActivity.go.migrated.go.modules.settings": "true",
-    "RunOnceActivity.go.modules.go.list.on.any.changes.was.set": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "feat/redirect__unauthorized",
-    "go.import.settings.migrated": "true",
-    "go.sdk.automatically.set": "true",
-    "last_opened_file_path": "/Users/romain.dreidemy",
-    "node.js.detected.package.eslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "ts.external.directory.path": "/Users/diyar/Sites/Ecole/Hetic/EasyDocker/front/node_modules/typescript/lib"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.formatter.settings.were.checked&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.migrated.go.modules.settings&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.modules.go.list.on.any.changes.was.set&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feat/redirect__unauthorized&quot;,
+    &quot;go.import.settings.migrated&quot;: &quot;true&quot;,
+    &quot;go.sdk.automatically.set&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/romain.dreidemy&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/home/jean/Documents/hetic/MT5-EasyDocker/front/node_modules/typescript/lib&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "postgresql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;postgresql&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
+    <option name="OPEN_GENERIC_TABS">
+      <map>
+        <entry key="f433091d-139e-4d45-878d-cb89485d9aba" value="TOOL_WINDOW" />
+      </map>
+    </option>
     <option name="TAB_STATES">
       <map>
         <entry key="MAIN">
@@ -114,6 +117,11 @@
                 </map>
               </option>
             </State>
+          </value>
+        </entry>
+        <entry key="f433091d-139e-4d45-878d-cb89485d9aba">
+          <value>
+            <State />
           </value>
         </entry>
       </map>

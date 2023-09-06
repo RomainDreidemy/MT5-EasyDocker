@@ -1,18 +1,20 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import StackEntity from '../../services/entities/Stack.entity'
 import { type IStack } from '../../interfaces/Stack.interface'
 import { Link } from 'react-router-dom'
-import CreateStackModal from '../organisms/CreateStackModal.organism'
+import CreateStackModal from '../organisms/StackFormModal.organism'
 
 const StacksPage = (): JSX.Element => {
   const [stacks, setStacks] = useState<IStack[]>([])
 
-  async function getStacks () {
+  const getStacks = async (): Promise<void> => {
     const { data: stacksResponse } = await StackEntity.stacks()
     setStacks(stacksResponse)
   }
 
-  getStacks()
+  useEffect(() => {
+    (async () => { await getStacks() })()
+  }, [])
 
   return (
     <section>
@@ -25,18 +27,19 @@ const StacksPage = (): JSX.Element => {
             <p>Click here to create a new stack</p>
           </div>
         </button>
-      {
-        (stacks.map((stack: IStack) => (
-          <Link to={`/stacks/${stack.id}`} key={stack.id} className="card shadow-md mb-2 rounded border border-blue-100 hover:border-blue-200">
-            <div className="card-body">
-              <h2 className="card-title">{stack.name}</h2>
-              <p>{stack.description}</p>
-            </div>
-          </Link>
-        )))
-      }
+        {
+          (stacks.map((stack: IStack) => (
+            <Link to={`/stacks/${stack.id}`} key={stack.id}
+                  className="card shadow-md mb-2 rounded border border-blue-100 hover:border-blue-200">
+              <div className="card-body">
+                <h2 className="card-title">{stack.name}</h2>
+                <p>{stack.description}</p>
+              </div>
+            </Link>
+          )))
+        }
       </div>
-      <CreateStackModal stacks={stacks} setStacks={setStacks} />
+      <CreateStackModal stacks={stacks} setStacks={setStacks}/>
     </section>
   )
 }
