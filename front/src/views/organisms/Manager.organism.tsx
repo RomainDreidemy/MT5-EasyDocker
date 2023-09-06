@@ -42,8 +42,8 @@ const ManagerOrganism = ({ stackId }: { stackId: string }): JSX.Element => {
         <EntityButtonAtom name="Network" onClick={createNetwork} disabled={loading}/>
         <EntityButtonAtom name="Volume" onClick={createVolume} disabled={loading}/>
 
-        <div className='justify-self-end'>
-          <Button label={'Generate yaml file'} variant="primary" onClick={async () => { await generateYaml() }}/>
+        <div className='mt-auto mb-4 flex justify-center'>
+          <Button label={'Generate yaml file'} className='w-auto' variant='ghost' onClick={async () => { await generateYaml() }}/>
         </div>
 
         <ComposeFileModalOrganism composeFileData={composeFileData} />
