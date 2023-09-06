@@ -1,13 +1,13 @@
-import { type TDrawer } from '../types/Drawer'
+import { type TDrawer } from '../../types/Drawer'
 import { useState } from 'react'
-import { type IServiceEnvVariable, type IServiceEnvVariableCreate } from '../interfaces/ServiceEnvVariable.interface'
-import { type IService } from '../interfaces/Service.interface'
+import { type IServiceEnvVariable, type IServiceEnvVariableCreate } from '../../interfaces/ServiceVariable/EnvVariable.interface'
+import { type IService } from '../../interfaces/Service.interface'
 import { AiOutlineLock, AiOutlineUnlock } from 'react-icons/ai'
-import EnvVariableMolecule from '../views/molecules/ServiceVariable/EnvVariable.molecule'
+import EnvVariableMolecule from '../../views/molecules/ServiceVariable/EnvVariable.molecule'
 import { type IconType } from 'react-icons'
-import { type EditorForm, ENV_VARIABLE_STRUCTURE } from '../forms/editor.structure'
-import EnvVariableEntity from '../services/entities/serviceVariables/EnvVariable.entity'
-import { type TVariablesEditor } from '../interfaces/VariableConfig.interface'
+import { type EditorForm, ENV_VARIABLE_STRUCTURE } from '../../forms/editor.structure'
+import EnvVariableEntity from '../../services/entities/serviceVariables/EnvVariable.entity'
+import { type TVariablesEditor } from '../../interfaces/VariableConfig.interface'
 
 export type TEnvVariableEditor = TVariablesEditor<IServiceEnvVariable, IServiceEnvVariableCreate>
 

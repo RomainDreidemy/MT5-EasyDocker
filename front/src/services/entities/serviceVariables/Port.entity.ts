@@ -1,6 +1,6 @@
 import { type AxiosResponse } from 'axios'
 import axios from '../../utils/axios'
-import { type IServicePortVariable, type IServicePortVariableCreate } from '../../../interfaces/ServicePort.interface'
+import { type IServicePortVariable, type IServicePortVariableCreate } from '../../../interfaces/ServiceVariable/Port.interface'
 import { type IVariableRequest } from '../../../interfaces/VariableConfig.interface'
 
 const PortEntity: IVariableRequest<IServicePortVariableCreate, IServicePortVariable> = {

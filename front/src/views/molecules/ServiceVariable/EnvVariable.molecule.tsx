@@ -2,7 +2,7 @@ import React from 'react'
 import {
   type IServiceEnvVariable,
   type IServiceEnvVariableCreate
-} from '../../../interfaces/ServiceEnvVariable.interface'
+} from '../../../interfaces/ServiceVariable/EnvVariable.interface'
 import VariableMolecule from './Variable.molecule'
 import { type IVariableMolecule } from '../../../interfaces/VariableConfig.interface'
 

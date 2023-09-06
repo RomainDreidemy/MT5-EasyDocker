@@ -5,6 +5,7 @@ import Checkbox from '../views/atoms/forms/Checkbox.atom'
 import TextArea from '../views/atoms/forms/TextArea.atom'
 import EnvVariablesOrganism from '../views/organisms/ServiceVariables/EnvVariables.organism'
 import PortVariablesOrganism from '../views/organisms/ServiceVariables/PortVariables.organism'
+import VolumeVariablesOrganism from '../views/organisms/ServiceVariables/VolumeVariables.organism'
 
 export type EditorStructure = {
   [key in DrawerTypes]: EditorForm[]
@@ -46,6 +47,23 @@ export const ENV_VARIABLE_STRUCTURE: EditorForm[] = [
   {
     label: 'Value',
     key: 'value',
+    type: TypeList.TEXT,
+    component: Input,
+    validator: string().required()
+  }
+]
+
+export const VOLUME_VARIABLE_STRUCTURE: EditorForm[] = [
+  {
+    label: 'Container path',
+    key: 'containerPath',
+    type: TypeList.TEXT,
+    component: Input,
+    validator: string().required()
+  },
+  {
+    label: 'LocalPath',
+    key: 'localPath',
     type: TypeList.TEXT,
     component: Input,
     validator: string().required()
@@ -124,6 +142,12 @@ export const DRAWER_TYPE_STRUCTURES: EditorStructure = {
       type: TypeList.CUSTOM,
       key: 'ports',
       component: PortVariablesOrganism
+    },
+    {
+      label: 'Volumes',
+      type: TypeList.CUSTOM,
+      key: 'volumes',
+      component: VolumeVariablesOrganism
     }
   ],
   [DrawerTypes.NETWORK]: [

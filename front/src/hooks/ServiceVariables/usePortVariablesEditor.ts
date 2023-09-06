@@ -1,13 +1,13 @@
-import { type TDrawer } from '../types/Drawer'
+import { type TDrawer } from '../../types/Drawer'
 import { useState } from 'react'
-import { type IService } from '../interfaces/Service.interface'
-import { type EditorForm, PORT_VARIABLE_STRUCTURE } from '../forms/editor.structure'
-import { type IServicePortVariable, type IServicePortVariableCreate } from '../interfaces/ServicePort.interface'
-import PortVariableMolecule from '../views/molecules/ServiceVariable/PortVariable.molecule'
-import PortEntity from '../services/entities/serviceVariables/Port.entity'
+import { type IService } from '../../interfaces/Service.interface'
+import { type EditorForm, PORT_VARIABLE_STRUCTURE } from '../../forms/editor.structure'
+import { type IServicePortVariable, type IServicePortVariableCreate } from '../../interfaces/ServiceVariable/Port.interface'
+import PortVariableMolecule from '../../views/molecules/ServiceVariable/PortVariable.molecule'
+import PortEntity from '../../services/entities/serviceVariables/Port.entity'
 import { TbReportMedical, TbReportSearch } from 'react-icons/tb'
 import { type IconType } from 'react-icons'
-import { type TVariablesEditor } from '../interfaces/VariableConfig.interface'
+import { type TVariablesEditor } from '../../interfaces/VariableConfig.interface'
 
 export type TPortEditor = TVariablesEditor<IServicePortVariable, IServicePortVariableCreate>
 

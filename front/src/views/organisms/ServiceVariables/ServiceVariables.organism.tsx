@@ -2,13 +2,14 @@ import React from 'react'
 import useToggle from '../../../hooks/useToggle'
 import Button from '../../atoms/forms/Button.atom'
 import { type TDrawer } from '../../../types/Drawer'
-import { type IServicePortVariable, type IServicePortVariableCreate } from '../../../interfaces/ServicePort.interface'
-import { type IServiceEnvVariable, type IServiceEnvVariableCreate } from '../../../interfaces/ServiceEnvVariable.interface'
+import { type IServicePortVariable, type IServicePortVariableCreate } from '../../../interfaces/ServiceVariable/Port.interface'
+import { type IServiceEnvVariable, type IServiceEnvVariableCreate } from '../../../interfaces/ServiceVariable/EnvVariable.interface'
 import { type TVariablesEditor } from '../../../interfaces/VariableConfig.interface'
+import { type IServiceVolume, type IServiceVolumeCreate } from '../../../interfaces/ServiceVariable/Volume.interface'
 
 function ServiceVariablesOrganism<
-  IVariable extends IServicePortVariable | IServiceEnvVariable,
-  IVariableCreate extends IServicePortVariableCreate | IServiceEnvVariableCreate
+  IVariable extends IServicePortVariable | IServiceEnvVariable | IServiceVolume,
+  IVariableCreate extends IServicePortVariableCreate | IServiceEnvVariableCreate | IServiceVolumeCreate
 > ({
   entity: drawer,
   editor

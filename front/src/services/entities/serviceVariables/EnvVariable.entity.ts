@@ -3,7 +3,7 @@ import axios from '../../utils/axios'
 import {
   type IServiceEnvVariable,
   type IServiceEnvVariableCreate
-} from '../../../interfaces/ServiceEnvVariable.interface'
+} from '../../../interfaces/ServiceVariable/EnvVariable.interface'
 import { type IVariableRequest } from '../../../interfaces/VariableConfig.interface'
 
 const EnvVariableEntity: IVariableRequest<IServiceEnvVariableCreate, IServiceEnvVariable> = {

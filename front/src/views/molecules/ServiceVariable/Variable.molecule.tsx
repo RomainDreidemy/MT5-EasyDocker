@@ -3,13 +3,14 @@ import useForm from '../../../hooks/useForm'
 import Button from '../../atoms/forms/Button.atom'
 import { GoPencil } from 'react-icons/go'
 import { AiOutlineDelete } from 'react-icons/ai'
-import { type IServicePortVariable, type IServicePortVariableCreate } from '../../../interfaces/ServicePort.interface'
-import { type IServiceEnvVariable, type IServiceEnvVariableCreate } from '../../../interfaces/ServiceEnvVariable.interface'
+import { type IServicePortVariable, type IServicePortVariableCreate } from '../../../interfaces/ServiceVariable/Port.interface'
+import { type IServiceEnvVariable, type IServiceEnvVariableCreate } from '../../../interfaces/ServiceVariable/EnvVariable.interface'
 import { type IVariableMolecule } from '../../../interfaces/VariableConfig.interface'
+import { type IServiceVolume, type IServiceVolumeCreate } from '../../../interfaces/ServiceVariable/Volume.interface'
 
 function VariableMolecule<
-  IVariable extends IServicePortVariable | IServiceEnvVariable,
-  IVariableCreate extends IServicePortVariableCreate | IServiceEnvVariableCreate
+  IVariable extends IServicePortVariable | IServiceEnvVariable | IServiceVolume,
+  IVariableCreate extends IServicePortVariableCreate | IServiceEnvVariableCreate | IServiceVolumeCreate
 > ({ variable, serviceId, addCallback, deleteCallback, fields, Requester }:
 IVariableMolecule<IVariableCreate, IVariable>): JSX.Element {
   const keyList = fields.map(({ key }) => ({ [key]: '' }))
