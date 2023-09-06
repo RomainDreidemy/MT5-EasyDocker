@@ -15,6 +15,7 @@ export enum TypeList {
   TEXT = 'text',
   NUMBER = 'number',
   CUSTOM = 'custom',
+  PASSWORD = 'password',
 }
 
 export interface EditorForm {
