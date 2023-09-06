@@ -40,7 +40,7 @@ function ServiceVariablesOrganism<
   const Icon = icon(open)
 
   return (
-    <section className="mb-3 mt-5">
+    <section className="mb-3">
       <hr/>
 
       <article className="pt-3">

@@ -20,7 +20,7 @@ const EditorOrganism = ({ entity, stackId, useEditor }: {
 
         <Button
           className="bg-transparent text-blue-500 hover:text-white font-bold h-2"
-          icon={<AiOutlineClose />}
+          icon={<AiOutlineClose/>}
           variant={'ghost'}
           onClick={onClose}
         />
@@ -33,18 +33,19 @@ const EditorOrganism = ({ entity, stackId, useEditor }: {
           const value = entityForm[field.key as keyof TEntity & keyof TLinkEntity]
 
           return (
-            <Component
-              key={index}
-              label={field.label}
-              type={field.type}
-              name={field.key}
-              entity={entity}
-              value={value}
-              onChange={onChange}
-            />)
+            <div className="mt-2" key={index}>
+              <Component
+                label={field.label}
+                type={field.type}
+                name={field.key}
+                entity={entity}
+                value={value}
+                onChange={onChange}
+              />
+            </div>)
         })}
 
-        <hr />
+        <hr/>
 
         <div className="mt-5 w-full flex space-x-4">
           <Button
