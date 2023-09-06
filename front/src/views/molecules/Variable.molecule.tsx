@@ -1,20 +1,19 @@
 import React from 'react'
 import useForm from '../../hooks/useForm'
-import { type EditorForm } from '../../forms/editor.structure'
 import Button from '../atoms/forms/Button.atom'
 import { GoPencil } from 'react-icons/go'
-import type { IVariableRequester } from '../../services/entities/ServiceEnvVariable.entity'
 import { AiOutlineDelete } from 'react-icons/ai'
 import { type IVariableMolecule } from '../../hooks/useEnvVariablesEditor'
+import { type IServicePortVariable, type IServicePortVariableCreate } from '../../interfaces/ServicePort.interface'
+import { type IServiceEnvVariable, type IServiceEnvVariableCreate } from '../../interfaces/ServiceEnvVariable.interface'
 
-function VariableMolecule<ICreate, IEntity> ({ variable, serviceId, addCallback, deleteCallback, fields, Requester }:
-IVariableMolecule<ICreate, IEntity>): JSX.Element {
-  console.log(fields)
-  const keyList =
-    fields.map(({ key }) => ({ [key]: '' }))
-  const initialForm = keyList.reduce((result, currentObj) => {
-    return { ...result, ...currentObj }
-  }, {})
+function VariableMolecule<
+  IVariable extends IServicePortVariable | IServiceEnvVariable,
+  IVariableCreate extends IServicePortVariableCreate | IServiceEnvVariableCreate
+> ({ variable, serviceId, addCallback, deleteCallback, fields, Requester }:
+IVariableMolecule<IVariableCreate, IVariable>): JSX.Element {
+  const keyList = fields.map(({ key }) => ({ [key]: '' }))
+  const initialForm = Object.assign({}, ...keyList)
 
   const {
     form,
@@ -34,8 +33,8 @@ IVariableMolecule<ICreate, IEntity>): JSX.Element {
 
       const response =
         isCreating
-          ? await Requester.create(serviceId, form as ICreate)
-          : await Requester.update(form as IEntity)
+          ? await Requester.create(serviceId, form as IVariableCreate)
+          : await Requester.update(form as IVariable)
 
       const { data: variable } = response
 
@@ -52,11 +51,11 @@ IVariableMolecule<ICreate, IEntity>): JSX.Element {
     try {
       if (isCreating) return
 
-      await Requester.delete(variable!.id!)
+      await Requester.delete(variable!.id)
 
       if (deleteCallback == null) return
 
-      deleteCallback(variable as IEntity)
+      deleteCallback(variable as IVariable)
     } catch (err) {
       console.error(err)
     }
@@ -66,7 +65,7 @@ IVariableMolecule<ICreate, IEntity>): JSX.Element {
     <>
       {fields.map((field, index) => {
         const Component = field.component
-        const value = form[field.key]
+        const value = form[field.key as keyof IVariable]
 
         return (
           <div className="w-1/3 flex items-center" key={index}>
@@ -74,6 +73,7 @@ IVariableMolecule<ICreate, IEntity>): JSX.Element {
               <Component
                 type={field.type}
                 name={field.key}
+                placeholder={field.label}
                 value={value}
                 onChange={onChange}
               />
