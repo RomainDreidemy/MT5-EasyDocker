@@ -3,9 +3,9 @@ import useForm from '../../hooks/useForm'
 import Button from '../atoms/forms/Button.atom'
 import { GoPencil } from 'react-icons/go'
 import { AiOutlineDelete } from 'react-icons/ai'
-import { type IVariableMolecule } from '../../hooks/useEnvVariablesEditor'
 import { type IServicePortVariable, type IServicePortVariableCreate } from '../../interfaces/ServicePort.interface'
 import { type IServiceEnvVariable, type IServiceEnvVariableCreate } from '../../interfaces/ServiceEnvVariable.interface'
+import { type IVariableMolecule } from '../../interfaces/VariableConfig.interface'
 
 function VariableMolecule<
   IVariable extends IServicePortVariable | IServiceEnvVariable,

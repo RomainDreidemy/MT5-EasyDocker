@@ -2,9 +2,9 @@ import React from 'react'
 import useToggle from '../../hooks/useToggle'
 import Button from '../atoms/forms/Button.atom'
 import { type TDrawer } from '../../types/Drawer'
-import { type TVariablesEditor } from '../../hooks/useEnvVariablesEditor'
 import { type IServicePortVariable, type IServicePortVariableCreate } from '../../interfaces/ServicePort.interface'
 import { type IServiceEnvVariable, type IServiceEnvVariableCreate } from '../../interfaces/ServiceEnvVariable.interface'
+import { type TVariablesEditor } from '../../interfaces/VariableConfig.interface'
 
 function ServiceVariablesOrganism<
   IVariable extends IServicePortVariable | IServiceEnvVariable,

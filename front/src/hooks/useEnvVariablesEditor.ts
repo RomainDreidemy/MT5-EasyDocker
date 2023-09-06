@@ -1,42 +1,18 @@
 import { type TDrawer } from '../types/Drawer'
-import { type Dispatch, type SetStateAction, useState } from 'react'
+import { useState } from 'react'
 import { type IServiceEnvVariable, type IServiceEnvVariableCreate } from '../interfaces/ServiceEnvVariable.interface'
 import { type IService } from '../interfaces/Service.interface'
 import { AiOutlineLock, AiOutlineUnlock } from 'react-icons/ai'
 import EnvVariableMolecule from '../views/molecules/EnvVariable.molecule'
 import { type IconType } from 'react-icons'
 import { type EditorForm, ENV_VARIABLE_STRUCTURE } from '../forms/editor.structure'
-import ServiceEnvVariableEntity, { type IVariableRequester } from '../services/entities/ServiceEnvVariable.entity'
-
-export interface IVariableMolecule<IVariableCreate, IVariable> {
-  fields: EditorForm[]
-  variable?: IVariable
-  serviceId: string
-  addCallback?: (variable: IVariable) => void
-  deleteCallback?: (variable: IVariable) => void
-  Requester: IVariableRequester<IVariableCreate, IVariable>
-}
-
-export type TVariableMolecule<IVariableCreate, IVariable> = (props: IVariableMolecule<IVariableCreate, IVariable>) => JSX.Element
-
-export interface TVariablesEditor<IVariable, IVariableCreate> {
-  variables: IVariable[]
-  setVariables: Dispatch<SetStateAction<IVariable[]>>
-  buttonText: (open: boolean) => string
-  fields: EditorForm[]
-
-  icon: (open: boolean) => IconType
-  Component: TVariableMolecule<IVariableCreate, IVariable>
-  Requester: IVariableRequester<IVariableCreate, IVariable>
-}
-
-export type TVariableEditorCaller<C> = (drawer: TDrawer) => C
+import ServiceEnvVariableEntity from '../services/entities/ServiceEnvVariable.entity'
+import { type TVariablesEditor } from '../interfaces/VariableConfig.interface'
 
 export type TServiceEnvVariable = IServiceEnvVariable
 export type TServiceEnvVariableCreate = IServiceEnvVariableCreate
 
 export type TEnvVariableEditor = TVariablesEditor<TServiceEnvVariable, TServiceEnvVariableCreate>
-export type TEnvVariableEditorCaller = TVariableEditorCaller<TEnvVariableEditor>
 
 const useEnvVariablesEditor = (drawer: TDrawer): TEnvVariableEditor => {
   const [structure] = useState<EditorForm[]>(ENV_VARIABLE_STRUCTURE)
