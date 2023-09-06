@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import StackEntity from '../../services/entities/Stack.entity'
 import { type IStack } from '../../interfaces/Stack.interface'
-import { Link } from 'react-router-dom'
-
-import Button from '../atoms/forms/Button.atom'
 import StackFormModalOrganism from '../organisms/StackFormModal.organism'
 import useToggle from '../../hooks/useToggle'
+import StackCardOrganism from '../organisms/StackCard.organism'
 
 const StacksPage = (): JSX.Element => {
   const [open, toggle] = useToggle()
@@ -22,7 +20,9 @@ const StacksPage = (): JSX.Element => {
     })()
   }, [])
 
-  const openModal = (): void => window.create_stack_modal.showModal()
+  const openModal = (): void => {
+    toggle()
+  }
 
   const onCreate = (): void => {
     setSelectedStack(undefined)
@@ -46,23 +46,12 @@ const StacksPage = (): JSX.Element => {
           </div>
         </button>
         {
-          (stacks.map((stack: IStack, index) => (
-            <div key={index} className="card shadow-md mb-2 rounded border border-blue-100 hover:border-blue-200">
-              <div className="card-body">
-                <h2 className="card-title">{stack.name}</h2>
-                <p>{stack.description}</p>
-              </div>
-
-              <Link to={`/stacks/${stack.id}`} key={stack.id}>
-                <Button label="Voir" variant="ghost"/>
-              </Link>
-
-              <Button label="Edit" variant="ghost" onClick={() => { onEdit(stack) }}/>
-            </div>
+          (stacks.map((stack: IStack) => (
+            <StackCardOrganism key={stack.id} stack={stack} id={stack.id} name={stack.name} description={stack.description} onEdit={onEdit} />
           )))
         }
       </div>
-      <StackFormModalOrganism stack={selectedStack} stacks={stacks} setStacks={setStacks} toggle={toggle}/>
+      {open && <StackFormModalOrganism stack={selectedStack} stacks={stacks} setStacks={setStacks} toggle={toggle}/>}
     </section>
   )
 }

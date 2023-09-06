@@ -28,7 +28,7 @@ const BoardEntity = {
   }),
   deleteServiceVolumeLink: async (id: string): Promise<AxiosResponse<void>> => await axios.delete(`/service_managed_volume_links/${id}`),
   updateServiceVolumeLink: async (serviceVolume: IServiceVolumeLinks): Promise<AxiosResponse<IServiceVolumeLinks>> => await axios.put(`/service_managed_volume_links/${serviceVolume.id}`, serviceVolume),
-  generateComposeFile: async (id: string): Promise<AxiosResponse<string>> => await axios.get(`/stacks/${id}/docker_compose`),
+  generateComposeFile: async (id: string): Promise<AxiosResponse<string>> => await axios.get(`/stacks/${id}/docker_compose`)
 }
 
 export default BoardEntity

@@ -25,8 +25,7 @@ const ManagerOrganism = ({ stackId }: { stackId: string }): JSX.Element => {
     try {
       const { data: yaml } = await BoardEntity.generateComposeFile(stackId)
       setComposeFileData(yaml)
-    }
-    catch (e: any) {
+    } catch (e: any) {
       console.log(e)
     }
   }
@@ -44,7 +43,7 @@ const ManagerOrganism = ({ stackId }: { stackId: string }): JSX.Element => {
         <EntityButtonAtom name="Volume" onClick={createVolume} disabled={loading}/>
 
         <div className='justify-self-end'>
-          <Button label={'Generate yaml file'} variant="primary" onClick={() => generateYaml()}/>
+          <Button label={'Generate yaml file'} variant="primary" onClick={async () => { await generateYaml() }}/>
         </div>
 
         <ComposeFileModalOrganism composeFileData={composeFileData} />
