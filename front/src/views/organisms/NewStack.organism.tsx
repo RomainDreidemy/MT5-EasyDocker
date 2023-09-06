@@ -1,10 +1,10 @@
 import Input from '../atoms/forms/Input.atom'
 import Button from '../atoms/forms/Button.atom'
-import React, { useState } from 'react'
+import React, { type ReactElement, useState } from 'react'
 import StackEntity from '../../services/entities/Stack.entity'
 import { useNavigate } from 'react-router-dom'
 
-const NewStackOrganism = () => {
+const NewStackOrganism = (): ReactElement => {
   const [name, setName] = useState('')
 
   const navigate = useNavigate()
