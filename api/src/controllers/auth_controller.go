@@ -115,7 +115,7 @@ func SignInUser(c *fiber.Ctx) error {
 		MaxAge:   config.JwtMaxAge * 60,
 		Secure:   false,
 		HTTPOnly: true,
-		Domain:   "localhost",
+		Domain:   config.Domain,
 	})
 
 	return c.Status(fiber.StatusOK).JSON(&models.UserLoginResponse{
