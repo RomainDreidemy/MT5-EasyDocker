@@ -1,5 +1,5 @@
 import { DrawerTypes } from '../enums/DrawerTypes'
-import { boolean, string } from 'yup'
+import { boolean, number, string } from 'yup'
 import Input from '../views/atoms/forms/Input.atom'
 import Checkbox from '../views/atoms/forms/Checkbox.atom'
 import TextArea from '../views/atoms/forms/TextArea.atom'
@@ -77,14 +77,14 @@ export const PORT_VARIABLE_STRUCTURE: EditorForm[] = [
     key: 'private',
     type: TypeList.NUMBER,
     component: Input,
-    validator: string().required()
+    validator: number().required()
   },
   {
     label: 'Public',
     key: 'public',
     type: TypeList.NUMBER,
     component: Input,
-    validator: string().required()
+    validator: number().required()
   }
 ]
 
