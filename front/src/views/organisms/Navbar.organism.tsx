@@ -14,7 +14,6 @@ export const Navbar = (): JSX.Element => {
   return (
     <div className="navbar bg-base-100 border-b-2">
       <div className="navbar-start">
-        <Button label={'Export as file'} variant="primary"/>
       </div>
       <Link to="/stacks" className="navbar-center">
         <img src={'/assets/logo.png'} alt="logo" className={'w-60'}/>
