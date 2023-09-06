@@ -6,7 +6,7 @@ on:
       - main
 
 concurrency:
-  group: ${{ github.ref }}
+  group: publish-front-${{ github.ref }}
   cancel-in-progress: true
 
 env:
