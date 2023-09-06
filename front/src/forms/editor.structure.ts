@@ -3,9 +3,8 @@ import { boolean, string } from 'yup'
 import Input from '../views/atoms/forms/Input.atom'
 import Checkbox from '../views/atoms/forms/Checkbox.atom'
 import TextArea from '../views/atoms/forms/TextArea.atom'
-import EnvVariablesOrganism from '../views/organisms/EnvVariables.organism'
-import PortVariableMolecule from '../views/molecules/PortVariable.molecule'
-import PortVariablesOrganism from '../views/organisms/PortVariables.organism'
+import EnvVariablesOrganism from '../views/organisms/ServiceVariables/EnvVariables.organism'
+import PortVariablesOrganism from '../views/organisms/ServiceVariables/PortVariables.organism'
 
 export type EditorStructure = {
   [key in DrawerTypes]: EditorForm[]
@@ -18,6 +17,7 @@ export enum TypeList {
 
 export interface EditorForm {
   [key: string]: any
+
   label: string
   key: string
   type: TypeList

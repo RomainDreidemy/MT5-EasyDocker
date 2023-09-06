@@ -1,8 +1,7 @@
 import { type EditorForm } from '../forms/editor.structure'
-import { type IVariableRequester } from '../services/entities/ServiceEnvVariable.entity'
 import { type Dispatch, type SetStateAction } from 'react'
 import { type IconType } from 'react-icons'
-import { type TDrawer } from '../types/Drawer'
+import { type AxiosResponse } from 'axios'
 
 export interface IVariableMolecule<IVariableCreate, IVariable> {
   fields: EditorForm[]
@@ -10,7 +9,7 @@ export interface IVariableMolecule<IVariableCreate, IVariable> {
   serviceId: string
   addCallback?: (variable: IVariable) => void
   deleteCallback?: (variable: IVariable) => void
-  Requester: IVariableRequester<IVariableCreate, IVariable>
+  Requester: IVariableRequest<IVariableCreate, IVariable>
 }
 
 export type TVariableMolecule<IVariableCreate, IVariable> = (props: IVariableMolecule<IVariableCreate, IVariable>) => JSX.Element
@@ -23,7 +22,11 @@ export interface TVariablesEditor<IVariable, IVariableCreate> {
 
   icon: (open: boolean) => IconType
   Component: TVariableMolecule<IVariableCreate, IVariable>
-  Requester: IVariableRequester<IVariableCreate, IVariable>
+  Requester: IVariableRequest<IVariableCreate, IVariable>
 }
 
-export type TVariableEditorCaller<C> = (drawer: TDrawer) => C
+export interface IVariableRequest<IVariableCreate, IVariable> {
+  create: (serviceId: string, entity: IVariableCreate) => Promise<AxiosResponse<IVariable>>
+  update: (entity: IVariable) => Promise<AxiosResponse<IVariable>>
+  delete: (id: string) => Promise<any>
+}

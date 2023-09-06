@@ -3,8 +3,8 @@ import { useState } from 'react'
 import { type IService } from '../interfaces/Service.interface'
 import { type EditorForm, PORT_VARIABLE_STRUCTURE } from '../forms/editor.structure'
 import { type IServicePortVariable, type IServicePortVariableCreate } from '../interfaces/ServicePort.interface'
-import PortVariableMolecule from '../views/molecules/PortVariable.molecule'
-import ServicePortEntity from '../services/entities/ServicePort.entity'
+import PortVariableMolecule from '../views/molecules/ServiceVariable/PortVariable.molecule'
+import PortEntity from '../services/entities/serviceVariables/Port.entity'
 import { TbReportMedical, TbReportSearch } from 'react-icons/tb'
 import { type IconType } from 'react-icons'
 import { type TVariablesEditor } from '../interfaces/VariableConfig.interface'
@@ -40,7 +40,7 @@ const useEnvVariablesEditor = (drawer: TDrawer): TPortEditor => {
 
     icon: Icon,
     Component: PortVariableMolecule,
-    Requester: ServicePortEntity
+    Requester: PortEntity
   }
 }
 
