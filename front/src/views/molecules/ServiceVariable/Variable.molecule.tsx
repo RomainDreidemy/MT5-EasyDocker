@@ -3,17 +3,30 @@ import useForm from '../../../hooks/useForm'
 import Button from '../../atoms/forms/Button.atom'
 import { GoPencil } from 'react-icons/go'
 import { AiOutlineDelete } from 'react-icons/ai'
-import { type IServicePortVariable, type IServicePortVariableCreate } from '../../../interfaces/ServiceVariable/Port.interface'
-import { type IServiceEnvVariable, type IServiceEnvVariableCreate } from '../../../interfaces/ServiceVariable/EnvVariable.interface'
+import {
+  type IServicePortVariable,
+  type IServicePortVariableCreate
+} from '../../../interfaces/ServiceVariable/Port.interface'
+import {
+  type IServiceEnvVariable,
+  type IServiceEnvVariableCreate
+} from '../../../interfaces/ServiceVariable/EnvVariable.interface'
 import { type IVariableMolecule } from '../../../interfaces/VariableConfig.interface'
 import { type IServiceVolume, type IServiceVolumeCreate } from '../../../interfaces/ServiceVariable/Volume.interface'
+import { TypeList } from '../../../forms/editor.structure'
 
 function VariableMolecule<
   IVariable extends IServicePortVariable | IServiceEnvVariable | IServiceVolume,
   IVariableCreate extends IServicePortVariableCreate | IServiceEnvVariableCreate | IServiceVolumeCreate
 > ({ variable, serviceId, addCallback, deleteCallback, fields, Requester }:
 IVariableMolecule<IVariableCreate, IVariable>): JSX.Element {
-  const keyList = fields.map(({ key }) => ({ [key]: '' }))
+  const defaultByType = {
+    [TypeList.TEXT]: '',
+    [TypeList.NUMBER]: 0,
+    [TypeList.CUSTOM]: undefined
+  }
+
+  const keyList = fields.map(({ key, type }) => ({ [key]: defaultByType[type] }))
   const initialForm = Object.assign({}, ...keyList)
 
   const {
@@ -30,6 +43,7 @@ IVariableMolecule<IVariableCreate, IVariable>): JSX.Element {
 
   const onSubmit = async (): Promise<void> => {
     try {
+      console.log(form)
       await validatorsSchema.validate(form)
 
       const response =
@@ -41,6 +55,9 @@ IVariableMolecule<IVariableCreate, IVariable>): JSX.Element {
 
       if (isCreating && (addCallback != null)) {
         addCallback(variable)
+
+        console.log(initialForm)
+
         setForm(initialForm)
       }
     } catch (err) {

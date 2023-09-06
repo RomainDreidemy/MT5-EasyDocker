@@ -13,6 +13,7 @@ export type EditorStructure = {
 
 export enum TypeList {
   TEXT = 'text',
+  NUMBER = 'number',
   CUSTOM = 'custom',
 }
 
@@ -74,14 +75,14 @@ export const PORT_VARIABLE_STRUCTURE: EditorForm[] = [
   {
     label: 'Private',
     key: 'private',
-    type: TypeList.TEXT,
+    type: TypeList.NUMBER,
     component: Input,
     validator: string().required()
   },
   {
     label: 'Public',
     key: 'public',
-    type: TypeList.TEXT,
+    type: TypeList.NUMBER,
     component: Input,
     validator: string().required()
   }
