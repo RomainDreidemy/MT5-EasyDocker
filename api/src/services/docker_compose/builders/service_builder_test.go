@@ -245,3 +245,43 @@ func TestBuildDockerComposeServiceEnvironments(t *testing.T) {
 		})
 	}
 }
+
+func TestBuildDockerComposeServiceNetworks(t *testing.T) {
+	type args struct {
+		networkLinks []models.ServiceNetworkLink
+	}
+	tests := []struct {
+		name string
+		args args
+		want []string
+	}{
+		{
+			name: "should have an array of network links",
+			args: args{
+				networkLinks: []models.ServiceNetworkLink{
+					{
+						Network: models.Network{
+							Name: "api",
+						},
+					},
+					{
+						Network: models.Network{
+							Name: "db",
+						},
+					},
+				},
+			},
+			want: []string{
+				"api",
+				"db",
+			},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := BuildDockerComposeServiceNetworks(tt.args.networkLinks); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("BuildDockerComposeServiceNetworks() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}

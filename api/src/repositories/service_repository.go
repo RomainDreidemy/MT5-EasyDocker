@@ -30,6 +30,8 @@ func FindServicesByStackIdWithAssociation(stackId string) ([]models.Service, *go
 		Preload("ServicePorts").
 		Preload("ServiceManagedVolumeLinks").
 		Preload("ServiceManagedVolumeLinks.ManagedVolume").
+		Preload("ServiceNetworkLinks").
+		Preload("ServiceNetworkLinks.Network").
 		Where("stack_id = ?", stackId).
 		Find(&services)
 	return services, result

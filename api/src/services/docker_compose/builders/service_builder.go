@@ -41,6 +41,10 @@ func DockerComposeServiceBuilder(service models.Service) models.DockerComposeSer
 		dockerComposeService.Environment = BuildDockerComposeServiceEnvironments(service.ServiceEnvVariables)
 	}
 
+	if len(service.ServiceNetworkLinks) > 0 {
+		dockerComposeService.Networks = BuildDockerComposeServiceNetworks(service.ServiceNetworkLinks)
+	}
+
 	return dockerComposeService
 }
 
@@ -100,4 +104,14 @@ func BuildDockerComposeServiceEnvironments(serviceEnvironments []models.ServiceE
 	}
 
 	return environments
+}
+
+func BuildDockerComposeServiceNetworks(networkLinks []models.ServiceNetworkLink) []string {
+	var dockerComposeNetworks []string
+
+	for _, networkLink := range networkLinks {
+		dockerComposeNetworks = append(dockerComposeNetworks, networkLink.Network.Name)
+	}
+
+	return dockerComposeNetworks
 }
