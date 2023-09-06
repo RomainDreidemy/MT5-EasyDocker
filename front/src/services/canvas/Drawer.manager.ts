@@ -9,7 +9,7 @@ export const DrawerManager: TDrawerManager = {
   ...StateCanvas,
 
   findDrawer (position: IPosition): TDrawerOrNullify {
-    return this.drawers.find(drawer =>
+    return [...this.drawers].reverse().find(drawer =>
       drawer.factory!.isSelected(position))
   },
 
