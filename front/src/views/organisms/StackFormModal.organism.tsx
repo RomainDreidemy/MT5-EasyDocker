@@ -6,7 +6,8 @@ import StackEntity from '../../services/entities/Stack.entity'
 import useForm from '../../hooks/useForm'
 import { type EditorForm } from '../../forms/editor.structure'
 
-const CreateStackModal = ({ stack, stacks, setStacks }: {
+const StackFormModalOrganism = ({ stack, stacks, setStacks, toggle }: {
+  toggle: Dispatch<SetStateAction<boolean>>
   stack?: IStack
   stacks: IStack[]
   setStacks: Dispatch<SetStateAction<IStack[]>>
@@ -18,17 +19,19 @@ const CreateStackModal = ({ stack, stacks, setStacks }: {
     description: ''
   }
 
-  const { form: StackEntityForm, onChange, validatorsSchema } = useForm<IStackCreate>(stack ?? initialForm, structure)
+  const { form: stackEntityForm, onChange, validatorsSchema } = useForm<IStackCreate>(stack ?? initialForm, structure)
 
   const isCreating = stack?.id == null
 
   const onSubmit = async (): Promise<void> => {
-    await validatorsSchema.validate(StackEntityForm)
+    await validatorsSchema.validate(stackEntityForm)
 
     const stacksResponse =
       isCreating
-        ? await StackEntity.create(StackEntityForm)
-        : await StackEntity.update(StackEntityForm as IStack)
+        ? await StackEntity.create(stackEntityForm)
+        : await StackEntity.update(stackEntityForm as IStack)
+
+    if (!isCreating) return
 
     setStacks([...stacks, stacksResponse.data])
   }
@@ -36,7 +39,8 @@ const CreateStackModal = ({ stack, stacks, setStacks }: {
   const onDelete = async (): Promise<void> => {
     if (isCreating) return
 
-    await StackEntity.delete(StackEntityForm as IStack)
+    console.log(stackEntityForm)
+    await StackEntity.delete(stackEntityForm as IStack)
 
     const filtered: IStack[] = stacks.filter(s => s.id !== stack.id)
 
@@ -85,4 +89,4 @@ const CreateStackModal = ({ stack, stacks, setStacks }: {
   )
 }
 
-export default CreateStackModal
+export default StackFormModalOrganism
