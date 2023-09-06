@@ -8,11 +8,6 @@ import { type IconType } from 'react-icons'
 import { type EditorForm, ENV_VARIABLE_STRUCTURE } from '../forms/editor.structure'
 import ServiceEnvVariableEntity, { type IVariableRequester } from '../services/entities/ServiceEnvVariable.entity'
 
-// interface ListItem<T> {
-//   id: number
-//   data: T
-// }
-
 export interface IVariableMolecule<IVariableCreate, IVariable> {
   fields: EditorForm[]
   variable?: IVariable

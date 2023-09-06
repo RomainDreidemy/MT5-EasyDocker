@@ -1,15 +1,13 @@
 import React from 'react'
 import { type TDrawer } from '../../types/Drawer'
 import ServiceVariablesOrganism from './ServiceVariables.organism'
-import usePortVariablesEditor, {
-  type TServicePortVariable,
-  type TServicePortVariableCreate
-} from '../../hooks/usePortVariablesEditor'
+import usePortVariablesEditor from '../../hooks/usePortVariablesEditor'
+import { type IServicePortVariable, type IServicePortVariableCreate } from '../../interfaces/ServicePort.interface'
 
 const PortVariablesOrganism = ({ entity: drawer }: { entity: TDrawer }): JSX.Element => {
   const editor = usePortVariablesEditor(drawer)
 
-  return <ServiceVariablesOrganism<TServicePortVariable, TServicePortVariableCreate>
+  return <ServiceVariablesOrganism<IServicePortVariable, IServicePortVariableCreate>
     entity={drawer} editor={editor}/>
 }
 

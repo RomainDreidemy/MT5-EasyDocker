@@ -3,14 +3,21 @@ import useToggle from '../../hooks/useToggle'
 import Button from '../atoms/forms/Button.atom'
 import { type TDrawer } from '../../types/Drawer'
 import { type TVariablesEditor } from '../../hooks/useEnvVariablesEditor'
+import { type IServicePortVariable, type IServicePortVariableCreate } from '../../interfaces/ServicePort.interface'
+import { type IServiceEnvVariable, type IServiceEnvVariableCreate } from '../../interfaces/ServiceEnvVariable.interface'
 
-function ServiceVariablesOrganism<IVariable, IVariableCreate> ({ entity: drawer, editor }: {
+function ServiceVariablesOrganism<
+  IVariable extends IServicePortVariable | IServiceEnvVariable,
+  IVariableCreate extends IServicePortVariableCreate | IServiceEnvVariableCreate
+> ({
+  entity: drawer,
+  editor
+}: {
   entity: TDrawer
   editor: TVariablesEditor<IVariable, IVariableCreate>
 }): JSX.Element {
   const [open, toggle] = useToggle()
 
-  // const editor = useEditor(drawer, open)
   const {
     variables,
     setVariables,
@@ -19,12 +26,12 @@ function ServiceVariablesOrganism<IVariable, IVariableCreate> ({ entity: drawer,
     Component
   } = editor
 
-  const addCallback = (envVariable: any): void => {
-    setVariables([...variables, envVariable])
+  const addCallback = (variable: IVariable): void => {
+    setVariables([...variables, variable])
   }
 
-  const deleteCallback = (envVariable: any): void => {
-    const filtered = variables.filter(v => v.id !== envVariable.id)
+  const deleteCallback = (variable: IVariable): void => {
+    const filtered = variables.filter(v => v.id !== variable.id)
 
     setVariables(filtered)
   }
@@ -61,48 +68,5 @@ function ServiceVariablesOrganism<IVariable, IVariableCreate> ({ entity: drawer,
     </section>
   )
 }
-
-// interface ListItem<T> {
-//   id: number
-//   data: T
-// }
-//
-// // Créez une interface générique pour définir les propriétés du composant de liste
-// interface ListProps<T> {
-//   items: Array<ListItem<T>>
-// }
-//
-// // Créez un composant de liste générique
-// function List<T> ({ items }: ListProps<T>) {
-//   return (
-//     <ul>
-//       {items.map((item) => (
-//         <li key={item.id}>{item.data}</li>
-//       ))}
-//     </ul>
-//   )
-// }
-//
-// // Exemple d'utilisation du composant de liste générique
-// const stringItems: Array<ListItem<string>> = [
-//   { id: 1, data: 'Premier élément' },
-//   { id: 2, data: 'Deuxième élément' }
-// ]
-//
-// const numberItems: Array<ListItem<number>> = [
-//   { id: 1, data: 42 },
-//   { id: 2, data: 1337 }
-// ]
-//
-// const App = () => {
-//   return (
-//     <div>
-//       <h1>Liste de chaînes de caractères</h1>
-//       <List items={stringItems} />
-//       <h1>Liste de nombres</h1>
-//       <List items={numberItems} />
-//     </div>
-//   )
-// }
 
 export default ServiceVariablesOrganism
