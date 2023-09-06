@@ -1,7 +1,7 @@
 import type React from 'react'
 
 export interface CheckboxProps {
-  label: string
+  label?: string
   name?: string
   value?: string
   className?: string

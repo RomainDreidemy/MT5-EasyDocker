@@ -1,4 +1,7 @@
 import { type Placements } from '../enums/placements'
+import { type IServiceEnvVariable } from './ServiceVariable/EnvVariable.interface'
+import { type IServicePortVariable } from './ServiceVariable/Port.interface'
+import { type IServiceVolume } from './ServiceVariable/Volume.interface'
 
 export interface IService {
   id: string
@@ -13,6 +16,11 @@ export interface IService {
 
   positionX: number
   positionY: number
+  test: number
+
+  envVariables: IServiceEnvVariable[]
+  ports: IServicePortVariable[]
+  volumes: IServiceVolume[]
 }
 
 export type IServiceCreate = Omit<IService, 'id'>

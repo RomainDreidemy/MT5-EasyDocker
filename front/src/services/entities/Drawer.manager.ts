@@ -5,7 +5,7 @@ import ServiceEntity from './Service.entity'
 import { type IService, type IServiceCreate } from '../../interfaces/Service.interface'
 import NetworkEntity from './Network.entity'
 import { type INetwork, type INetworkCreate } from '../../interfaces/Network.interface'
-import ManagedVolumeEntity from './Volume.entity'
+import ManagedVolumeEntity from './ManagedVolume.entity'
 import { type IVolume, type IVolumeCreate } from '../../interfaces/Volume.interface'
 import { Errors } from '../../enums/errors'
 
