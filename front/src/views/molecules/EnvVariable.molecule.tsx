@@ -3,15 +3,9 @@ import { type IServiceEnvVariable, type IServiceEnvVariableCreate } from '../../
 import { type EditorForm } from '../../forms/editor.structure'
 import { type IVariableRequester } from '../../services/entities/ServiceEnvVariable.entity'
 import VariableMolecule from './Variable.molecule'
+import { type IVariableMolecule } from '../../hooks/useEnvVariablesEditor'
 
-const EnvVariableMolecule = (props: {
-  fields: EditorForm[]
-  variable?: IServiceEnvVariable
-  serviceId: string
-  addCallback?: (envVariable: IServiceEnvVariable) => void
-  deleteCallback?: (envVariable: IServiceEnvVariable) => void
-  Requester: IVariableRequester<IServiceEnvVariableCreate, IServiceEnvVariable>
-}): JSX.Element => {
+const EnvVariableMolecule = (props: IVariableMolecule<IServiceEnvVariableCreate, IServiceEnvVariable>): JSX.Element => {
   return <VariableMolecule<IServiceEnvVariableCreate, IServiceEnvVariable> {...props} />
 }
 

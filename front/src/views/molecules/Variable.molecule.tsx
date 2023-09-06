@@ -5,15 +5,10 @@ import Button from '../atoms/forms/Button.atom'
 import { GoPencil } from 'react-icons/go'
 import type { IVariableRequester } from '../../services/entities/ServiceEnvVariable.entity'
 import { AiOutlineDelete } from 'react-icons/ai'
+import { type IVariableMolecule } from '../../hooks/useEnvVariablesEditor'
 
-function VariableMolecule<ICreate, IEntity> ({ variable, serviceId, addCallback, deleteCallback, fields, Requester }: {
-  fields: EditorForm[]
-  variable?: IEntity
-  serviceId: string
-  addCallback?: (envVariable: IEntity) => void
-  deleteCallback?: (envVariable: IEntity) => void
-  Requester: IVariableRequester<ICreate, IEntity>
-}): JSX.Element {
+function VariableMolecule<ICreate, IEntity> ({ variable, serviceId, addCallback, deleteCallback, fields, Requester }:
+IVariableMolecule<ICreate, IEntity>): JSX.Element {
   console.log(fields)
   const keyList =
     fields.map(({ key }) => ({ [key]: '' }))

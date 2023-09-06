@@ -7,22 +7,40 @@ import EnvVariableMolecule from '../views/molecules/EnvVariable.molecule'
 import { type IconType } from 'react-icons'
 import { type EditorForm, ENV_VARIABLE_STRUCTURE } from '../forms/editor.structure'
 import ServiceEnvVariableEntity, { type IVariableRequester } from '../services/entities/ServiceEnvVariable.entity'
-import { TbReportMedical, TbReportSearch } from 'react-icons/tb'
 
-export interface TVariablesEditor<IVariable, Component, Requester> {
-  variables: IVariable[]
-  setVariables: Dispatch<SetStateAction<IVariable[]>>
+interface ListItem<T> {
+  id: number
+  data: T
+}
+
+export interface IVariableMolecule<IVariable, IVariableCreate> {
+  fields: EditorForm[]
+  variable?: IVariable
+  serviceId: string
+  addCallback?: (variable: IVariable) => void
+  deleteCallback?: (variable: IVariable) => void
+  Requester: IVariableRequester<IVariableCreate, IVariable>
+}
+
+export type TVariableMolecule<IVariableCreate, IVariable> = (props: IVariableMolecule<IVariableCreate, IVariable>) => JSX.Element
+
+export interface TVariablesEditor<IVariable, IVariableCreate> {
+  variables: Array<ListItem<IVariable>>
+  setVariables: Dispatch<SetStateAction<Array<ListItem<IVariable>>>>
   buttonText: (open: boolean) => string
   fields: EditorForm[]
 
   icon: (open: boolean) => IconType
-  Component: Component
-
-  Requester: Requester
+  Component: TVariableMolecule<IVariableCreate, IVariable>
+  Requester: IVariableRequester<IVariable, IVariableCreate>
 }
 
 export type TVariableEditorCaller<C> = (drawer: TDrawer) => C
-export type TEnvVariableEditor = TVariablesEditor<IServiceEnvVariable, typeof EnvVariableMolecule, IVariableRequester<IServiceEnvVariableCreate, IServiceEnvVariable>>
+
+export type TServiceEnvVariable = IServiceEnvVariable
+export type TServiceEnvVariableCreate = IServiceEnvVariableCreate
+
+export type TEnvVariableEditor = TVariablesEditor<TServiceEnvVariable, TServiceEnvVariableCreate>
 export type TEnvVariableEditorCaller = TVariableEditorCaller<TEnvVariableEditor>
 
 const useEnvVariablesEditor = (drawer: TDrawer): TEnvVariableEditor => {
@@ -30,7 +48,7 @@ const useEnvVariablesEditor = (drawer: TDrawer): TEnvVariableEditor => {
 
   const entity: IService = drawer.entity! as IService
 
-  const [envVariables, setEnvVariables] = useState<IServiceEnvVariable[]>(entity.envVariables)
+  const [envVariables, setEnvVariables] = useState<TServiceEnvVariable[]>(entity.envVariables)
 
   const buttonText =
     (open: boolean): string => {

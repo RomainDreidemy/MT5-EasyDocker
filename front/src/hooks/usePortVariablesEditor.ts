@@ -9,8 +9,12 @@ import PortVariableMolecule from '../views/molecules/PortVariable.molecule'
 import ServicePortEntity from '../services/entities/ServicePort.entity'
 import { TbReportMedical, TbReportSearch } from 'react-icons/tb'
 import { type IconType } from 'react-icons'
+import { IBoard } from '../interfaces/Board.interface'
 
-export type TPortEditor = TVariablesEditor<IServicePortVariable, typeof PortVariableMolecule, IVariableRequester<IServicePortVariableCreate, IServicePortVariable>>
+export type TServicePortVariable = IServicePortVariable
+export type TServicePortVariableCreate = IServicePortVariableCreate
+
+export type TPortEditor = TVariablesEditor<TServicePortVariable, TServicePortVariableCreate, IVariableRequester<TServicePortVariableCreate, TServicePortVariable>>
 export type TPortEditorCaller = TVariableEditorCaller<TPortEditor>
 
 const useEnvVariablesEditor = (drawer: TDrawer): TPortEditor => {
@@ -18,7 +22,7 @@ const useEnvVariablesEditor = (drawer: TDrawer): TPortEditor => {
 
   const entity: IService = drawer.entity! as IService
 
-  const [ports, setPorts] = useState<IServicePortVariable[]>(entity.ports)
+  const [ports, setPorts] = useState<TServicePortVariable[]>(entity.ports)
 
   const buttonText =
     (open: boolean): string => {
