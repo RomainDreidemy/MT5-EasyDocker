@@ -38,17 +38,6 @@ const StackFormModalOrganism = ({ stack, stacks, setStacks, toggle }: {
     toggle()
   }
 
-  const onDelete = async (): Promise<void> => {
-    if (isCreating) return
-
-    console.log(stackEntityForm)
-    await StackEntity.delete(stackEntityForm as IStack)
-
-    const filtered: IStack[] = stacks.filter(s => s.id !== stack.id)
-
-    setStacks(filtered)
-  }
-
   const buttonText =
     isCreating
       ? 'Create stack +'
@@ -95,11 +84,6 @@ const StackFormModalOrganism = ({ stack, stacks, setStacks, toggle }: {
                 direction={'right'}
               />
 
-              {!isCreating && (<Button
-                label={'Delete'}
-                onClick={onDelete}
-                direction={'left'}
-              />)}
               <Button className='btn-ghost ml-4' onClick={toggle} label={'Close'} />
             </div>
           </div>

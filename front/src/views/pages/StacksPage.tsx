@@ -34,6 +34,11 @@ const StacksPage = (): JSX.Element => {
     openModal()
   }
 
+  const onDelete = async (id: string): Promise<void> => {
+    await StackEntity.delete(id)
+    await getStacks()
+  }
+
   return (
     <section>
       <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-4 p-5'>
@@ -47,7 +52,7 @@ const StacksPage = (): JSX.Element => {
         </button>
         {
           (stacks.map((stack: IStack) => (
-            <StackCardOrganism key={stack.id} stack={stack} id={stack.id} name={stack.name} description={stack.description} onEdit={onEdit} />
+            <StackCardOrganism key={stack.id} stack={stack} id={stack.id.toString()} name={stack.name} description={stack.description} onEdit={onEdit} onDelete={onDelete} />
           )))
         }
       </div>
