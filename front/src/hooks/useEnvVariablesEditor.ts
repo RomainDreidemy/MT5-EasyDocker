@@ -9,17 +9,14 @@ import { type EditorForm, ENV_VARIABLE_STRUCTURE } from '../forms/editor.structu
 import ServiceEnvVariableEntity from '../services/entities/ServiceEnvVariable.entity'
 import { type TVariablesEditor } from '../interfaces/VariableConfig.interface'
 
-export type TServiceEnvVariable = IServiceEnvVariable
-export type TServiceEnvVariableCreate = IServiceEnvVariableCreate
-
-export type TEnvVariableEditor = TVariablesEditor<TServiceEnvVariable, TServiceEnvVariableCreate>
+export type TEnvVariableEditor = TVariablesEditor<IServiceEnvVariable, IServiceEnvVariableCreate>
 
 const useEnvVariablesEditor = (drawer: TDrawer): TEnvVariableEditor => {
   const [structure] = useState<EditorForm[]>(ENV_VARIABLE_STRUCTURE)
 
   const entity: IService = drawer.entity! as IService
 
-  const [envVariables, setEnvVariables] = useState<TServiceEnvVariable[]>(entity.envVariables)
+  const [envVariables, setEnvVariables] = useState<IServiceEnvVariable[]>(entity.envVariables)
 
   const buttonText =
     (open: boolean): string => {
