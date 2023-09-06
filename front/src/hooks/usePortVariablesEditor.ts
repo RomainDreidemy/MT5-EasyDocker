@@ -14,7 +14,7 @@ import { IBoard } from '../interfaces/Board.interface'
 export type TServicePortVariable = IServicePortVariable
 export type TServicePortVariableCreate = IServicePortVariableCreate
 
-export type TPortEditor = TVariablesEditor<TServicePortVariable, TServicePortVariableCreate, IVariableRequester<TServicePortVariableCreate, TServicePortVariable>>
+export type TPortEditor = TVariablesEditor<TServicePortVariable, TServicePortVariableCreate>
 export type TPortEditorCaller = TVariableEditorCaller<TPortEditor>
 
 const useEnvVariablesEditor = (drawer: TDrawer): TPortEditor => {

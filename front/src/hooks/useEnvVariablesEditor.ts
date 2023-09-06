@@ -8,12 +8,12 @@ import { type IconType } from 'react-icons'
 import { type EditorForm, ENV_VARIABLE_STRUCTURE } from '../forms/editor.structure'
 import ServiceEnvVariableEntity, { type IVariableRequester } from '../services/entities/ServiceEnvVariable.entity'
 
-interface ListItem<T> {
-  id: number
-  data: T
-}
+// interface ListItem<T> {
+//   id: number
+//   data: T
+// }
 
-export interface IVariableMolecule<IVariable, IVariableCreate> {
+export interface IVariableMolecule<IVariableCreate, IVariable> {
   fields: EditorForm[]
   variable?: IVariable
   serviceId: string
@@ -25,14 +25,14 @@ export interface IVariableMolecule<IVariable, IVariableCreate> {
 export type TVariableMolecule<IVariableCreate, IVariable> = (props: IVariableMolecule<IVariableCreate, IVariable>) => JSX.Element
 
 export interface TVariablesEditor<IVariable, IVariableCreate> {
-  variables: Array<ListItem<IVariable>>
-  setVariables: Dispatch<SetStateAction<Array<ListItem<IVariable>>>>
+  variables: IVariable[]
+  setVariables: Dispatch<SetStateAction<IVariable[]>>
   buttonText: (open: boolean) => string
   fields: EditorForm[]
 
   icon: (open: boolean) => IconType
   Component: TVariableMolecule<IVariableCreate, IVariable>
-  Requester: IVariableRequester<IVariable, IVariableCreate>
+  Requester: IVariableRequester<IVariableCreate, IVariable>
 }
 
 export type TVariableEditorCaller<C> = (drawer: TDrawer) => C

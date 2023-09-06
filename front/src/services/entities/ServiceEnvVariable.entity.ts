@@ -2,9 +2,9 @@ import { type AxiosResponse } from 'axios'
 import axios from '../utils/axios'
 import { type IServiceEnvVariable, type IServiceEnvVariableCreate } from '../../interfaces/ServiceEnvVariable.interface'
 
-export interface IVariableRequester<C, E> {
-  create: (serviceId: string, entity: C) => Promise<AxiosResponse<E>>
-  update: (entity: E) => Promise<AxiosResponse<E>>
+export interface IVariableRequester<IVariableCreate, IVariable> {
+  create: (serviceId: string, entity: IVariableCreate) => Promise<AxiosResponse<IVariable>>
+  update: (entity: IVariable) => Promise<AxiosResponse<IVariable>>
   delete: (id: string) => Promise<any>
 }
 
