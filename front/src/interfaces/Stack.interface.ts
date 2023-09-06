@@ -1,3 +1,7 @@
+import { type EditorForm } from '../forms/editor.structure'
+import Input from '../views/atoms/forms/Input.atom'
+import { string } from 'yup'
+
 export interface IStack {
   id: number
 
@@ -5,11 +9,21 @@ export interface IStack {
   name: string
 }
 
-export interface IStackEntity {
-  name: string
-  description: string
-}
+export type IStackCreate = Omit<IStack, 'id'>
 
-export interface IstackMethods {
-  createStack: (stack: IStackEntity) => Promise<IStack>
-}
+export const STACK_STRUCTURE: EditorForm[] = [
+  {
+    label: 'Name',
+    key: 'name',
+    type: 'text',
+    component: Input,
+    validator: string().required()
+  },
+  {
+    label: 'Description',
+    key: 'description',
+    type: 'text',
+    component: Input,
+    validator: string().nullable()
+  }
+]

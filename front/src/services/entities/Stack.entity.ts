@@ -7,7 +7,7 @@ const StackEntity = {
   stacks: async () => await axios.get('/stacks'),
   stack: async (id: string) => await axios.get(`/stacks/${id}`),
   board: async (id: string): Promise<AxiosResponse<IBoard>> => await axios.get(`/stacks/${id}/board`),
-  createStack: async (stack: IStackEntity) => await axios.post('/stacks', stack),
+  create: async (stack: IStackEntity): Promise<AxiosResponse> => await axios.post('/stacks', stack)
 }
 
 export default StackEntity

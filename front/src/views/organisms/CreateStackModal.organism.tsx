@@ -1,36 +1,28 @@
-import React, { useState } from "react";
-import { object, string } from 'yup'
-import { IStackEntity } from '../../interfaces/Stack.interface'
+import React, { useState } from 'react'
+import { STACK_STRUCTURE, type IStackCreate } from '../../interfaces/Stack.interface'
 import Button from '../atoms/forms/Button.atom'
 import Input from '../atoms/forms/Input.atom'
-import { BiRightArrowAlt } from 'react-icons/bi'
-import { validateSchema } from '../../services/utils/validation.util'
 import StackEntity from '../../services/entities/Stack.entity'
-import { IStack } from "../../interfaces/Stack.interface";
+import useForm from '../../hooks/useForm'
+import { type EditorForm } from '../../forms/editor.structure'
 
-const CreateStackModal = (stacks, setStacks):JSX.Element => {
-  const [form, setForm] = useState<IStackEntity>({ name: '', description: '' })
-
-  const stackSchema = object({
-    name: string().required(),
-    description: string().nullable(),
-  })
-
-  const changeValue = (e: React.ChangeEvent<any>): void => {
-    setForm({ ...form, [e.target.name]: e.target.value })
-  }
+const CreateStackModal = (stacks, setStacks): JSX.Element => {
+  const [structure] = useState<EditorForm[]>(STACK_STRUCTURE)
+  const { form: StackEntityForm, setForm: setStackEntityForm, onChange, validatorsSchema } = useForm<IStackCreate>(
+    {
+      name: '',
+      description: ''
+    }, structure)
 
   const createStack = async (): Promise<void> => {
-    const isSchemaValid = (await validateSchema(stackSchema, form))
-    if (!isSchemaValid) return
+    await validatorsSchema.validate(StackEntityForm)
 
     try {
-      const stacksResponse = await StackEntity.createStack(form)
+      const stacksResponse = await StackEntity.create(StackEntityForm)
 
-       setStacks((stacks:IStack[]) => [...stacks, stacksResponse.data])
-
+      setStacks([...stacks, stacksResponse.data])
     } catch (e: any) {
-      // setStatus({ ...status, errors: [{ path: e.response.data.status, message: e.response.data.message }] })
+      console.log(e)
     }
   }
 
@@ -42,18 +34,14 @@ const CreateStackModal = (stacks, setStacks):JSX.Element => {
           label="Name"
           type="text"
           name="name"
-          onChange={(e) => {
-            changeValue(e)
-          }}
+          onChange={onChange}
         />
 
         <Input
           label="Description"
           type="textarea"
           name="description"
-          onChange={(e) => {
-            changeValue(e)
-          }}
+          onChange={onChange}
           onKeyDown={async (e) => await (e.key === 'Enter' && createStack())}
         />
 
@@ -62,7 +50,6 @@ const CreateStackModal = (stacks, setStacks):JSX.Element => {
           onClick={async () => { createStack() }}
           direction={'right'}
         />
-        {/* if there is a button in form, it will close the modal */}
         <button className="btn">Close</button>
       </form>
   </div>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import StackEntity from '../../services/entities/Stack.entity'
 import { type IStack } from '../../interfaces/Stack.interface'
 import { Link } from 'react-router-dom'
@@ -6,8 +6,8 @@ import CreateStackModal from '../organisms/CreateStackModal.organism'
 
 const StacksPage = (): JSX.Element => {
   const [stacks, setStacks] = useState<IStack[]>([])
-  
-  async function getStacks() {
+
+  async function getStacks () {
     const { data: stacksResponse } = await StackEntity.stacks()
     setStacks(stacksResponse)
   }
