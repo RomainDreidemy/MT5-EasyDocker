@@ -43,7 +43,6 @@ IVariableMolecule<IVariableCreate, IVariable>): JSX.Element {
 
   const onSubmit = async (): Promise<void> => {
     try {
-      console.log(form)
       await validatorsSchema.validate(form)
 
       const response =
@@ -55,8 +54,6 @@ IVariableMolecule<IVariableCreate, IVariable>): JSX.Element {
 
       if (isCreating && (addCallback != null)) {
         addCallback(variable)
-
-        console.log(initialForm)
 
         setForm(initialForm)
       }
