@@ -1,15 +1,13 @@
 import React from 'react'
 import { type TDrawer } from '../../types/Drawer'
 import ServiceVariablesOrganism from './ServiceVariables.organism'
-import useEnvVariablesEditor, {
-  type TServiceEnvVariableCreate
-} from '../../hooks/useEnvVariablesEditor'
-import { type IServiceEnvVariable } from '../../interfaces/ServiceEnvVariable.interface'
+import useEnvVariablesEditor from '../../hooks/useEnvVariablesEditor'
+import { type IServiceEnvVariable, type IServiceEnvVariableCreate } from '../../interfaces/ServiceEnvVariable.interface'
 
 const EnvVariablesOrganism = ({ entity: drawer }: { entity: TDrawer }): JSX.Element => {
   const editor = useEnvVariablesEditor(drawer)
 
-  return <ServiceVariablesOrganism<IServiceEnvVariable, TServiceEnvVariableCreate>
+  return <ServiceVariablesOrganism<IServiceEnvVariable, IServiceEnvVariableCreate>
     entity={drawer} editor={editor}/>
 }
 

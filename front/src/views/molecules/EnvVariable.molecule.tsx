@@ -6,7 +6,7 @@ import VariableMolecule from './Variable.molecule'
 import { type IVariableMolecule } from '../../hooks/useEnvVariablesEditor'
 
 const EnvVariableMolecule = (props: IVariableMolecule<IServiceEnvVariableCreate, IServiceEnvVariable>): JSX.Element => {
-  return <VariableMolecule<IServiceEnvVariableCreate, IServiceEnvVariable> {...props} />
+  return <VariableMolecule<IServiceEnvVariable, IServiceEnvVariableCreate> {...props} />
 }
 
 export default EnvVariableMolecule
