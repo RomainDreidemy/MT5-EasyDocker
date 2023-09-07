@@ -13,6 +13,7 @@ export type EditorStructure = {
 
 export enum TypeList {
   TEXT = 'text',
+  CHECKBOX = 'checkbox',
   NUMBER = 'number',
   CUSTOM = 'custom',
 }
@@ -128,7 +129,7 @@ export const DRAWER_TYPE_STRUCTURES: EditorStructure = {
     {
       label: 'External',
       key: 'isExternal',
-      type: TypeList.TEXT,
+      type: TypeList.CHECKBOX,
       component: Checkbox,
       validator: boolean().nullable()
     },
@@ -169,7 +170,7 @@ export const DRAWER_TYPE_STRUCTURES: EditorStructure = {
     {
       label: 'External',
       key: 'isExternal',
-      type: TypeList.TEXT,
+      type: TypeList.CHECKBOX,
       component: Checkbox,
       validator: boolean().nullable()
     },

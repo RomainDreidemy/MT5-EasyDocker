@@ -12,4 +12,4 @@ export interface InputProps {
   onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void
 }
 
-export type TOnChange = React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+export type TOnChange = React.ChangeEvent<HTMLInputElement & HTMLTextAreaElement>
