@@ -2,7 +2,6 @@ import React from 'react'
 import Button from '../atoms/forms/Button.atom'
 import { Link, useNavigate } from 'react-router-dom'
 import AuthEntity from '../../services/entities/Auth.entity'
-import { BiLeftArrowAlt } from 'react-icons/bi'
 
 export const Navbar = (): JSX.Element => {
   const navigate = useNavigate()

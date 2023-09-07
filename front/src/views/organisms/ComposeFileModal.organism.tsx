@@ -1,21 +1,16 @@
 import React, { type ReactElement } from 'react'
+import ModalOrganism from './Modal.organism'
 
 interface ComposeFileModalOrganismProps {
+  toggle: () => void
   composeFileData: string
 }
 
-const ComposeFileModalOrganism = ({ composeFileData }: ComposeFileModalOrganismProps): ReactElement => {
+const ComposeFileModalOrganism = ({ toggle, composeFileData }: ComposeFileModalOrganismProps): ReactElement => {
   return (
-    <dialog id="compose_file_modal" className="modal">
-      <div className="modal-box">
+    <ModalOrganism toggle={toggle}>
         <textarea className="h-96 w-full" readOnly defaultValue={composeFileData} />
-        <div className="modal-action">
-          <form method="dialog">
-            <button className="btn">Close</button>
-          </form>
-        </div>
-      </div>
-    </dialog>
+    </ModalOrganism>
   )
 }
 
