@@ -25,3 +25,23 @@ jobs:
           - name: Test
             working-directory: api
             run: go test -v ./...
+
+    front-test:
+        name: Front Test
+        runs-on: ubuntu-latest
+        steps:
+          - name: Install NodeJS
+            uses: actions/setup-node@v2
+            with:
+              node-version: ${{ env.NODE_VERSION }}
+
+          - name: Code Checkout
+            uses: actions/checkout@v2
+
+          - name: Install Dependencies
+            working-directory: front
+            run: yarn install
+
+          - name: Code Testing
+            working-directory: front
+            run: yarn test
