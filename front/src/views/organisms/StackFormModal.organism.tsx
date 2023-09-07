@@ -28,15 +28,22 @@ const StackFormModalOrganism = ({ stack, stacks, setStacks, toggle }: {
   const onSubmit = async (): Promise<void> => {
     await validatorsSchema.validate(stackEntityForm)
 
-    const stacksResponse =
+    const { data: stackResponse} =
       isCreating
         ? await StackEntity.create(stackEntityForm)
         : await StackEntity.update(stackEntityForm as IStack)
 
-    if (!isCreating) return
-
-    setStacks([...stacks, stacksResponse.data])
     toggle()
+    const filteredStacks = stacks.filter((s) => s.id !== stackResponse.id)
+    
+    if (!isCreating) {
+      const indexOfEditedStack = stacks.findIndex((s) => s.id === stackResponse.id)
+      filteredStacks.splice(indexOfEditedStack, 0, stackResponse)
+      setStacks(filteredStacks)
+      return
+    }
+
+    setStacks([...filteredStacks, stackResponse])
   }
 
   const buttonText =
@@ -44,8 +51,10 @@ const StackFormModalOrganism = ({ stack, stacks, setStacks, toggle }: {
       ? 'Create stack +'
       : 'Edit'
 
+  const title = isCreating ? 'Create a new stack' : 'Edit stack'
+
   return (
-    <ModalOrganism toggle={toggle} onSubmit={onSubmit} buttonText={buttonText}>
+    <ModalOrganism toggle={toggle} onSubmit={onSubmit} buttonText={buttonText} title={title}>
       <div className="relative p-6 flex-auto">
         <form>
           <Input
@@ -53,6 +62,7 @@ const StackFormModalOrganism = ({ stack, stacks, setStacks, toggle }: {
             type="text"
             name="name"
             className='mb-4'
+            value={stackEntityForm.name}
             onChange={onChange}
           />
 
@@ -61,6 +71,7 @@ const StackFormModalOrganism = ({ stack, stacks, setStacks, toggle }: {
             type="textarea"
             name="description"
             className='h-32'
+            value={stackEntityForm.description}
             onChange={onChange}
           />
         </form>

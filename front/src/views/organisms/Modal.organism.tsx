@@ -1,11 +1,12 @@
 import React from 'react'
 import Button from '../atoms/forms/Button.atom'
 
-const ModalOrganism = ({ children, toggle, onSubmit, buttonText }: {
+const ModalOrganism = ({ children, toggle, onSubmit, buttonText, title }: {
   children: React.ReactNode
   toggle: () => void
   onSubmit?: () => void
   buttonText?: string
+  title?: string
 }): JSX.Element => {
   return (
     <>
@@ -18,7 +19,7 @@ const ModalOrganism = ({ children, toggle, onSubmit, buttonText }: {
             {/* header */}
             <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
               <h3 className="text-3xl font-semibold">
-                Create a new stack
+                {title}
               </h3>
             </div>
             {children}
