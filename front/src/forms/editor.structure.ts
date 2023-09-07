@@ -165,18 +165,18 @@ export const DRAWER_TYPE_STRUCTURES: EditorStructure = {
       validator: string().nullable()
     },
     {
-      label: 'External',
-      key: 'isExternal',
-      type: TypeList.CHECKBOX,
-      component: Checkbox,
-      validator: boolean().nullable()
-    },
-    {
       label: 'Driver',
       key: 'driver',
       type: TypeList.TEXT,
       component: Input,
       validator: string().nullable()
+    },
+    {
+      label: 'External',
+      key: 'isExternal',
+      type: TypeList.CHECKBOX,
+      component: Checkbox,
+      validator: boolean().nullable()
     }
   ],
   [DrawerTypes.VOLUME]: [
@@ -193,20 +193,6 @@ export const DRAWER_TYPE_STRUCTURES: EditorStructure = {
       key: 'description',
       type: TypeList.TEXT,
       component: TextArea,
-      validator: string().nullable()
-    },
-    {
-      label: 'Container Path',
-      key: 'containerPath',
-      type: TypeList.TEXT,
-      component: Input,
-      validator: string().nullable()
-    },
-    {
-      label: 'Local Path',
-      key: 'localPath',
-      type: TypeList.TEXT,
-      component: Input,
       validator: string().nullable()
     }
   ]
