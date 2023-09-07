@@ -14,7 +14,7 @@ const EditorOrganism = ({ entity, stackId, useEditor }: {
   const { fields, onSubmit, onChange, entityForm, onDelete, onClose } = useEditor(entity, stackId)
 
   return (
-    <div className="w-full h-full border-l-2 bg-white">
+    <div className="w-full border-l-2 bg-white h-full max-h-full overflow-y-auto">
       <div className="h-[70px] border-b-2 p-2 flex flex items-center justify-between">
         <h2><strong>Editor</strong></h2>
 
