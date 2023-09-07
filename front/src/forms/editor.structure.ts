@@ -24,8 +24,10 @@ export interface EditorForm {
   label: string
   key: string
   type: TypeList
-  validator?: any
   component: any
+
+  validator?: any
+  maxLength?: number
 }
 
 export const LINKER_STRUCTURE: EditorForm[] = [
@@ -96,7 +98,8 @@ export const DRAWER_TYPE_STRUCTURES: EditorStructure = {
       key: 'name',
       type: TypeList.TEXT,
       component: Input,
-      validator: string().nullable()
+      validator: string().nullable(),
+      maxLength: 15
     },
     {
       label: 'Docker Image',
@@ -127,13 +130,6 @@ export const DRAWER_TYPE_STRUCTURES: EditorStructure = {
       validator: string().nullable()
     },
     {
-      label: 'External',
-      key: 'isExternal',
-      type: TypeList.CHECKBOX,
-      component: Checkbox,
-      validator: boolean().nullable()
-    },
-    {
       label: 'Env variables',
       type: TypeList.CUSTOM,
       key: 'envVariables',
@@ -158,7 +154,8 @@ export const DRAWER_TYPE_STRUCTURES: EditorStructure = {
       key: 'name',
       type: TypeList.TEXT,
       component: Input,
-      validator: string().nullable()
+      validator: string().nullable(),
+      maxLength: 15
     },
     {
       label: 'Description',
@@ -188,7 +185,8 @@ export const DRAWER_TYPE_STRUCTURES: EditorStructure = {
       key: 'name',
       type: TypeList.TEXT,
       component: Input,
-      validator: string().nullable()
+      validator: string().nullable(),
+      maxLength: 15
     },
     {
       label: 'Description',
