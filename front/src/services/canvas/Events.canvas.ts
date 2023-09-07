@@ -24,6 +24,18 @@ const EventsCanvas: TEventsCanvas = {
     this.screenStartup()
     this.mouseStartup()
     this.keyboardStartup()
+  },
+
+  reset (): void {
+    this.drawers = []
+
+    this.selectedLinker = undefined
+    this.selectedDrawer = undefined
+    this.selectedConnector = undefined
+    this.onHoverDrawer = undefined
+
+    this.mouseClickPosition = undefined
+    this.initialDrawerPosition = undefined
   }
 }
 

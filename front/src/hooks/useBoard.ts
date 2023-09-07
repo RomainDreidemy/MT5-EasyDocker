@@ -104,6 +104,7 @@ const useBoard = (board: TBoardOrNullify): {
 
   useEffect(() => {
     if (board == null || EventsCanvas.context == null) return
+    EventsCanvas.reset()
 
     const drawersBuilder = DrawersBuilder(board, EventsCanvas.context)
     drawersBuilder.generate()

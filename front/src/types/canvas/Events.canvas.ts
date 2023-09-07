@@ -14,4 +14,5 @@ export type TEventsCanvas =
   TKeyboardEventManager &
   {
     startup: () => void
+    reset: () => void
   }
