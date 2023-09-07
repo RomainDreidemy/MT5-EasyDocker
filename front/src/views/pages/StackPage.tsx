@@ -16,17 +16,26 @@ const StackPage = (): JSX.Element => {
   const { id: stackId } = useParams()
 
   useEffect(() => {
-    if (stackId == null) navigate('/stacks')
+    if (stackId == null) navigateToStacks()
   }, [stackId])
+
+  const navigateToStacks = (): void => { navigate('/stacks') }
+
+  const stack = async (): Promise<void> => {
+    try {
+      const { data: boardResponse } = await StackEntity.board(stackId!)
+
+      setBoard(boardResponse)
+    } catch (err) {
+      console.error(err)
+      navigateToStacks()
+    }
+  }
 
   const [board, setBoard] = useState<TBoardOrNullify>(undefined)
 
   useEffect(() => {
-    (async () => {
-      const { data: boardResponse } = await StackEntity.board(stackId!)
-
-      setBoard(boardResponse)
-    })()
+    (async () => { await stack() })()
   }, [])
 
   const { canvasRef, selectedDrawer, selectedLinker } = useBoard(board)
