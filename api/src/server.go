@@ -54,6 +54,7 @@ func main() {
 	stacks.Post("/", controllers.CreateStack)
 	stacks.Put("/:id", controllers.UpdateStack)
 	stacks.Delete("/:id", controllers.DeleteStack)
+	stacks.Post("/:id/duplicate", controllers.DuplicateStack)
 
 	stacks.Post("/:stackId/services", controllers.CreateService)
 	stacks.Get("/:stackId/services", controllers.GetServices)

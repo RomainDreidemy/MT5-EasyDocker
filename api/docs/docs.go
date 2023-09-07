@@ -1084,6 +1084,37 @@ const docTemplate = `{
                 }
             }
         },
+        "/stacks/{id}/duplicate": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Stacks"
+                ],
+                "summary": "Duplicate a stack",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Stack ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.StackResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/stacks/{stackId}/board": {
             "get": {
                 "consumes": [
