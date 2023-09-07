@@ -13,10 +13,17 @@ export interface IForm<T> {
 const useForm = <T>(initialForm: T, formStructure: EditorForm[]): IForm<T> => {
   const [form, setForm] = useState<T>(initialForm)
 
+  const convertByType = (event: TOnChange): number | string | boolean => {
+    const { type, value, checked }: HTMLInputElement = event.target
+
+    if (type === TypeList.NUMBER) return +value
+    if (type === TypeList.CHECKBOX) return checked
+
+    return value
+  }
+
   const onChange: (event: TOnChange) => void = (event: TOnChange): void => {
-    const value = event.target.type !== TypeList.NUMBER
-      ? event.target.value
-      : +event.target.value
+    const value = convertByType(event)
 
     setForm({ ...form, [event.target.name]: value })
   }

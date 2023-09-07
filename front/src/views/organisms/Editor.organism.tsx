@@ -38,6 +38,7 @@ const EditorOrganism = ({ entity, stackId, useEditor }: {
                 label={field.label}
                 type={field.type}
                 name={field.key}
+                maxLength={field.maxLength}
                 entity={entity}
                 value={value}
                 onChange={onChange}
