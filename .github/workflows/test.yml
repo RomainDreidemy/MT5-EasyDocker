@@ -17,12 +17,23 @@ jobs:
         steps:
           - uses: actions/checkout@v3
 
+          - name: Get files that have changed
+            id: changed-files
+            uses: tj-actions/changed-files@v39
+            with:
+              files_yaml: |
+                api:
+                  - api/**
+              base_sha: ${{ github.event.pull_request.base.sha }}
+
           - name: Set up Go
             uses: actions/setup-go@v4
+            if: steps.changed-files.outputs.test_any_changed == 'true'
             with:
               go-version: '1.20'
 
           - name: Test
+            if: steps.changed-files.outputs.test_any_changed == 'true'
             working-directory: api
             run: go test -v ./...
 
@@ -30,18 +41,30 @@ jobs:
         name: Front Test
         runs-on: ubuntu-latest
         steps:
-          - name: Install NodeJS
-            uses: actions/setup-node@v2
-            with:
-              node-version: ${{ env.NODE_VERSION }}
-
           - name: Code Checkout
             uses: actions/checkout@v2
 
+          - name: Get files that have changed
+            id: changed-files
+            uses: tj-actions/changed-files@v39
+            with:
+              files_yaml: |
+                front:
+                  - front/**
+              base_sha: ${{ github.event.pull_request.base.sha }}
+
+          - name: Install NodeJS
+            uses: actions/setup-node@v2
+            if: steps.changed-files.outputs.test_any_changed == 'true'
+            with:
+              node-version: ${{ env.NODE_VERSION }}
+
           - name: Install Dependencies
+            if: steps.changed-files.outputs.test_any_changed == 'true'
             working-directory: front
             run: yarn install
 
           - name: Code Testing
+            if: steps.changed-files.outputs.test_any_changed == 'true'
             working-directory: front
             run: yarn test
