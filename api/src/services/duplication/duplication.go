@@ -15,30 +15,19 @@ func DuplicateStack(stack models.Stack) models.Stack {
 
 	repositories.Create[models.Stack](&newStack)
 
+	serviceMapping := make(map[string]string)
+	networkMapping := make(map[string]string)
+	volumeMapping := make(map[string]string)
+
 	for _, service := range stack.Services {
 		newService := duplicateService(service, newStack.ID.String())
 		repositories.Create[models.Service](&newService)
 		newServiceId := newService.ID.String()
+		serviceMapping[service.ID.String()] = newServiceId
 
-		fmt.Println(newServiceId)
-
-		for _, environmentVariable := range service.ServiceEnvVariables {
-			newEnvironmentVariable := duplicateServiceEnvVariable(environmentVariable, newServiceId)
-
-			repositories.Create[models.ServiceEnvVariable](&newEnvironmentVariable)
-		}
-
-		for _, port := range service.ServicePorts {
-			newPort := duplicateServicePort(port, newServiceId)
-
-			repositories.Create[models.ServicePort](&newPort)
-		}
-
-		for _, volume := range service.ServiceVolumes {
-			newVolume := duplicateServiceVolume(volume, newServiceId)
-
-			repositories.Create[models.ServiceVolume](&newVolume)
-		}
+		duplicateServiceEnvVariables(service.ServiceEnvVariables, newServiceId)
+		duplicateServicePorts(service.ServicePorts, newServiceId)
+		duplicateServiceVolumes(service.ServiceVolumes, newServiceId)
 	}
 
 	for _, network := range stack.Networks {
@@ -53,6 +42,7 @@ func DuplicateStack(stack models.Stack) models.Stack {
 		}
 
 		repositories.Create[models.Network](&newNetwork)
+		networkMapping[network.ID.String()] = newNetwork.ID.String()
 	}
 
 	for _, volume := range stack.ManagedVolumes {
@@ -65,6 +55,41 @@ func DuplicateStack(stack models.Stack) models.Stack {
 		}
 
 		repositories.Create[models.ManagedVolume](&newVolume)
+		volumeMapping[volume.ID.String()] = newVolume.ID.String()
+	}
+
+	for _, service := range stack.Services {
+		links := make([]models.ServiceNetworkLink, 0)
+		for _, link := range service.ServiceNetworkLinks {
+			newLink := models.ServiceNetworkLink{
+				ServiceID:            serviceMapping[link.ServiceID],
+				NetworkID:            networkMapping[link.NetworkID],
+				ServiceArrowPosition: link.ServiceArrowPosition,
+				NetworkArrowPosition: link.NetworkArrowPosition,
+			}
+
+			links = append(links, newLink)
+		}
+
+		fmt.Println("--------------")
+		fmt.Println(links)
+
+		repositories.Create[[]models.ServiceNetworkLink](&links)
+
+		volumeLinks := make([]models.ServiceManagedVolumeLink, 0)
+		for _, link := range service.ServiceManagedVolumeLinks {
+			newLink := models.ServiceManagedVolumeLink{
+				ServiceID:                  serviceMapping[link.ServiceID],
+				ManagedVolumeID:            volumeMapping[link.ManagedVolumeID],
+				ServiceArrowPosition:       link.ServiceArrowPosition,
+				ManagedVolumeArrowPosition: link.ManagedVolumeArrowPosition,
+				ContainerPath:              link.ContainerPath,
+			}
+
+			volumeLinks = append(volumeLinks, newLink)
+		}
+
+		repositories.Create[[]models.ServiceManagedVolumeLink](&volumeLinks)
 	}
 
 	return newStack
@@ -85,26 +110,43 @@ func duplicateService(service models.Service, stackId string) models.Service {
 	}
 }
 
-func duplicateServiceEnvVariable(environmentVariable models.ServiceEnvVariable, serviceId string) models.ServiceEnvVariable {
-	return models.ServiceEnvVariable{
-		ServiceID: serviceId,
-		Key:       environmentVariable.Key,
-		Value:     environmentVariable.Value,
+func duplicateServiceEnvVariables(environmentVariables []models.ServiceEnvVariable, serviceId string) {
+	envVariables := make([]models.ServiceEnvVariable, len(environmentVariables))
+	for _, environmentVariable := range environmentVariables {
+		envVariables = append(envVariables, models.ServiceEnvVariable{
+			ServiceID: serviceId,
+			Key:       environmentVariable.Key,
+			Value:     environmentVariable.Value,
+		})
 	}
+
+	repositories.Create[[]models.ServiceEnvVariable](&envVariables)
 }
 
-func duplicateServicePort(port models.ServicePort, serviceId string) models.ServicePort {
-	return models.ServicePort{
-		ServiceID: serviceId,
-		Private:   port.Private,
-		Public:    port.Public,
+func duplicateServicePorts(ports []models.ServicePort, serviceId string) {
+	newPorts := make([]models.ServicePort, len(ports))
+
+	for _, port := range ports {
+		newPorts = append(newPorts, models.ServicePort{
+			ServiceID: serviceId,
+			Private:   port.Private,
+			Public:    port.Public,
+		})
 	}
+
+	repositories.Create[[]models.ServicePort](&newPorts)
 }
 
-func duplicateServiceVolume(volume models.ServiceVolume, serviceId string) models.ServiceVolume {
-	return models.ServiceVolume{
-		ServiceID:     serviceId,
-		LocalPath:     volume.LocalPath,
-		ContainerPath: volume.ContainerPath,
+func duplicateServiceVolumes(volumes []models.ServiceVolume, serviceId string) {
+	newVolumes := make([]models.ServiceVolume, len(volumes))
+
+	for _, volume := range volumes {
+		newVolumes = append(newVolumes, models.ServiceVolume{
+			ServiceID:     serviceId,
+			LocalPath:     volume.LocalPath,
+			ContainerPath: volume.ContainerPath,
+		})
 	}
+
+	repositories.Create[[]models.ServiceVolume](&newVolumes)
 }
