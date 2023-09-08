@@ -5,6 +5,7 @@ import useToggle from '../../hooks/useToggle'
 import StackCardOrganism from '../organisms/StackCard.organism'
 import CreateStackFormModalOrganism from '../organisms/CreateStackFormModal.organism'
 import EditStackFormModalOrganism from '../organisms/EditStackFormModal.organism'
+import CreateStackCardOrganism from '../organisms/CreateStackCard.organism'
 
 const StacksPage = (): JSX.Element => {
   const [open, toggle] = useToggle()
@@ -50,14 +51,7 @@ const StacksPage = (): JSX.Element => {
   return (
     <section>
       <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-4 p-5'>
-        <button
-          onClick={() => { onOpenModal(undefined) }}
-          className="card shadow-md mb-2 rounded bg-blue-100 border border-blue-100 hover:border-blue-200">
-          <div className="card-body">
-            <h2 className="card-title">+ Create a new stack</h2>
-            <p>Click here to create a new stack</p>
-          </div>
-        </button>
+        <CreateStackCardOrganism onOpenModal={onOpenModal} />
         {
           (stacks.map((stack: IStack) => (
             <StackCardOrganism
