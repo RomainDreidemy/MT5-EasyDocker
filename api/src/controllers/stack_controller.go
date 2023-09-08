@@ -6,6 +6,7 @@ import (
 	"github.com/RomainDreidemy/MT5-docker-extension/src/models"
 	"github.com/RomainDreidemy/MT5-docker-extension/src/policies"
 	"github.com/RomainDreidemy/MT5-docker-extension/src/repositories"
+	"github.com/RomainDreidemy/MT5-docker-extension/src/services/duplication"
 	"github.com/RomainDreidemy/MT5-docker-extension/src/services/factories"
 	"github.com/gofiber/fiber/v2"
 )
@@ -140,4 +141,27 @@ func DeleteStack(c *fiber.Ctx) error {
 	initializers.DB.Delete(&stack)
 
 	return c.Status(fiber.StatusNoContent).Send(nil)
+}
+
+// DuplicateStack godoc
+// @Summary      Duplicate a stack
+// @Tags         Stacks
+// @Accept       json
+// @Produce      json
+// @Param id path string true "Stack ID"
+// @Success      200  {object}  models.StackResponse
+// @Router       /stacks/{id}/duplicate [post]
+func DuplicateStack(c *fiber.Ctx) error {
+	id := c.Params("id")
+	currentUser := c.Locals("user").(models.UserResponse)
+
+	if !policies.CanAccessStack(currentUser, id) {
+		return c.Status(fiber.StatusNotFound).JSON(factories.BuildErrorResponse("error", "Stack not found"))
+	}
+
+	stack, _ := repositories.FindStackWithAssociations(id)
+
+	duplicatedStack := duplication.DuplicateStack(stack)
+
+	return c.Status(fiber.StatusCreated).JSON(factories.BuildStackResponse(duplicatedStack))
 }

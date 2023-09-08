@@ -1152,6 +1152,26 @@ paths:
       summary: Update a stack
       tags:
       - Stacks
+  /stacks/{id}/duplicate:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Stack ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.StackResponse'
+      summary: Duplicate a stack
+      tags:
+      - Stacks
   /stacks/{stackId}/board:
     get:
       consumes:
