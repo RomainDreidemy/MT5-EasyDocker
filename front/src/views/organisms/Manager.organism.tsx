@@ -5,10 +5,12 @@ import useDrawerManager from '../../hooks/useDrawerManager'
 import Button from '../atoms/forms/Button.atom'
 import BoardEntity from '../../services/entities/Board.entity'
 import ComposeFileModalOrganism from './ComposeFileModal.organism'
+import useToggle from '../../hooks/useToggle'
 
 const ManagerOrganism = ({ stackId }: { stackId: string }): JSX.Element => {
   const { createEntityAndDraw, loading } = useDrawerManager(stackId)
-  const [composeFileData, setComposeFileData] = useState<string>()
+  const [composeFileData, setComposeFileData] = useState<string>('')
+  const [open, toggle] = useToggle()
 
   const createService = async (): Promise<void> => {
     await createEntityAndDraw(DrawerTypes.SERVICE)
@@ -20,8 +22,12 @@ const ManagerOrganism = ({ stackId }: { stackId: string }): JSX.Element => {
     await createEntityAndDraw(DrawerTypes.VOLUME)
   }
 
+  const openModal = (): void => {
+    toggle()
+  }
+
   const generateYaml = async (): Promise<void> => {
-    window.compose_file_modal.showModal()
+    openModal()
     try {
       const { data: yaml } = await BoardEntity.generateComposeFile(stackId)
       setComposeFileData(yaml)
@@ -42,11 +48,11 @@ const ManagerOrganism = ({ stackId }: { stackId: string }): JSX.Element => {
         <EntityButtonAtom name="Network" onClick={createNetwork} disabled={loading}/>
         <EntityButtonAtom name="Volume" onClick={createVolume} disabled={loading}/>
 
-        <div className='justify-self-end'>
-          <Button label={'Generate yaml file'} variant="primary" onClick={async () => { await generateYaml() }}/>
+        <div className='mt-auto mb-4 flex justify-center'>
+          <Button label={'Generate yaml file'} className='w-auto' variant='ghost' onClick={async () => { await generateYaml() }}/>
         </div>
 
-        <ComposeFileModalOrganism composeFileData={composeFileData} />
+        {open && <ComposeFileModalOrganism composeFileData={composeFileData} toggle={toggle} />}
     </div>
   )
 }

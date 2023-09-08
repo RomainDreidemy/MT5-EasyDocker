@@ -9,7 +9,7 @@ const StackEntity = {
   board: async (id: string): Promise<AxiosResponse<IBoard>> => await axios.get(`/stacks/${id}/board`),
   create: async (stack: IStackCreate): Promise<AxiosResponse<IStack>> => await axios.post('/stacks', stack),
   update: async (stack: IStack): Promise<AxiosResponse<IStack>> => await axios.put(`/stacks/${stack.id}`, stack),
-  delete: async (stack: IStack): Promise<AxiosResponse> => await axios.delete(`/stacks/${stack.id}`)
+  delete: async (id: string): Promise<AxiosResponse> => await axios.delete(`/stacks/${id}`)
 }
 
 export default StackEntity
