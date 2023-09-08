@@ -39,6 +39,11 @@ const StacksPage = (): JSX.Element => {
     await getStacks()
   }
 
+  const onDuplicate = async (id: string): Promise<void> => {
+    await StackEntity.duplicate(id)
+    await getStacks()
+  }
+
   return (
     <section>
       <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-4 p-5'>
@@ -52,7 +57,15 @@ const StacksPage = (): JSX.Element => {
         </button>
         {
           (stacks.map((stack: IStack) => (
-            <StackCardOrganism key={stack.id} stack={stack} id={stack.id.toString()} name={stack.name} description={stack.description} onEdit={onEdit} onDelete={onDelete} />
+            <StackCardOrganism key={stack.id}
+                               stack={stack}
+                               id={stack.id.toString()}
+                               name={stack.name}
+                               description={stack.description}
+                               onEdit={onEdit}
+                               onDelete={onDelete}
+                               onDuplicate={onDuplicate}
+            />
           )))
         }
       </div>
