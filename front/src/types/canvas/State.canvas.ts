@@ -17,6 +17,4 @@ export interface TStateCanvas {
   initialDrawerPosition?: IPosition
   isMoving: boolean
   onDrawerClickOffset?: IPosition
-
-  historicalDrawer?: TDrawer
 }

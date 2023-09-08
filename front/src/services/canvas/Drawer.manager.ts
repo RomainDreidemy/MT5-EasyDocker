@@ -32,7 +32,6 @@ export const DrawerManager: TDrawerManager = {
   selectDrawer (drawer: TDrawer): void {
     this.clearSelectedDrawer()
     this.selectedDrawer = drawer
-    this.historicalDrawer = drawer
     this.selectedDrawer.factory!.selected = true
   },
 
