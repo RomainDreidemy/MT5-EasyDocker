@@ -1,7 +1,6 @@
 package duplication
 
 import (
-	"fmt"
 	"github.com/RomainDreidemy/MT5-docker-extension/src/models"
 	"github.com/RomainDreidemy/MT5-docker-extension/src/repositories"
 )
@@ -70,9 +69,6 @@ func DuplicateStack(stack models.Stack) models.Stack {
 
 			links = append(links, newLink)
 		}
-
-		fmt.Println("--------------")
-		fmt.Println(links)
 
 		repositories.Create[[]models.ServiceNetworkLink](&links)
 
