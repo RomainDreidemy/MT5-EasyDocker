@@ -1,37 +1,26 @@
 import React, { useEffect, useState } from 'react'
 import StackEntity from '../../services/entities/Stack.entity'
-import { type IStack } from '../../interfaces/Stack.interface'
-import StackFormModalOrganism from '../organisms/StackFormModal.organism'
+import { type IStack, type IStackCreate } from '../../interfaces/Stack.interface'
 import useToggle from '../../hooks/useToggle'
 import StackCardOrganism from '../organisms/StackCard.organism'
+import CreateStackFormModalOrganism from '../organisms/CreateStackFormModal.organism'
+import EditStackFormModalOrganism from '../organisms/EditStackFormModal.organism'
 
 const StacksPage = (): JSX.Element => {
   const [open, toggle] = useToggle()
   const [stacks, setStacks] = useState<IStack[]>([])
   const [selectedStack, setSelectedStack] = useState<IStack | undefined>(undefined)
+
   const getStacks = async (): Promise<void> => {
     const { data: stacksResponse } = await StackEntity.stacks()
     setStacks(stacksResponse)
   }
 
-  useEffect(() => {
-    (async () => {
-      await getStacks()
-    })()
-  }, [])
+  useEffect(() => { getStacks() }, [])
 
-  const openModal = (): void => {
-    toggle()
-  }
-
-  const onCreate = (): void => {
-    setSelectedStack(undefined)
-    openModal()
-  }
-
-  const onEdit = (stack: IStack): void => {
+  const onOpenModal = (stack: IStack | undefined): void => {
     setSelectedStack(stack)
-    openModal()
+    toggle()
   }
 
   const onDelete = async (id: string): Promise<void> => {
@@ -39,11 +28,25 @@ const StacksPage = (): JSX.Element => {
     await getStacks()
   }
 
+  const formState = selectedStack == null ? 'create' : 'edit'
+  const FormComponent = formState === 'create'
+    ? CreateStackFormModalOrganism
+    : EditStackFormModalOrganism
+
+  const onSubmit = async (stackEntityForm: IStackCreate): Promise<void> => {
+    formState === 'create'
+      ? await StackEntity.create(stackEntityForm)
+      : await StackEntity.update(stackEntityForm as IStack)
+
+    await getStacks()
+    toggle()
+  }
+
   return (
     <section>
       <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-4 p-5'>
         <button
-          onClick={onCreate}
+          onClick={() => { onOpenModal(undefined) }}
           className="card shadow-md mb-2 rounded bg-blue-100 border border-blue-100 hover:border-blue-200">
           <div className="card-body">
             <h2 className="card-title">+ Create a new stack</h2>
@@ -52,11 +55,22 @@ const StacksPage = (): JSX.Element => {
         </button>
         {
           (stacks.map((stack: IStack) => (
-            <StackCardOrganism key={stack.id} stack={stack} id={stack.id.toString()} name={stack.name} description={stack.description} onEdit={onEdit} onDelete={onDelete} />
+            <StackCardOrganism
+              key={stack.id}
+              stack={stack}
+              id={stack.id.toString()}
+              name={stack.name}
+              description={stack.description}
+              onEdit={() => { onOpenModal(stack) }}
+              onDelete={onDelete} />
           )))
         }
       </div>
-      {open && <StackFormModalOrganism stack={selectedStack} stacks={stacks} setStacks={setStacks} toggle={toggle}/>}
+       {open && <FormComponent
+          stack={selectedStack}
+          toggle={toggle}
+          onSubmit={onSubmit}
+       />}
     </section>
   )
 }
