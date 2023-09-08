@@ -3,12 +3,14 @@ package models
 import "github.com/google/uuid"
 
 type Stack struct {
-	ID          *uuid.UUID `gorm:"type:uuid;default:uuid_generate_v4();primary_key"`
-	Name        string     `gorm:"type:varchar(100);not null"`
-	Description string     `gorm:"type:text"`
-	UserID      *uuid.UUID
-	User        User
-	Services    []Service `gorm:"constraint:OnDelete:CASCADE;"`
+	ID             *uuid.UUID `gorm:"type:uuid;default:uuid_generate_v4();primary_key"`
+	Name           string     `gorm:"type:varchar(100);not null"`
+	Description    string     `gorm:"type:text"`
+	UserID         *uuid.UUID
+	User           User
+	Services       []Service       `gorm:"constraint:OnDelete:CASCADE;"`
+	Networks       []Network       `gorm:"constraint:OnDelete:CASCADE;"`
+	ManagedVolumes []ManagedVolume `gorm:"constraint:OnDelete:CASCADE;"`
 }
 
 type StackCreateInput struct {
