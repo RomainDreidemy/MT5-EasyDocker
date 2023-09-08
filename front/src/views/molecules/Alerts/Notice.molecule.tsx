@@ -1,5 +1,5 @@
 import React from 'react'
-import Alert from '../../organisms/Alert.atom'
+import Alert from '../../atoms/Alert.atom'
 import { type AlertProps } from '../../../interfaces/Alert.interface'
 
 const Notice = ({ message }: AlertProps): JSX.Element => {
