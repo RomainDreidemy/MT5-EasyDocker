@@ -1,17 +1,17 @@
-import React, { type Dispatch, type SetStateAction, useState } from 'react'
+import React, { useState } from 'react'
 import { type IStack, type IStackCreate, STACK_STRUCTURE } from '../../interfaces/Stack.interface'
 import Input from '../atoms/forms/Input.atom'
-import StackEntity from '../../services/entities/Stack.entity'
 import useForm from '../../hooks/useForm'
 import { type EditorForm } from '../../forms/editor.structure'
 import TextArea from '../atoms/forms/TextArea.atom'
 import ModalOrganism from './Modal.organism'
 
-const StackFormModalOrganism = ({ stack, stacks, setStacks, toggle }: {
+const StackFormModalOrganism = ({ title, buttonText, stack, toggle, onSubmit }: {
+  title: string
+  buttonText: string
   toggle: () => void
   stack?: IStack
-  stacks: IStack[]
-  setStacks: Dispatch<SetStateAction<IStack[]>>
+  onSubmit: (form: IStackCreate) => Promise<void>
 }): JSX.Element => {
   const [structure] = useState<EditorForm[]>(STACK_STRUCTURE)
 
@@ -22,29 +22,14 @@ const StackFormModalOrganism = ({ stack, stacks, setStacks, toggle }: {
 
   const { form: stackEntityForm, onChange, validatorsSchema } = useForm<IStackCreate>(stack ?? initialForm, structure)
 
-  const isCreating = stack?.id == null
-
-  const onSubmit = async (): Promise<void> => {
+  const onSubmitWithValidation = async (): Promise<void> => {
     await validatorsSchema.validate(stackEntityForm)
 
-    const stacksResponse =
-      isCreating
-        ? await StackEntity.create(stackEntityForm)
-        : await StackEntity.update(stackEntityForm as IStack)
-
-    if (!isCreating) return
-
-    setStacks([...stacks, stacksResponse.data])
-    toggle()
+    await onSubmit(stackEntityForm)
   }
 
-  const buttonText =
-    isCreating
-      ? 'Create stack +'
-      : 'Edit'
-
   return (
-    <ModalOrganism toggle={toggle} onSubmit={onSubmit} buttonText={buttonText}>
+    <ModalOrganism toggle={toggle} onSubmit={onSubmitWithValidation} buttonText={buttonText} title={title}>
       <div className="relative p-6 flex-auto">
         <form>
           <Input
@@ -52,6 +37,7 @@ const StackFormModalOrganism = ({ stack, stacks, setStacks, toggle }: {
             type="text"
             name="name"
             className='mb-4'
+            value={stackEntityForm.name}
             onChange={onChange}
           />
 
@@ -60,12 +46,12 @@ const StackFormModalOrganism = ({ stack, stacks, setStacks, toggle }: {
             type="textarea"
             name="description"
             className='h-32'
+            value={stackEntityForm.description}
             onChange={onChange}
           />
         </form>
       </div>
     </ModalOrganism>
-
   )
 }
 
