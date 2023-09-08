@@ -6,6 +6,7 @@ import useForm from '../../hooks/useForm'
 import { type EditorForm } from '../../forms/editor.structure'
 import TextArea from '../atoms/forms/TextArea.atom'
 import ModalOrganism from './Modal.organism'
+import Button from '../atoms/forms/Button.atom'
 
 const StackFormModalOrganism = ({ stack, stacks, setStacks, toggle }: {
   toggle: () => void
@@ -63,9 +64,17 @@ const StackFormModalOrganism = ({ stack, stacks, setStacks, toggle }: {
             onChange={onChange}
           />
         </form>
+        <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
+          <Button
+            label={buttonText}
+            onClick={onSubmit}
+            direction={'right'}
+          />
+
+          <Button className='btn-ghost ml-4' onClick={toggle} label={'Close'} />
+        </div>
       </div>
     </ModalOrganism>
-
   )
 }
 
