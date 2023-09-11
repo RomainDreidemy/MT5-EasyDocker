@@ -16,11 +16,15 @@ const ComposeFileModalOrganism = ({ toggle, composeFileData }: ComposeFileModalO
     onDownload('docker-compose', 'yml')
   }
 
+  const onCopyClick = async (): Promise<void> => {
+    await navigator.clipboard.writeText(composeFileData)
+  }
+
   return (
     <ModalOrganism toggle={toggle}>
       <div className="w-full flex justify-around">
 
-        <Button className="btn-ghost" label="Copy" icon={<AiOutlineCopy />} onClick={onDownloadClick}/>
+        <Button className="btn-ghost" label="Copy" icon={<AiOutlineCopy />} onClick={onCopyClick}/>
         <Button className="btn-ghost" label="Download" icon={<AiOutlineDownload />} onClick={onDownloadClick}/>
       </div>
       <hr/>
