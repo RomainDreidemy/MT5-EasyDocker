@@ -101,6 +101,8 @@ services:
         image: postgres:12
         networks:
             - private
+        volumes:
+            - data:./data
     front:
         container_name: front
         image: node:18

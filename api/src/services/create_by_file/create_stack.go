@@ -1,7 +1,6 @@
 package create_by_file
 
 import (
-	"fmt"
 	"github.com/RomainDreidemy/MT5-docker-extension/src/models"
 	"github.com/RomainDreidemy/MT5-docker-extension/src/repositories"
 	"strings"
@@ -118,9 +117,6 @@ func createServiceVolumeLinks(volumes []models.ManagedVolume, services []models.
 	for _, volume := range volumes {
 		for _, service := range services {
 			for _, volumeName := range model.Services[service.Name].Volumes {
-				fmt.Println(volumeName)
-				fmt.Println(strings.Split(volumeName, ":")[0])
-				fmt.Println(volume.Name)
 				if volume.Name == strings.Split(volumeName, ":")[0] {
 					links = append(links, models.ServiceManagedVolumeLink{
 						ManagedVolumeID:            volume.ID.String(),
