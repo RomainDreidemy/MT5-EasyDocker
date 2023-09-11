@@ -9,7 +9,7 @@ interface ComposeFileModalOrganismProps {
 const ComposeFileModalOrganism = ({ toggle, composeFileData }: ComposeFileModalOrganismProps): ReactElement => {
   return (
     <ModalOrganism toggle={toggle}>
-        <textarea className="h-96 w-full" readOnly defaultValue={composeFileData} />
+        <textarea className="h-96 w-full" readOnly value={composeFileData} />
     </ModalOrganism>
   )
 }

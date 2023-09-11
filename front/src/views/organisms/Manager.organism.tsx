@@ -27,10 +27,10 @@ const ManagerOrganism = ({ stackId }: { stackId: string }): JSX.Element => {
   }
 
   const generateYaml = async (): Promise<void> => {
-    openModal()
     try {
       const { data: yaml } = await BoardEntity.generateComposeFile(stackId)
       setComposeFileData(yaml)
+      openModal()
     } catch (e: any) {
       console.log(e)
     }
