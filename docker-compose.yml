@@ -1,47 +1,23 @@
-version: '3'
-
+version: "3"
 services:
-  front:
-    container_name: front
-    build:
-      context: ./front
-      dockerfile: Dockerfile
-    volumes:
-      - ./front/:/app
-      - /app/node_modules
-      - ./.env:/app/.env
-    ports:
-      - "${FRONT_PORT}:3000"
-    entrypoint: ["yarn", "start"]
-
   api:
     container_name: api
-    build:
-      context: ./api
-      dockerfile: Dockerfile
-    volumes:
-      - ./api/:/app
-      - ./.env:/app/.env
+    image: go:1.18
     ports:
-      - "${API_PORT}:3000"
-    depends_on:
-      database:
-        condition: service_healthy
-
+      - 3030:8080
+    environment:
+      ENV: prod
+    networks:
+      - private
+    entrypoint: go build -t ./src/server.go
   database:
     container_name: database
-    image: postgres:15
-    restart: always
-    environment:
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: ${POSTGRES_DB}
-    ports:
-      - "${POSTGRES_PORT}:5432"
-    volumes:
-      - ./tmp/database:/var/lib/postgresql/data
-    healthcheck:
-      test: ["CMD", "pg_isready", "-U", "${POSTGRES_USER}"]
-      interval: 5s
-      timeout: 5s
-      retries: 10
+    networks:
+      - private
+  front:
+    container_name: front
+networks:
+  private:
+    external: false
+volumes:
+  data: {}
