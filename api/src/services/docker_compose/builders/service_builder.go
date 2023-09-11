@@ -33,7 +33,7 @@ func DockerComposeServiceBuilder(service models.Service) models.DockerComposeSer
 		dockerComposeService.Ports = BuildDockerComposeServicePorts(service.ServicePorts)
 	}
 
-	if len(service.ServiceVolumes) > 0 {
+	if len(service.ServiceVolumes) > 0 || len(service.ServiceManagedVolumeLinks) > 0 {
 		dockerComposeService.Volumes = BuildDockerComposeServiceVolumes(service)
 	}
 
