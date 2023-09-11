@@ -6,6 +6,7 @@ import (
 	"github.com/RomainDreidemy/MT5-docker-extension/src/models"
 	"github.com/RomainDreidemy/MT5-docker-extension/src/policies"
 	"github.com/RomainDreidemy/MT5-docker-extension/src/repositories"
+	"github.com/RomainDreidemy/MT5-docker-extension/src/services/create_by_file"
 	"github.com/RomainDreidemy/MT5-docker-extension/src/services/duplication"
 	"github.com/RomainDreidemy/MT5-docker-extension/src/services/factories"
 	"github.com/gofiber/fiber/v2"
@@ -79,6 +80,67 @@ func CreateStack(c *fiber.Ctx) error {
 	}
 
 	return c.Status(fiber.StatusCreated).JSON(factories.BuildStackResponse(newStack))
+}
+
+func CreateStackFromFile(c *fiber.Ctx) error {
+	//currentUser := c.Locals("user").(models.UserResponse)
+	var data = `
+version: "3"
+services:
+    api:
+        container_name: api
+        image: go:1.18
+        volumes:
+            - /code:./api
+        networks:
+            - public
+            - private
+        entrypoint: go build -t ./src/server.go
+    database:
+        container_name: database
+        image: postgres:12
+        networks:
+            - private
+    front:
+        container_name: front
+        image: node:18
+        environment:
+            API_URL: http://localhost:3000
+        networks:
+            - public
+        entrypoint: ' yarn start'
+networks:
+    private:
+        external: false
+    public:
+        external: false
+volumes:
+    data: {}
+`
+	currentUser := c.Locals("user").(models.UserResponse)
+
+	body, err := helpers.BodyParse[models.StackCreateInput](c)
+	if err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(factories.BuildErrorResponse("error", err.Error()))
+	}
+
+	errors := helpers.ValidateStruct(body)
+	if errors != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"status": "fail", "errors": errors})
+	}
+
+	newStack := factories.BuildStackFromStackCreateInput(body, currentUser.ID)
+
+	result := initializers.DB.Create(&newStack)
+
+	if result.Error != nil {
+		return c.Status(fiber.StatusBadGateway).JSON(fiber.Map{"status": "error", "message": "Something bad happened"})
+	}
+
+	model := create_by_file.GenerateModelWithYaml(data)
+	create_by_file.CreateStackWithModel(newStack, model)
+
+	return c.Status(fiber.StatusCreated).JSON(nil)
 }
 
 // UpdateStack godoc
