@@ -7,10 +7,10 @@ import (
 	"log"
 )
 
-func GenerateModelWithYaml(content string) models.DockerCompose {
+func GenerateModelWithYaml(content []byte) models.DockerCompose {
 	t := models.DockerCompose{}
 
-	err := yaml.Unmarshal([]byte(content), &t)
+	err := yaml.Unmarshal(content, &t)
 	if err != nil {
 		log.Fatalf("error: %v", err)
 	}

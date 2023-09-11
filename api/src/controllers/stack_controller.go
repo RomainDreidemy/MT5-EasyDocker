@@ -83,42 +83,6 @@ func CreateStack(c *fiber.Ctx) error {
 }
 
 func CreateStackFromFile(c *fiber.Ctx) error {
-	//currentUser := c.Locals("user").(models.UserResponse)
-	var data = `
-version: "3"
-services:
-    api:
-        container_name: api
-        image: go:1.18
-        volumes:
-            - /code:./api
-        networks:
-            - public
-            - private
-        entrypoint: go build -t ./src/server.go
-    database:
-        container_name: database
-        image: postgres:12
-        networks:
-            - private
-        volumes:
-            - data:./data
-    front:
-        container_name: front
-        image: node:18
-        environment:
-            API_URL: http://localhost:3000
-        networks:
-            - public
-        entrypoint: ' yarn start'
-networks:
-    private:
-        external: false
-    public:
-        external: false
-volumes:
-    data: {}
-`
 	currentUser := c.Locals("user").(models.UserResponse)
 
 	body, err := helpers.BodyParse[models.StackCreateInput](c)
@@ -139,7 +103,12 @@ volumes:
 		return c.Status(fiber.StatusBadGateway).JSON(fiber.Map{"status": "error", "message": "Something bad happened"})
 	}
 
-	model := create_by_file.GenerateModelWithYaml(data)
+	file, _ := c.FormFile("file")
+	buffer, _ := file.Open()
+	b := make([]byte, file.Size)
+	buffer.Read(b)
+
+	model := create_by_file.GenerateModelWithYaml(b)
 	create_by_file.CreateStackWithModel(newStack, model)
 
 	return c.Status(fiber.StatusCreated).JSON(nil)
