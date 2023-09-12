@@ -2,7 +2,6 @@ import BaseFactory from './Base.factory'
 import { type IVariableName, type TServiceFactory } from '../../../../types/board/drawer/factories/Service.factory'
 import { DrawerTypes } from '../../../../enums/DrawerTypes'
 import { type IService } from '../../../../interfaces/Service.interface'
-import { CanvasColor } from '../../../../enums/CanvasColor'
 import { type IServiceEnvVariable } from '../../../../interfaces/ServiceVariable/EnvVariable.interface'
 import { type IServiceVolume } from '../../../../interfaces/ServiceVariable/Volume.interface'
 import { type IServicePortVariable } from '../../../../interfaces/ServiceVariable/Port.interface'
@@ -25,17 +24,17 @@ const ServiceFactory = (): TServiceFactory => {
       const entity = this.drawer!.entity! as IService
       let height = this.initialHeight
 
-      const envVariables: IServiceEnvVariable[] = entity.envVariables || []
+      const envVariables: IServiceEnvVariable[] = entity.envVariables ?? []
       if (envVariables.length > 0) {
         height += OFFSET_SECTION_Y + OFFSET_SECTION_Y * envVariables.length
       }
 
-      const volumes: IServiceVolume[] = entity.volumes || []
+      const volumes: IServiceVolume[] = entity.volumes ?? []
       if (volumes.length > 0) {
         height += OFFSET_SECTION_Y + OFFSET_SECTION_Y + OFFSET_Y * volumes.length
       }
 
-      const ports: IServicePortVariable[] = entity.ports || []
+      const ports: IServicePortVariable[] = entity.ports ?? []
       if (ports.length > 0) {
         height += OFFSET_SECTION_Y + OFFSET_SECTION_Y + OFFSET_Y * (ports.length)
       }
