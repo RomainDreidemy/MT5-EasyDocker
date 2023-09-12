@@ -6,10 +6,10 @@ import {CanvasColor} from '../../../../enums/CanvasColor'
 import TextPipe from "../../../../pipes/Text.pipe";
 import {DrawerTypes} from "../../../../enums/DrawerTypes";
 import {TDrawer} from "../../../../types/Drawer";
+import {IService} from "../../../../interfaces/Service.interface";
 
 const BaseFactory: TBaseFactory = {
-  ...CommonBases,
-  ...StateFactory,
+  ...CommonBases, ...StateFactory,
 
   create(drawer: TDrawer): void {
     this.drawer = drawer
@@ -28,24 +28,18 @@ const BaseFactory: TBaseFactory = {
 
   position(withOffset: number = 0): IPosition {
     return {
-      x: this.positionX - withOffset,
-      y: this.positionY - withOffset
+      x: this.positionX - withOffset, y: this.positionY - withOffset
     }
   },
+
+
 
   draw(): void {
     const context = this.drawer!.context!
 
     const rectangle = new Path2D()
 
-    if (this.type! === DrawerTypes.SERVICE) {
-      const length = (this.drawer!.entity!.envVariables || []).length
-
-      this.height = this.initialHeight + 25 * length
-      console.log(this.height)
-
-    }
-
+    this.beforeDraw && this.beforeDraw();
 
     context!.beginPath()
     context!.lineWidth = 3
@@ -77,30 +71,7 @@ const BaseFactory: TBaseFactory = {
     context!.font = '20px Arial'
     context!.fillText(TextPipe.capitalizeFirstLetter(this.type!), marginX, this.positionY + 45)
 
-    if (this.type! === DrawerTypes.SERVICE) {
-      console.log(this.drawer!.entity.envVariables)
-
-      const envVariables = (this.drawer!.entity!.envVariables || [])
-
-      if (envVariables.length) {
-
-        context!.fillStyle = CanvasColor.CONTENT
-        context!.font = 'bold 15px Arial'
-        context!.fillText('Env variables:', marginX, this.positionY + this.topMarginText + 80)
-
-
-        const y = this.positionY + this.topMarginText + 80
-
-        this.drawer!.entity!.envVariables.forEach((variable, index: number) => {
-          console.log(index)
-          context!.font = 'bold 13px Arial'
-          context!.fillText('Port →', this.positionX + this.width - this.marginText * 5, y + 20 * index)
-          context!.font = '13px Arial'
-          context!.fillText(variable.key, this.positionX + this.width - this.marginText * 5 + 45, y + 20 * index)
-        })
-
-      }
-    }
+    this.afterDraw && this.afterDraw()
 
     this.path = rectangle
   }
