@@ -12,6 +12,7 @@ const CreateStackFormModalOrganism = ({ toggle, onSubmit }: {
     stack={undefined}
     toggle={toggle}
     onSubmit={onSubmit}
+    file
   />
 }
 

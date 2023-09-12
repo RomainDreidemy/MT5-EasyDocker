@@ -1,6 +1,6 @@
 import { type EditorForm, TypeList } from '../forms/editor.structure'
 import Input from '../views/atoms/forms/Input.atom'
-import { string } from 'yup'
+import { object, string } from 'yup'
 
 export interface IStack {
   id: number
@@ -9,7 +9,11 @@ export interface IStack {
   name: string
 }
 
-export type IStackCreate = Omit<IStack, 'id'>
+export interface IStackCreate {
+  name: string
+  description: string
+  file?: File | null
+}
 
 export const STACK_STRUCTURE: EditorForm[] = [
   {
@@ -25,5 +29,11 @@ export const STACK_STRUCTURE: EditorForm[] = [
     type: TypeList.TEXT,
     component: Input,
     validator: string().nullable()
+  },
+  {
+    label: 'File',
+    key: 'file',
+    type: TypeList.FILE,
+    component: Input
   }
 ]
