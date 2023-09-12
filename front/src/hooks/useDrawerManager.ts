@@ -74,7 +74,6 @@ const useDrawerManager = (stackId: string): {
       form.positionY = y
 
       const { data: entityCreated } = await DrawerManager.create(stackId, form, type)
-      console.log(entityCreated)
 
       const entityDrawer: TServiceDrawer = drawer(entityCreated, EventsCanvas.context!)
       entityDrawer.create()
