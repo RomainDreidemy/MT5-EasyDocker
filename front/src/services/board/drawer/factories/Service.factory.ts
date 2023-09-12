@@ -6,7 +6,6 @@ import {CanvasColor} from "../../../../enums/CanvasColor";
 import {IServiceEnvVariable} from "../../../../interfaces/ServiceVariable/EnvVariable.interface";
 import {IServiceVolume} from "../../../../interfaces/ServiceVariable/Volume.interface";
 import {IServicePortVariable} from "../../../../interfaces/ServiceVariable/Port.interface";
-import {IVolume} from "../../../../interfaces/Volume.interface";
 
 const offsetY: number = 25
 const offsetSectionY: number = 25
@@ -41,7 +40,6 @@ const ServiceFactory = (): TServiceFactory => {
       this.height = height
     },
 
-
     afterDraw(): void {
       const entity: IService = this.drawer!.entity! as IService
       let positionY: number = this.positionY + this.topMarginText + offsetSectionY * 3
@@ -49,11 +47,15 @@ const ServiceFactory = (): TServiceFactory => {
       const envVariables: IServiceEnvVariable[] = entity.envVariables || []
       if (envVariables.length) {
         this.drawEnvVariables(envVariables, positionY)
+
+        positionY += offsetItemsY * 2 + offsetItemY * envVariables.length
       }
 
       const volumes: IServiceVolume[] = entity.volumes || []
       if (volumes.length) {
         this.drawVolumes(volumes, positionY)
+
+        positionY += offsetItemsY * 2 + offsetItemY * volumes.length
       }
 
       const ports: IServicePortVariable[] = entity.ports || []
