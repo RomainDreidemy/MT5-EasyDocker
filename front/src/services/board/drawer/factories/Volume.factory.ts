@@ -6,7 +6,8 @@ const VolumeFactory = (): TVolumeFactory => {
   return {
     ...BaseFactory,
 
-    type: DrawerTypes.VOLUME
+    type: DrawerTypes.VOLUME,
+    backgroundColor: '#e7eef5'
   }
 }
 

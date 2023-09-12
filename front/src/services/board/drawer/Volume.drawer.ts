@@ -20,7 +20,7 @@ const VolumeDrawer = (volume: TEntityOrCreate, context: CanvasRenderingContext2D
       this.Linker = CommonLinker
 
       this.factory = VolumeFactory()
-      this.factory.create(volume, context)
+      this.factory.create(this)
 
       this.Connector = ConnectorBuilder(this, CommonConnector)
       this.createConnectors()

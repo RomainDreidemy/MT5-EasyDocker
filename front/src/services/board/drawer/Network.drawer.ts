@@ -20,7 +20,7 @@ const NetworkDrawer = (network: TEntityOrCreate, context: CanvasRenderingContext
       this.Linker = CommonLinker
 
       this.factory = NetworkFactory()
-      this.factory.create(network, context)
+      this.factory.create(this)
 
       this.Connector = ConnectorBuilder(this, CommonConnector)
       this.createConnectors()

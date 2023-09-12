@@ -1,18 +1,26 @@
 import { type TStateFactory } from '../../../../types/board/drawer/factories/State.factory'
+import {CanvasColor} from "../../../../enums/CanvasColor";
+
+const width = 250
+const height = 150
 
 const StateFactory: TStateFactory = {
   path: new Path2D(),
 
   positionX: 20,
   positionY: 20,
-  width: 200,
-  height: 120,
+
+  initialWidth: width,
+  width: width,
+
+  initialHeight: height,
+  height: height,
 
   marginText: 20,
   topMarginTitle: 40,
-  topMarginText: 70,
+  topMarginText: 60,
 
-  name: '',
+  backgroundColor: CanvasColor.DEFAULT_BACKGROUND,
 
   selected: false,
   onHover: false

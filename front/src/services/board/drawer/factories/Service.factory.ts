@@ -6,7 +6,8 @@ const ServiceFactory = (): TServiceFactory => {
   return {
     ...BaseFactory,
 
-    type: DrawerTypes.SERVICE
+    type: DrawerTypes.SERVICE,
+    backgroundColor: '#1f2937'
   }
 }
 

@@ -22,7 +22,6 @@ const BaseDrawer = (): TBaseDrawer => {
 
     update (entity: TEntityOrCreate) {
       this.entity = entity
-      this.factory!.update(entity)
     },
 
     updateEntityPosition () {
