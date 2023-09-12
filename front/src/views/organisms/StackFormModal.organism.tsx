@@ -5,6 +5,7 @@ import useForm from '../../hooks/useForm'
 import { type EditorForm } from '../../forms/editor.structure'
 import TextArea from '../atoms/forms/TextArea.atom'
 import ModalOrganism from './Modal.organism'
+import File from '../atoms/forms/File.atom'
 
 const StackFormModalOrganism = ({ title, buttonText, stack, toggle, onSubmit }: {
   title: string
@@ -46,12 +47,17 @@ const StackFormModalOrganism = ({ title, buttonText, stack, toggle, onSubmit }: 
             label="Description"
             type="textarea"
             name="description"
-            className='h-32'
+            className='h-32 mb-4'
             value={stackEntityForm.description}
             onChange={onChange}
           />
 
-          <input type="file" name="file" id="file" className="inputfile" onChange={onChange} />
+          <File
+            label="File (optional)"
+            name="file"
+            value={stackEntityForm.file}
+            onChange={onChange}
+          />
         </form>
       </div>
     </ModalOrganism>
