@@ -1,7 +1,7 @@
 import { type TStateFactory } from '../../../../types/board/drawer/factories/State.factory'
 import {CanvasColor} from "../../../../enums/CanvasColor";
 
-const width = 350
+const width = 250
 const height = 150
 
 const StateFactory: TStateFactory = {

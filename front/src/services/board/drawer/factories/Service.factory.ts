@@ -5,6 +5,7 @@ import {IService} from "../../../../interfaces/Service.interface";
 import {CanvasColor} from "../../../../enums/CanvasColor";
 import {IServiceEnvVariable} from "../../../../interfaces/ServiceVariable/EnvVariable.interface";
 import {IServiceVolume} from "../../../../interfaces/ServiceVariable/Volume.interface";
+import {IServicePortVariable} from "../../../../interfaces/ServiceVariable/Port.interface";
 
 
 const ServiceFactory = (): TServiceFactory => {
@@ -15,54 +16,90 @@ const ServiceFactory = (): TServiceFactory => {
 
     beforeDraw(): void {
       const entity = this.drawer!.entity! as IService
+      // const offset: number = 20
+      let height = this.topMarginText + 70
 
-      const envVariables = entity.envVariables || []
+      const offsetY: number = 25
+      const offsetSectionY: number = 25
+
+      // height += this.topMarginText
+
+      const envVariables: IServiceEnvVariable[] = entity.envVariables || []
       if (envVariables.length) {
-        this.height = this.initialHeight + 20 * envVariables.length
+        height += offsetY * envVariables.length + offsetSectionY
       }
-      const volumes = entity.volumes || []
+
+      const volumes: IServiceVolume[] = entity.volumes || []
       if (volumes.length) {
-        this.height += this.initialHeight + 20 * volumes.length
+        height += offsetY * volumes.length + offsetSectionY
       }
+
+      const ports: IServicePortVariable[] = entity.ports || []
+      if (ports.length) {
+        height += offsetY * ports.length + offsetSectionY
+      }
+
+      this.height = height
+
+      // console.log((envVariables.length + volumes.length + ports.length))
+      // this.height = this.height / (envVariables.length + volumes.length + ports.length)
     },
 
     afterDraw(): void {
-      const entity = this.drawer!.entity! as IService
-      const initialPositionY = this.positionY + this.topMarginText + 80
+      const entity: IService = this.drawer!.entity! as IService
+      let positionY: number = this.positionY + this.topMarginText + 70
+      const offsetY: number = 25
+      const offsetSectionY: number = 25
 
-      const envVariables = entity.envVariables || []
+      const envVariables: IServiceEnvVariable[] = entity.envVariables || []
       if (envVariables.length) {
-        const name: IVariableName<IServiceEnvVariable> = {
-          sectionName: 'Env variables:', variableName: 'Port →', valueDecorator: (variable: IServiceEnvVariable) => {
-            return `${variable.key}:${variable.value}`
-          }
+        const valueDecorator = (variable: IServiceEnvVariable) => {
+          return variable.key
         }
 
-        const positionY = this.positionY + this.topMarginText + 80
-        this.drawSection<IServiceEnvVariable>(name, envVariables, initialPositionY)
+        const name: IVariableName<IServiceEnvVariable> = {
+          sectionName: 'Env variables:',
+          variableName: 'Variable →',
+          valueDecorator
+        }
+
+        this.drawSection<IServiceEnvVariable>(name, envVariables, positionY)
+
+        positionY += offsetSectionY + offsetY * envVariables.length
       }
 
-
-      const volumes = entity.volumes || []
+      const volumes: IServiceVolume[] = entity.volumes || []
       if (volumes.length) {
-        const name: IVariableName<IServiceVolume> = {
-          sectionName: 'Volumes:', variableName: 'Port →', valueDecorator: (variable: IServiceVolume) => {
-            return variable.containerPath
-          }
+        const valueDecorator = (variable: IServiceVolume) => {
+          return variable.containerPath
         }
 
-        const positionY =
-          envVariables.length
-            ? initialPositionY + 25 * envVariables.length
-            : initialPositionY
-
+        const name: IVariableName<IServiceVolume> = {
+          sectionName: 'Volumes:',
+          variableName: 'Volume →',
+          valueDecorator
+        }
 
         this.drawSection<IServiceVolume>(name, volumes, positionY)
+
+        positionY += offsetSectionY + offsetSectionY + offsetY * (volumes.length)
       }
 
+      const ports: IServicePortVariable[] = entity.ports || []
+      if (ports.length) {
+        const valueDecorator = (variable: IServicePortVariable) => {
+          return `${variable.public}:${variable.private}`
+        }
 
+        const name: IVariableName<IServicePortVariable> = {
+          sectionName: 'Ports:',
+          variableName: 'Port →',
+          valueDecorator
+        }
+
+        this.drawSection<IServicePortVariable>(name, ports, positionY)
+      }
     },
-
 
     drawSection<IVariable>({sectionName, variableName, valueDecorator}: IVariableName<IVariable>, variables: IVariable[], positionY: number): void {
       const context: CanvasRenderingContext2D = this.drawer!.context!
@@ -72,15 +109,19 @@ const ServiceFactory = (): TServiceFactory => {
       context!.font = 'bold 15px Arial'
       context!.fillText(sectionName, marginX, positionY)
 
-      variables.forEach((variable, index: number) => {
-        const value = valueDecorator(variable)
-        const offset = positionY + 20 * index
-        const positionX = marginX + 200
+      variables.forEach((variable: IVariable, index: number) => {
+        const value: string = valueDecorator(variable)
+        const newPositionY: number = positionY + 30 + 20 * index
+        const positionX: number = this.width - this.marginText + this.positionX
 
+        context!.textAlign = "left";
         context!.font = 'bold 13px Arial'
-        context!.fillText(variableName, positionX, offset)
+        context!.fillText(variableName, marginX, newPositionY)
+
+        context!.textAlign = "right";
         context!.font = '13px Arial'
-        context!.fillText(value, positionX + 45, offset)
+        context!.fillText(value, positionX, newPositionY)
+        context!.textAlign = "left";
       })
     }
   }
