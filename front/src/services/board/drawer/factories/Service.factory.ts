@@ -21,38 +21,24 @@ const ServiceFactory = (): TServiceFactory => {
 
     beforeDraw(): void {
       const entity = this.drawer!.entity! as IService
-      // const offset: number = 20
-      const offsetY: number = 25
-
       let height = this.initialHeight
-      // const offsetSectionY: number = 25
-
-      // height += this.topMarginText
 
       const envVariables: IServiceEnvVariable[] = entity.envVariables || []
       if (envVariables.length) {
-        // height += offsetY * envVariables.length + offsetSectionY
-        height += offsetSectionY + offsetY * envVariables.length
-
+        height += offsetSectionY + offsetSectionY * envVariables.length
       }
 
       const volumes: IServiceVolume[] = entity.volumes || []
       if (volumes.length) {
-        // height += offsetY * volumes.length + offsetSectionY
-        height += offsetSectionY + offsetSectionY + offsetY * (volumes.length)
-
+        height += offsetSectionY + offsetSectionY + offsetY * volumes.length
       }
 
       const ports: IServicePortVariable[] = entity.ports || []
       if (ports.length) {
-        // height += offsetY * ports.length + offsetSectionY
         height += offsetSectionY + offsetSectionY + offsetY * (ports.length)
       }
 
       this.height = height
-
-      // console.log((envVariables.length + volumes.length + ports.length))
-      // this.height = this.height / (envVariables.length + volumes.length + ports.length)
     },
 
 
