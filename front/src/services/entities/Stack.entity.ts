@@ -7,7 +7,9 @@ const StackEntity = {
   stacks: async () => await axios.get('/stacks'),
   stack: async (id: string) => await axios.get(`/stacks/${id}`),
   board: async (id: string): Promise<AxiosResponse<IBoard>> => await axios.get(`/stacks/${id}/board`),
-  create: async (stack: IStackCreate): Promise<AxiosResponse<IStack>> => await axios.post('/stacks', stack),
+  create: async (stack: IStackCreate): Promise<AxiosResponse<IStack>> => await axios.post('/stacks', stack, {
+    headers: { 'Content-Type': 'multipart/form-data' }
+  }),
   update: async (stack: IStack): Promise<AxiosResponse<IStack>> => await axios.put(`/stacks/${stack.id}`, stack),
   delete: async (id: string): Promise<AxiosResponse> => await axios.delete(`/stacks/${id}`),
   duplicate: async (id: string): Promise<AxiosResponse<IStack>> => await axios.post(`/stacks/${id}/duplicate`)

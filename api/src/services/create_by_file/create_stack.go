@@ -3,6 +3,8 @@ package create_by_file
 import (
 	"github.com/RomainDreidemy/MT5-docker-extension/src/models"
 	"github.com/RomainDreidemy/MT5-docker-extension/src/repositories"
+	"github.com/RomainDreidemy/MT5-docker-extension/src/utils"
+	"strconv"
 	"strings"
 )
 
@@ -23,6 +25,15 @@ func CreateStackWithModel(stack models.Stack, model models.DockerCompose) error 
 
 	serviceVolumeLinks := createServiceVolumeLinks(volumes, services, model)
 	repositories.Create[[]models.ServiceManagedVolumeLink](&serviceVolumeLinks)
+
+	serviceEnvVars := createServiceEnvVars(services, model)
+	repositories.Create[[]models.ServiceEnvVariable](&serviceEnvVars)
+
+	servicePorts := createServicePorts(services, model)
+	repositories.Create[[]models.ServicePort](&servicePorts)
+
+	serviceVolumes := createServiceVolumes(services, model, volumes)
+	repositories.Create[[]models.ServiceVolume](&serviceVolumes)
 
 	return nil
 }
@@ -123,11 +134,67 @@ func createServiceVolumeLinks(volumes []models.ManagedVolume, services []models.
 						ServiceID:                  service.ID.String(),
 						ServiceArrowPosition:       "bottom",
 						ManagedVolumeArrowPosition: "top",
+						ContainerPath:              strings.Split(volumeName, ":")[1],
 					})
 				}
 			}
+
 		}
 	}
 
 	return links
+}
+
+func createServiceEnvVars(services []models.Service, model models.DockerCompose) []models.ServiceEnvVariable {
+	envVars := make([]models.ServiceEnvVariable, 0)
+
+	for _, service := range services {
+		for key, value := range model.Services[service.Name].Environment {
+			envVars = append(envVars, models.ServiceEnvVariable{
+				ServiceID: service.ID.String(),
+				Key:       key,
+				Value:     value,
+			})
+		}
+	}
+
+	return envVars
+}
+
+func createServicePorts(services []models.Service, model models.DockerCompose) []models.ServicePort {
+	ports := make([]models.ServicePort, 0)
+
+	for _, service := range services {
+		for _, port := range model.Services[service.Name].Ports {
+			public, _ := strconv.Atoi(strings.Split(port, ":")[0])
+			private, _ := strconv.Atoi(strings.Split(port, ":")[1])
+			ports = append(ports, models.ServicePort{
+				ServiceID: service.ID.String(),
+				Public:    public,
+				Private:   private,
+			})
+		}
+	}
+
+	return ports
+}
+
+func createServiceVolumes(services []models.Service, model models.DockerCompose, volumes []models.ManagedVolume) []models.ServiceVolume {
+	newVolumes := make([]models.ServiceVolume, 0)
+
+	for _, service := range services {
+		for _, volume := range model.Services[service.Name].Volumes {
+			if utils.Any[models.ManagedVolume](volumes, func(v models.ManagedVolume) bool { return v.Name == strings.Split(volume, ":")[0] }) {
+				continue
+			}
+
+			newVolumes = append(newVolumes, models.ServiceVolume{
+				ServiceID:     service.ID.String(),
+				LocalPath:     strings.Split(volume, ":")[0],
+				ContainerPath: strings.Split(volume, ":")[1],
+			})
+		}
+	}
+
+	return newVolumes
 }
