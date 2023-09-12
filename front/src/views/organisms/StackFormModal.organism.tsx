@@ -7,12 +7,13 @@ import TextArea from '../atoms/forms/TextArea.atom'
 import ModalOrganism from './Modal.organism'
 import File from '../atoms/forms/File.atom'
 
-const StackFormModalOrganism = ({ title, buttonText, stack, toggle, onSubmit }: {
+const StackFormModalOrganism = ({ title, buttonText, stack, toggle, onSubmit, file = false }: {
   title: string
   buttonText: string
   toggle: () => void
   stack?: IStack
   onSubmit: (form: IStackCreate) => Promise<void>
+  file: boolean
 }): JSX.Element => {
   const [structure] = useState<EditorForm[]>(STACK_STRUCTURE)
 
@@ -52,12 +53,12 @@ const StackFormModalOrganism = ({ title, buttonText, stack, toggle, onSubmit }: 
             onChange={onChange}
           />
 
-          <File
+          {file && <File
             label="File (optional)"
             name="file"
             value={stackEntityForm.file}
             onChange={onChange}
-          />
+          />}
         </form>
       </div>
     </ModalOrganism>
