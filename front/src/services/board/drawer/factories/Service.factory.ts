@@ -6,7 +6,12 @@ import {CanvasColor} from "../../../../enums/CanvasColor";
 import {IServiceEnvVariable} from "../../../../interfaces/ServiceVariable/EnvVariable.interface";
 import {IServiceVolume} from "../../../../interfaces/ServiceVariable/Volume.interface";
 import {IServicePortVariable} from "../../../../interfaces/ServiceVariable/Port.interface";
+import {IVolume} from "../../../../interfaces/Volume.interface";
 
+const offsetY: number = 25
+const offsetSectionY: number = 25
+const offsetItemsY: number = 30
+const offsetItemY: number = 20
 
 const ServiceFactory = (): TServiceFactory => {
   return {
@@ -17,26 +22,31 @@ const ServiceFactory = (): TServiceFactory => {
     beforeDraw(): void {
       const entity = this.drawer!.entity! as IService
       // const offset: number = 20
-      let height = this.topMarginText + 70
-
       const offsetY: number = 25
-      const offsetSectionY: number = 25
+
+      let height = this.initialHeight
+      // const offsetSectionY: number = 25
 
       // height += this.topMarginText
 
       const envVariables: IServiceEnvVariable[] = entity.envVariables || []
       if (envVariables.length) {
-        height += offsetY * envVariables.length + offsetSectionY
+        // height += offsetY * envVariables.length + offsetSectionY
+        height += offsetSectionY + offsetY * envVariables.length
+
       }
 
       const volumes: IServiceVolume[] = entity.volumes || []
       if (volumes.length) {
-        height += offsetY * volumes.length + offsetSectionY
+        // height += offsetY * volumes.length + offsetSectionY
+        height += offsetSectionY + offsetSectionY + offsetY * (volumes.length)
+
       }
 
       const ports: IServicePortVariable[] = entity.ports || []
       if (ports.length) {
-        height += offsetY * ports.length + offsetSectionY
+        // height += offsetY * ports.length + offsetSectionY
+        height += offsetSectionY + offsetSectionY + offsetY * (ports.length)
       }
 
       this.height = height
@@ -45,60 +55,67 @@ const ServiceFactory = (): TServiceFactory => {
       // this.height = this.height / (envVariables.length + volumes.length + ports.length)
     },
 
+
     afterDraw(): void {
       const entity: IService = this.drawer!.entity! as IService
-      let positionY: number = this.positionY + this.topMarginText + 70
-      const offsetY: number = 25
-      const offsetSectionY: number = 25
+      let positionY: number = this.positionY + this.topMarginText + offsetSectionY * 3
 
       const envVariables: IServiceEnvVariable[] = entity.envVariables || []
       if (envVariables.length) {
-        const valueDecorator = (variable: IServiceEnvVariable) => {
-          return variable.key
-        }
-
-        const name: IVariableName<IServiceEnvVariable> = {
-          sectionName: 'Env variables:',
-          variableName: 'Variable →',
-          valueDecorator
-        }
-
-        this.drawSection<IServiceEnvVariable>(name, envVariables, positionY)
-
-        positionY += offsetSectionY + offsetY * envVariables.length
+        this.drawEnvVariables(envVariables, positionY)
       }
 
       const volumes: IServiceVolume[] = entity.volumes || []
       if (volumes.length) {
-        const valueDecorator = (variable: IServiceVolume) => {
-          return variable.containerPath
-        }
-
-        const name: IVariableName<IServiceVolume> = {
-          sectionName: 'Volumes:',
-          variableName: 'Volume →',
-          valueDecorator
-        }
-
-        this.drawSection<IServiceVolume>(name, volumes, positionY)
-
-        positionY += offsetSectionY + offsetSectionY + offsetY * (volumes.length)
+        this.drawVolumes(volumes, positionY)
       }
 
       const ports: IServicePortVariable[] = entity.ports || []
       if (ports.length) {
-        const valueDecorator = (variable: IServicePortVariable) => {
-          return `${variable.public}:${variable.private}`
-        }
-
-        const name: IVariableName<IServicePortVariable> = {
-          sectionName: 'Ports:',
-          variableName: 'Port →',
-          valueDecorator
-        }
-
-        this.drawSection<IServicePortVariable>(name, ports, positionY)
+        this.drawPorts(ports, positionY)
       }
+    },
+
+    drawPorts(variables: IServicePortVariable[], positionY: number): void {
+      const valueDecorator = (variable: IServicePortVariable) => {
+        return `${variable.public}:${variable.private}`
+      }
+
+      const name: IVariableName<IServicePortVariable> = {
+        sectionName: 'Ports:',
+        variableName: 'Port →',
+        valueDecorator
+      }
+
+      this.drawSection<IServicePortVariable>(name, variables, positionY)
+    },
+
+    drawVolumes(variables: IServiceVolume[], positionY: number): void {
+      const valueDecorator = (variable: IServiceVolume) => {
+        return variable.containerPath
+      }
+
+      const name: IVariableName<IServiceVolume> = {
+        sectionName: 'Volumes:',
+        variableName: 'Volume →',
+        valueDecorator
+      }
+
+      this.drawSection<IServiceVolume>(name, variables, positionY)
+    },
+
+    drawEnvVariables(variables: IServiceEnvVariable[], positionY: number): void {
+      const valueDecorator = (variable: IServiceEnvVariable) => {
+        return variable.key
+      }
+
+      const name: IVariableName<IServiceEnvVariable> = {
+        sectionName: 'Env variables:',
+        variableName: 'Variable →',
+        valueDecorator
+      }
+
+      this.drawSection<IServiceEnvVariable>(name, variables, positionY)
     },
 
     drawSection<IVariable>({sectionName, variableName, valueDecorator}: IVariableName<IVariable>, variables: IVariable[], positionY: number): void {
@@ -111,16 +128,16 @@ const ServiceFactory = (): TServiceFactory => {
 
       variables.forEach((variable: IVariable, index: number) => {
         const value: string = valueDecorator(variable)
-        const newPositionY: number = positionY + 30 + 20 * index
-        const positionX: number = this.width - this.marginText + this.positionX
-
+        const newPositionY: number = positionY + offsetItemsY + offsetItemY * index
         context!.textAlign = "left";
+
         context!.font = 'bold 13px Arial'
         context!.fillText(variableName, marginX, newPositionY)
-
         context!.textAlign = "right";
+
+        const positionRightX: number = this.width - this.marginText + this.positionX
         context!.font = '13px Arial'
-        context!.fillText(value, positionX, newPositionY)
+        context!.fillText(value, positionRightX, newPositionY)
         context!.textAlign = "left";
       })
     }
