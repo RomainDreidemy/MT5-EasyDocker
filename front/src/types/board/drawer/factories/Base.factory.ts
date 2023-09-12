@@ -1,7 +1,7 @@
-import {type TStateFactory} from './State.factory'
-import {type IPosition} from '../../../../interfaces/Position.interface'
-import {type TCommonBases} from '../Common.bases'
-import {TDrawer} from "../../../Drawer";
+import { type TStateFactory } from './State.factory'
+import { type IPosition } from '../../../../interfaces/Position.interface'
+import { type TCommonBases } from '../Common.bases'
+import { type TDrawer } from '../../../Drawer'
 
 export type TBaseFactory =
   Omit<TCommonBases & TStateFactory, 'create'>

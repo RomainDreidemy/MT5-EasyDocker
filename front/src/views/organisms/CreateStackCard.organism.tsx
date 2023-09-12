@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react'
 
 const StackCardOrganism = ({ onOpenModal }: {
   onOpenModal: (undefined: undefined) => void
@@ -12,7 +12,7 @@ const StackCardOrganism = ({ onOpenModal }: {
         <p>Click here to create a new stack</p>
       </div>
     </button>
-  );
+  )
 }
 
-export default StackCardOrganism;
+export default StackCardOrganism

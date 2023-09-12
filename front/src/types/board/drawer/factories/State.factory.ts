@@ -1,7 +1,7 @@
 import { type DrawerTypes } from '../../../../enums/DrawerTypes'
-import {CanvasColor} from "../../../../enums/CanvasColor";
-import {TEntity} from "../../../Entity";
-import {TDrawer} from "../../../Drawer";
+import { type CanvasColor } from '../../../../enums/CanvasColor'
+import { TEntity } from '../../../Entity'
+import { type TDrawer } from '../../../Drawer'
 
 export interface TStateFactory {
   drawer?: TDrawer

@@ -1,5 +1,5 @@
 import { type TStateFactory } from '../../../../types/board/drawer/factories/State.factory'
-import {CanvasColor} from "../../../../enums/CanvasColor";
+import { CanvasColor } from '../../../../enums/CanvasColor'
 
 const height = 150
 
@@ -12,7 +12,7 @@ const StateFactory: TStateFactory = {
   width: 250,
 
   initialHeight: height,
-  height: height,
+  height,
 
   marginText: 20,
   topMarginTitle: 40,
