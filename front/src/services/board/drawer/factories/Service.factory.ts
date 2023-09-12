@@ -47,28 +47,28 @@ const ServiceFactory = (): TServiceFactory => {
       const entity: IService = this.drawer!.entity! as IService
       let positionY: number = this.positionY + this.topMarginText + OFFSET_SECTION_Y * 3
 
-      const envVariables: IServiceEnvVariable[] = entity.envVariables || []
+      const envVariables: IServiceEnvVariable[] = entity.envVariables ?? []
       if (envVariables.length > 0) {
         this.drawEnvVariables(envVariables, positionY)
 
         positionY += OFFSET_ITEMS_Y * 2 + OFFSET_ITEM_Y * envVariables.length
       }
 
-      const volumes: IServiceVolume[] = entity.volumes || []
+      const volumes: IServiceVolume[] = entity.volumes ?? []
       if (volumes.length > 0) {
         this.drawVolumes(volumes, positionY)
 
         positionY += OFFSET_ITEMS_Y * 2 + OFFSET_ITEM_Y * volumes.length
       }
 
-      const ports: IServicePortVariable[] = entity.ports || []
+      const ports: IServicePortVariable[] = entity.ports ?? []
       if (ports.length > 0) {
         this.drawPorts(ports, positionY)
       }
     },
 
     drawPorts (variables: IServicePortVariable[], positionY: number): void {
-      const valueDecorator = (variable: IServicePortVariable) => {
+      const valueDecorator = (variable: IServicePortVariable): string => {
         return `${variable.public}:${variable.private}`
       }
 
@@ -82,7 +82,7 @@ const ServiceFactory = (): TServiceFactory => {
     },
 
     drawVolumes (variables: IServiceVolume[], positionY: number): void {
-      const valueDecorator = (variable: IServiceVolume) => {
+      const valueDecorator = (variable: IServiceVolume): string => {
         return variable.containerPath
       }
 
@@ -96,7 +96,7 @@ const ServiceFactory = (): TServiceFactory => {
     },
 
     drawEnvVariables (variables: IServiceEnvVariable[], positionY: number): void {
-      const valueDecorator = (variable: IServiceEnvVariable) => {
+      const valueDecorator = (variable: IServiceEnvVariable): string => {
         return variable.key
       }
 

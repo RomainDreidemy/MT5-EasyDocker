@@ -12,7 +12,7 @@ const CardOrganism = ({ id, name, description, linkUrl, isEditable, onDelete, on
   onDelete: (id: string) => void
   onEdit: () => void
   onDuplicate: (id: string) => void
-}) => {
+}): JSX.Element => {
   return (
     <div className="card shadow-md mb-2 rounded border border-blue-100 hover:border-blue-200">
       <Link to={`${linkUrl}/${id}`} key={id}>

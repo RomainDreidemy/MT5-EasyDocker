@@ -11,8 +11,8 @@ const StateFactory: TStateFactory = {
 
   width: 250,
 
-  initialHeight: height,
   height,
+  initialHeight: height,
 
   marginText: 20,
   topMarginTitle: 40,

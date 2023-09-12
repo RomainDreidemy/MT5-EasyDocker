@@ -35,7 +35,7 @@ const BaseFactory: TBaseFactory = {
 
     const rectangle = new Path2D()
 
-    ;(this.beforeDraw != null) && this.beforeDraw()
+    if (this.beforeDraw != null) this.beforeDraw()
 
     context.beginPath()
     context.lineWidth = 5
@@ -67,7 +67,7 @@ const BaseFactory: TBaseFactory = {
     context.font = '20px Arial'
     context.fillText(TextPipe.capitalizeFirstLetter(this.type!), marginX, this.positionY + 45)
 
-    ;(this.afterDraw != null) && this.afterDraw()
+    if (this.afterDraw != null) this.afterDraw()
 
     this.path = rectangle
   }
