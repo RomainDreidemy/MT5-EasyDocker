@@ -16,7 +16,9 @@ const ServiceFactory = (): TServiceFactory => {
   return {
     ...BaseFactory,
 
-    type: DrawerTypes.SERVICE, backgroundColor: '#1f2937',
+    type: DrawerTypes.SERVICE,
+
+    backgroundColor: '#1f2937',
 
     beforeDraw(): void {
       const entity = this.drawer!.entity! as IService
@@ -110,7 +112,7 @@ const ServiceFactory = (): TServiceFactory => {
       const context: CanvasRenderingContext2D = this.drawer!.context!
       const marginX: number = this.positionX + this.marginText
 
-      context!.fillStyle = CanvasColor.CONTENT
+      context!.fillStyle = CanvasColor.TEXT
       context!.font = 'bold 15px Arial'
       context!.fillText(sectionName, marginX, positionY)
 

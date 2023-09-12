@@ -2,11 +2,8 @@ import {type TBaseFactory} from '../../../../types/board/drawer/factories/Base.f
 import StateFactory from './State.factory'
 import {type IPosition} from '../../../../interfaces/Position.interface'
 import CommonBases from '../Common.bases'
-import {CanvasColor} from '../../../../enums/CanvasColor'
 import TextPipe from "../../../../pipes/Text.pipe";
-import {DrawerTypes} from "../../../../enums/DrawerTypes";
 import {TDrawer} from "../../../../types/Drawer";
-import {IService} from "../../../../interfaces/Service.interface";
 
 const BaseFactory: TBaseFactory = {
   ...CommonBases, ...StateFactory,
@@ -33,7 +30,6 @@ const BaseFactory: TBaseFactory = {
   },
 
 
-
   draw(): void {
     const context = this.drawer!.context!
 
@@ -46,15 +42,15 @@ const BaseFactory: TBaseFactory = {
     rectangle.roundRect(this.positionX, this.positionY, this.width, this.height, [10])
     context!.stroke()
 
-    context!.strokeStyle = CanvasColor.BORDER
+    context!.strokeStyle = this.borderColor
     context!.fillStyle = this.backgroundColor
     context!.beginPath()
     context!.roundRect(this.positionX, this.positionY, this.width, this.height, [10])
 
     if (this.selected) {
-      context!.strokeStyle = CanvasColor.SELECTED
+      context!.strokeStyle = this.selectedColor
     } else if (this.onHover) {
-      context!.strokeStyle = CanvasColor.ON_HOVER
+      context!.strokeStyle = this.onHoverColor
     }
 
     context!.stroke(rectangle)
@@ -63,11 +59,11 @@ const BaseFactory: TBaseFactory = {
 
     const marginX: number = this.positionX + this.marginText
 
-    context!.fillStyle = '#ffffff'
+    context!.fillStyle = this.titleColor
     context!.font = 'bold 20px Arial'
     context!.fillText(TextPipe.capitalizeFirstLetter(this.drawer!.entity!.name), marginX, this.positionY + 80)
 
-    context!.fillStyle = CanvasColor.CONTENT
+    context!.fillStyle = this.textColor
     context!.font = '20px Arial'
     context!.fillText(TextPipe.capitalizeFirstLetter(this.type!), marginX, this.positionY + 45)
 

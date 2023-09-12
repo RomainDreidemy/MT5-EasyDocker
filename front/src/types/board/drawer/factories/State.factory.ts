@@ -10,7 +10,6 @@ export interface TStateFactory {
 
   positionX: number
   positionY: number
-  initialWidth: number
   width: number
   initialHeight: number
   height: number
@@ -20,6 +19,11 @@ export interface TStateFactory {
   topMarginText: number
 
   backgroundColor: CanvasColor | string
+  borderColor: CanvasColor | string
+  selectedColor: CanvasColor | string
+  titleColor: CanvasColor | string
+  textColor: CanvasColor | string
+  onHoverColor: CanvasColor | string
 
   selected: boolean
   onHover: boolean

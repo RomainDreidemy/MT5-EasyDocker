@@ -8,5 +8,5 @@ export enum CanvasColor {
   DEFAULT = '#000000',
 
   TITLE = '#333333',
-  CONTENT = '#9ca3af',
+  TEXT = '#9ca3af',
 }

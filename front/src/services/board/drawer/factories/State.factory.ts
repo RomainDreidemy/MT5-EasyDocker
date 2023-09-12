@@ -1,7 +1,6 @@
 import { type TStateFactory } from '../../../../types/board/drawer/factories/State.factory'
 import {CanvasColor} from "../../../../enums/CanvasColor";
 
-const width = 250
 const height = 150
 
 const StateFactory: TStateFactory = {
@@ -10,8 +9,7 @@ const StateFactory: TStateFactory = {
   positionX: 20,
   positionY: 20,
 
-  initialWidth: width,
-  width: width,
+  width: 250,
 
   initialHeight: height,
   height: height,
@@ -21,6 +19,11 @@ const StateFactory: TStateFactory = {
   topMarginText: 60,
 
   backgroundColor: CanvasColor.DEFAULT_BACKGROUND,
+  borderColor: CanvasColor.BORDER,
+  titleColor: CanvasColor.TITLE,
+  textColor: CanvasColor.TEXT,
+  selectedColor: CanvasColor.SELECTED,
+  onHoverColor: CanvasColor.ON_HOVER,
 
   selected: false,
   onHover: false
