@@ -6,6 +6,7 @@ import (
 	"github.com/RomainDreidemy/MT5-docker-extension/src/models"
 	"github.com/RomainDreidemy/MT5-docker-extension/src/policies"
 	"github.com/RomainDreidemy/MT5-docker-extension/src/repositories"
+	"github.com/RomainDreidemy/MT5-docker-extension/src/services/create_by_file"
 	"github.com/RomainDreidemy/MT5-docker-extension/src/services/duplication"
 	"github.com/RomainDreidemy/MT5-docker-extension/src/services/factories"
 	"github.com/gofiber/fiber/v2"
@@ -76,6 +77,16 @@ func CreateStack(c *fiber.Ctx) error {
 
 	if result.Error != nil {
 		return c.Status(fiber.StatusBadGateway).JSON(fiber.Map{"status": "error", "message": "Something bad happened"})
+	}
+
+	file, _ := c.FormFile("file")
+	if file != nil {
+		buffer, _ := file.Open()
+		b := make([]byte, file.Size)
+		buffer.Read(b)
+
+		model := create_by_file.GenerateModelWithYaml(b)
+		create_by_file.CreateStackWithModel(newStack, model)
 	}
 
 	return c.Status(fiber.StatusCreated).JSON(factories.BuildStackResponse(newStack))
