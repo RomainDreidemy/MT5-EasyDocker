@@ -23,7 +23,6 @@ const ComposeFileModalOrganism = ({ toggle, composeFileData }: ComposeFileModalO
   return (
     <ModalOrganism toggle={toggle}>
       <div className="w-full flex justify-around">
-
         <Button className="btn-ghost" label="Copy" icon={<AiOutlineCopy />} onClick={onCopyClick}/>
         <Button className="btn-ghost" label="Download" icon={<AiOutlineDownload />} onClick={onDownloadClick}/>
       </div>

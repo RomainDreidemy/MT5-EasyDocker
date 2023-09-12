@@ -1,7 +1,7 @@
 const useDownload = (file: string): {
   onDownload: (name: string | undefined, format: string) => void
 } => {
-  const onDownload = (name: string = 'File', format: string = 'txt'): void => {
+  const onDownload = (name: string = 'File', extension: string = 'txt'): void => {
     const url = window.URL.createObjectURL(
       new Blob([file])
     )
@@ -9,7 +9,7 @@ const useDownload = (file: string): {
     const link = document.createElement('a')
 
     link.href = url
-    link.setAttribute('download', `${name}.${format}`)
+    link.setAttribute('download', `${name}.${extension}`)
 
     document.body.appendChild(link)
 
