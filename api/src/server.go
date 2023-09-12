@@ -52,7 +52,6 @@ func main() {
 	stacks.Get("/", controllers.GetStacks)
 	stacks.Get("/:id", controllers.GetStack)
 	stacks.Post("/", controllers.CreateStack)
-	stacks.Post("/file", controllers.CreateStackFromFile)
 	stacks.Put("/:id", controllers.UpdateStack)
 	stacks.Delete("/:id", controllers.DeleteStack)
 	stacks.Post("/:id/duplicate", controllers.DuplicateStack)

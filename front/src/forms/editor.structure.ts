@@ -15,6 +15,7 @@ export enum TypeList {
   TEXT = 'text',
   CHECKBOX = 'checkbox',
   NUMBER = 'number',
+  FILE = 'file',
   CUSTOM = 'custom',
 }
 

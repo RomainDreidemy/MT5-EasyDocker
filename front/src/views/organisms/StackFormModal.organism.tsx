@@ -17,7 +17,8 @@ const StackFormModalOrganism = ({ title, buttonText, stack, toggle, onSubmit }: 
 
   const initialForm: IStackCreate = {
     name: '',
-    description: ''
+    description: '',
+    file: null
   }
 
   const { form: stackEntityForm, onChange, validatorsSchema } = useForm<IStackCreate>(stack ?? initialForm, structure)
@@ -49,6 +50,8 @@ const StackFormModalOrganism = ({ title, buttonText, stack, toggle, onSubmit }: 
             value={stackEntityForm.description}
             onChange={onChange}
           />
+
+          <input type="file" name="file" id="file" className="inputfile" onChange={onChange} />
         </form>
       </div>
     </ModalOrganism>

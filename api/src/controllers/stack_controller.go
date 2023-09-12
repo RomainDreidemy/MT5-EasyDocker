@@ -79,39 +79,17 @@ func CreateStack(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusBadGateway).JSON(fiber.Map{"status": "error", "message": "Something bad happened"})
 	}
 
-	return c.Status(fiber.StatusCreated).JSON(factories.BuildStackResponse(newStack))
-}
-
-func CreateStackFromFile(c *fiber.Ctx) error {
-	currentUser := c.Locals("user").(models.UserResponse)
-
-	body, err := helpers.BodyParse[models.StackCreateInput](c)
-	if err != nil {
-		return c.Status(fiber.StatusBadRequest).JSON(factories.BuildErrorResponse("error", err.Error()))
-	}
-
-	errors := helpers.ValidateStruct(body)
-	if errors != nil {
-		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"status": "fail", "errors": errors})
-	}
-
-	newStack := factories.BuildStackFromStackCreateInput(body, currentUser.ID)
-
-	result := initializers.DB.Create(&newStack)
-
-	if result.Error != nil {
-		return c.Status(fiber.StatusBadGateway).JSON(fiber.Map{"status": "error", "message": "Something bad happened"})
-	}
-
 	file, _ := c.FormFile("file")
-	buffer, _ := file.Open()
-	b := make([]byte, file.Size)
-	buffer.Read(b)
+	if file != nil {
+		buffer, _ := file.Open()
+		b := make([]byte, file.Size)
+		buffer.Read(b)
 
-	model := create_by_file.GenerateModelWithYaml(b)
-	create_by_file.CreateStackWithModel(newStack, model)
+		model := create_by_file.GenerateModelWithYaml(b)
+		create_by_file.CreateStackWithModel(newStack, model)
+	}
 
-	return c.Status(fiber.StatusCreated).JSON(nil)
+	return c.Status(fiber.StatusCreated).JSON(factories.BuildStackResponse(newStack))
 }
 
 // UpdateStack godoc

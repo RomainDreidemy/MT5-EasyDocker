@@ -13,11 +13,12 @@ export interface IForm<T> {
 const useForm = <T>(initialForm: T, formStructure: EditorForm[]): IForm<T> => {
   const [form, setForm] = useState<T>(initialForm)
 
-  const convertByType = (event: TOnChange): number | string | boolean => {
-    const { type, value, checked }: HTMLInputElement = event.target
+  const convertByType = (event: TOnChange): number | string | boolean | File | null => {
+    const { type, value, checked, files }: HTMLInputElement = event.target
 
     if (type === TypeList.NUMBER) return +value
     if (type === TypeList.CHECKBOX) return checked
+    if (type === TypeList.FILE && (files != null)) return files[0]
 
     return value
   }
