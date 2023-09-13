@@ -40,7 +40,7 @@ const useBoard = (board: TBoardOrNullify): {
     setSelectedDrawer(drawer)
   }
 
-  const onMovedScrollClickMouse: EventListenerCallback = async () => {
+  const onMovedDrawers: EventListenerCallback = async () => {
     EventsCanvas.drawers.forEach(onMovedDrawer)
   }
 
@@ -97,7 +97,7 @@ const useBoard = (board: TBoardOrNullify): {
     { name: EventEmitters.ON_DELETED_LINKER, action: onDeletedLinker },
     { name: EventEmitters.ON_SELECTED_DRAWER, action: onSelectedDrawer },
     { name: EventEmitters.ON_UNSELECTED_DRAWER, action: onUnselectedDrawer },
-    { name: EventEmitters.ON_MOVED_SCROLL_CLICK_MOUSE, action: onMovedScrollClickMouse },
+    { name: EventEmitters.ON_MOVED_DRAWERS, action: onMovedDrawers },
     { name: EventEmitters.ON_SELECTED_LINKER, action: onSelectedLinker },
     { name: EventEmitters.ON_UNSELECTED_LINKER, action: onUnselectedLinker }
   ]

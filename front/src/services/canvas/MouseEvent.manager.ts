@@ -34,7 +34,7 @@ const MouseEventManager: TMouseEventManager = {
     }
 
     if (this.mouseClickPosition != null) {
-      eventEmitter.emit(EventEmitters.ON_MOVED_SCROLL_CLICK_MOUSE)
+      eventEmitter.emit(EventEmitters.ON_MOVED_DRAWERS)
       this.mouseClickPosition = undefined
     }
 
