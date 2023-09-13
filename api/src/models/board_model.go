@@ -3,7 +3,7 @@ package models
 import "github.com/google/uuid"
 
 type Board struct {
-	Services                  []BoardItem                        `json:"services"`
+	Services                  []ServiceResponseItem              `json:"services"`
 	Networks                  []BoardItem                        `json:"networks"`
 	Volumes                   []BoardItem                        `json:"volumes"`
 	ServiceNetworkLinks       []ServiceNetworkLinkResponse       `json:"serviceNetworkLinks"`

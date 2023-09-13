@@ -16,7 +16,7 @@ definitions:
         type: array
       services:
         items:
-          $ref: '#/definitions/models.BoardItem'
+          $ref: '#/definitions/models.ServiceResponseItem'
         type: array
       volumes:
         items:

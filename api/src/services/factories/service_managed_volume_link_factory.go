@@ -14,7 +14,7 @@ func BuildServiceManagedVolumeLinkResponse(link models.ServiceManagedVolumeLink)
 }
 
 func BuildServiceManagedVolumeLinkResponses(links []models.ServiceManagedVolumeLink) []models.ServiceManagedVolumeLinkResponse {
-	var linkResponses []models.ServiceManagedVolumeLinkResponse
+	linkResponses := make([]models.ServiceManagedVolumeLinkResponse, 0)
 
 	for _, link := range links {
 		linkResponses = append(linkResponses, BuildServiceManagedVolumeLinkResponse(link))
