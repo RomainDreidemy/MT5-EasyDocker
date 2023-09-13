@@ -1,41 +1,56 @@
-import { type TMouseEventManager } from '../../types/canvas/MouseEvent.manager'
 import { Events } from '../../enums/events'
-import { type IPosition } from '../../interfaces/Position.interface'
 import BaseManager from './Base.manager'
 import LinkerManager from './Linker.manager'
 import { DrawerManager } from './Drawer.manager'
-import { type TConnector, type TConnectorOrNullify } from '../../types/Connector'
-import { type TDrawer, type TDrawerOrNullify } from '../../types/Drawer'
 import eventEmitter from '../apps/Event.emitter'
 import { EventEmitters } from '../../enums/eventEmitters'
 import { type TWheelEventManager } from '../../types/canvas/WheelEvent.manager'
+import { type TDrawer } from '../../types/Drawer'
+import { type IPosition } from '../../interfaces/Position.interface'
 
 const WheelEventManager: TWheelEventManager = {
   ...BaseManager,
   ...LinkerManager,
   ...DrawerManager,
 
+  isInteracting: false,
+  interactionDebounce: 500,
+
   wheelStartup (): void {
-    this.canvas!.addEventListener(Events.WHEEL, (event) => {
-      console.log(event)
-      // x += event.deltaX;
-      // y += event.deltaY;
+    this.canvas!.addEventListener(Events.WHEEL, (event: WheelEvent) => {
+      if (!this.isInteracting) this.isInteracting = true
 
-      this.drawers.forEach((drawer: TDrawer) => {
-        const drawerPosition: IPosition = {
-          x: drawer.factory!.positionX + event.deltaX,
-          y: drawer.factory!.positionY + event.deltaY
-        }
-
-        drawer.factory?.updatePosition(drawerPosition)
-      })
-      eventEmitter.emit(EventEmitters.ON_MOVED_DRAWERS)
-
-      // this.mouseClickPosition = position
-      this.updateScreen()
+      this.onInteraction(event)
+      this.handleInteraction()
     })
-  }
+  },
 
+  handleInteraction (): void {
+    if (this.interactionTimeout !== null) {
+      clearTimeout(this.interactionTimeout)
+    }
+
+    this.interactionTimeout = setTimeout(this.finishedInteraction, this.interactionDebounce)
+  },
+
+  finishedInteraction (): void {
+    this.isInteracting = false
+    this.interactionTimeout = undefined
+
+    eventEmitter.emit(EventEmitters.ON_MOVED_DRAWERS)
+  },
+
+  onInteraction (event: WheelEvent) {
+    this.drawers.forEach((drawer: TDrawer) => {
+      const drawerPosition: IPosition = {
+        x: drawer.factory!.positionX + event.deltaX,
+        y: drawer.factory!.positionY + event.deltaY
+      }
+
+      drawer.factory?.updatePosition(drawerPosition)
+    })
+    this.updateScreen()
+  }
 }
 
 export default WheelEventManager
