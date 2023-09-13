@@ -129,15 +129,7 @@ const MouseEventManager: TMouseEventManager = {
       x: position.x - this.mouseClickPosition!.x,
       y: position.y - this.mouseClickPosition!.y
     }
-
-    this.drawers.forEach((drawer: TDrawer) => {
-      const drawerPosition: IPosition = {
-        x: drawer.factory!.positionX + delta.x,
-        y: drawer.factory!.positionY + delta.y
-      }
-
-      drawer.factory?.updatePosition(drawerPosition)
-    })
+    this.moveDrawersByPosition(delta)
 
     this.mouseClickPosition = position
     this.updateScreen()

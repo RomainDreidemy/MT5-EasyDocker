@@ -4,8 +4,7 @@ import LinkerManager from './Linker.manager'
 import { DrawerManager } from './Drawer.manager'
 import eventEmitter from '../apps/Event.emitter'
 import { EventEmitters } from '../../enums/eventEmitters'
-import { type TWheelEventManager } from '../../types/canvas/WheelEvent.manager'
-import { type TDrawer } from '../../types/Drawer'
+import { InteractionType, type TWheelEventManager } from '../../types/canvas/WheelEvent.manager'
 import { type IPosition } from '../../interfaces/Position.interface'
 
 const WheelEventManager: TWheelEventManager = {
@@ -14,15 +13,32 @@ const WheelEventManager: TWheelEventManager = {
   ...DrawerManager,
 
   isInteracting: false,
-  interactionDebounce: 500,
+  interactionDebounce: 250,
+  moveThreshold: 5,
 
   wheelStartup (): void {
-    this.canvas!.addEventListener(Events.WHEEL, (event: WheelEvent) => {
-      if (!this.isInteracting) this.isInteracting = true
-
-      this.onInteraction(event)
-      this.handleInteraction()
+    this.canvas!.addEventListener(Events.WHEEL, (event: WheelEvent): void => {
+      this.onWheel(event)
     }, { passive: false })
+  },
+
+  onWheel (event: WheelEvent) {
+    if (!this.isInteracting) this.isInteracting = true
+
+    if (!this.interactionType) {
+      const isMoving = Math.abs(event.deltaY) < this.moveThreshold
+
+      if (isMoving) {
+        this.interactionType = InteractionType.MOVE
+      } else {
+        this.interactionType = InteractionType.ZOOM
+      }
+    }
+
+    this.onInteraction(event)
+
+    this.handleInteraction()
+    event.preventDefault()
   },
 
   handleInteraction (): void {
@@ -30,37 +46,38 @@ const WheelEventManager: TWheelEventManager = {
       clearTimeout(this.interactionTimeout)
     }
 
-    this.interactionTimeout = setTimeout(this.finishedInteraction, this.interactionDebounce)
+    this.interactionTimeout = setTimeout(() => {
+      this.finishedInteraction()
+    }, this.interactionDebounce)
   },
 
   finishedInteraction (): void {
     this.isInteracting = false
     this.interactionTimeout = undefined
+    this.interactionType = undefined
 
     eventEmitter.emit(EventEmitters.ON_MOVED_DRAWERS)
   },
 
   onInteraction (event: WheelEvent) {
-    event.preventDefault()
+    if (!this.interactionType) return
 
-    // if (Math.abs(event.deltaY) < 25) {
-    // } else {
-    // }
-    this.onZoom(event)
-    // this.onMove(event)
+    switch (this.interactionType) {
+      case InteractionType.MOVE:
+        this.onMove(event)
+        break
+      case InteractionType.ZOOM:
+        this.onZoom(event)
+        break
+    }
 
     this.updateScreen()
   },
 
   onMove (event: WheelEvent) {
-    this.drawers.forEach((drawer: TDrawer) => {
-      const drawerPosition: IPosition = {
-        x: drawer.factory!.positionX + event.deltaX,
-        y: drawer.factory!.positionY + event.deltaY
-      }
+    const delta: IPosition = { x: event.deltaX, y: event.deltaY }
 
-      drawer.factory?.updatePosition(drawerPosition)
-    })
+    this.moveDrawersByPosition(delta)
   },
 
   onZoom (event: WheelEvent) {

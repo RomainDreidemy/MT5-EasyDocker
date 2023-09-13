@@ -48,5 +48,16 @@ export const DrawerManager: TDrawerManager = {
     } else {
       this.clearOnHoverDrawer()
     }
+  },
+
+  moveDrawersByPosition (deltaPosition: IPosition): void {
+    this.drawers.forEach((drawer: TDrawer) => {
+      const drawerPosition: IPosition = {
+        x: drawer.factory!.positionX + deltaPosition.x,
+        y: drawer.factory!.positionY + deltaPosition.y
+      }
+
+      drawer.factory?.updatePosition(drawerPosition)
+    })
   }
 }
