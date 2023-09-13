@@ -8,6 +8,7 @@ import { type TConnector, type TConnectorOrNullify } from '../../types/Connector
 import { type TDrawer, type TDrawerOrNullify } from '../../types/Drawer'
 import eventEmitter from '../apps/Event.emitter'
 import { EventEmitters } from '../../enums/eventEmitters'
+import { type EventListenerCallback } from '../../interfaces/EventListener.interface'
 
 const MouseEventManager: TMouseEventManager = {
   ...BaseManager,
@@ -34,7 +35,7 @@ const MouseEventManager: TMouseEventManager = {
     }
 
     if (this.mouseClickPosition != null) {
-      eventEmitter.emit(EventEmitters.ON_MOVED_DRAWERS)
+      eventEmitter.emit<EventListenerCallback<any>>(EventEmitters.ON_MOVED_DRAWERS)
       this.mouseClickPosition = undefined
     }
 
@@ -43,9 +44,13 @@ const MouseEventManager: TMouseEventManager = {
 
     if (this.selectedDrawer != null) {
       if (this.selectedDrawer.hasMoved(this.initialDrawerPosition)) {
-        eventEmitter.emit(EventEmitters.ON_MOVED_DRAWER, this.selectedDrawer)
+        eventEmitter.emit<EventListenerCallback<{
+          drawer: TDrawer
+        }>>(EventEmitters.ON_MOVED_DRAWER, { drawer: this.selectedDrawer })
       } else {
-        eventEmitter.emit(EventEmitters.ON_SELECTED_DRAWER, this.selectedDrawer)
+        eventEmitter.emit<EventListenerCallback<{
+          drawer: TDrawer
+        }>>(EventEmitters.ON_SELECTED_DRAWER, this.selectedDrawer)
       }
     }
 

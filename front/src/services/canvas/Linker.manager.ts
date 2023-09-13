@@ -10,6 +10,7 @@ import { type TBaseLinker } from '../../types/board/drawer/linkers/Base.linker'
 import { CanvasColor } from '../../enums/CanvasColor'
 import eventEmitter from '../apps/Event.emitter'
 import { EventEmitters } from '../../enums/eventEmitters'
+import { type EventListenerCallback } from '../../interfaces/EventListener.interface'
 
 const LinkerManager: TLinkerManager = {
   ...BaseManager,
@@ -38,7 +39,7 @@ const LinkerManager: TLinkerManager = {
 
   deleteLinker (drawer: TDrawer, linkerToRemove: TLinker): void {
     const index = drawer.linkers.findIndex((linker: TBaseLinker) => linkerToRemove === linker)
-    eventEmitter.emit(EventEmitters.ON_DELETED_LINKER, drawer.linkers[index])
+    eventEmitter.emit<EventListenerCallback<TDrawer>>(EventEmitters.ON_DELETED_LINKER, drawer.linkers[index])
     drawer.linkers.splice(index, 1)
     this.clearSelectedLinker()
   },
@@ -53,7 +54,7 @@ const LinkerManager: TLinkerManager = {
     this.clearSelectedLinker()
     this.selectedLinker = linker
     this.selectedLinker.selected = true
-    eventEmitter.emit(EventEmitters.ON_SELECTED_LINKER, linker)
+    eventEmitter.emit<EventListenerCallback<TLinker>>(EventEmitters.ON_SELECTED_LINKER, linker)
   },
 
   createLinker (position: IPosition): void {
@@ -62,7 +63,7 @@ const LinkerManager: TLinkerManager = {
     if ((this.selectedConnector != null) && (connector != null) && (this.selectedDrawer != null) && (this.onHoverDrawer != null)) {
       const link = connector.drawer!.createLink(connector, this.selectedConnector)
 
-      eventEmitter.emit(EventEmitters.ON_CREATED_LINKER, link)
+      eventEmitter.emit<EventListenerCallback<TLinker>>(EventEmitters.ON_CREATED_LINKER, link)
 
       this.clearOnHoverDrawer()
       this.onSelectDrawer(false)
@@ -80,7 +81,7 @@ const LinkerManager: TLinkerManager = {
       this.selectedLinker.selected = false
     }
     this.selectedLinker = undefined
-    eventEmitter.emit(EventEmitters.ON_UNSELECTED_LINKER)
+    eventEmitter.emit<EventListenerCallback<null>>(EventEmitters.ON_UNSELECTED_LINKER)
   }
 }
 

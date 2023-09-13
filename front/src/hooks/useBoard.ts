@@ -28,9 +28,10 @@ const useBoard = (board: TBoardOrNullify): {
     await onSelectDrawer(drawer, DrawerManager.get)
   }
 
-  const onMovedDrawer: EventListenerCallback<TDrawer> = async (drawer: TDrawer): Promise<void> => {
+  const onMovedDrawer: EventListenerCallback<{ drawer: TDrawer, selectDrawer?: boolean }> = async ({ drawer, selectDrawer }): Promise<void> => {
+    console.log(drawer)
     drawer.updateEntityPosition()
-    await onSelectDrawer(drawer, DrawerManager.update, false)
+    await onSelectDrawer(drawer, DrawerManager.update, selectDrawer)
   }
 
   const onSelectDrawer = async (drawer: TDrawer, method: typeof drawerManager['update' | 'get'], selectDrawer: boolean = true): Promise<void> => {
@@ -40,8 +41,8 @@ const useBoard = (board: TBoardOrNullify): {
     if (selectDrawer) setSelectedDrawer(drawer)
   }
 
-  const onMovedDrawers: EventListenerCallback<null> = async () => {
-    EventsCanvas.drawers.forEach(onMovedDrawer)
+  const onMovedDrawers: EventListenerCallback<any> = async () => {
+    EventsCanvas.drawers.forEach((drawer: TDrawer) => { onMovedDrawer({ drawer, selectDrawer: false }) })
   }
 
   const onCreatedLinker: EventListenerCallback<TLinker> = async (linker: TLinker) => {
@@ -73,7 +74,7 @@ const useBoard = (board: TBoardOrNullify): {
     throw new Error(Errors.NOT_IMPLEMENTED)
   }
 
-  const onUnselectedDrawer: EventListenerCallback<null> = () => {
+  const onUnselectedDrawer: EventListenerCallback<any> = () => {
     setSelectedDrawer(undefined)
   }
 
@@ -81,7 +82,7 @@ const useBoard = (board: TBoardOrNullify): {
     setSelectedLinker(linker)
   }
 
-  const onUnselectedLinker: EventListenerCallback<null> = () => {
+  const onUnselectedLinker: EventListenerCallback<any> = () => {
     setSelectedLinker(undefined)
   }
 
@@ -115,7 +116,7 @@ const useBoard = (board: TBoardOrNullify): {
 
   useEffect(() => {
     events.forEach(({ name, action }) => {
-      eventEmitter.on(name, action)
+      eventEmitter.on<any>(name, action)
     })
 
     return () => {

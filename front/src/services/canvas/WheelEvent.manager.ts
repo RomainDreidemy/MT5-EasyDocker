@@ -6,6 +6,8 @@ import eventEmitter from '../apps/Event.emitter'
 import { EventEmitters } from '../../enums/eventEmitters'
 import { InteractionType, type TWheelEventManager } from '../../types/canvas/WheelEvent.manager'
 import { type IPosition } from '../../interfaces/Position.interface'
+import { type EventListenerCallback } from '../../interfaces/EventListener.interface'
+import { type TDrawer } from '../../types/Drawer'
 
 const WheelEventManager: TWheelEventManager = {
   ...BaseManager,
@@ -45,9 +47,8 @@ const WheelEventManager: TWheelEventManager = {
   finishedInteraction (): void {
     this.isInteracting = false
     this.interactionTimeout = undefined
-    this.interactionType = undefined
 
-    eventEmitter.emit(EventEmitters.ON_MOVED_DRAWERS)
+    eventEmitter.emit<EventListenerCallback<TDrawer[]>>(EventEmitters.ON_MOVED_DRAWERS)
   },
 
   onInteraction (event: WheelEvent) {

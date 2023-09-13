@@ -7,6 +7,7 @@ import eventEmitter from '../apps/Event.emitter'
 import { EventEmitters } from '../../enums/eventEmitters'
 import { type IPosition } from '../../interfaces/Position.interface'
 import { type ISize } from '../../interfaces/Window.interface'
+import { type EventListenerCallback } from '../../interfaces/EventListener.interface'
 
 const BaseManager: TBaseManager = {
   ...BaseCanvas,
@@ -35,7 +36,7 @@ const BaseManager: TBaseManager = {
     this.selectDrawer(drawer)
     this.updateScreen()
 
-    eventEmitter.emit(EventEmitters.ON_SELECTED_DRAWER, drawer)
+    eventEmitter.emit<EventListenerCallback<TDrawer>>(EventEmitters.ON_SELECTED_DRAWER, drawer)
   },
 
   emptyPosition (size: ISize, offset: number = 20): IPosition {
