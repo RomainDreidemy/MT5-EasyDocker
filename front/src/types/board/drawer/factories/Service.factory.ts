@@ -1,5 +1,4 @@
 import { type TBaseFactory } from './Base.factory'
-import { type IServiceEnvVariable } from '../../../../interfaces/ServiceVariable/EnvVariable.interface'
 import { type IServicePortVariable } from '../../../../interfaces/ServiceVariable/Port.interface'
 import { type IServiceVolume } from '../../../../interfaces/ServiceVariable/Volume.interface'
 
