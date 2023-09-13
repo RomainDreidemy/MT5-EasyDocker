@@ -15,6 +15,7 @@ const WheelEventManager: TWheelEventManager = {
   isInteracting: false,
   interactionDebounce: 250,
   moveThreshold: 5,
+  interactionType: InteractionType.MOVE,
 
   wheelStartup (): void {
     this.canvas!.addEventListener(Events.WHEEL, (event: WheelEvent): void => {
@@ -25,19 +26,9 @@ const WheelEventManager: TWheelEventManager = {
   onWheel (event: WheelEvent) {
     if (!this.isInteracting) this.isInteracting = true
 
-    if (!this.interactionType) {
-      const isMoving = Math.abs(event.deltaY) < this.moveThreshold
-
-      if (isMoving) {
-        this.interactionType = InteractionType.MOVE
-      } else {
-        this.interactionType = InteractionType.ZOOM
-      }
-    }
-
     this.onInteraction(event)
-
     this.handleInteraction()
+
     event.preventDefault()
   },
 
