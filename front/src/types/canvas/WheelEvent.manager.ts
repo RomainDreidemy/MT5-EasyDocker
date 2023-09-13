@@ -13,5 +13,7 @@ export type TWheelEventManager =
     finishedInteraction: () => void
     wheelStartup: () => void
     onInteraction: (event: WheelEvent) => void
+    onZoom: (event: WheelEvent) => void
+    onMove: (event: WheelEvent) => void
     handleInteraction: () => void
   }

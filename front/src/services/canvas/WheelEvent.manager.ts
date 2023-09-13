@@ -22,7 +22,7 @@ const WheelEventManager: TWheelEventManager = {
 
       this.onInteraction(event)
       this.handleInteraction()
-    })
+    }, { passive: false })
   },
 
   handleInteraction (): void {
@@ -41,27 +41,42 @@ const WheelEventManager: TWheelEventManager = {
   },
 
   onInteraction (event: WheelEvent) {
-    const delta = event.deltaY > 0 ? 0.9 : 1.1
+    event.preventDefault()
 
-    if (delta === 0.9) {
-      if (this.scale > 0.5) {
-        this.scale *= delta
+    // if (Math.abs(event.deltaY) < 25) {
+    // } else {
+    // }
+    this.onZoom(event)
+    // this.onMove(event)
+
+    this.updateScreen()
+  },
+
+  onMove (event: WheelEvent) {
+    this.drawers.forEach((drawer: TDrawer) => {
+      const drawerPosition: IPosition = {
+        x: drawer.factory!.positionX + event.deltaX,
+        y: drawer.factory!.positionY + event.deltaY
+      }
+
+      drawer.factory?.updatePosition(drawerPosition)
+    })
+  },
+
+  onZoom (event: WheelEvent) {
+    if (event.deltaY < 0) {
+      const newScale = Math.min(5, this.scale * 1.1) // ZOOM IN
+
+      if (newScale < 1) {
+        this.scale = newScale
       }
     } else {
-      if (this.scale < 1) {
-        this.scale *= delta
+      const newScale = Math.max(0.1, this.scale * (1 / 1.1)) // ZOOM OUT
+
+      if (newScale > 0.3) {
+        this.scale = newScale
       }
     }
-
-    // this.drawers.forEach((drawer: TDrawer) => {
-    //   const drawerPosition: IPosition = {
-    //     x: drawer.factory!.positionX + event.deltaX,
-    //     y: drawer.factory!.positionY + event.deltaY
-    //   }
-    //
-    //   drawer.factory?.updatePosition(drawerPosition)
-    // })
-    this.updateScreen()
   }
 }
 

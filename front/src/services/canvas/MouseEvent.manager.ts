@@ -58,6 +58,8 @@ const MouseEventManager: TMouseEventManager = {
   handleMouseMove (event: MouseEvent): void {
     const position: IPosition = this.boundingClientPosition(event)
 
+    this.mouseMovePosition = position
+
     if (this.isMouseScrollClick(event)) {
       this.onMouseScroll(position)
     }
