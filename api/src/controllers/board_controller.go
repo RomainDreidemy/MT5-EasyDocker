@@ -24,14 +24,14 @@ func GetBoard(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusNotFound).JSON(factories.BuildErrorResponse("error", "Board not found"))
 	}
 
-	services, _ := repositories.FindServicesByStackId(stackId)
+	services, _ := repositories.FindServicesByStackIdWithAssociation(stackId)
 	networks, _ := repositories.FindNetworksByStackId(stackId)
 	volumes, _ := repositories.FindManagedVolumesByStackId(stackId)
 	serviceNetworkLinks, _ := repositories.FindServiceNetworkLinksByStackId(stackId)
 	serviceManagedVolumeLinks, _ := repositories.FindServiceManagedVolumeLinksByStackId(stackId)
 
 	board := models.Board{
-		Services:                  factories.BuildServiceBoardResponses(services),
+		Services:                  factories.BuildServiceResponses(services),
 		Networks:                  factories.BuildNetworkBoardResponses(networks),
 		Volumes:                   factories.BuildManagedVolumeBoardResponses(volumes),
 		ServiceNetworkLinks:       factories.BuildServiceNetworkLinkResponses(serviceNetworkLinks),

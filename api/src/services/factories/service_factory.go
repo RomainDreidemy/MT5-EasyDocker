@@ -20,19 +20,10 @@ func BuildServiceResponse(service models.Service) models.ServiceResponseItem {
 	}
 }
 
-func BuildServiceResponses(services []models.Service) []models.ServiceResponse {
-	var serializedServices []models.ServiceResponse
+func BuildServiceResponses(services []models.Service) []models.ServiceResponseItem {
+	var serializedServices []models.ServiceResponseItem
 	for i := 0; i < len(services); i++ {
-		serializedServices = append(serializedServices, models.ServiceResponse{
-			ID:          services[i].ID,
-			Name:        services[i].Name,
-			DockerImage: services[i].DockerImage,
-			DockerTag:   services[i].DockerTag,
-			Entrypoint:  services[i].Entrypoint,
-			Description: services[i].Description,
-			PositionX:   services[i].PositionX,
-			PositionY:   services[i].PositionY,
-		})
+		serializedServices = append(serializedServices, BuildServiceResponse(services[i]))
 	}
 	return serializedServices
 }

@@ -1476,7 +1476,7 @@ const docTemplate = `{
                 "services": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/models.BoardItem"
+                        "$ref": "#/definitions/models.ServiceResponseItem"
                     }
                 },
                 "volumes": {

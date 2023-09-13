@@ -1,7 +1,7 @@
 import { type TStateFactory } from '../../../../types/board/drawer/factories/State.factory'
 import { CanvasColor } from '../../../../enums/CanvasColor'
 
-const height = 150
+const height = 120
 
 const StateFactory: TStateFactory = {
   path: new Path2D(),
