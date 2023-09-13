@@ -2,13 +2,11 @@ import BaseFactory from './Base.factory'
 import { type IVariableName, type TServiceFactory } from '../../../../types/board/drawer/factories/Service.factory'
 import { DrawerTypes } from '../../../../enums/DrawerTypes'
 import { type IService } from '../../../../interfaces/Service.interface'
-import { type IServiceEnvVariable } from '../../../../interfaces/ServiceVariable/EnvVariable.interface'
 import { type IServiceVolume } from '../../../../interfaces/ServiceVariable/Volume.interface'
 import { type IServicePortVariable } from '../../../../interfaces/ServiceVariable/Port.interface'
 
-const OFFSET_Y: number = 25
-const OFFSET_SECTION_Y: number = 25
-const OFFSET_ITEMS_Y: number = 30
+const OFFSET_SECTION_Y: number = 15
+const OFFSET_ITEMS_Y: number = 5
 const OFFSET_ITEM_Y: number = 20
 
 const ServiceFactory = (): TServiceFactory => {
@@ -24,19 +22,14 @@ const ServiceFactory = (): TServiceFactory => {
       const entity = this.drawer!.entity! as IService
       let height = this.initialHeight
 
-      const envVariables: IServiceEnvVariable[] = entity.envVariables ?? []
-      if (envVariables.length > 0) {
-        height += OFFSET_SECTION_Y + OFFSET_SECTION_Y * envVariables.length
-      }
-
       const volumes: IServiceVolume[] = entity.volumes ?? []
       if (volumes.length > 0) {
-        height += OFFSET_SECTION_Y + OFFSET_SECTION_Y + OFFSET_Y * volumes.length
+        height += OFFSET_ITEMS_Y + OFFSET_ITEM_Y * volumes.length
       }
 
       const ports: IServicePortVariable[] = entity.ports ?? []
       if (ports.length > 0) {
-        height += OFFSET_SECTION_Y + OFFSET_SECTION_Y + OFFSET_Y * (ports.length)
+        height += OFFSET_ITEMS_Y + OFFSET_ITEM_Y * (ports.length)
       }
 
       this.height = height
@@ -45,13 +38,6 @@ const ServiceFactory = (): TServiceFactory => {
     afterDraw (): void {
       const entity: IService = this.drawer!.entity! as IService
       let positionY: number = this.positionY + this.topMarginText + OFFSET_SECTION_Y * 3
-
-      const envVariables: IServiceEnvVariable[] = entity.envVariables ?? []
-      if (envVariables.length > 0) {
-        this.drawEnvVariables(envVariables, positionY)
-
-        positionY += OFFSET_ITEMS_Y * 2 + OFFSET_ITEM_Y * envVariables.length
-      }
 
       const volumes: IServiceVolume[] = entity.volumes ?? []
       if (volumes.length > 0) {
@@ -82,7 +68,7 @@ const ServiceFactory = (): TServiceFactory => {
 
     drawVolumes (variables: IServiceVolume[], positionY: number): void {
       const valueDecorator = (variable: IServiceVolume): string => {
-        return variable.containerPath
+        return `${variable.localPath}:${variable.containerPath}`
       }
 
       const name: IVariableName<IServiceVolume> = {
@@ -94,27 +80,13 @@ const ServiceFactory = (): TServiceFactory => {
       this.drawSection<IServiceVolume>(name, variables, positionY)
     },
 
-    drawEnvVariables (variables: IServiceEnvVariable[], positionY: number): void {
-      const valueDecorator = (variable: IServiceEnvVariable): string => {
-        return variable.key
-      }
-
-      const name: IVariableName<IServiceEnvVariable> = {
-        sectionName: 'Env variables:',
-        variableName: 'Variable →',
-        valueDecorator
-      }
-
-      this.drawSection<IServiceEnvVariable>(name, variables, positionY)
-    },
-
     drawSection<IVariable>({ sectionName, variableName, valueDecorator }: IVariableName<IVariable>, variables: IVariable[], positionY: number): void {
       const context: CanvasRenderingContext2D = this.drawer!.context!
       const marginX: number = this.positionX + this.marginText
 
       context.fillStyle = this.titleColor
       context.font = 'bold 15px Arial'
-      context.fillText(sectionName, marginX, positionY)
+      // context.fillText(sectionName, marginX, positionY)
 
       variables.forEach((variable: IVariable, index: number) => {
         const value: string = valueDecorator(variable)

@@ -27,7 +27,7 @@ const ComposeFileModalOrganism = ({ toggle, composeFileData }: ComposeFileModalO
         <Button className="btn-ghost" label="Download" icon={<AiOutlineDownload />} onClick={onDownloadClick}/>
       </div>
       <hr/>
-      <textarea className="h-96 w-full" readOnly value={composeFileData}/>
+      <textarea className="h-96 w-full p-3" readOnly value={composeFileData}/>
 
     </ModalOrganism>
   )
