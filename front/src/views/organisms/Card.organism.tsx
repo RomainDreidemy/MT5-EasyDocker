@@ -1,10 +1,9 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import Button from "../atoms/forms/Button.atom";
-import { BiTrash, BiEdit, BiCopy } from "react-icons/bi";
-import { IStack } from "../../interfaces/Stack.interface";
+import React from 'react'
+import { Link } from 'react-router-dom'
+import Button from '../atoms/forms/Button.atom'
+import { BiTrash, BiEdit, BiCopy } from 'react-icons/bi'
 
-const CardOrganism = ({ id, name, description, linkUrl, isEditable, onDelete, onEdit, onDuplicate } : {
+const CardOrganism = ({ id, name, description, linkUrl, isEditable, onDelete, onEdit, onDuplicate }: {
   id: string
   name: string
   description: string
@@ -13,7 +12,7 @@ const CardOrganism = ({ id, name, description, linkUrl, isEditable, onDelete, on
   onDelete: (id: string) => void
   onEdit: () => void
   onDuplicate: (id: string) => void
-}) => {
+}): JSX.Element => {
   return (
     <div className="card shadow-md mb-2 rounded border border-blue-100 hover:border-blue-200">
       <Link to={`${linkUrl}/${id}`} key={id}>
@@ -31,7 +30,7 @@ const CardOrganism = ({ id, name, description, linkUrl, isEditable, onDelete, on
         </div>
       )}
     </div>
-  );
+  )
 }
 
-export default CardOrganism;
+export default CardOrganism

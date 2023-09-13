@@ -11,7 +11,6 @@ const StackCardOrganism = ({ stack, id, name, description, onEdit, onDelete, onD
   onDelete: (id: string) => void
   onDuplicate: (id: string) => void
 }): JSX.Element => {
-
   return (
     <CardOrganism
       id={id}
@@ -20,7 +19,7 @@ const StackCardOrganism = ({ stack, id, name, description, onEdit, onDelete, onD
       linkUrl={'/stacks'}
       isEditable={true}
       onDelete={onDelete}
-      onEdit={() => onEdit(stack)}
+      onEdit={() => { onEdit(stack) }}
       onDuplicate={onDuplicate}
     />
   )

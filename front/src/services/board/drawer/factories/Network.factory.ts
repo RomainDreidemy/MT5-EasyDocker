@@ -6,7 +6,9 @@ const NetworkFactory = (): TNetworkFactory => {
   return {
     ...BaseFactory,
 
-    type: DrawerTypes.NETWORK
+    type: DrawerTypes.NETWORK,
+    backgroundColor: '#304570',
+    titleColor: '#ffffff'
   }
 }
 
