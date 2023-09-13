@@ -41,14 +41,26 @@ const WheelEventManager: TWheelEventManager = {
   },
 
   onInteraction (event: WheelEvent) {
-    this.drawers.forEach((drawer: TDrawer) => {
-      const drawerPosition: IPosition = {
-        x: drawer.factory!.positionX + event.deltaX,
-        y: drawer.factory!.positionY + event.deltaY
-      }
+    const delta = event.deltaY > 0 ? 0.9 : 1.1
 
-      drawer.factory?.updatePosition(drawerPosition)
-    })
+    if (delta === 0.9) {
+      if (this.scale > 0.5) {
+        this.scale *= delta
+      }
+    } else {
+      if (this.scale < 1) {
+        this.scale *= delta
+      }
+    }
+
+    // this.drawers.forEach((drawer: TDrawer) => {
+    //   const drawerPosition: IPosition = {
+    //     x: drawer.factory!.positionX + event.deltaX,
+    //     y: drawer.factory!.positionY + event.deltaY
+    //   }
+    //
+    //   drawer.factory?.updatePosition(drawerPosition)
+    // })
     this.updateScreen()
   }
 }

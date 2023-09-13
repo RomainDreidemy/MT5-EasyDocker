@@ -118,12 +118,6 @@ const MouseEventManager: TMouseEventManager = {
     return drawer.connectors.find((connector: TConnector) => connector.isSelected(position))
   },
 
-  boundingClientPosition (event: MouseEvent): IPosition {
-    const rect: DOMRect = this.context!.canvas.getBoundingClientRect()
-
-    return { x: event.clientX - rect.left, y: event.clientY - rect.top }
-  },
-
   isMouseScrollClick (event: MouseEvent): boolean {
     return event.buttons === 4
   },

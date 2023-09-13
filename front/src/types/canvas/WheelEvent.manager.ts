@@ -7,7 +7,7 @@ export type TWheelEventManager =
   TDrawerManager &
   TLinkerManager &
   {
-    interactionDebounce: 500
+    interactionDebounce: number
     isInteracting: boolean
     interactionTimeout?: ReturnType<typeof setTimeout>
     finishedInteraction: () => void
