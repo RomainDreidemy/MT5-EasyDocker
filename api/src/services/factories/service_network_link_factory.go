@@ -13,7 +13,7 @@ func BuildServiceNetworkLinkResponse(link models.ServiceNetworkLink) models.Serv
 }
 
 func BuildServiceNetworkLinkResponses(links []models.ServiceNetworkLink) []models.ServiceNetworkLinkResponse {
-	var linkResponses []models.ServiceNetworkLinkResponse
+	linkResponses := make([]models.ServiceNetworkLinkResponse, 0)
 
 	for _, link := range links {
 		linkResponses = append(linkResponses, BuildServiceNetworkLinkResponse(link))

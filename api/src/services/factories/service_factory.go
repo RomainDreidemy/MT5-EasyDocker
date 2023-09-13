@@ -21,7 +21,7 @@ func BuildServiceResponse(service models.Service) models.ServiceResponseItem {
 }
 
 func BuildServiceResponses(services []models.Service) []models.ServiceResponseItem {
-	var serializedServices []models.ServiceResponseItem
+	serializedServices := make([]models.ServiceResponseItem, 0)
 	for i := 0; i < len(services); i++ {
 		serializedServices = append(serializedServices, BuildServiceResponse(services[i]))
 	}
