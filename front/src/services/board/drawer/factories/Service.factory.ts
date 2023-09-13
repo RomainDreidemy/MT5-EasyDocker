@@ -86,7 +86,6 @@ const ServiceFactory = (): TServiceFactory => {
 
       context.fillStyle = this.titleColor
       context.font = 'bold 15px Arial'
-      // context.fillText(sectionName, marginX, positionY)
 
       variables.forEach((variable: IVariable, index: number) => {
         const value: string = valueDecorator(variable)
