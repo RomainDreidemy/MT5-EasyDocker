@@ -26,17 +26,17 @@ const ServiceFactory = (): TServiceFactory => {
 
       const envVariables: IServiceEnvVariable[] = entity.envVariables ?? []
       if (envVariables.length > 0) {
-        height += OFFSET_SECTION_Y + OFFSET_SECTION_Y * envVariables.length
+        height += OFFSET_SECTION_Y + OFFSET_Y * envVariables.length
       }
 
       const volumes: IServiceVolume[] = entity.volumes ?? []
       if (volumes.length > 0) {
-        height += OFFSET_SECTION_Y + OFFSET_SECTION_Y + OFFSET_Y * volumes.length
+        height += OFFSET_SECTION_Y * 2 + OFFSET_Y * volumes.length
       }
 
       const ports: IServicePortVariable[] = entity.ports ?? []
       if (ports.length > 0) {
-        height += OFFSET_SECTION_Y + OFFSET_SECTION_Y + OFFSET_Y * (ports.length)
+        height += OFFSET_SECTION_Y * 2 + OFFSET_Y * (ports.length)
       }
 
       this.height = height
