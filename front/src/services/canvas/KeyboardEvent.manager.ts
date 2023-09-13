@@ -4,6 +4,8 @@ import BaseManager from './Base.manager'
 import LinkerManager from './Linker.manager'
 import { type TKeyboardEventManager } from '../../types/canvas/KeyboardEvent.manager'
 
+const deleteKeys: Keyboard[] = [Keyboard.BACKSPACE, Keyboard.DELETE]
+
 const MouseEventManager: TKeyboardEventManager = {
   ...BaseManager,
   ...LinkerManager,
@@ -13,7 +15,7 @@ const MouseEventManager: TKeyboardEventManager = {
   },
 
   handleKeyDown (event: KeyboardEvent): void {
-    if (event.code === Keyboard.DELETE && (this.selectedLinker != null)) {
+    if (deleteKeys.includes(event.code as Keyboard) && (this.selectedLinker != null)) {
       this.deleteLinker(this.selectedLinker.drawer!, this.selectedLinker)
       this.updateScreen()
     }

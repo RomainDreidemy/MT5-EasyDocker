@@ -1,3 +1,4 @@
 export enum Keyboard {
-  DELETE = 'Delete'
+  DELETE = 'Delete',
+  BACKSPACE = 'Backspace',
 }

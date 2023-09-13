@@ -58,19 +58,19 @@ const useBoard = (board: TBoardOrNullify): {
       return await BoardEntity.serviceNetworkLink(linkBody)
     } else if (UtilsDrawer.isServiceVolumeLink(linker)) {
       return await BoardEntity.serviceVolumeLink(linkBody)
+    } else {
+      throw new Error(Errors.NOT_IMPLEMENTED)
     }
-
-    throw new Error(Errors.NOT_IMPLEMENTED)
   }
 
-  const onDeletedLinker: EventListenerCallback<TLinker> = async (linker: TLinker) => {
+  const onDeletedLinker: EventListenerCallback<TLinker> = async (linker: TLinker): Promise<void> => {
     if (UtilsDrawer.isServiceNetworkLink(linker)) {
       await BoardEntity.deleteServiceNetworkLink(linker.entity!.id)
     } else if (UtilsDrawer.isServiceVolumeLink(linker)) {
       await BoardEntity.deleteServiceVolumeLink(linker.entity!.id)
+    } else {
+      throw new Error(Errors.NOT_IMPLEMENTED)
     }
-
-    throw new Error(Errors.NOT_IMPLEMENTED)
   }
 
   const onUnselectedDrawer: EventListenerCallback<any> = () => {
