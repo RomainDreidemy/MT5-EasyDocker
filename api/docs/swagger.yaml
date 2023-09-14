@@ -137,6 +137,8 @@ definitions:
         type: string
       entrypoint:
         type: string
+      envFile:
+        type: string
       name:
         type: string
       positionX:
@@ -302,6 +304,8 @@ definitions:
         type: string
       entrypoint:
         type: string
+      envFile:
+        type: string
       id:
         type: string
       name:
@@ -322,6 +326,8 @@ definitions:
       dockerTag:
         type: string
       entrypoint:
+        type: string
+      envFile:
         type: string
       envVariables:
         items:
@@ -359,6 +365,8 @@ definitions:
       dockerfile:
         type: string
       entrypoint:
+        type: string
+      envFile:
         type: string
       name:
         type: string

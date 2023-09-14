@@ -107,6 +107,23 @@ func TestDockerComposeServicesBuilder(t *testing.T) {
 				},
 			},
 		},
+		{
+			name: "should have a env_file value if specified",
+			args: args{
+				services: []models.Service{
+					{
+						Name:    "api",
+						EnvFile: "prod.env",
+					},
+				},
+			},
+			want: map[string]models.DockerComposeService{
+				"api": {
+					ContainerName: "api",
+					EnvFile:       "prod.env",
+				},
+			},
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
