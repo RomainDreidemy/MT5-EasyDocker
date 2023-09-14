@@ -6,7 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="93a38079-b24e-4c0d-a7db-694c7ba74bab" name="Changes" comment="feat(entity): adding loading">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/services/docker_compose/builders/service_builder.go" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/services/docker_compose/builders/service_builder.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/models/service_model.go" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/models/service_model.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/services/factories/service_factory.go" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/services/factories/service_factory.go" afterDir="false" />
     </list>
     <list id="9d6ec37d-1338-4257-80e2-d39852ceb11b" name="DO NOT COMMIT" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -18,10 +19,20 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="main" />
+        <entry key="$PROJECT_DIR$" value="feat/I_want_to_change_the_container_name" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitRewordedCommitMessages">
+    <option name="commitMessagesMapping">
+      <RewordedCommitMessageMapping>
+        <option name="originalMessage" value="fix(board): handle container name in docker compose" />
+        <option name="rewordedMessage" value="feat(service): handle container name in docker compose" />
+      </RewordedCommitMessageMapping>
+    </option>
+    <option name="currentCommit" value="1" />
+    <option name="onto" value="cb006e748f294d0f920221d7cb84fe426555f62f" />
   </component>
   <component name="GitToolBoxStore">
     <option name="recentBranches">
@@ -32,16 +43,8 @@
               <option name="branches">
                 <list>
                   <RecentBranch>
-                    <option name="branchName" value="feat/I_want_to_see_the_volumes_in_the_yaml_file" />
-                    <option name="lastUsedInstant" value="1689330749" />
-                  </RecentBranch>
-                  <RecentBranch>
-                    <option name="branchName" value="feat/I_want_to_delete_a_mounted_volume" />
-                    <option name="lastUsedInstant" value="1689328512" />
-                  </RecentBranch>
-                  <RecentBranch>
-                    <option name="branchName" value="feat/I_want_to_create_a_manageed_volume" />
-                    <option name="lastUsedInstant" value="1689328511" />
+                    <option name="branchName" value="feat/I_want_to_set_a_env_file_path" />
+                    <option name="lastUsedInstant" value="1694689322" />
                   </RecentBranch>
                 </list>
               </option>
@@ -71,7 +74,7 @@
     "RunOnceActivity.go.migrated.go.modules.settings": "true",
     "RunOnceActivity.go.modules.go.list.on.any.changes.was.set": "true",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "feat/create__from__file",
+    "git-widget-placeholder": "feat/I__want__to__set__a__env__file__path",
     "go.import.settings.migrated": "true",
     "go.sdk.automatically.set": "true",
     "last_opened_file_path": "/Users/romain.dreidemy",
