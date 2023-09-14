@@ -1653,6 +1653,9 @@
                 "entrypoint": {
                     "type": "string"
                 },
+                "envFile": {
+                    "type": "string"
+                },
                 "name": {
                     "type": "string"
                 },
@@ -1892,6 +1895,9 @@
                 "entrypoint": {
                     "type": "string"
                 },
+                "envFile": {
+                    "type": "string"
+                },
                 "id": {
                     "type": "string"
                 },
@@ -1922,6 +1928,9 @@
                     "type": "string"
                 },
                 "entrypoint": {
+                    "type": "string"
+                },
+                "envFile": {
                     "type": "string"
                 },
                 "envVariables": {
@@ -1978,6 +1987,9 @@
                     "type": "string"
                 },
                 "entrypoint": {
+                    "type": "string"
+                },
+                "envFile": {
                     "type": "string"
                 },
                 "name": {

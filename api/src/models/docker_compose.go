@@ -12,6 +12,7 @@ type DockerComposeService struct {
 	Build         DockerComposeServiceBuild `yaml:"build,omitempty"`
 	Image         string                    `yaml:"image,omitempty"`
 	Ports         []string                  `yaml:"ports,omitempty"`
+	EnvFile       string                    `yaml:"env_file,omitempty"`
 	Environment   map[string]string         `yaml:"environment,omitempty"`
 	Volumes       []string                  `yaml:"volumes,omitempty"`
 	Networks      []string                  `yaml:"networks,omitempty"`
