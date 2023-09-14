@@ -1,3 +1,3 @@
 export enum CursorTypes {
-  GRAB = 'cursor-grab'
+  GRAB = 'canvas-cursor-grab'
 }

@@ -13,6 +13,6 @@ export interface TBaseCanvas {
   updateContext: () => void
   setCanvasDimensions: (size: ISize) => void
   sizeCanvas: () => void
-  gradCursor: (add?: boolean) => void
+  gradCursor: (activate?: boolean) => void
   boundingClientPosition: (event: MouseEvent | WheelEvent) => IPosition
 }

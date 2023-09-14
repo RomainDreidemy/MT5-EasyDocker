@@ -47,6 +47,7 @@ const WheelEventManager: TWheelEventManager = {
   finishedInteraction (): void {
     this.isInteracting = false
     this.interactionTimeout = undefined
+    this.gradCursor(false)
 
     eventEmitter.emit<EventListenerCallback<TDrawer[]>>(EventEmitters.ON_MOVED_DRAWERS)
   },
@@ -67,6 +68,7 @@ const WheelEventManager: TWheelEventManager = {
   },
 
   onMove (event: WheelEvent) {
+    this.gradCursor(true)
     const delta: IPosition = { x: event.deltaX, y: event.deltaY }
 
     this.moveDrawersByPosition(delta)

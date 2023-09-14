@@ -54,7 +54,7 @@ const MouseEventManager: TMouseEventManager = {
       }
     }
 
-    this.gradCursor()
+    this.gradCursor(false)
     this.isMoving = false
     this.selectedConnector = undefined
     this.initialDrawerPosition = undefined
