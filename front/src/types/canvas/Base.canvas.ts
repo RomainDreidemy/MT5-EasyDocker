@@ -9,7 +9,6 @@ export interface TBaseCanvas {
   create: (canvas: HTMLCanvasElement) => void
   update: () => void
   clearArea: () => void
-  scaleCanvas: () => void
   updateContext: () => void
   setCanvasDimensions: (size: ISize) => void
   sizeCanvas: () => void

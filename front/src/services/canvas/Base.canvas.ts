@@ -16,10 +16,6 @@ const BaseCanvas: TBaseCanvas = {
     this.sizeCanvas()
   },
 
-  scaleCanvas (): void {
-
-  },
-
   sizeCanvas (): void {
     const dimensions: ISize = { width: this.context!.canvas.offsetWidth, height: this.context!.canvas.offsetHeight }
 
