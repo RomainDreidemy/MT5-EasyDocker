@@ -91,6 +91,22 @@ func TestDockerComposeServicesBuilder(t *testing.T) {
 				},
 			},
 		},
+		{
+			name: "should use the container name if specified",
+			args: args{
+				services: []models.Service{
+					{
+						Name:          "api",
+						ContainerName: "Api container name",
+					},
+				},
+			},
+			want: map[string]models.DockerComposeService{
+				"api": {
+					ContainerName: "Api container name",
+				},
+			},
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

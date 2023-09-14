@@ -1638,6 +1638,9 @@
                 "positionY"
             ],
             "properties": {
+                "containerName": {
+                    "type": "string"
+                },
                 "description": {
                     "type": "string"
                 },
@@ -1874,6 +1877,9 @@
         "models.ServiceResponse": {
             "type": "object",
             "properties": {
+                "containerName": {
+                    "type": "string"
+                },
                 "description": {
                     "type": "string"
                 },
@@ -1903,6 +1909,9 @@
         "models.ServiceResponseItem": {
             "type": "object",
             "properties": {
+                "containerName": {
+                    "type": "string"
+                },
                 "description": {
                     "type": "string"
                 },
@@ -1950,6 +1959,9 @@
         "models.ServiceUpdateInput": {
             "type": "object",
             "properties": {
+                "containerName": {
+                    "type": "string"
+                },
                 "context": {
                     "type": "string"
                 },

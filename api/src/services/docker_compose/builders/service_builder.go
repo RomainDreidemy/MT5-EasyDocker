@@ -16,8 +16,12 @@ func DockerComposeServicesBuilder(services []models.Service) map[string]models.D
 }
 
 func DockerComposeServiceBuilder(service models.Service) models.DockerComposeService {
+	if service.ContainerName == "" {
+		service.ContainerName = service.Name
+	}
+
 	dockerComposeService := models.DockerComposeService{
-		ContainerName: service.Name,
+		ContainerName: service.ContainerName,
 		Entrypoint:    service.Entrypoint,
 	}
 
