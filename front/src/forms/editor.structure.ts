@@ -103,6 +103,14 @@ export const DRAWER_TYPE_STRUCTURES: EditorStructure = {
       maxLength: 15
     },
     {
+      label: 'Container name',
+      key: 'containerName',
+      type: TypeList.TEXT,
+      component: Input,
+      validator: string().nullable(),
+      maxLength: 25
+    },
+    {
       label: 'Docker Image',
       key: 'dockerImage',
       type: TypeList.TEXT,
