@@ -125,6 +125,13 @@ export const DRAWER_TYPE_STRUCTURES: EditorStructure = {
       validator: string().nullable()
     },
     {
+      label: 'Env file',
+      key: 'envFile',
+      type: TypeList.TEXT,
+      component: Input,
+      validator: string().nullable()
+    },
+    {
       label: 'Entrypoint',
       key: 'entrypoint',
       type: TypeList.TEXT,
