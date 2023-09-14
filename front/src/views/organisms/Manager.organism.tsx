@@ -32,7 +32,7 @@ const ManagerOrganism = ({ stackId }: { stackId: string }): JSX.Element => {
       setComposeFileData(yaml)
       openModal()
     } catch (e: any) {
-      console.log(e)
+      console.error(e)
     }
   }
 

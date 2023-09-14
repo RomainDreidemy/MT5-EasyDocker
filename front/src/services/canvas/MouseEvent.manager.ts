@@ -8,6 +8,7 @@ import { type TConnector, type TConnectorOrNullify } from '../../types/Connector
 import { type TDrawer, type TDrawerOrNullify } from '../../types/Drawer'
 import eventEmitter from '../apps/Event.emitter'
 import { EventEmitters } from '../../enums/eventEmitters'
+import { type EventListenerCallback } from '../../interfaces/EventListener.interface'
 
 const MouseEventManager: TMouseEventManager = {
   ...BaseManager,
@@ -34,7 +35,7 @@ const MouseEventManager: TMouseEventManager = {
     }
 
     if (this.mouseClickPosition != null) {
-      eventEmitter.emit(EventEmitters.ON_MOVED_SCROLL_CLICK_MOUSE)
+      eventEmitter.emit<EventListenerCallback<any>>(EventEmitters.ON_MOVED_DRAWERS)
       this.mouseClickPosition = undefined
     }
 
@@ -43,9 +44,13 @@ const MouseEventManager: TMouseEventManager = {
 
     if (this.selectedDrawer != null) {
       if (this.selectedDrawer.hasMoved(this.initialDrawerPosition)) {
-        eventEmitter.emit(EventEmitters.ON_MOVED_DRAWER, this.selectedDrawer)
+        eventEmitter.emit<EventListenerCallback<{
+          drawer: TDrawer
+        }>>(EventEmitters.ON_MOVED_DRAWER, { drawer: this.selectedDrawer })
       } else {
-        eventEmitter.emit(EventEmitters.ON_SELECTED_DRAWER, this.selectedDrawer)
+        eventEmitter.emit<EventListenerCallback<{
+          drawer: TDrawer
+        }>>(EventEmitters.ON_SELECTED_DRAWER, this.selectedDrawer)
       }
     }
 
@@ -57,6 +62,8 @@ const MouseEventManager: TMouseEventManager = {
 
   handleMouseMove (event: MouseEvent): void {
     const position: IPosition = this.boundingClientPosition(event)
+
+    this.mouseMovePosition = position
 
     if (this.isMouseScrollClick(event)) {
       this.onMouseScroll(position)
@@ -118,12 +125,6 @@ const MouseEventManager: TMouseEventManager = {
     return drawer.connectors.find((connector: TConnector) => connector.isSelected(position))
   },
 
-  boundingClientPosition (event: MouseEvent): IPosition {
-    const rect: DOMRect = this.context!.canvas.getBoundingClientRect()
-
-    return { x: event.clientX - rect.left, y: event.clientY - rect.top }
-  },
-
   isMouseScrollClick (event: MouseEvent): boolean {
     return event.buttons === 4
   },
@@ -133,15 +134,7 @@ const MouseEventManager: TMouseEventManager = {
       x: position.x - this.mouseClickPosition!.x,
       y: position.y - this.mouseClickPosition!.y
     }
-
-    this.drawers.forEach((drawer: TDrawer) => {
-      const drawerPosition: IPosition = {
-        x: drawer.factory!.positionX + delta.x,
-        y: drawer.factory!.positionY + delta.y
-      }
-
-      drawer.factory?.updatePosition(drawerPosition)
-    })
+    this.moveDrawersByPosition(delta)
 
     this.mouseClickPosition = position
     this.updateScreen()

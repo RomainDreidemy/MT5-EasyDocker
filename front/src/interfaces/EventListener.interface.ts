@@ -1,3 +1,3 @@
-export type EventListenerCallback = (data?: any) => void
+export type EventListenerCallback<T> = (arg: T) => void
 
-export type EventListeners = Record<string, EventListenerCallback[]>
+export type EventListeners<T> = Record<string, Array<EventListenerCallback<T>>>

@@ -1,6 +1,6 @@
 import { type EditorForm, TypeList } from '../forms/editor.structure'
 import Input from '../views/atoms/forms/Input.atom'
-import { object, string } from 'yup'
+import { string } from 'yup'
 
 export interface IStack {
   id: number

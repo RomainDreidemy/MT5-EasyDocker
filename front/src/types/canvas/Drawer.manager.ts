@@ -11,4 +11,5 @@ export type TDrawerManager =
     clearSelectedDrawer: () => void
     clearOnHoverDrawer: () => void
     updateHoverDrawer: (position: IPosition) => void
+    moveDrawersByPosition: (deltaPosition: IPosition) => void
   }

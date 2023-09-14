@@ -8,6 +8,7 @@ import LinkerManager from './Linker.manager'
 import { ConnectorManager } from './Connector.manager'
 import KeyboardEventManager from './KeyboardEvent.manager'
 import ScreenEventManager from './ScreenEvent.manager'
+import WheelEventManager from './WheelEvent.manager'
 
 const EventsCanvas: TEventsCanvas = {
   ...StateCanvas,
@@ -16,6 +17,7 @@ const EventsCanvas: TEventsCanvas = {
   ...LinkerManager,
   ...ConnectorManager,
   ...MouseEventManager,
+  ...WheelEventManager,
   ...ScreenEventManager,
   ...KeyboardEventManager,
 
@@ -23,6 +25,7 @@ const EventsCanvas: TEventsCanvas = {
     this.draw()
     this.screenStartup()
     this.mouseStartup()
+    this.wheelStartup()
     this.keyboardStartup()
   },
 

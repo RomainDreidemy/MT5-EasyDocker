@@ -4,6 +4,7 @@ import StateCanvas from './State.canvas'
 import { type TDrawer, type TDrawerOrNullify } from '../../types/Drawer'
 import eventEmitter from '../apps/Event.emitter'
 import { EventEmitters } from '../../enums/eventEmitters'
+import { type EventListenerCallback } from '../../interfaces/EventListener.interface'
 
 export const DrawerManager: TDrawerManager = {
   ...StateCanvas,
@@ -19,7 +20,7 @@ export const DrawerManager: TDrawerManager = {
     }
     this.selectedDrawer = undefined
 
-    eventEmitter.emit(EventEmitters.ON_UNSELECTED_DRAWER)
+    eventEmitter.emit<EventListenerCallback<any>>(EventEmitters.ON_UNSELECTED_DRAWER)
   },
 
   clearOnHoverDrawer (): void {
@@ -48,5 +49,16 @@ export const DrawerManager: TDrawerManager = {
     } else {
       this.clearOnHoverDrawer()
     }
+  },
+
+  moveDrawersByPosition (deltaPosition: IPosition): void {
+    this.drawers.forEach((drawer: TDrawer) => {
+      const drawerPosition: IPosition = {
+        x: drawer.factory!.positionX + deltaPosition.x,
+        y: drawer.factory!.positionY + deltaPosition.y
+      }
+
+      drawer.factory?.updatePosition(drawerPosition)
+    })
   }
 }
