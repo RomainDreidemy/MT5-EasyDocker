@@ -56,7 +56,7 @@ const ServiceFactory = (): TServiceFactory => {
       const name: IVariableName<IServicePortVariable> = {
         outsideName: (variable) => variable.public,
         insideName: (variable) => variable.private,
-        color: '#c96717'
+        color: '#705e9f'
       }
 
       this.drawSection<IServicePortVariable>(name, variables, positionY)
@@ -66,7 +66,7 @@ const ServiceFactory = (): TServiceFactory => {
       const name: IVariableName<IServiceVolume> = {
         outsideName: (variable) => variable.localPath,
         insideName: (variable) => variable.containerPath,
-        color: '#8e17c9'
+        color: '#5e7a9f'
       }
 
       this.drawSection<IServiceVolume>(name, variables, positionY)
@@ -86,7 +86,9 @@ const ServiceFactory = (): TServiceFactory => {
         context.textAlign = 'left'
 
         context.beginPath()
-        context.rect(marginX - 20, newPositionY - 12, 40, 15)
+        context.roundRect(marginX - 20, newPositionY - 12, 40, 15, [5])
+        // context.roundRect(this.positionX, this.positionY, this.width, this.height, [10])
+
         context.fillStyle = color
         context.fill()
         context.closePath()
