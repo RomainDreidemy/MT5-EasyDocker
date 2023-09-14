@@ -10,8 +10,11 @@ export const DrawerManager: TDrawerManager = {
   ...StateCanvas,
 
   findDrawer (position: IPosition): TDrawerOrNullify {
-    return this.drawers.find(drawer =>
-      drawer.factory!.isSelected(position))
+    return this.drawers
+      .slice()
+      .reverse()
+      .find(drawer =>
+        drawer.factory!.isSelected(position))
   },
 
   clearSelectedDrawer (): void {
@@ -60,5 +63,10 @@ export const DrawerManager: TDrawerManager = {
 
       drawer.factory?.updatePosition(drawerPosition)
     })
+  },
+
+  putDrawerOnTopLayer (drawer: TDrawer): TDrawer[] {
+    const cleanedDrawers = this.drawers.filter(d => d !== drawer)
+    return [...cleanedDrawers, drawer]
   }
 }
