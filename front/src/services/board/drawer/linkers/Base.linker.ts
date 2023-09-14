@@ -35,7 +35,7 @@ const BaseLinker: TBaseLinker = {
     } else {
       this.context!.strokeStyle = CanvasColor.DEFAULT
     }
-    this.context!.lineWidth = this.width
+    this.context!.lineWidth = this.lineWidth
     this.context!.stroke(line)
 
     this.path = line
