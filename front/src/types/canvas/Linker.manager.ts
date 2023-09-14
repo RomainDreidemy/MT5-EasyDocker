@@ -13,6 +13,8 @@ export type TLinkerManager =
   TDrawerManager &
   TConnectorManager &
   {
+    lineWidth: number
+    arrowSize: number
     drawConnectorLine: (connector: TConnector, position: IPosition) => void
     deleteLinker: (drawer: TDrawer, linkerToRemove: TLinker) => void
     findLinker: (position: IPosition) => TLinker | undefined
