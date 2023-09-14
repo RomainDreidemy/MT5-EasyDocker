@@ -35,15 +35,22 @@ const BaseLinker: TBaseLinker = {
     } else {
       this.context!.strokeStyle = CanvasColor.DEFAULT
     }
-    this.context!.lineWidth = this.width
+    this.context!.lineWidth = this.lineWidth
     this.context!.stroke(line)
 
     this.path = line
 
-    const at: IPosition = this.link!.from.drawer!.factory!.position(this.offset)
-    const to: IPosition = this.link!.to.drawer!.factory!.position(this.offset)
+    const fromPosition: IPosition = {
+      x: this.link!.from.positionX,
+      y: this.link!.from.positionY
+    }
 
-    this.drawArrow(to, at)
+    const toPosition: IPosition = {
+      x: this.link!.to.positionX,
+      y: this.link!.to.positionY
+    }
+
+    this.drawArrow(fromPosition, toPosition)
   },
 
   definePosition (connector: TConnector, line: (x: number, y: number) => void): void {
@@ -72,8 +79,8 @@ const BaseLinker: TBaseLinker = {
     }
   },
 
-  drawArrow (from: IPosition, at: IPosition): void {
-    const angle: number = Math.atan2(at.y - from.y, at.x - from.x)
+  drawArrow (from: IPosition, to: IPosition): void {
+    const angle: number = Math.atan2(from.y - to.y, from.x - to.x)
 
     this.context!.beginPath()
     if (this.selected) {

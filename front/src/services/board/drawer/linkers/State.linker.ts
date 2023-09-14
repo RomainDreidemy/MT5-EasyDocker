@@ -5,7 +5,7 @@ const StateLinker: TStateLinker = {
 
   selected: false,
 
-  width: 2,
+  lineWidth: 2,
   offset: 5,
   arrowSize: 10
 }
