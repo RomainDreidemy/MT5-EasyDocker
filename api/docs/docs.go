@@ -1648,6 +1648,9 @@ const docTemplate = `{
                 "positionY"
             ],
             "properties": {
+                "containerName": {
+                    "type": "string"
+                },
                 "description": {
                     "type": "string"
                 },
@@ -1884,6 +1887,9 @@ const docTemplate = `{
         "models.ServiceResponse": {
             "type": "object",
             "properties": {
+                "containerName": {
+                    "type": "string"
+                },
                 "description": {
                     "type": "string"
                 },
@@ -1913,6 +1919,9 @@ const docTemplate = `{
         "models.ServiceResponseItem": {
             "type": "object",
             "properties": {
+                "containerName": {
+                    "type": "string"
+                },
                 "description": {
                     "type": "string"
                 },
@@ -1960,6 +1969,9 @@ const docTemplate = `{
         "models.ServiceUpdateInput": {
             "type": "object",
             "properties": {
+                "containerName": {
+                    "type": "string"
+                },
                 "context": {
                     "type": "string"
                 },

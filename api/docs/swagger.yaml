@@ -127,6 +127,8 @@ definitions:
     type: object
   models.ServiceCreateInput:
     properties:
+      containerName:
+        type: string
       description:
         type: string
       dockerImage:
@@ -290,6 +292,8 @@ definitions:
     type: object
   models.ServiceResponse:
     properties:
+      containerName:
+        type: string
       description:
         type: string
       dockerImage:
@@ -309,6 +313,8 @@ definitions:
     type: object
   models.ServiceResponseItem:
     properties:
+      containerName:
+        type: string
       description:
         type: string
       dockerImage:
@@ -340,6 +346,8 @@ definitions:
     type: object
   models.ServiceUpdateInput:
     properties:
+      containerName:
+        type: string
       context:
         type: string
       description:
