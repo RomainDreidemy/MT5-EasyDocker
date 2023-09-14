@@ -12,7 +12,17 @@ export default defineConfig(() => {
       port: 3000
     },
     test: {
-      files: 'src/**/*.test.{ts,tsx}'
+      files: 'src/**/*.test.{ts,tsx}',
+      environment: 'jsdom',
+      deps: {
+        inline: ['vitest-canvas-mock']
+      },
+      threads: false,
+      environmentOptions: {
+        jsdom: {
+          resources: 'usable'
+        }
+      }
     }
   }
 })

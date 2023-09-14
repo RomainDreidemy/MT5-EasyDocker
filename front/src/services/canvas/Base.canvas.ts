@@ -1,4 +1,4 @@
-import WindowApp from '../apps/window.app'
+import WindowApp from '../apps/Window.app'
 import { type ISize } from '../../interfaces/Window.interface'
 import { Contexts } from '../../enums/contexts'
 import { type TBaseCanvas } from '../../types/canvas/Base.canvas'
