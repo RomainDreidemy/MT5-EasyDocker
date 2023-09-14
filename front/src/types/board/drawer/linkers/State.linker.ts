@@ -13,6 +13,6 @@ export interface TStateLinker {
   selected: boolean
 
   offset: number
-  width: number
+  lineWidth: number
   arrowSize: number
 }

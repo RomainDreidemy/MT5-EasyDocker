@@ -33,6 +33,10 @@ func DockerComposeServiceBuilder(service models.Service) models.DockerComposeSer
 		dockerComposeService.Image = BuildDockerComposeServiceImage(service)
 	}
 
+	if service.EnvFile != "" {
+		dockerComposeService.EnvFile = service.EnvFile
+	}
+
 	if len(service.ServicePorts) > 0 {
 		dockerComposeService.Ports = BuildDockerComposeServicePorts(service.ServicePorts)
 	}

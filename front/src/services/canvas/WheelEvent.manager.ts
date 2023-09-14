@@ -17,6 +17,7 @@ const WheelEventManager: TWheelEventManager = {
   isInteracting: false,
   interactionDebounce: 250,
   moveThreshold: 5,
+  interactionSensibility: 2.5,
   interactionType: InteractionType.MOVE,
 
   wheelStartup (): void {
@@ -69,8 +70,11 @@ const WheelEventManager: TWheelEventManager = {
 
   onMove (event: WheelEvent) {
     this.gradCursor(true)
-    const delta: IPosition = { x: event.deltaX, y: event.deltaY }
-
+    
+    const delta: IPosition = {
+      x: event.deltaX / this.interactionSensibility,
+      y: event.deltaY / this.interactionSensibility
+    }
     this.moveDrawersByPosition(delta)
   },
 

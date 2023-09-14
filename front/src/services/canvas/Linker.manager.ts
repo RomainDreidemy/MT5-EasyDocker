@@ -17,15 +17,19 @@ const LinkerManager: TLinkerManager = {
   ...ConnectorManager,
   ...DrawerManager,
 
+  lineWidth: 2,
+  arrowSize: 10,
+
   drawConnectorLine (connector: TConnector, position: IPosition): void {
     this.updateScreen()
     this.context!.beginPath()
     this.context!.strokeStyle = CanvasColor.DEFAULT
     this.context!.moveTo(connector.positionX, connector.positionY)
     this.context!.lineTo(position.x, position.y)
+    this.context!.lineWidth = this.lineWidth
     this.context!.stroke()
 
-    const arrowSize = 10
+    const arrowSize = this.arrowSize
     const angle: number = Math.atan2(position.y - connector.positionY, position.x - connector.positionX)
 
     this.context!.beginPath()

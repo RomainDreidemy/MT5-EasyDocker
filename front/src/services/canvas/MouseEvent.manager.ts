@@ -107,6 +107,8 @@ const MouseEventManager: TMouseEventManager = {
         y: position.y - drawer.factory!.positionY
       }
 
+      this.drawers = this.putDrawerOnTopLayer(drawer)
+
       this.selectDrawer(drawer)
     } else if (this.selectedConnector == null) {
       this.clearSelectedDrawer()

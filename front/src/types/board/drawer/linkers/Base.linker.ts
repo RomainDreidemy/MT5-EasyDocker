@@ -10,6 +10,6 @@ export type TBaseLinker =
   {
     update: (entity: TLinkEntity) => void
     isSelected: (Position: IPosition) => boolean
-    drawArrow: (from: IPosition, at: IPosition) => void
+    drawArrow: (from: IPosition, to: IPosition) => void
     definePosition: (connector: TConnector, line: (x: number, y: number) => void) => void
   }

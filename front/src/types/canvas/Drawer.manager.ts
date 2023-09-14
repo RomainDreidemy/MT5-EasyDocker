@@ -1,7 +1,7 @@
 import { type IPosition } from '../../interfaces/Position.interface'
 import { type TStateCanvas } from './State.canvas'
 import { type TServiceDrawer } from '../board/drawer/Service.drawer'
-import { type TDrawerOrNullify } from '../Drawer'
+import { type TDrawer, type TDrawerOrNullify } from '../Drawer'
 
 export type TDrawerManager =
   TStateCanvas &
@@ -12,4 +12,5 @@ export type TDrawerManager =
     clearOnHoverDrawer: () => void
     updateHoverDrawer: (position: IPosition) => void
     moveDrawersByPosition: (deltaPosition: IPosition) => void
+    putDrawerOnTopLayer: (drawer: TDrawer) => TDrawer[]
   }

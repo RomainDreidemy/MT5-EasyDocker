@@ -8,6 +8,7 @@ type Service struct {
 	ContainerName string     `gorm:"type:varchar(255)"`
 	DockerImage   string     `gorm:"type:varchar(255)"`
 	DockerTag     string     `gorm:"type:varchar(255)"`
+	EnvFile       string     `gorm:"type:varchar(255)"`
 	Entrypoint    string     `gorm:"type:varchar(255)"`
 	Description   string     `gorm:"type:text"`
 	PositionX     float32    `gorm:"type:decimal(20,8);not null"`
@@ -31,6 +32,7 @@ type ServiceCreateInput struct {
 	ContainerName string  `json:"containerName"`
 	DockerImage   string  `json:"dockerImage"`
 	DockerTag     string  `json:"dockerTag"`
+	EnvFile       string  `json:"envFile"`
 	Entrypoint    string  `json:"entrypoint"`
 	Description   string  `json:"description"`
 	PositionX     float32 `json:"positionX" validate:"required"`
@@ -42,6 +44,7 @@ type ServiceUpdateInput struct {
 	ContainerName string  `json:"containerName"`
 	DockerImage   string  `json:"dockerImage"`
 	DockerTag     string  `json:"dockerTag"`
+	EnvFile       string  `json:"envFile"`
 	Context       string  `json:"context"`
 	Dockerfile    string  `json:"dockerfile"`
 	Entrypoint    string  `json:"entrypoint"`
@@ -56,6 +59,7 @@ type ServiceResponse struct {
 	ContainerName string     `json:"containerName"`
 	DockerImage   string     `json:"dockerImage"`
 	DockerTag     string     `json:"dockerTag"`
+	EnvFile       string     `json:"envFile"`
 	Entrypoint    string     `json:"entrypoint"`
 	Description   string     `json:"description"`
 	PositionX     float32    `json:"positionX"`
@@ -68,6 +72,7 @@ type ServiceResponseItem struct {
 	ContainerName string     `json:"containerName"`
 	DockerImage   string     `json:"dockerImage"`
 	DockerTag     string     `json:"dockerTag"`
+	EnvFile       string     `json:"envFile"`
 	Entrypoint    string     `json:"entrypoint"`
 	Description   string     `json:"description"`
 	PositionX     float32    `json:"positionX"`

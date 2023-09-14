@@ -1663,6 +1663,9 @@ const docTemplate = `{
                 "entrypoint": {
                     "type": "string"
                 },
+                "envFile": {
+                    "type": "string"
+                },
                 "name": {
                     "type": "string"
                 },
@@ -1902,6 +1905,9 @@ const docTemplate = `{
                 "entrypoint": {
                     "type": "string"
                 },
+                "envFile": {
+                    "type": "string"
+                },
                 "id": {
                     "type": "string"
                 },
@@ -1932,6 +1938,9 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "entrypoint": {
+                    "type": "string"
+                },
+                "envFile": {
                     "type": "string"
                 },
                 "envVariables": {
@@ -1988,6 +1997,9 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "entrypoint": {
+                    "type": "string"
+                },
+                "envFile": {
                     "type": "string"
                 },
                 "name": {

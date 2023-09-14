@@ -12,6 +12,7 @@ export type TWheelEventManager =
   TDrawerManager &
   TLinkerManager &
   {
+    interactionSensibility: number
     interactionType?: InteractionType
     interactionDebounce: number
     moveThreshold: number
