@@ -87,8 +87,6 @@ const ServiceFactory = (): TServiceFactory => {
 
         context.beginPath()
         context.roundRect(marginX - 20, newPositionY - 12, 40, 15, [5])
-        // context.roundRect(this.positionX, this.positionY, this.width, this.height, [10])
-
         context.fillStyle = color
         context.fill()
         context.closePath()
