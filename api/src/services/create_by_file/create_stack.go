@@ -46,13 +46,15 @@ func createServices(composeServices map[string]models.DockerComposeService, stac
 		image := strings.Split(composeService.Image, ":")
 
 		services = append(services, models.Service{
-			StackID:     stackId,
-			Name:        key,
-			DockerImage: image[0],
-			DockerTag:   image[1],
-			Entrypoint:  composeService.Entrypoint,
-			PositionY:   10,
-			PositionX:   float32(250*(index) + 10),
+			StackID:       stackId,
+			Name:          key,
+			ContainerName: composeService.ContainerName,
+			DockerImage:   image[0],
+			DockerTag:     image[1],
+			EnvFile:       composeService.EnvFile,
+			Entrypoint:    composeService.Entrypoint,
+			PositionY:     10,
+			PositionX:     float32(250*(index) + 10),
 		})
 
 		index += 1
