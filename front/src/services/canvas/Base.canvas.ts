@@ -49,8 +49,8 @@ const BaseCanvas: TBaseCanvas = {
     this.canvas!.height = height
   },
 
-  gradCursor (add: boolean = false): void {
-    add
+  gradCursor (activate: boolean = false): void {
+    activate
       ? this.canvas!.classList.add(CursorTypes.GRAB)
       : this.canvas!.classList.remove(CursorTypes.GRAB)
   },
