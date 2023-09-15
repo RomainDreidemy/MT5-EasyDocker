@@ -107,7 +107,7 @@ func duplicateService(service models.Service, stackId string) models.Service {
 }
 
 func duplicateServiceEnvVariables(environmentVariables []models.ServiceEnvVariable, serviceId string) {
-	envVariables := make([]models.ServiceEnvVariable, len(environmentVariables))
+	envVariables := make([]models.ServiceEnvVariable, 0)
 	for _, environmentVariable := range environmentVariables {
 		envVariables = append(envVariables, models.ServiceEnvVariable{
 			ServiceID: serviceId,
@@ -120,7 +120,7 @@ func duplicateServiceEnvVariables(environmentVariables []models.ServiceEnvVariab
 }
 
 func duplicateServicePorts(ports []models.ServicePort, serviceId string) {
-	newPorts := make([]models.ServicePort, len(ports))
+	newPorts := make([]models.ServicePort, 0)
 
 	for _, port := range ports {
 		newPorts = append(newPorts, models.ServicePort{
@@ -134,7 +134,7 @@ func duplicateServicePorts(ports []models.ServicePort, serviceId string) {
 }
 
 func duplicateServiceVolumes(volumes []models.ServiceVolume, serviceId string) {
-	newVolumes := make([]models.ServiceVolume, len(volumes))
+	newVolumes := make([]models.ServiceVolume, 0)
 
 	for _, volume := range volumes {
 		newVolumes = append(newVolumes, models.ServiceVolume{
