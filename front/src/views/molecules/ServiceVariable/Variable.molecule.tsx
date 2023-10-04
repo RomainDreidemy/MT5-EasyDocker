@@ -23,7 +23,9 @@ IVariableMolecule<IVariableCreate, IVariable>): JSX.Element {
   const defaultByType = {
     [TypeList.TEXT]: '',
     [TypeList.NUMBER]: 0,
-    [TypeList.CUSTOM]: undefined
+    [TypeList.CUSTOM]: undefined,
+    [TypeList.CHECKBOX]: undefined,
+    [TypeList.FILE]: undefined
   }
 
   const keyList = fields.map(({ key, type }) => ({ [key]: defaultByType[type] }))
