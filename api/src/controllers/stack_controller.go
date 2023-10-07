@@ -56,7 +56,7 @@ func GetStack(c *fiber.Ctx) error {
 // @Accept       json
 // @Produce      json
 // @Param request body models.StackCreateInput true "query params"
-// @Success      200  {object}  models.StackResponse
+// @Success      201  {object}  models.StackResponse
 // @Router       /stacks [post]
 func CreateStack(c *fiber.Ctx) error {
 	currentUser := c.Locals("user").(models.UserResponse)
@@ -160,7 +160,7 @@ func DeleteStack(c *fiber.Ctx) error {
 // @Accept       json
 // @Produce      json
 // @Param id path string true "Stack ID"
-// @Success      200  {object}  models.StackResponse
+// @Success      201  {object}  models.StackResponse
 // @Router       /stacks/{id}/duplicate [post]
 func DuplicateStack(c *fiber.Ctx) error {
 	id := c.Params("id")

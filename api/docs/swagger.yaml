@@ -1099,8 +1099,8 @@ paths:
       produces:
       - application/json
       responses:
-        "200":
-          description: OK
+        "201":
+          description: Created
           schema:
             $ref: '#/definitions/models.StackResponse'
       summary: Create a new stack
@@ -1181,8 +1181,8 @@ paths:
       produces:
       - application/json
       responses:
-        "200":
-          description: OK
+        "201":
+          description: Created
           schema:
             $ref: '#/definitions/models.StackResponse'
       summary: Duplicate a stack
