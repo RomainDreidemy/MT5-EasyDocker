@@ -107,8 +107,7 @@ export const DRAWER_TYPE_STRUCTURES: EditorStructure = {
       label: 'Context',
       key: 'context',
       type: TypeList.CUSTOM,
-      component: ContextFormOrganism,
-      validator: string().nullable()
+      component: ContextFormOrganism
     },
     // {
     //   label: 'Container name',
