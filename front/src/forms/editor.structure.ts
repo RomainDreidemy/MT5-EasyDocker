@@ -6,7 +6,7 @@ import TextArea from '../views/atoms/forms/TextArea.atom'
 import EnvVariablesOrganism from '../views/organisms/ServiceVariables/EnvVariables.organism'
 import PortVariablesOrganism from '../views/organisms/ServiceVariables/PortVariables.organism'
 import VolumeVariablesOrganism from '../views/organisms/ServiceVariables/VolumeVariables.organism'
-import ContextFormOrganism from '../views/organisms/ServiceForm/ContextForm.organism'
+import LocalisationFormOrganism from '../views/organisms/ServiceForm/LocalisationForm.organism'
 
 export type EditorStructure = {
   [key in DrawerTypes]: EditorForm[]
@@ -104,32 +104,18 @@ export const DRAWER_TYPE_STRUCTURES: EditorStructure = {
       maxLength: 15
     },
     {
+      label: 'Container name',
+      key: 'containerName',
+      type: TypeList.TEXT,
+      component: Input,
+      validator: string().nullable(),
+      maxLength: 25
+    },
+    {
       label: 'Context',
       key: 'context',
       type: TypeList.CUSTOM,
-      component: ContextFormOrganism
-    },
-    // {
-    //   label: 'Container name',
-    //   key: 'containerName',
-    //   type: TypeList.TEXT,
-    //   component: Input,
-    //   validator: string().nullable(),
-    //   maxLength: 25
-    // },
-    // {
-    //   label: 'Docker Image',
-    //   key: 'dockerImage',
-    //   type: TypeList.TEXT,
-    //   component: Input,
-    //   validator: string().nullable()
-    // },
-    {
-      label: 'Docker Tag',
-      key: 'dockerTag',
-      type: TypeList.TEXT,
-      component: Input,
-      validator: string().nullable()
+      component: LocalisationFormOrganism
     },
     {
       label: 'Env file',
