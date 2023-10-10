@@ -1,21 +1,13 @@
-import React, { type ChangeEvent, useEffect } from 'react'
+import React, { type ChangeEvent } from 'react'
 import Input from '../../atoms/forms/Input.atom'
 import { type IService } from '../../../interfaces/Service.interface'
 import { type TEditor } from '../../../types/board/drawer/Common.bases'
 import { type TEntity } from '../../../types/Entity'
-import { type EditorForm } from '../../../forms/editor.structure'
+import { type EditorForm, TypeList } from '../../../forms/editor.structure'
 import { string } from 'yup'
 import Radio from '../../atoms/forms/RadioButton.atom'
 import useToggle from '../../../hooks/useToggle'
 import { Errors } from '../../../enums/errors'
-
-export enum TypeList {
-  TEXT = 'text',
-  CHECKBOX = 'checkbox',
-  NUMBER = 'number',
-  FILE = 'file',
-  CUSTOM = 'custom',
-}
 
 const isDefined = (value: string): boolean =>
   value !== undefined && value !== null && value !== ''
@@ -85,19 +77,8 @@ const LocalisationFormOrganism = ({ entityForm: serviceForm, onChange, onForm }:
     LOCAL_FIELDS
   ]
 
-  useEffect(() => {
-    console.log('--- local')
-    console.log({ hasSelectedLocal })
-    console.log(serviceForm.dockerImage, serviceForm.dockerTag)
-    console.log(isDefined(serviceForm.dockerImage), isDefined(serviceForm.dockerTag))
-
-    console.log('--- remote')
-    console.log({ hasSelectedRemote })
-    console.log(serviceForm.context, serviceForm.dockerFile)
-    console.log(isDefined(serviceForm.context), isDefined(serviceForm.dockerFile))
-  }, [])
-
   const onKeyFormReset = (key: keyof TEntity): void => {
+    // @ts-expect-error ts-migrate Object is possibly 'undefined'.
     serviceForm[key] = ''
   }
 
