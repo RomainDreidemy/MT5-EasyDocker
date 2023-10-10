@@ -54,6 +54,7 @@ const useDrawerEditor = (drawer: TDrawer, stackId: string): TEditor<TEntity> => 
   return {
     fields: structure,
     entityForm,
+    onForm: setEntityForm,
     onSubmit,
     onChange,
     onDelete,

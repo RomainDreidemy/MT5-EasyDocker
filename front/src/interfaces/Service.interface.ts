@@ -8,11 +8,15 @@ export interface IService {
 
   name: string
   description: string
+  containerName: string
   dockerImage: string
   dockerTag: string
   entrypoint: string
 
   isExternal: boolean
+
+  context: string
+  dockerFile: string
 
   positionX: number
   positionY: number

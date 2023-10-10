@@ -6,6 +6,7 @@ import TextArea from '../views/atoms/forms/TextArea.atom'
 import EnvVariablesOrganism from '../views/organisms/ServiceVariables/EnvVariables.organism'
 import PortVariablesOrganism from '../views/organisms/ServiceVariables/PortVariables.organism'
 import VolumeVariablesOrganism from '../views/organisms/ServiceVariables/VolumeVariables.organism'
+import LocalisationFormOrganism from '../views/organisms/ServiceForm/LocalisationForm.organism'
 
 export type EditorStructure = {
   [key in DrawerTypes]: EditorForm[]
@@ -27,6 +28,7 @@ export interface EditorForm {
   type: TypeList
   component: any
 
+  disabled?: any
   validator?: any
   maxLength?: number
 }
@@ -111,18 +113,10 @@ export const DRAWER_TYPE_STRUCTURES: EditorStructure = {
       maxLength: 25
     },
     {
-      label: 'Docker Image',
-      key: 'dockerImage',
-      type: TypeList.TEXT,
-      component: Input,
-      validator: string().nullable()
-    },
-    {
-      label: 'Docker Tag',
-      key: 'dockerTag',
-      type: TypeList.TEXT,
-      component: Input,
-      validator: string().nullable()
+      label: 'Context',
+      key: 'context',
+      type: TypeList.CUSTOM,
+      component: LocalisationFormOrganism
     },
     {
       label: 'Env file',
