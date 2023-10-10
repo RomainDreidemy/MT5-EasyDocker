@@ -83,9 +83,9 @@ const LocalisationFormOrganism = ({ entityForm: serviceForm, onChange, onForm }:
   }
 
   const emptyFieldsRadioSelection = (name: string): void => {
-    if (name === 'local') {
+    if (name === LOCAL_RADIO_NAME) {
       toggleSelectedLocal()
-    } else if (name === 'remote') {
+    } else if (name === REMOTE_RADIO_NAME) {
       toggleSelectedRemote()
     } else {
       throw new Error(Errors.NOT_IMPLEMENTED)
@@ -93,11 +93,11 @@ const LocalisationFormOrganism = ({ entityForm: serviceForm, onChange, onForm }:
   }
 
   const onEntityRadioChange = (name: string): void => {
-    if (name === 'local') {
+    if (name === LOCAL_RADIO_NAME) {
       keys(REMOTE_FIELDS).forEach((key) => {
         onKeyFormReset(key as keyof TEntity)
       })
-    } else if (name === 'remote') {
+    } else if (name === REMOTE_RADIO_NAME) {
       keys(LOCAL_FIELDS).forEach((key) => {
         onKeyFormReset(key as keyof TEntity)
       })
