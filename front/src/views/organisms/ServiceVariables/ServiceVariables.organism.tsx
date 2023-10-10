@@ -40,6 +40,7 @@ function ServiceVariablesOrganism<
     const filtered = variables.filter(v => v.id !== variable.id)
 
     setVariables(filtered)
+    eventEmitter.emit<EventListenerCallback<TDrawer>>(EventEmitters.ON_UPDATED_DRAWER, drawer)
   }
 
   const Icon = icon(open)
