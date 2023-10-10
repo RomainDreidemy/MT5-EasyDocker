@@ -128,17 +128,18 @@ const LocalisationFormOrganism = ({ entityForm: serviceForm, onChange, onForm }:
       const value = serviceForm[field.key as keyof TEntity]
 
       return (
-        <Component
-          label={field.label}
-          type={field.type}
-          name={field.key}
-          maxLength={field.maxLength}
-          entity={serviceForm}
-          value={value}
-          disabled={field.disabled}
-          onChange={onChange}
-          key={index}
-        />)
+        <div className="mt-2" key={index}>
+          <Component
+            label={field.label}
+            type={field.type}
+            name={field.key}
+            maxLength={field.maxLength}
+            entity={serviceForm}
+            value={value}
+            disabled={field.disabled}
+            onChange={onChange}
+          />
+        </div>)
     })
   }
 
