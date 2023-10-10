@@ -31,6 +31,7 @@ const useBoard = (board: TBoardOrNullify): {
 
   const onSelectedDrawer: EventListenerCallback<TDrawer> = async (drawer: TDrawer) => {
     await onSelectDrawer(drawer, DrawerManager.get)
+    EventsCanvas.updateScreen()
   }
 
   const onMovedDrawer: EventListenerCallback<{ drawer: TDrawer, selectDrawer?: boolean }> = async ({ drawer, selectDrawer }): Promise<void> => {
