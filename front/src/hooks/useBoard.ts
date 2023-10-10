@@ -24,6 +24,11 @@ const useBoard = (board: TBoardOrNullify): {
   const [selectedDrawer, setSelectedDrawer] = useState<TDrawerOrNullify>(undefined)
   const [selectedLinker, setSelectedLinker] = useState<TLinkerOrNullify>(undefined)
 
+  const onUpdatedDrawer: EventListenerCallback<TDrawer> = async (drawer: TDrawer) => {
+    await onSelectDrawer(drawer, DrawerManager.get)
+    EventsCanvas.updateScreen()
+  }
+
   const onSelectedDrawer: EventListenerCallback<TDrawer> = async (drawer: TDrawer) => {
     await onSelectDrawer(drawer, DrawerManager.get)
   }
@@ -96,6 +101,7 @@ const useBoard = (board: TBoardOrNullify): {
     { name: EventEmitters.ON_CREATED_LINKER, action: onCreatedLinker },
     { name: EventEmitters.ON_DELETED_LINKER, action: onDeletedLinker },
     { name: EventEmitters.ON_SELECTED_DRAWER, action: onSelectedDrawer },
+    { name: EventEmitters.ON_UPDATED_DRAWER, action: onUpdatedDrawer },
     { name: EventEmitters.ON_UNSELECTED_DRAWER, action: onUnselectedDrawer },
     { name: EventEmitters.ON_MOVED_DRAWERS, action: onMovedDrawers },
     { name: EventEmitters.ON_SELECTED_LINKER, action: onSelectedLinker },
