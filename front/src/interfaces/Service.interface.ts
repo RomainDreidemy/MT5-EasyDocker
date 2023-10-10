@@ -9,6 +9,7 @@ export interface IService {
   name: string
   description: string
   containerName: string
+  imageSelectionType: string
   dockerImage: string
   dockerTag: string
   entrypoint: string

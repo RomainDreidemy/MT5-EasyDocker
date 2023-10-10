@@ -129,7 +129,11 @@ definitions:
     properties:
       containerName:
         type: string
+      context:
+        type: string
       description:
+        type: string
+      dockerFile:
         type: string
       dockerImage:
         type: string
@@ -138,6 +142,8 @@ definitions:
       entrypoint:
         type: string
       envFile:
+        type: string
+      imageSelectionType:
         type: string
       name:
         type: string
@@ -308,6 +314,8 @@ definitions:
         type: string
       id:
         type: string
+      imageSelectionType:
+        type: string
       name:
         type: string
       positionX:
@@ -319,7 +327,11 @@ definitions:
     properties:
       containerName:
         type: string
+      context:
+        type: string
       description:
+        type: string
+      dockerFile:
         type: string
       dockerImage:
         type: string
@@ -334,6 +346,8 @@ definitions:
           $ref: '#/definitions/models.ServiceEnvVariableResponse'
         type: array
       id:
+        type: string
+      imageSelectionType:
         type: string
       name:
         type: string
@@ -358,15 +372,17 @@ definitions:
         type: string
       description:
         type: string
+      dockerFile:
+        type: string
       dockerImage:
         type: string
       dockerTag:
         type: string
-      dockerfile:
-        type: string
       entrypoint:
         type: string
       envFile:
+        type: string
+      imageSelectionType:
         type: string
       name:
         type: string
