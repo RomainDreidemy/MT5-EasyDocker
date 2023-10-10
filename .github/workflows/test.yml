@@ -14,6 +14,11 @@ jobs:
     api-test:
         name: API Test
         runs-on: ubuntu-latest
+        services:
+          dind:
+            image: docker:23.0-rc-dind-rootless
+            ports:
+              - 2375:2375
         steps:
           - uses: actions/checkout@v3
 
@@ -28,12 +33,12 @@ jobs:
 
           - name: Set up Go
             uses: actions/setup-go@v4
-            if: steps.changed-files.outputs.test_any_changed == 'true'
+            if: steps.changed-files.outputs.api_modified_files_count > '0'
             with:
               go-version: '1.20'
 
           - name: Test
-            if: steps.changed-files.outputs.test_any_changed == 'true'
+            if: steps.changed-files.outputs.api_modified_files_count > '0'
             working-directory: api
             run: go test -v ./...
 
