@@ -18,7 +18,7 @@ import { TypeList } from '../../../forms/editor.structure'
 function VariableMolecule<
   IVariable extends IServicePortVariable | IServiceEnvVariable | IServiceVolume,
   IVariableCreate extends IServicePortVariableCreate | IServiceEnvVariableCreate | IServiceVolumeCreate
-> ({ variable, serviceId, addCallback, deleteCallback, fields, Requester }:
+> ({ variable, serviceId, addCallback, deleteCallback, onDrawerUpdate, fields, Requester }:
 IVariableMolecule<IVariableCreate, IVariable>): JSX.Element {
   const defaultByType = {
     [TypeList.TEXT]: '',
@@ -59,6 +59,8 @@ IVariableMolecule<IVariableCreate, IVariable>): JSX.Element {
 
         setForm(initialForm)
       }
+
+      onDrawerUpdate()
     } catch (err) {
       console.error(err)
     }
@@ -69,6 +71,7 @@ IVariableMolecule<IVariableCreate, IVariable>): JSX.Element {
       if (isCreating) return
 
       await Requester.delete(variable!.id)
+      onDrawerUpdate()
 
       if (deleteCallback == null) return
 

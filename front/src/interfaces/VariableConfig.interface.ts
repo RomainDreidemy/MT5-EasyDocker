@@ -9,6 +9,7 @@ export interface IVariableMolecule<IVariableCreate, IVariable> {
   serviceId: string
   addCallback?: (variable: IVariable) => void
   deleteCallback?: (variable: IVariable) => void
+  onDrawerUpdate: () => void
   Requester: IVariableRequest<IVariableCreate, IVariable>
 }
 

@@ -32,9 +32,9 @@ function ServiceVariablesOrganism<
 
   const addCallback = (variable: IVariable): void => {
     setVariables([...variables, variable])
-
-    eventEmitter.emit<EventListenerCallback<TDrawer>>(EventEmitters.ON_UPDATED_DRAWER, drawer)
   }
+
+  const onDrawerUpdate = (): void => { eventEmitter.emit<EventListenerCallback<TDrawer>>(EventEmitters.ON_UPDATED_DRAWER, drawer) }
 
   const deleteCallback = (variable: IVariable): void => {
     const filtered = variables.filter(v => v.id !== variable.id)
@@ -61,12 +61,14 @@ function ServiceVariablesOrganism<
                            variable={variable}
                            serviceId={drawer.entity!.id}
                            deleteCallback={deleteCallback}
+                           onDrawerUpdate={onDrawerUpdate}
                            {...editor}
                 />
               ))}
 
               <Component serviceId={drawer.entity!.id}
                          addCallback={addCallback}
+                         onDrawerUpdate={onDrawerUpdate}
                          {...editor} />
             </div>
           </div>
