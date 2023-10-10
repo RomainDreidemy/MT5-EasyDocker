@@ -25,12 +25,10 @@ func DockerComposeServiceBuilder(service models.Service) models.DockerComposeSer
 		Entrypoint:    service.Entrypoint,
 	}
 
-	if service.Context != "" && service.Dockerfile != "" {
-		dockerComposeService.Build = BuildDockerComposeServiceBuild(service)
-	}
-
-	if service.DockerImage != "" {
+	if service.ImageSelectionType == "remote" {
 		dockerComposeService.Image = BuildDockerComposeServiceImage(service)
+	} else {
+		dockerComposeService.Build = BuildDockerComposeServiceBuild(service)
 	}
 
 	if service.EnvFile != "" {

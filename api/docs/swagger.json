@@ -1641,7 +1641,13 @@
                 "containerName": {
                     "type": "string"
                 },
+                "context": {
+                    "type": "string"
+                },
                 "description": {
+                    "type": "string"
+                },
+                "dockerFile": {
                     "type": "string"
                 },
                 "dockerImage": {
@@ -1654,6 +1660,9 @@
                     "type": "string"
                 },
                 "envFile": {
+                    "type": "string"
+                },
+                "imageSelectionType": {
                     "type": "string"
                 },
                 "name": {
@@ -1901,6 +1910,9 @@
                 "id": {
                     "type": "string"
                 },
+                "imageSelectionType": {
+                    "type": "string"
+                },
                 "name": {
                     "type": "string"
                 },
@@ -1918,7 +1930,13 @@
                 "containerName": {
                     "type": "string"
                 },
+                "context": {
+                    "type": "string"
+                },
                 "description": {
+                    "type": "string"
+                },
+                "dockerFile": {
                     "type": "string"
                 },
                 "dockerImage": {
@@ -1940,6 +1958,9 @@
                     }
                 },
                 "id": {
+                    "type": "string"
+                },
+                "imageSelectionType": {
                     "type": "string"
                 },
                 "name": {
@@ -1977,19 +1998,22 @@
                 "description": {
                     "type": "string"
                 },
+                "dockerFile": {
+                    "type": "string"
+                },
                 "dockerImage": {
                     "type": "string"
                 },
                 "dockerTag": {
                     "type": "string"
                 },
-                "dockerfile": {
-                    "type": "string"
-                },
                 "entrypoint": {
                     "type": "string"
                 },
                 "envFile": {
+                    "type": "string"
+                },
+                "imageSelectionType": {
                     "type": "string"
                 },
                 "name": {

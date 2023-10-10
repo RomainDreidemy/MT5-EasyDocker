@@ -1,4 +1,4 @@
-import React, { type ChangeEvent } from 'react'
+import React from 'react'
 import Input from '../../atoms/forms/Input.atom'
 import { type IService } from '../../../interfaces/Service.interface'
 import { type TEditor } from '../../../types/board/drawer/Common.bases'
@@ -7,7 +7,7 @@ import { type EditorForm, TypeList } from '../../../forms/editor.structure'
 import { string } from 'yup'
 import Radio from '../../atoms/forms/RadioButton.atom'
 import useToggle from '../../../hooks/useToggle'
-import { Errors } from '../../../enums/errors'
+import { type TOnChange } from '../../../interfaces/Forms/Input.interface'
 
 const isDefined = (value: string): boolean =>
   value !== undefined && value !== null && value !== ''
@@ -32,7 +32,6 @@ const LocalisationFormOrganism = ({ entityForm: serviceForm, onChange, onForm }:
 
   const isEmptyFields = !hasSelectedRemote && !hasSelectedLocal
 
-  const remoteFieldsDisabled = hasSelectedLocal || isEmptyFields
   const REMOTE_FIELDS: EditorForm[] = [
     {
       label: 'Docker image',
@@ -40,7 +39,7 @@ const LocalisationFormOrganism = ({ entityForm: serviceForm, onChange, onForm }:
       type: TypeList.TEXT,
       component: Input,
       validator: string().nullable(),
-      disabled: remoteFieldsDisabled
+      disabled: serviceForm.imageSelectionType !== REMOTE_RADIO_NAME
     },
     {
       label: 'Docker tag',
@@ -48,11 +47,10 @@ const LocalisationFormOrganism = ({ entityForm: serviceForm, onChange, onForm }:
       type: TypeList.TEXT,
       component: Input,
       validator: string().nullable(),
-      disabled: remoteFieldsDisabled
+      disabled: serviceForm.imageSelectionType !== REMOTE_RADIO_NAME
     }
   ]
 
-  const localFieldsDisabled = hasSelectedRemote || isEmptyFields
   const LOCAL_FIELDS: EditorForm[] = [
     {
       label: 'Context',
@@ -60,7 +58,7 @@ const LocalisationFormOrganism = ({ entityForm: serviceForm, onChange, onForm }:
       type: TypeList.TEXT,
       component: Input,
       validator: string().nullable(),
-      disabled: localFieldsDisabled
+      disabled: serviceForm.imageSelectionType !== LOCAL_RADIO_NAME
     },
     {
       label: 'Docker file',
@@ -68,7 +66,7 @@ const LocalisationFormOrganism = ({ entityForm: serviceForm, onChange, onForm }:
       type: TypeList.TEXT,
       component: Input,
       validator: string().nullable(),
-      disabled: localFieldsDisabled
+      disabled: serviceForm.imageSelectionType !== LOCAL_RADIO_NAME
     }
   ]
 
@@ -77,49 +75,10 @@ const LocalisationFormOrganism = ({ entityForm: serviceForm, onChange, onForm }:
     LOCAL_FIELDS
   ]
 
-  const onKeyFormReset = (key: keyof TEntity): void => {
-    // @ts-expect-error ts-migrate Object is possibly 'undefined'.
-    serviceForm[key] = ''
-  }
-
-  const emptyFieldsRadioSelection = (name: string): void => {
-    if (name === LOCAL_RADIO_NAME) {
-      toggleSelectedLocal()
-    } else if (name === REMOTE_RADIO_NAME) {
-      toggleSelectedRemote()
-    } else {
-      throw new Error(Errors.NOT_IMPLEMENTED)
-    }
-  }
-
-  const onEntityRadioChange = (name: string): void => {
-    if (name === LOCAL_RADIO_NAME) {
-      keys(REMOTE_FIELDS).forEach((key) => {
-        onKeyFormReset(key as keyof TEntity)
-      })
-    } else if (name === REMOTE_RADIO_NAME) {
-      keys(LOCAL_FIELDS).forEach((key) => {
-        onKeyFormReset(key as keyof TEntity)
-      })
-    } else {
-      throw new Error(Errors.NOT_IMPLEMENTED)
-    }
-
-    toggleSelectedRemote()
-    toggleSelectedLocal()
-    onForm({ ...serviceForm })
-  }
-
-  const onRadioChange = (event: ChangeEvent<HTMLInputElement>): void => {
-    const { name, value } = event.target
-
-    if (value !== 'on') return
-
-    if (isEmptyFields) {
-      emptyFieldsRadioSelection(name)
-    } else {
-      onEntityRadioChange(name)
-    }
+  const onRadioChange = (event: TOnChange): void => {
+    event.target.value = event.target.name
+    event.target.name = 'imageSelectionType'
+    onChange(event)
   }
 
   const generateFields = (fields: EditorForm[]): JSX.Element[] => {
@@ -147,10 +106,10 @@ const LocalisationFormOrganism = ({ entityForm: serviceForm, onChange, onForm }:
     <div className="container mx-auto">
       <div className="flex flex-wrap -mx-2 p-2 ">
         <div className="w-1/2">
-          <Radio label="Remote" value={hasSelectedRemote} onChange={onRadioChange} name={REMOTE_RADIO_NAME}/>
+          <Radio label="Remote" value={serviceForm.imageSelectionType === 'remote'} onChange={onRadioChange} name={REMOTE_RADIO_NAME}/>
         </div>
         <div className="w-1/2">
-          <Radio label="Local" value={hasSelectedLocal} onChange={onRadioChange} name={LOCAL_RADIO_NAME}/>
+          <Radio label="Local" value={serviceForm.imageSelectionType === 'local'} onChange={onRadioChange} name={LOCAL_RADIO_NAME}/>
         </div>
 
         {LOCALISATION_FIELDS.map((editor, index) => {
