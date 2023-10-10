@@ -47,6 +47,7 @@ const useDrawerEditor = (linker: TBaseLinker, _: string): TEditor<TLinkEntity> =
     fields: structure,
     entityForm: linkerForm,
     onSubmit,
+    onForm: setLinkerForm,
     onDelete,
     onChange,
     onClose

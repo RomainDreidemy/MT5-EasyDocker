@@ -26,10 +26,6 @@ const useForm = <T>(initialForm: T, formStructure: EditorForm[]): IForm<T> => {
   const onChange: (event: TOnChange) => void = (event: TOnChange): void => {
     const value = convertByType(event)
 
-    console.log('=')
-    console.log(form)
-    console.log(event.target.name, value)
-
     setForm({ ...form, [event.target.name]: value })
   }
 

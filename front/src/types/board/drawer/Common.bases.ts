@@ -1,5 +1,6 @@
 import { type EditorForm } from '../../../forms/editor.structure'
 import { type TOnChange } from '../../../interfaces/Forms/Input.interface'
+import { type IForm } from '../../../hooks/useForm'
 
 export interface TCommonBases {
   create: () => void
@@ -12,5 +13,6 @@ export interface TEditor<T> {
   onChange: (event: TOnChange) => void
   onDelete?: () => void
   onClose: () => void
+  onForm: IForm<T>['setForm']
   entityForm: T
 }

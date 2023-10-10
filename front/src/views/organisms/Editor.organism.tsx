@@ -11,7 +11,15 @@ const EditorOrganism = ({ entity, stackId, useEditor }: {
   stackId: string
   useEditor: typeof useDrawerEditor | typeof useLinkerEditor
 }): JSX.Element => {
-  const { fields, onSubmit, onChange, entityForm, onDelete, onClose } = useEditor(entity, stackId)
+  const {
+    fields,
+    onSubmit,
+    onChange,
+    entityForm,
+    onForm,
+    onDelete,
+    onClose
+  } = useEditor(entity, stackId)
 
   return (
     <div className="w-full border-l-2 bg-white h-full max-h-full overflow-y-auto">
@@ -39,7 +47,9 @@ const EditorOrganism = ({ entity, stackId, useEditor }: {
                 type={field.type}
                 name={field.key}
                 maxLength={field.maxLength}
+                entityForm={entityForm}
                 entity={entity}
+                onForm={onForm}
                 value={value}
                 onChange={onChange}
               />

@@ -28,6 +28,7 @@ export interface EditorForm {
   type: TypeList
   component: any
 
+  disabled?: any
   validator?: any
   maxLength?: number
 }
