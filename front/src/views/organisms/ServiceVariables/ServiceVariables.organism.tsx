@@ -6,6 +6,9 @@ import { type IServicePortVariable, type IServicePortVariableCreate } from '../.
 import { type IServiceEnvVariable, type IServiceEnvVariableCreate } from '../../../interfaces/ServiceVariable/EnvVariable.interface'
 import { type TVariablesEditor } from '../../../interfaces/VariableConfig.interface'
 import { type IServiceVolume, type IServiceVolumeCreate } from '../../../interfaces/ServiceVariable/Volume.interface'
+import { EventEmitters } from '../../../enums/eventEmitters'
+import eventEmitter from '../../../services/apps/Event.emitter'
+import { type EventListenerCallback } from '../../../interfaces/EventListener.interface'
 
 function ServiceVariablesOrganism<
   IVariable extends IServicePortVariable | IServiceEnvVariable | IServiceVolume,
@@ -31,6 +34,8 @@ function ServiceVariablesOrganism<
     setVariables([...variables, variable])
   }
 
+  const onDrawerUpdate = (): void => { eventEmitter.emit<EventListenerCallback<TDrawer>>(EventEmitters.ON_UPDATED_DRAWER, drawer) }
+
   const deleteCallback = (variable: IVariable): void => {
     const filtered = variables.filter(v => v.id !== variable.id)
 
@@ -55,12 +60,14 @@ function ServiceVariablesOrganism<
                            variable={variable}
                            serviceId={drawer.entity!.id}
                            deleteCallback={deleteCallback}
+                           onDrawerUpdate={onDrawerUpdate}
                            {...editor}
                 />
               ))}
 
               <Component serviceId={drawer.entity!.id}
                          addCallback={addCallback}
+                         onDrawerUpdate={onDrawerUpdate}
                          {...editor} />
             </div>
           </div>
