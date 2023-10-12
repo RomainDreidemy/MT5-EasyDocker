@@ -93,18 +93,19 @@ func DuplicateStack(stack models.Stack) models.Stack {
 
 func duplicateService(service models.Service, stackId string) models.Service {
 	return models.Service{
-		StackID:       stackId,
-		Name:          service.Name,
-		ContainerName: service.ContainerName,
-		Description:   service.Description,
-		DockerImage:   service.DockerImage,
-		DockerTag:     service.DockerTag,
-		EnvFile:       service.EnvFile,
-		Entrypoint:    service.Entrypoint,
-		Context:       service.Context,
-		Dockerfile:    service.Dockerfile,
-		PositionX:     service.PositionX,
-		PositionY:     service.PositionY,
+		StackID:            stackId,
+		Name:               service.Name,
+		ContainerName:      service.ContainerName,
+		ImageSelectionType: service.ImageSelectionType,
+		Description:        service.Description,
+		DockerImage:        service.DockerImage,
+		DockerTag:          service.DockerTag,
+		EnvFile:            service.EnvFile,
+		Entrypoint:         service.Entrypoint,
+		Context:            service.Context,
+		Dockerfile:         service.Dockerfile,
+		PositionX:          service.PositionX,
+		PositionY:          service.PositionY,
 	}
 }
 
