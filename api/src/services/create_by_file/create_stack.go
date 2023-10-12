@@ -43,19 +43,39 @@ func createServices(composeServices map[string]models.DockerComposeService, stac
 
 	index := 0
 	for key, composeService := range composeServices {
-		image := strings.Split(composeService.Image, ":")
+		imageSelectionType := "remote"
 
-		services = append(services, models.Service{
+		newService := models.Service{
 			StackID:       stackId,
 			Name:          key,
 			ContainerName: composeService.ContainerName,
-			DockerImage:   image[0],
-			DockerTag:     image[1],
 			EnvFile:       composeService.EnvFile,
 			Entrypoint:    composeService.Entrypoint,
 			PositionY:     10,
 			PositionX:     float32(250*(index) + 10),
-		})
+		}
+
+		if composeService.Image != "" {
+			image := strings.Split(composeService.Image, ":")
+			tag := "latest"
+
+			if len(image) > 1 {
+				tag = image[1]
+			}
+
+			newService.DockerImage = image[0]
+			newService.DockerTag = tag
+		}
+
+		if composeService.Build != (models.DockerComposeServiceBuild{}) {
+			newService.Context = composeService.Build.Context
+			newService.Dockerfile = composeService.Build.Dockerfile
+			imageSelectionType = "local"
+		}
+
+		newService.ImageSelectionType = imageSelectionType
+
+		services = append(services, newService)
 
 		index += 1
 	}
