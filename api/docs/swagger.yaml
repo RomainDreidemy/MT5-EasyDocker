@@ -532,6 +532,26 @@ paths:
       summary: Sign up a new user
       tags:
       - Auth
+  /dockerhub/images:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Search Term
+        in: query
+        name: term
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: json
+      summary: Search Docker Hub for images
+      tags:
+      - DockerHub
   /env_variables/{id}:
     delete:
       consumes:
