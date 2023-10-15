@@ -81,37 +81,6 @@ const docTemplate = `{
                 }
             }
         },
-        "/dockerhub/images": {
-            "get": {
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "DockerHub"
-                ],
-                "summary": "Search Docker Hub for images",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "Search Term",
-                        "name": "term",
-                        "in": "query",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "json"
-                        }
-                    }
-                }
-            }
-        },
         "/env_variables/{id}": {
             "get": {
                 "consumes": [
