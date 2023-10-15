@@ -1,15 +1,15 @@
 package models
 
-type DockerHubSearchResponse struct {
+type DockerHubSearchImagesResponse struct {
 	PageSize int `json:"page_size"`
 	Next     string `json:"next"`
 	Previous string `json:"previous"`
 	Page     int `json:"page"`
 	Count    int `json:"count"`
-	Summaries []DockerHubImageDetails `json:"summaries"`
+	Summaries []DockerHubImage `json:"summaries"`
 }
 
-type DockerHubImageDetails struct {
+type DockerHubImage struct {
 	ID                   string `json:"id"`
 	Name                 string `json:"name"`
 	Slug                 string `json:"slug"`
