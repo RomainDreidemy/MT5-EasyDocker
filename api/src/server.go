@@ -114,7 +114,8 @@ func main() {
 	serviceManagedVolumeLink.Put("/:id", controllers.UpdateServiceManagedVolumeLink)
 	serviceManagedVolumeLink.Delete("/:id", controllers.DeleteServiceManagedVolumeLink)
 
-	stacks.Get("/:stackId/docker_compose", controllers.GenerateDockerComposeFile)
+	dockerhub := micro.Group("/dockerhub")
+	dockerhub.Get("images/", controllers.SearchDockerHubImages)
 
 	app.Get("/swagger/*", swagger.HandlerDefault)
 
