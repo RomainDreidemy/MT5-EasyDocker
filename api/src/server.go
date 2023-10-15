@@ -116,6 +116,7 @@ func main() {
 
 	dockerhub := micro.Group("/dockerhub")
 	dockerhub.Get("images/", controllers.SearchDockerHubImages)
+	dockerhub.Get("tags",controllers.SearchDockerHubImageTags)
 
 	app.Get("/swagger/*", swagger.HandlerDefault)
 
