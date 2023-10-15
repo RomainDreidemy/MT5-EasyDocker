@@ -1,46 +1,105 @@
-# VSCode Webview React
+# EasyDocker
 
-This project was bootstrapped with 
-* [Create React App](https://github.com/facebookincubator/create-react-app)
-* [Create React App TypeScript](https://github.com/wmonk/create-react-app-typescript)
-* [VSCode Extension Webview Sample](https://github.com/Microsoft/vscode-extension-samples/tree/master/webview-sample)
+EasyDocker est une application qui permet de créer un fichier `docker-compose.yml` facilement via une interface graphique intuitive
 
-[The webview API](https://code.visualstudio.com/docs/extensions/webview) allows extensions to create customizable views within VSCode. Single Page Application frameworks are perfect fit for this use case. However, to make modern JavaScript frameworks/toolchains appeal to VSCode webview API's [security best practices](https://code.visualstudio.com/docs/extensions/webview#_security) requires some knowledge of both the bundling framework you are using and how VSCode secures webview. This project aims to provide an out-of-box starter kit for Create React App and TypeScript in VSCode's webview.
+## Developpement
 
-## Development
+Les commandes docker les plus importantes se trouve dans le fichier `Makefile`
 
-Run following commands in the terminal
+### Lancer le projet
 
 ```shell
-yarn install --ignore-engines
-yarn run build
-```
-And then press F5, in Extension Development Host session, run `Start React Webview` command from command palette.
-
-### Docker
-
-If you don't want to install nodejs and yarn, you can use docker to build the project.
-
-```shell
-make up # start docker container
-make install # install yarn dependencies
-make watch # watch file changes and build
+make up
+# docker compose up --build --detach
 ```
 
-If you want to kill your docker container, run `make down`.
-
-# Production
-
-## Build api Docker image
+### Arrêter les container
 
 ```shell
-docker build -t easydocker/api -f ./api/Dockerfile ./api
+make down
+# docker compose down --remove-orphans
 ```
 
-## Build front Docker image
+### Installer les dépendances Front
 
 ```shell
-docker build --tag easydocker/front \
-  --build-arg VITE_API_URL=<API_URL> \
-  -f front/Dockerfile.prod ./front
+make install
+# docker compose exec -it front yarn install --ignore-engines
+```
+
+### Build le Front
+
+```shell
+make build
+# docker compose exec -it front yarn run build
+```
+
+### Lancer le Front en mode watch
+
+```shell
+make watch
+# docker compose exec -it front yarn run watch-build
+```
+
+### Voir les logs
+
+```shell
+make logs:
+# docker compose logs -f
+```
+
+### Logs de l'API
+
+```shell
+make api-logs 
+# docker compose logs -f api
+```
+
+### Logs du Front
+
+```shell
+make front-logs
+# docker compose logs -f front
+```
+
+### Lint du Front
+
+```shell
+make front-linter
+# docker compose exec -it front yarn lint
+```
+
+### Logs de la base de donnée
+
+```shell
+make database-logs
+# docker compose logs -f database
+```
+
+### Ouvrir un terminal bash dans le container de l'API
+
+```shell
+make api-sh
+# docker compose exec -it api sh
+```
+
+### Ouvrir un terminal bash dans le container du Front
+
+```shell
+make front-sh
+# docker compose exec -it front sh
+```
+
+### Ouvrir un terminal bash dans le container de la base de donnée
+
+```shell
+make database-sh
+# docker compose exec -it database sh
+```
+
+### Lancer les tests de l'API
+
+```shell
+make api-test
+# docker compose exec -it api go test -v ./...
 ```
