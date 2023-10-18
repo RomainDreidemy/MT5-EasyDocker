@@ -4,33 +4,34 @@ import { type IPosition } from '../../../../interfaces/Position.interface'
 import CommonBases from '../Common.bases'
 import TextPipe from '../../../../pipes/Text.pipe'
 import { type TDrawer } from '../../../../types/Drawer'
+import PopupManager from '../../../canvas/Popup.manager';
 
 const BaseFactory: TBaseFactory = {
-  ...CommonBases,
-  ...StateFactory,
+    ...CommonBases,
+    ...StateFactory,
 
-  create (drawer: TDrawer): void {
-    this.drawer = drawer
-    this.positionX = isNaN(drawer.entity!.positionX) ? this.positionX : drawer.entity!.positionX
-    this.positionY = isNaN(drawer.entity!.positionY) ? this.positionY : drawer.entity!.positionY
-  },
+    create (drawer: TDrawer): void {
+        this.drawer = drawer
+        this.positionX = isNaN(drawer.entity!.positionX) ? this.positionX : drawer.entity!.positionX
+        this.positionY = isNaN(drawer.entity!.positionY) ? this.positionY : drawer.entity!.positionY
+    },
 
-  isSelected ({ x, y }: IPosition): boolean {
-    return this.drawer!.context!.isPointInPath(this.path, x, y)
-  },
+    isSelected ({ x, y }: IPosition): boolean {
+        return this.drawer!.context!.isPointInPath(this.path, x, y)
+    },
 
-  updatePosition (position: IPosition): void {
-    this.positionX = position.x
-    this.positionY = position.y
-  },
+    updatePosition (position: IPosition): void {
+        this.positionX = position.x
+        this.positionY = position.y
+    },
 
-  position (withOffset: number = 0): IPosition {
-    return {
-      x: this.positionX - withOffset, y: this.positionY - withOffset
-    }
-  },
+    position (withOffset: number = 0): IPosition {
+        return {
+            x: this.positionX - withOffset, y: this.positionY - withOffset
+        }
+    },
 
-  draw (): void {
+    draw (): void {
         const context = this.drawer!.context!
 
         const rectangle = new Path2D()
@@ -48,9 +49,9 @@ const BaseFactory: TBaseFactory = {
         context.roundRect(this.positionX, this.positionY, this.width, this.height, [10])
 
         if (this.selected) {
-          context.strokeStyle = this.selectedColor
+            context.strokeStyle = this.selectedColor
         } else if (this.onHover) {
-          context.strokeStyle = this.onHoverColor
+            context.strokeStyle = this.onHoverColor
         }
 
         context.stroke(rectangle)
@@ -67,13 +68,6 @@ const BaseFactory: TBaseFactory = {
         const buttonHeight = 20;
         const buttonRadius = 5;
 
-        const popupX = this.positionX + this.width + 40;
-        const popupY = this.positionY;
-        const popupWidth = 250;
-        const popupHeight = 250;
-
-        let isPopupVisible = false;
-
         context.fillStyle = "white";
         context.beginPath();
         context.moveTo(buttonX, buttonY + buttonRadius);
@@ -86,50 +80,30 @@ const BaseFactory: TBaseFactory = {
         context.lineTo(buttonX + buttonRadius, buttonY);
         context.quadraticCurveTo(buttonX, buttonY, buttonX, buttonY + buttonRadius);
         context.fill();
+
         context.font = "16px Arial";
         context.fillStyle = "black";
         context.fillText("Info", buttonX + 10, buttonY + 15);
 
         let textInfo = '';
+        let linkInfo = '';
 
         if (this.backgroundColor == "#304570") {
-            textInfo = 'A Docker network\nis an essential\ncomponent of the\nDocker ecosystem\nthat manages\ncontainer connectivity.';
-
+            textInfo = 'A Docker network\nis an essential\ncomponent of the\nDocker ecosystem\nthat manages\ncontainer connectivity.'
+            linkInfo = 'https://docs.docker.com/network/';
         } else if (this.backgroundColor == "#1f2937") {
             textInfo = 'A Docker service\nis a software unit\nfor deploying, managing,\nand scaling containers,\nsimplifying the\nmanagement of\napplications in distributed\nenvironments.'
-
+            linkInfo = 'https://docs.docker.com/engine/swarm/how-swarm-mode-works/services/';
         } else {
             textInfo = 'A Docker volume\nis a storage mechanism\nthat enables Docker\ncontainers to access\npersistent and shared\ndata.'
+            linkInfo = 'https://docs.docker.com/storage/volumes/';
         }
 
-
         canvas.addEventListener("click", (event) => {
-            const mouseX = event.clientX - canvas.getBoundingClientRect().left;
-            const mouseY = event.clientY - canvas.getBoundingClientRect().top;
+            const mouseX = event.clientX - canvas.getBoundingClientRect().left
+            const mouseY = event.clientY - canvas.getBoundingClientRect().top
 
-            if (mouseX >= buttonX && mouseX <= buttonX + buttonWidth && mouseY >= buttonY && mouseY <= buttonY + buttonHeight) {
-                if (isPopupVisible) {
-                    context.clearRect(popupX, popupY, popupWidth, popupHeight);
-                    isPopupVisible = false;
-                } else {
-                    context.fillStyle = "white";
-                    context.strokeStyle = "black";
-                    context.lineWidth = 2;
-                    context.strokeRect(popupX, popupY, popupWidth, popupHeight);
-
-                    context.fillRect(popupX, popupY, popupWidth, popupHeight);
-                    context.fillStyle = "black";
-
-                    const lines = textInfo.split("\n");
-
-                    for (let i = 0; i < lines.length; i++) {
-                        context.fillText(lines[i], popupX + 10, popupY + 25 + i * 25);
-                    }
-
-                    context.fillText("Click to close", popupX + 10, popupY + 240);
-                    isPopupVisible = true;
-                }
-            }
+            PopupManager.handleClick(mouseX, mouseY, this.positionX, this.positionY, this.width, textInfo, linkInfo, context, canvas);
         });
 
         context.fillStyle = this.titleColor
@@ -143,7 +117,7 @@ const BaseFactory: TBaseFactory = {
         if (this.afterDraw != null) this.afterDraw()
 
         this.path = rectangle
-  }
+    }
 }
 
 export default BaseFactory
