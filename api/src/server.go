@@ -3,7 +3,6 @@ package main
 import (
 	_ "github.com/RomainDreidemy/MT5-docker-extension/docs"
 	"github.com/RomainDreidemy/MT5-docker-extension/src/controllers"
-	// "github.com/RomainDreidemy/MT5-docker-extension/src/services/dockerhub"
 	"github.com/RomainDreidemy/MT5-docker-extension/src/initializers"
 	middleware "github.com/RomainDreidemy/MT5-docker-extension/src/middlewares"
 	"github.com/gofiber/fiber/v2"
@@ -31,8 +30,6 @@ func main() {
 	config, _ := initializers.LoadConfig(".")
 	frontUrl := viper.GetString("FRONT_URL")
 	frontPort := viper.GetString("FRONT_PORT")
-	// Créez une instance du contrôleur avec le service injecté
-	searchController := &controllers.DockerHubSearchController{}
 
 	app.Use(logger.New())
 	app.Use(cors.New(cors.Config{
@@ -119,8 +116,8 @@ func main() {
 	serviceManagedVolumeLink.Delete("/:id", controllers.DeleteServiceManagedVolumeLink)
 
 	dockerhub := micro.Group("/dockerhub")
-	dockerhub.Get("images/", searchController.SearchDockerHubImages)
-	dockerhub.Get("tags/", searchController.SearchDockerHubImageTags)
+	dockerhub.Get("images/", controllers.SearchDockerHubImages)
+	dockerhub.Get("tags/", controllers.SearchDockerHubImageTags)
 
 
 	app.Get("/swagger/*", swagger.HandlerDefault)

@@ -34,6 +34,178 @@ definitions:
       positionY:
         type: number
     type: object
+  models.DockerHubArchitecture:
+    properties:
+      label:
+        type: string
+      name:
+        type: string
+    type: object
+  models.DockerHubCategory:
+    properties:
+      label:
+        type: string
+      name:
+        type: string
+    type: object
+  models.DockerHubImage:
+    properties:
+      architectures:
+        items:
+          $ref: '#/definitions/models.DockerHubArchitecture'
+        type: array
+      categories:
+        items:
+          $ref: '#/definitions/models.DockerHubCategory'
+        type: array
+      certification_status:
+        type: string
+      created_at:
+        type: string
+      extension_reviewed:
+        type: boolean
+      filter_type:
+        type: string
+      id:
+        type: string
+      logo_url:
+        $ref: '#/definitions/models.DockerHubLogoURL'
+      name:
+        type: string
+      operating_systems:
+        items:
+          $ref: '#/definitions/models.DockerHubOperatingSystem'
+        type: array
+      popularity:
+        type: integer
+      publisher:
+        $ref: '#/definitions/models.DockerHubPublisher'
+      short_description:
+        type: string
+      slug:
+        type: string
+      source:
+        type: string
+      star_count:
+        type: integer
+      type:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  models.DockerHubLogoURL:
+    properties:
+      small:
+        type: string
+      small@2x:
+        type: string
+    type: object
+  models.DockerHubOperatingSystem:
+    properties:
+      label:
+        type: string
+      name:
+        type: string
+    type: object
+  models.DockerHubPublisher:
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+    type: object
+  models.DockerHubSearchImagesResponse:
+    properties:
+      count:
+        type: integer
+      next:
+        type: string
+      page:
+        type: integer
+      page_size:
+        type: integer
+      previous:
+        type: string
+      summaries:
+        items:
+          $ref: '#/definitions/models.DockerHubImage'
+        type: array
+    type: object
+  models.DockerHubTag:
+    properties:
+      content_type:
+        type: string
+      creator:
+        type: integer
+      digest:
+        type: string
+      full_size:
+        type: integer
+      id:
+        type: integer
+      images:
+        items:
+          $ref: '#/definitions/models.DockerHubTagImage'
+        type: array
+      last_updated:
+        type: string
+      last_updater:
+        type: integer
+      last_updater_username:
+        type: string
+      media_type:
+        type: string
+      name:
+        type: string
+      repository:
+        type: integer
+      tag_last_pulled:
+        type: string
+      tag_last_pushed:
+        type: string
+      tag_status:
+        type: string
+      v2:
+        type: boolean
+    type: object
+  models.DockerHubTagImage:
+    properties:
+      architecture:
+        type: string
+      digest:
+        type: string
+      features:
+        type: string
+      last_pulled:
+        type: string
+      last_pushed:
+        type: string
+      os:
+        type: string
+      os_features:
+        type: string
+      os_version:
+        type: string
+      size:
+        type: integer
+      status:
+        type: string
+      variant:
+        type: string
+    type: object
+  models.DockerHubTagResponse:
+    properties:
+      count:
+        type: integer
+      next:
+        type: string
+      previous:
+        type: string
+      results:
+        items:
+          $ref: '#/definitions/models.DockerHubTag'
+        type: array
+    type: object
   models.ManagedVolumeCreateInput:
     properties:
       description:
@@ -532,6 +704,45 @@ paths:
       summary: Sign up a new user
       tags:
       - Auth
+  /dockerhub/images:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Term
+        in: query
+        name: term
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.DockerHubSearchImagesResponse'
+      summary: searches public images based on a given term.
+      tags:
+      - DockerHub
+  /dockerhub/tags:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Image
+        in: query
+        name: image
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.DockerHubTagResponse'
+      summary: searches tags based on a given image.
+      tags:
+      - DockerHub
   /env_variables/{id}:
     delete:
       consumes:
