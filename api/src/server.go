@@ -11,6 +11,7 @@ import (
 	"github.com/gofiber/swagger"
 	"github.com/spf13/viper"
 	"log"
+
 )
 
 func init() {
@@ -114,7 +115,10 @@ func main() {
 	serviceManagedVolumeLink.Put("/:id", controllers.UpdateServiceManagedVolumeLink)
 	serviceManagedVolumeLink.Delete("/:id", controllers.DeleteServiceManagedVolumeLink)
 
-	stacks.Get("/:stackId/docker_compose", controllers.GenerateDockerComposeFile)
+	dockerhub := micro.Group("/dockerhub")
+	dockerhub.Get("images/", controllers.SearchDockerHubImages)
+	dockerhub.Get("tags/", controllers.SearchDockerHubImageTags)
+
 
 	app.Get("/swagger/*", swagger.HandlerDefault)
 
